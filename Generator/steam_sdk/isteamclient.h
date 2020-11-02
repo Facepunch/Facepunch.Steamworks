@@ -56,7 +56,7 @@ public:
 
 	// set the local IP and Port to bind to
 	// this must be set before CreateLocalUser()
-	virtual void SetLocalIPBinding( uint32 unIP, uint16 usPort ) = 0; 
+	virtual void SetLocalIPBinding( const SteamIPAddress_t &unIP, uint16 usPort ) = 0; 
 
 	// returns the ISteamFriends interface
 	virtual ISteamFriends *GetISteamFriends( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
@@ -156,14 +156,19 @@ public:
 	// Steam Parties interface
 	virtual ISteamParties *GetISteamParties( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
+	// Steam Remote Play interface
+	virtual ISteamRemotePlay *GetISteamRemotePlay( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+
+	STEAM_PRIVATE_API( virtual void DestroyAllInterfaces() = 0; )
+
 };
-#define STEAMCLIENT_INTERFACE_VERSION		"SteamClient018"
+#define STEAMCLIENT_INTERFACE_VERSION		"SteamClient020"
 
 #ifndef STEAM_API_EXPORTS
 
 // Global ISteamClient interface accessor
 inline ISteamClient *SteamClient();
-STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamClient *, SteamClient, SteamInternal_CreateInterface( STEAMCLIENT_INTERFACE_VERSION ) );
+STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamClient *, SteamClient, SteamInternal_CreateInterface( STEAMCLIENT_INTERFACE_VERSION ), "global", STEAMCLIENT_INTERFACE_VERSION );
 
 // The internal ISteamClient used for the gameserver interface.
 // (This is actually the same thing.  You really shouldn't need to access any of this stuff directly.)

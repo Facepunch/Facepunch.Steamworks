@@ -18,7 +18,7 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
+				Internal.GetBeaconDetails( Id, ref owner, ref location, out _ );
 				return owner;
 			}
 		}
@@ -32,7 +32,7 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
+				_ = Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
 				return strVal;
 			}
 		}

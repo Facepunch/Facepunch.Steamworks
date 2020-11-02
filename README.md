@@ -1,7 +1,8 @@
 # Facepunch.Steamworks
-Another fucking c# Steamworks implementation
 
-[![Build Status](http://build.facepunch.com/buildStatus/icon?job=Facepunch/Facepunch.Steamworks/master)](http://build.facepunch.com/job/Facepunch/job/Facepunch.Steamworks/job/master/)
+[Another fucking c# Steamworks implementation](https://wiki.facepunch.com/steamworks/)
+
+![Build All](https://github.com/Facepunch/Facepunch.Steamworks/workflows/Build%20All/badge.svg)
 
 ## Features
 
@@ -17,7 +18,7 @@ Another fucking c# Steamworks implementation
 | Single C# dll (no native requirements apart from Steam) | ✔ |
 | Open Source | ✔ |
 | MIT license | ✔ |
-| Any 32bit OS | ❌ |
+| Any 32bit OS | ✔  |
 
 ## Why
 
@@ -70,7 +71,7 @@ foreach ( var friend in SteamFriends.GetFriends() )
     var image = await SteamFriends.GetLargeAvatarAsync( steamid );
     if ( !image.HasValue ) return DefaultImage;
 
-    return MakeTextureFromRGBA( image.Data, image.Width, image.Height );
+    return MakeTextureFromRGBA( image.Value.Data, image.Value.Width, image.Value.Height );
 ```
 
 ### Get a list of servers
@@ -348,6 +349,8 @@ catch ( System.Exception )
 Wanna help? Go for it, pull requests, bug reports, yes, do it.
 
 You can also hit up the [Steamworks Thread](http://steamcommunity.com/groups/steamworks/discussions/0/1319961618833314524/) for help/discussion.
+
+We also have [a wiki you can read](https://wiki.facepunch.com/steamworks/) and help fill out with examples and advice.
 
 # License
 

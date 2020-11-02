@@ -25,55 +25,78 @@ namespace Generator
                 if ( name[0] == 'E' )
                     name = name.Substring( 1 );
 
-				name = Cleanup.ConvertType( name );
+                name = Cleanup.ConvertType( name );
 
-				if ( !Cleanup.ShouldCreate( name ) )
-					continue;
+                if ( !Cleanup.ShouldCreate( name ) )
+                    continue;
 
-                StartBlock( $"{Cleanup.Expose( name )} enum {name} : int" );
+                var lowest = o.Values.Min( x => long.Parse( x.Value ) );
+                var highest = o.Values.Max( x => long.Parse( x.Value ) );
+
+                var t = "int";
+
+                if ( highest > int.MaxValue )
+                    t = "uint";
+
+                WriteEnum( o, name, t );
+            }
+        }
+
+        private void WriteEnum( SteamApiDefinition.EnumDef o, string name, string t = "int" )
+        {
+            StartBlock( $"{Cleanup.Expose( name )} enum {name} : {t}" );
+            {
+                //
+                // If all the enum values start with the same 
+                // string, remove it. This converts
+                // "k_EUserHasLicenseResultHasLicense" to "HasLicense" etc
+                //
+                int iFinished = int.MaxValue;
+                for ( int i = 0; i < 4096; i++ )
                 {
-                    //
-                    // If all the enum values start with the same 
-                    // string, remove it. This converts
-                    // "k_EUserHasLicenseResultHasLicense" to "HasLicense" etc
-                    //
-                    int iFinished = int.MaxValue;
-                    for ( int i = 0; i < 4096; i++ )
-                    {
-                        var c = o.Values.First().Name[i];
-                        foreach ( var entry in o.Values )
-                        {
-                            if ( entry.Name[i] != c )
-                            {
-                                iFinished = i;
-                                break;
-                            }
-                        }
-
-                        if ( iFinished != int.MaxValue )
-                            break;
-                    }
-
+                    var c = o.Values.First().Name[i];
                     foreach ( var entry in o.Values )
                     {
-                        var ename = entry.Name;
-
-                        if ( iFinished != int.MaxValue )
-                            ename = ename.Substring( iFinished );
-
-                        //
-                        // Names aren't allowed to start with a number
-                        // So just stick the enum name on the front
-                        //
-                        if ( char.IsNumber( ename[0] ) )
-                            ename = name + ename;
-
-                        WriteLine( $"{ename} = {entry.Value}," );
+                        if ( entry.Name[i] != c )
+                        {
+                            iFinished = i;
+                            break;
+                        }
                     }
+
+                    if ( iFinished != int.MaxValue )
+                        break;
                 }
-                EndBlock();
-                WriteLine();
+
+                foreach ( var entry in o.Values )
+                {
+                    var ename = entry.Name;
+
+                    if ( ename.Contains( "Force32Bit" ) )
+                        continue;
+
+                    if ( iFinished != int.MaxValue )
+                        ename = ename.Substring( iFinished );
+
+                    //
+                    // Names aren't allowed to start with a number
+                    // So just stick the enum name on the front
+                    //
+                    if ( char.IsNumber( ename[0] ) )
+                    {
+                        var p = name;
+
+                        if ( p == "HTTPStatusCode" ) p = "Code";
+                        if ( p == "SteamIPType" ) p = "Type";
+
+                        ename = p + ename;
+                    }
+
+                    WriteLine( $"{ename.Trim( ' ', '_' )} = {entry.Value}," );
+                }
             }
+            EndBlock();
+            WriteLine();
         }
     }
 }

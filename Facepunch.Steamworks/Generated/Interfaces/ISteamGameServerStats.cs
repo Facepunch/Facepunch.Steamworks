@@ -9,88 +9,56 @@ namespace Steamworks
 {
 	internal class ISteamGameServerStats : SteamInterface
 	{
-		public override string InterfaceName => "SteamGameServerStats001";
 		
-		public override void InitInternals()
+		internal ISteamGameServerStats( bool IsGameServer )
 		{
-			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_UpdateUserAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateUserAvgRateStat>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_SetUserAchievement = Marshal.GetDelegateForFunctionPointer<FSetUserAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_ClearUserAchievement = Marshal.GetDelegateForFunctionPointer<FClearUserAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_StoreUserStats = Marshal.GetDelegateForFunctionPointer<FStoreUserStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			
-			#if PLATFORM_WIN
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_SetUserStat1 = Marshal.GetDelegateForFunctionPointer<FSetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_SetUserStat2 = Marshal.GetDelegateForFunctionPointer<FSetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			#else
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_SetUserStat1 = Marshal.GetDelegateForFunctionPointer<FSetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_SetUserStat2 = Marshal.GetDelegateForFunctionPointer<FSetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			#endif
+			SetupInterface( IsGameServer );
 		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-			_RequestUserStats = null;
-			_GetUserStat1 = null;
-			_GetUserStat2 = null;
-			_GetUserAchievement = null;
-			_SetUserStat1 = null;
-			_SetUserStat2 = null;
-			_UpdateUserAvgRateStat = null;
-			_SetUserAchievement = null;
-			_ClearUserAchievement = null;
-			_StoreUserStats = null;
-		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerStats_v001", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerStats_v001();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerStats_v001();
+		
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRequestUserStats( IntPtr self, SteamId steamIDUser );
-		private FRequestUserStats _RequestUserStats;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats", CallingConvention = Platform.CC)]
+		private static extern SteamAPICall_t _RequestUserStats( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
-		internal async Task<GSStatsReceived_t?> RequestUserStats( SteamId steamIDUser )
+		internal CallResult<GSStatsReceived_t> RequestUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _RequestUserStats( Self, steamIDUser );
-			return await GSStatsReceived_t.GetResultAsync( returnValue );
+			return new CallResult<GSStatsReceived_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStatInt32", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserStat1( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData );
-		private FGetUserStat1 _GetUserStat1;
+		private static extern bool _GetUserStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData );
 		
 		#endregion
-		internal bool GetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData )
+		internal bool GetUserStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData )
 		{
-			var returnValue = _GetUserStat1( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat( Self, steamIDUser, pchName, ref pData );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStatFloat", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserStat2( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData );
-		private FGetUserStat2 _GetUserStat2;
+		private static extern bool _GetUserStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData );
 		
 		#endregion
-		internal bool GetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData )
+		internal bool GetUserStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData )
 		{
-			var returnValue = _GetUserStat2( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat( Self, steamIDUser, pchName, ref pData );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserAchievement", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
-		private FGetUserAchievement _GetUserAchievement;
+		private static extern bool _GetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
 		
 		#endregion
 		internal bool GetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
@@ -100,36 +68,33 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStatInt32", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserStat1( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData );
-		private FSetUserStat1 _SetUserStat1;
+		private static extern bool _SetUserStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData );
 		
 		#endregion
-		internal bool SetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData )
+		internal bool SetUserStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData )
 		{
-			var returnValue = _SetUserStat1( Self, steamIDUser, pchName, nData );
+			var returnValue = _SetUserStat( Self, steamIDUser, pchName, nData );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStatFloat", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserStat2( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData );
-		private FSetUserStat2 _SetUserStat2;
+		private static extern bool _SetUserStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData );
 		
 		#endregion
-		internal bool SetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
+		internal bool SetUserStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
 		{
-			var returnValue = _SetUserStat2( Self, steamIDUser, pchName, fData );
+			var returnValue = _SetUserStat( Self, steamIDUser, pchName, fData );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FUpdateUserAvgRateStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float flCountThisSession, double dSessionLength );
-		private FUpdateUserAvgRateStat _UpdateUserAvgRateStat;
+		private static extern bool _UpdateUserAvgRateStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float flCountThisSession, double dSessionLength );
 		
 		#endregion
 		internal bool UpdateUserAvgRateStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float flCountThisSession, double dSessionLength )
@@ -139,10 +104,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserAchievement", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName );
-		private FSetUserAchievement _SetUserAchievement;
+		private static extern bool _SetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName );
 		
 		#endregion
 		internal bool SetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
@@ -152,10 +116,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_ClearUserAchievement", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FClearUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName );
-		private FClearUserAchievement _ClearUserAchievement;
+		private static extern bool _ClearUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName );
 		
 		#endregion
 		internal bool ClearUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
@@ -165,15 +128,14 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FStoreUserStats( IntPtr self, SteamId steamIDUser );
-		private FStoreUserStats _StoreUserStats;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_StoreUserStats", CallingConvention = Platform.CC)]
+		private static extern SteamAPICall_t _StoreUserStats( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
-		internal async Task<GSStatsStored_t?> StoreUserStats( SteamId steamIDUser )
+		internal CallResult<GSStatsStored_t> StoreUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _StoreUserStats( Self, steamIDUser );
-			return await GSStatsStored_t.GetResultAsync( returnValue );
+			return new CallResult<GSStatsStored_t>( returnValue, IsServer );
 		}
 		
 	}

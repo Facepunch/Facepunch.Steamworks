@@ -13,33 +13,21 @@ namespace Steamworks
 	/// when an important cut scene is shown, and start playing afterwards.
 	/// Nothing uses Steam Music though so this can probably get fucked
 	/// </summary>
-	public static class SteamMusic
+	public class SteamMusic : SteamClientClass<SteamMusic>
 	{
-		static ISteamMusic _internal;
-		internal static ISteamMusic Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
+		internal static ISteamMusic Internal => Interface as ISteamMusic;
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamMusic();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			SetInterface( server, new ISteamMusic( server ) );
+
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()
 		{
-			PlaybackStatusHasChanged_t.Install( x => OnPlaybackChanged?.Invoke() );
-			VolumeHasChanged_t.Install( x => OnVolumeChanged?.Invoke( x.NewVolume ) );
+			Dispatch.Install<PlaybackStatusHasChanged_t>( x => OnPlaybackChanged?.Invoke() );
+			Dispatch.Install<VolumeHasChanged_t>( x => OnVolumeChanged?.Invoke( x.NewVolume ) );
 		}
 
 		/// <summary>

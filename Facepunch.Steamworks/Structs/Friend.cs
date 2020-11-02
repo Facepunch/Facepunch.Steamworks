@@ -51,7 +51,7 @@ namespace Steamworks
 		/// Sometimes we don't know the user's name. This will wait until we have
 		/// downloaded the information on this user.
 		/// </summary>
-		public async Task RequestInfoAsync( int timeout = 5000 )
+		public async Task RequestInfoAsync()
 		{
 			await SteamFriends.CacheUserInformationAsync( Id, true );
 		}
@@ -99,7 +99,7 @@ namespace Steamworks
 		{
 			get
 			{
-				FriendGameInfo_t gameInfo = default( FriendGameInfo_t );
+				FriendGameInfo_t gameInfo = default;
 				if ( !SteamFriends.Internal.GetFriendGamePlayed( Id, ref gameInfo ) )
 					return null;
 
@@ -182,6 +182,81 @@ namespace Steamworks
 		public bool SendMessage( string message )
 		{
 			return SteamFriends.Internal.ReplyToFriendMessage( Id, message );
+		}
+
+
+		/// <summary>
+		/// Tries to get download the latest user stats
+		/// </summary>
+		/// <returns>True if successful, False if failure</returns>
+		public async Task<bool> RequestUserStatsAsync()
+		{
+			var result = await SteamUserStats.Internal.RequestUserStats( Id );
+			return result.HasValue && result.Value.Result == Result.OK;
+		}
+
+		/// <summary>
+		/// Gets a user stat. Must call RequestUserStats first.
+		/// </summary>
+		/// <param name="statName">The name of the stat you want to get</param>
+		/// <param name="defult">Will return this value if not available</param>
+		/// <returns>The value, or defult if not available</returns>
+		public float GetStatFloat( string statName, float defult = 0 )
+		{
+			var val = defult;
+
+			if ( !SteamUserStats.Internal.GetUserStat( Id, statName, ref val ) )
+				return defult;
+
+			return val;
+		}
+
+		/// <summary>
+		/// Gets a user stat. Must call RequestUserStats first.
+		/// </summary>
+		/// <param name="statName">The name of the stat you want to get</param>
+		/// <param name="defult">Will return this value if not available</param>
+		/// <returns>The value, or defult if not available</returns>
+		public int GetStatInt( string statName, int defult = 0 )
+		{
+			var val = defult;
+
+			if ( !SteamUserStats.Internal.GetUserStat( Id, statName, ref val ) )
+				return defult;
+
+			return val;
+		}
+
+		/// <summary>
+		/// Gets a user achievement state. Must call RequestUserStats first.
+		/// </summary>
+		/// <param name="statName">The name of the achievement you want to get</param>
+		/// <param name="defult">Will return this value if not available</param>
+		/// <returns>The value, or defult if not available</returns>
+		public bool GetAchievement( string statName, bool defult = false )
+		{
+			var val = defult;
+
+			if ( !SteamUserStats.Internal.GetUserAchievement( Id, statName, ref val ) )
+				return defult;
+
+			return val;
+		}		
+		
+		/// <summary>
+		/// Gets a the time this achievement was unlocked.
+		/// </summary>
+		/// <param name="statName">The name of the achievement you want to get</param>
+		/// <returns>The time unlocked. If it wasn't unlocked, or you haven't downloaded the stats yet - will return DateTime.MinValue</returns>
+		public DateTime GetAchievementUnlockTime( string statName )
+		{
+			bool val = false;
+			uint time = 0;
+
+			if ( !SteamUserStats.Internal.GetUserAchievementAndUnlockTime( Id, statName, ref val, ref time ) || !val )
+				return DateTime.MinValue;
+
+			return Epoch.ToDateTime( time );
 		}
 
 	}

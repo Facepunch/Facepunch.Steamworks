@@ -23,33 +23,13 @@
 
 #define STEAM_INPUT_MAX_ORIGINS 8
 
+#define STEAM_INPUT_MAX_ACTIVE_LAYERS 16
+
 // When sending an option to a specific controller handle, you can send to all devices via this command
 #define STEAM_INPUT_HANDLE_ALL_CONTROLLERS UINT64_MAX
 
 #define STEAM_INPUT_MIN_ANALOG_ACTION_DATA -1.0f
 #define STEAM_INPUT_MAX_ANALOG_ACTION_DATA 1.0f
-
-enum EInputSource
-{
-	k_EInputSource_None,
-	k_EInputSource_LeftTrackpad,
-	k_EInputSource_RightTrackpad,
-	k_EInputSource_Joystick,
-	k_EInputSource_ABXY,
-	k_EInputSource_Switch,
-	k_EInputSource_LeftTrigger,
-	k_EInputSource_RightTrigger,
-	k_EInputSource_LeftBumper,
-	k_EInputSource_RightBumper,
-	k_EInputSource_Gyro,
-	k_EInputSource_CenterTrackpad,		// PS4
-	k_EInputSource_RightJoystick,		// Traditional Controllers
-	k_EInputSource_DPad,				// Traditional Controllers
-	k_EInputSource_Key,                 // Keyboards with scan codes - Unused
-	k_EInputSource_Mouse,               // Traditional mouse - Unused
-	k_EInputSource_LeftGyro,			// Secondary Gyro - Switch - Unused
-	k_EInputSource_Count
-};
 
 enum EInputSourceMode
 {
@@ -184,7 +164,7 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_PS4_Gyro_Pitch,
 	k_EInputActionOrigin_PS4_Gyro_Yaw,
 	k_EInputActionOrigin_PS4_Gyro_Roll,
-	k_EInputActionOrigin_PS4_Reserved0,
+	k_EInputActionOrigin_PS4_DPad_Move,
 	k_EInputActionOrigin_PS4_Reserved1,
 	k_EInputActionOrigin_PS4_Reserved2,
 	k_EInputActionOrigin_PS4_Reserved3,
@@ -225,7 +205,7 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_XBoxOne_DPad_South,
 	k_EInputActionOrigin_XBoxOne_DPad_West,
 	k_EInputActionOrigin_XBoxOne_DPad_East,
-	k_EInputActionOrigin_XBoxOne_Reserved0,
+	k_EInputActionOrigin_XBoxOne_DPad_Move,
 	k_EInputActionOrigin_XBoxOne_Reserved1,
 	k_EInputActionOrigin_XBoxOne_Reserved2,
 	k_EInputActionOrigin_XBoxOne_Reserved3,
@@ -266,7 +246,7 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_XBox360_DPad_South,
 	k_EInputActionOrigin_XBox360_DPad_West,
 	k_EInputActionOrigin_XBox360_DPad_East,	
-	k_EInputActionOrigin_XBox360_Reserved0,
+	k_EInputActionOrigin_XBox360_DPad_Move,
 	k_EInputActionOrigin_XBox360_Reserved1,
 	k_EInputActionOrigin_XBox360_Reserved2,
 	k_EInputActionOrigin_XBox360_Reserved3,
@@ -314,7 +294,7 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_Switch_ProGyro_Pitch,  // Primary Gyro in Pro Controller, or Right JoyCon
 	k_EInputActionOrigin_Switch_ProGyro_Yaw,  // Primary Gyro in Pro Controller, or Right JoyCon
 	k_EInputActionOrigin_Switch_ProGyro_Roll,  // Primary Gyro in Pro Controller, or Right JoyCon
-	k_EInputActionOrigin_Switch_Reserved0,
+	k_EInputActionOrigin_Switch_DPad_Move,
 	k_EInputActionOrigin_Switch_Reserved1,
 	k_EInputActionOrigin_Switch_Reserved2,
 	k_EInputActionOrigin_Switch_Reserved3,
@@ -498,7 +478,7 @@ public:
 	// the Steam Input settings in the Steamworks site or users can opt-in in their controller settings in Steam.
 	// handlesOut should point to a STEAM_INPUT_MAX_COUNT sized array of InputHandle_t handles
 	// Returns the number of handles written to handlesOut
-	virtual int GetConnectedControllers( InputHandle_t *handlesOut ) = 0;
+	virtual int GetConnectedControllers( STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_COUNT, Receives list of connected controllers ) InputHandle_t *handlesOut ) = 0;
 	
 	//-----------------------------------------------------------------------------
 	// ACTION SETS
@@ -517,7 +497,10 @@ public:
 	virtual void ActivateActionSetLayer( InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle ) = 0;
 	virtual void DeactivateActionSetLayer( InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle ) = 0;
 	virtual void DeactivateAllActionSetLayers( InputHandle_t inputHandle ) = 0;
-	virtual int GetActiveActionSetLayers( InputHandle_t inputHandle, InputActionSetHandle_t *handlesOut ) = 0;
+	// Enumerate currently active layers.
+	// handlesOut should point to a STEAM_INPUT_MAX_ACTIVE_LAYERS sized array of ControllerActionSetHandle_t handles
+	// Returns the number of handles written to handlesOut
+	virtual int GetActiveActionSetLayers( InputHandle_t inputHandle, STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_ACTIVE_LAYERS, Receives list of active layers ) InputActionSetHandle_t *handlesOut ) = 0;
 
 	//-----------------------------------------------------------------------------
 	// ACTIONS
@@ -532,7 +515,7 @@ public:
 	// Get the origin(s) for a digital action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.
 	// originsOut should point to a STEAM_INPUT_MAX_ORIGINS sized array of EInputActionOrigin handles. The EInputActionOrigin enum will get extended as support for new controller controllers gets added to
 	// the Steam client and will exceed the values from this header, please check bounds if you are using a look up table.
-	virtual int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, EInputActionOrigin *originsOut ) = 0;
+	virtual int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_ORIGINS, Receives list of action origins ) EInputActionOrigin *originsOut ) = 0;
 	
 	// Lookup the handle for an analog action. Best to do this once on startup, and store the handles for all future API calls.
 	virtual InputAnalogActionHandle_t GetAnalogActionHandle( const char *pszActionName ) = 0;
@@ -543,12 +526,12 @@ public:
 	// Get the origin(s) for an analog action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.
 	// originsOut should point to a STEAM_INPUT_MAX_ORIGINS sized array of EInputActionOrigin handles. The EInputActionOrigin enum will get extended as support for new controller controllers gets added to
 	// the Steam client and will exceed the values from this header, please check bounds if you are using a look up table.
-	virtual int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, EInputActionOrigin *originsOut ) = 0;
+	virtual int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_ORIGINS, Receives list of action origins ) EInputActionOrigin *originsOut ) = 0;
 	
-	// Get a local path to art for on-screen glyph for a particular origin - this call is cheap
+	// Get a local path to art for on-screen glyph for a particular origin
 	virtual const char *GetGlyphForActionOrigin( EInputActionOrigin eOrigin ) = 0;
 	
-	// Returns a localized string (from Steam's language setting) for the specified origin - this call is serialized
+	// Returns a localized string (from Steam's language setting) for the specified origin.
 	virtual const char *GetStringForActionOrigin( EInputActionOrigin eOrigin ) = 0;
 
 	// Stop analog momentum for the action if it is a mouse action in trackball mode
@@ -594,10 +577,10 @@ public:
 	// Returns the associated gamepad index for the specified controller, if emulating a gamepad or -1 if not associated with an Xinput index
 	virtual int GetGamepadIndexForController( InputHandle_t ulinputHandle ) = 0;
 	
-	// Returns a localized string (from Steam's language setting) for the specified Xbox controller origin. This function is cheap.
+	// Returns a localized string (from Steam's language setting) for the specified Xbox controller origin.
 	virtual const char *GetStringForXboxOrigin( EXboxOrigin eOrigin ) = 0;
 
-	// Get a local path to art for on-screen glyph for a particular Xbox controller origin. This function is serialized.
+	// Get a local path to art for on-screen glyph for a particular Xbox controller origin
 	virtual const char *GetGlyphForXboxOrigin( EXboxOrigin eOrigin ) = 0;
 
 	// Get the equivalent ActionOrigin for a given Xbox controller origin this can be chained with GetGlyphForActionOrigin to provide future proof glyphs for
@@ -605,9 +588,16 @@ public:
 	virtual EInputActionOrigin GetActionOriginFromXboxOrigin( InputHandle_t inputHandle, EXboxOrigin eOrigin ) = 0;
 
 	// Convert an origin to another controller type - for inputs not present on the other controller type this will return k_EInputActionOrigin_None
-	// When a new input type is added you will be able to pass in k_ESteamInputType_Unknown amd the closest origin that your version of the SDK regonized will be returned
+	// When a new input type is added you will be able to pass in k_ESteamInputType_Unknown and the closest origin that your version of the SDK recognized will be returned
 	// ex: if a Playstation 5 controller was released this function would return Playstation 4 origins.
 	virtual EInputActionOrigin TranslateActionOrigin( ESteamInputType eDestinationInputType, EInputActionOrigin eSourceOrigin ) = 0;
+
+	// Get the binding revision for a given device. Returns false if the handle was not valid or if a mapping is not yet loaded for the device
+	virtual bool GetDeviceBindingRevision( InputHandle_t inputHandle, int *pMajor, int *pMinor ) = 0;
+
+	// Get the Steam Remote Play session ID associated with a device, or 0 if there is no session associated with it
+	// See isteamremoteplay.h for more information on Steam Remote Play sessions
+	virtual uint32 GetRemotePlaySessionID( InputHandle_t inputHandle ) = 0;
 };
 
 #define STEAMINPUT_INTERFACE_VERSION "SteamInput001"

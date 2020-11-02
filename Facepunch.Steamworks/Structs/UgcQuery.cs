@@ -124,7 +124,7 @@ namespace Steamworks.Ugc
 			}
 			else
 			{
-				handle = SteamUGC.Internal.CreateQueryAllUGCRequest1( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
+				handle = SteamUGC.Internal.CreateQueryAllUGCRequest( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
 			}
 
 		    ApplyReturns(handle);
@@ -148,7 +148,12 @@ namespace Steamworks.Ugc
 				Handle = result.Value.Handle,
 				ResultCount = (int) result.Value.NumResultsReturned,
 				TotalCount = (int)result.Value.TotalMatchingResults,
-				CachedData = result.Value.CachedData
+				CachedData = result.Value.CachedData,
+				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
+				ReturnsDefaultStats = WantsDefaultStats ?? true, //true by default
+				ReturnsMetadata = WantsReturnMetadata ?? false,
+				ReturnsChildren = WantsReturnChildren ?? false,
+				ReturnsAdditionalPreviews = WantsReturnAdditionalPreviews ?? false,
 			};
 		}
 
@@ -241,7 +246,9 @@ namespace Steamworks.Ugc
 	    bool? WantsReturnOnlyIDs;
 	    public QueryType WithOnlyIDs(bool b) { WantsReturnOnlyIDs = b; return this; }
 	    bool? WantsReturnKeyValueTags;
-	    public QueryType WithKeyValueTag(bool b) { WantsReturnKeyValueTags = b; return this; }
+		public QueryType WithKeyValueTags(bool b) { WantsReturnKeyValueTags = b; return this; }
+		[Obsolete( "Renamed to WithKeyValueTags" )]
+        public QueryType WithKeyValueTag(bool b) { WantsReturnKeyValueTags = b; return this; }
 	    bool? WantsReturnLongDescription;
 	    public QueryType WithLongDescription(bool b) { WantsReturnLongDescription = b; return this; }
 	    bool? WantsReturnMetadata;
@@ -299,5 +306,15 @@ namespace Steamworks.Ugc
 	    }
 
         #endregion
-    }
+
+		#region LoadingBehaviour
+
+		bool? WantsDefaultStats; //true by default
+		/// <summary>
+		/// Set to false to disable, by default following stats are loaded: NumSubscriptions, NumFavorites, NumFollowers, NumUniqueSubscriptions, NumUniqueFavorites, NumUniqueFollowers, NumUniqueWebsiteViews, ReportScore, NumSecondsPlayed, NumPlaytimeSessions, NumComments, NumSecondsPlayedDuringTimePeriod, NumPlaytimeSessionsDuringTimePeriod
+		/// </summary>
+		public QueryType WithDefaultStats( bool b ) { WantsDefaultStats = b; return this; }
+
+		#endregion
+	}
 }

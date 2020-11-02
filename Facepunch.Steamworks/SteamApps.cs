@@ -11,32 +11,19 @@ namespace Steamworks
 	/// <summary>
 	/// Exposes a wide range of information and actions for applications and Downloadable Content (DLC).
 	/// </summary>
-	public static class SteamApps
+	public class SteamApps : SteamSharedClass<SteamApps>
 	{
-		static ISteamApps _internal;
-		internal static ISteamApps Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamApps();
-					_internal.Init();
-				}
+		internal static ISteamApps Internal => Interface as ISteamApps;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			SetInterface( server, new ISteamApps( server ) );
 		}
 
 		internal static void InstallEvents()
 		{
-			DlcInstalled_t.Install( x => OnDlcInstalled?.Invoke( x.AppID ) );
-			NewUrlLaunchParameters_t.Install( x => OnNewLaunchParameters?.Invoke() );
+			Dispatch.Install<DlcInstalled_t>( x => OnDlcInstalled?.Invoke( x.AppID ) );
+			Dispatch.Install<NewUrlLaunchParameters_t>( x => OnNewLaunchParameters?.Invoke() );
 		}
 
 		/// <summary>
@@ -181,9 +168,7 @@ namespace Steamworks
 				appid = SteamClient.AppId;
 
 			var depots = new DepotId_t[32];
-			uint count = 0;
-
-			count = Internal.GetInstalledDepots( appid.Value, depots, (uint) depots.Length );
+			uint count = Internal.GetInstalledDepots( appid.Value, depots, (uint) depots.Length );
 
 			for ( int i = 0; i < count; i++ )
 			{
@@ -233,7 +218,7 @@ namespace Steamworks
 			ulong punBytesTotal = 0;
 
 			if ( !Internal.GetDlcDownloadProgress( appid.Value, ref punBytesDownloaded, ref punBytesTotal ) )
-				return default( DownloadProgress );
+				return default;
 
 			return new DownloadProgress { BytesDownloaded = punBytesDownloaded, BytesTotal = punBytesTotal, Active = true };
 		}
@@ -276,10 +261,29 @@ namespace Steamworks
 		{
 			get
 			{
-				var len = Internal.GetLaunchCommandLine( out var strVal );
+				Internal.GetLaunchCommandLine( out var strVal );
 				return strVal;
 			}
 		}
+
+		/// <summary>
+		///  check if game is a timed trial with limited playtime
+		/// </summary>
+		public static bool IsTimedTrial( out int secondsAllowed, out int secondsPlayed )
+        {
+			uint a = 0;
+			uint b = 0;
+			secondsAllowed = 0;
+			secondsPlayed = 0;
+
+			if ( !Internal.BIsTimedTrial( ref a, ref b ) )
+				return false;
+
+			secondsAllowed = (int) a;
+			secondsPlayed = (int) b;
+
+			return true;
+        }
 
 	}
 }

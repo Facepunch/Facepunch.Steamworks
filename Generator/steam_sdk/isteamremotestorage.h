@@ -65,8 +65,10 @@ enum ERemoteStoragePlatform
 	k_ERemoteStoragePlatformOSX			= (1 << 1),
 	k_ERemoteStoragePlatformPS3			= (1 << 2),
 	k_ERemoteStoragePlatformLinux		= (1 << 3),
-	k_ERemoteStoragePlatformReserved2	= (1 << 4),
+	k_ERemoteStoragePlatformSwitch		= (1 << 4),
 	k_ERemoteStoragePlatformAndroid		= (1 << 5),
+	k_ERemoteStoragePlatformIOS			= (1 << 6),
+	// NB we get one more before we need to widen some things
 
 	k_ERemoteStoragePlatformAll = 0xffffffff
 };
@@ -76,6 +78,7 @@ enum ERemoteStoragePublishedFileVisibility
 	k_ERemoteStoragePublishedFileVisibilityPublic = 0,
 	k_ERemoteStoragePublishedFileVisibilityFriendsOnly = 1,
 	k_ERemoteStoragePublishedFileVisibilityPrivate = 2,
+	k_ERemoteStoragePublishedFileVisibilityUnlisted = 3,
 };
 
 

@@ -13,46 +13,33 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public static class SteamUser
+	public class SteamUser : SteamClientClass<SteamUser>
 	{
-		static ISteamUser _internal;
-		internal static ISteamUser Internal
+		internal static ISteamUser Internal => Interface as ISteamUser;
+
+		internal override void InitializeInterface( bool server )
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			SetInterface( server, new ISteamUser( server ) );
+			InstallEvents();
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamUser();
-					_internal.Init();
-
-					richPresence = new Dictionary<string, string>();
-
-					SampleRate = OptimalSampleRate;
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			richPresence = new Dictionary<string, string>();
+			SampleRate = OptimalSampleRate;
 		}
 
 		static Dictionary<string, string> richPresence;
 
 		internal static void InstallEvents()
 		{
-			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke() );
-			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke() );
-			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke() );
-			ClientGameServerDeny_t.Install( x => OnClientGameServerDeny?.Invoke() );
-			LicensesUpdated_t.Install( x => OnLicensesUpdated?.Invoke() );
-			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
-			MicroTxnAuthorizationResponse_t.Install( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
-			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
-			GetAuthSessionTicketResponse_t.Install( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke() );
+			Dispatch.Install<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke() );
+			Dispatch.Install<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke() );
+			Dispatch.Install<ClientGameServerDeny_t>( x => OnClientGameServerDeny?.Invoke() );
+			Dispatch.Install<LicensesUpdated_t>( x => OnLicensesUpdated?.Invoke() );
+			Dispatch.Install<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
+			Dispatch.Install<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
+			Dispatch.Install<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
+			Dispatch.Install<GetAuthSessionTicketResponse_t>( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<DurationControl_t>( x => OnDurationControl?.Invoke( new DurationControl { _inner = x } ) );
 		}
 
 		/// <summary>
@@ -109,11 +96,19 @@ namespace Steamworks
 		public static event Action<AppId, ulong, bool> OnMicroTxnAuthorizationResponse;
 
 		/// <summary>
-		/// Sent to your game in response to a steam://gamewebcallback/ command from a user clicking a link in the Steam overlay browser.
+		/// Sent to your game in response to a steam://gamewebcallback/(appid)/command/stuff command from a user clicking a 
+		/// link in the Steam overlay browser.
 		/// You can use this to add support for external site signups where you want to pop back into the browser after some web page 
 		/// signup sequence, and optionally get back some detail about that.
 		/// </summary>
 		public static event Action<string> OnGameWebCallback;
+
+		/// <summary>
+		/// Sent for games with enabled anti indulgence / duration control, for enabled users.
+		/// Lets the game know whether persistent rewards or XP should be granted at normal rate, 
+		/// half rate, or zero rate.
+		/// </summary>
+		public static event Action<DurationControl> OnDurationControl;
 
 
 
@@ -266,6 +261,9 @@ namespace Steamworks
 			return (int)szWritten;
 		}
 
+		/// <summary>
+		/// Lazy version
+		/// </summary>
 		public static unsafe int DecompressVoice( byte[] from, System.IO.Stream output )
 		{
 			var to = Helpers.TakeBuffer( 1024 * 64 );
@@ -286,6 +284,22 @@ namespace Steamworks
 			// Copy to output buffer
 			//
 			output.Write( to, 0, (int)szWritten );
+			return (int)szWritten;
+		}
+
+		/// <summary>
+		/// Advanced and potentially fastest version - incase you know what you're doing
+		/// </summary>
+		public static unsafe int DecompressVoice( IntPtr from, int length, IntPtr to, int bufferSize )
+		{
+			if ( length <= 0 ) throw new ArgumentException( $"length should be > 0 " );
+			if ( bufferSize <= 0 ) throw new ArgumentException( $"bufferSize should be > 0 " );
+
+			uint szWritten = 0;
+
+			if ( Internal.DecompressVoice( from, (uint) length, to, (uint)bufferSize, ref szWritten, SampleRate ) != VoiceResult.OK )
+				return 0;
+			
 			return (int)szWritten;
 		}
 
@@ -324,11 +338,11 @@ namespace Steamworks
 			AuthTicket ticket = null;
 			var stopwatch = Stopwatch.StartNew();
 
-			Action<GetAuthSessionTicketResponse_t> f = ( t ) =>
+			void f( GetAuthSessionTicketResponse_t t )
 			{
 				if ( t.AuthTicket != ticket.Handle ) return;
 				result = t.Result;
-			};
+			}
 
 			OnGetAuthSessionTicketResponse += f;
 
@@ -424,6 +438,7 @@ namespace Steamworks
 		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
 		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
 		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
+		/// If you get a null result from this it's probably because you're calling it too often.
 		/// This can fail if you don't have an encrypted ticket set for your app here https://partner.steamgames.com/apps/sdkauth/
 		/// </summary>
 		public static async Task<byte[]> RequestEncryptedAppTicketAsync( byte[] dataToInclude )
@@ -483,5 +498,16 @@ namespace Steamworks
 
 		}
 
+
+		/// <summary>
+		/// Get anti indulgence / duration control
+		/// </summary>
+		public static async Task<DurationControl> GetDurationControl()
+		{
+			var response = await Internal.GetDurationControl();
+			if ( !response.HasValue ) return default;
+
+			return new DurationControl { _inner = response.Value };
+		}
 	}
 }

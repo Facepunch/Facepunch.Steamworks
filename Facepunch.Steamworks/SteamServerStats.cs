@@ -7,34 +7,22 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamServerStats
+	public class SteamServerStats : SteamServerClass<SteamServerStats>
 	{
-		static ISteamGameServerStats _internal;
-		internal static ISteamGameServerStats Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamGameServerStats();
-					_internal.InitServer();
-				}
+		internal static ISteamGameServerStats Internal => Interface as ISteamGameServerStats;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			SetInterface( server, new ISteamGameServerStats( server ) );
 		}
+		
 
 		/// <summary>
 		/// Downloads stats for the user
 		/// If the user has no stats will return fail
 		/// these stats will only be auto-updated for clients playing on the server
 		/// </summary>
-		public static async Task<Result> RequestUserStats( SteamId steamid )
+		public static async Task<Result> RequestUserStatsAsync( SteamId steamid )
 		{
 			var r = await Internal.RequestUserStats( steamid );
 			if ( !r.HasValue ) return Result.Fail;
@@ -47,7 +35,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetInt( SteamId steamid, string name, int stat )
 		{
-			return Internal.SetUserStat1( steamid, name, stat );
+			return Internal.SetUserStat( steamid, name, stat );
 		}
 
 		/// <summary>
@@ -56,7 +44,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetFloat( SteamId steamid, string name, float stat )
 		{
-			return Internal.SetUserStat2( steamid, name, stat );
+			return Internal.SetUserStat( steamid, name, stat );
 		}
 
 		/// <summary>
@@ -68,7 +56,7 @@ namespace Steamworks
 		{
 			int data = defaultValue;
 
-			if ( !Internal.GetUserStat1( steamid, name, ref data ) )
+			if ( !Internal.GetUserStat( steamid, name, ref data ) )
 				return defaultValue;
 
 			return data;
@@ -83,7 +71,7 @@ namespace Steamworks
 		{
 			float data = defaultValue;
 
-			if ( !Internal.GetUserStat2( steamid, name, ref data ) )
+			if ( !Internal.GetUserStat( steamid, name, ref data ) )
 				return defaultValue;
 
 			return data;

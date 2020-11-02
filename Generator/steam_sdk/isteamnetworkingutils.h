@@ -14,6 +14,7 @@
 
 #include "steamnetworkingtypes.h"
 struct SteamDatagramRelayAuthTicket;
+struct SteamRelayNetworkStatus_t;
 
 //-----------------------------------------------------------------------------
 /// Misc networking utilities for checking the local networking environment
@@ -21,28 +22,67 @@ struct SteamDatagramRelayAuthTicket;
 class ISteamNetworkingUtils
 {
 public:
+	//
+	// Efficient message sending
+	//
+
+	/// Allocate and initialize a message object.  Usually the reason
+	/// you call this is to pass it to ISteamNetworkingSockets::SendMessages.
+	/// The returned object will have all of the relevant fields cleared to zero.
+	///
+	/// Optionally you can also request that this system allocate space to
+	/// hold the payload itself.  If cbAllocateBuffer is nonzero, the system
+	/// will allocate memory to hold a payload of at least cbAllocateBuffer bytes.
+	/// m_pData will point to the allocated buffer, m_cbSize will be set to the
+	/// size, and m_pfnFreeData will be set to the proper function to free up
+	/// the buffer.
+	///
+	/// If cbAllocateBuffer=0, then no buffer is allocated.  m_pData will be NULL,
+	/// m_cbSize will be zero, and m_pfnFreeData will be NULL.  You will need to
+	/// set each of these.
+	virtual SteamNetworkingMessage_t *AllocateMessage( int cbAllocateBuffer ) = 0;
+
+	//
+	// Access to Steam Datagram Relay (SDR) network
+	//
+
 #ifdef STEAMNETWORKINGSOCKETS_ENABLE_SDR
 
 	//
-	// Initialization
+	// Initialization and status check
 	//
 
-	/// If you know that you are going to be using the relay network, call
-	/// this to initialize the relay network or check if that initialization
-	/// has completed.  If you do not call this, the initialization will
-	/// happen the first time you use a feature that requires access to the
-	/// relay network, and that use will be delayed.
+	/// If you know that you are going to be using the relay network (for example,
+	/// because you anticipate making P2P connections), call this to initialize the
+	/// relay network.  If you do not call this, the initialization will
+	/// be delayed until the first time you use a feature that requires access
+	/// to the relay network, which will delay that first access.
 	///
-	/// Returns true if initialization has completed successfully.
-	/// (It will probably return false on the first call.)
+	/// You can also call this to force a retry if the previous attempt has failed.
+	/// Performing any action that requires access to the relay network will also
+	/// trigger a retry, and so calling this function is never strictly necessary,
+	/// but it can be useful to call it a program launch time, if access to the
+	/// relay network is anticipated.
 	///
+	/// Use GetRelayNetworkStatus or listen for SteamRelayNetworkStatus_t
+	/// callbacks to know when initialization has completed.
 	/// Typically initialization completes in a few seconds.
 	///
-	/// Note: dedicated servers hosted with Valve do *not* need to call
-	/// this, since they do not make routing decisions.  However, if the
-	/// dedicated server will be using P2P functionality, it will act as
+	/// Note: dedicated servers hosted in known data centers do *not* need
+	/// to call this, since they do not make routing decisions.  However, if
+	/// the dedicated server will be using P2P functionality, it will act as
 	/// a "client" and this should be called.
-	inline bool InitializeRelayNetworkAccess();
+	inline void InitRelayNetworkAccess();
+
+	/// Fetch current status of the relay network.
+	///
+	/// SteamRelayNetworkStatus_t is also a callback.  It will be triggered on
+	/// both the user and gameserver interfaces any time the status changes, or
+	/// ping measurement starts or stops.
+	///
+	/// SteamRelayNetworkStatus_t::m_eAvail is returned.  If you want
+	/// more details, you can pass a non-NULL value.
+	virtual ESteamNetworkingAvailability GetRelayNetworkStatus( SteamRelayNetworkStatus_t *pDetails ) = 0;
 
 	//
 	// "Ping location" functions
@@ -59,14 +99,14 @@ public:
 	// This is extremely useful to select peers for matchmaking!
 	//
 	// The markers can also be converted to a string, so they can be transmitted.
-	// We have a separate library you can use on your backend to manipulate
-	// these objects.  (See steamdatagram_ticketgen.h)
+	// We have a separate library you can use on your app's matchmaking/coordinating
+	// server to manipulate these objects.  (See steamdatagram_gamecoordinator.h)
 
 	/// Return location info for the current host.  Returns the approximate
 	/// age of the data, in seconds, or -1 if no data is available.
 	///
 	/// It takes a few seconds to initialize access to the relay network.  If
-	/// you call this very soon after calling InitializeRelayNetworkAccess,
+	/// you call this very soon after calling InitRelayNetworkAccess,
 	/// the data may not be available yet.
 	///
 	/// This always return the most up-to-date information we have available
@@ -117,10 +157,6 @@ public:
 	/// the string.
 	virtual bool ParsePingLocationString( const char *pszString, SteamNetworkPingLocation_t &result ) = 0;
 
-	//
-	// Initialization / ping measurement status
-	//
-
 	/// Check if the ping data of sufficient recency is available, and if
 	/// it's too old, start refreshing it.
 	///
@@ -136,12 +172,10 @@ public:
 	/// Returns false if sufficiently recent data is not available.  In this
 	/// case, ping measurement is initiated, if it is not already active.
 	/// (You cannot restart a measurement already in progress.)
+	///
+	/// You can use GetRelayNetworkStatus or listen for SteamRelayNetworkStatus_t
+	/// to know when ping measurement completes.
 	virtual bool CheckPingDataUpToDate( float flMaxAgeSeconds ) = 0;
-
-	/// Return true if we are taking ping measurements to update our ping
-	/// location or select optimal routing.  Ping measurement typically takes
-	/// a few seconds, perhaps up to 10 seconds.
-	virtual bool IsPingMeasurementInProgress() = 0;
 
 	//
 	// List of Valve data centers, and ping times to them.  This might
@@ -197,10 +231,15 @@ public:
 	/// value means more important, and the value you pass is the lowest priority (highest
 	/// numeric value) you wish to receive callbacks for.
 	///
+	/// The value here controls the detail level for most messages.  You can control the
+	/// detail level for various subsystems (perhaps only for certain connections) by
+	/// adjusting the configuration values k_ESteamNetworkingConfig_LogLevel_Xxxxx.
+	///
 	/// Except when debugging, you should only use k_ESteamNetworkingSocketsDebugOutputType_Msg
 	/// or k_ESteamNetworkingSocketsDebugOutputType_Warning.  For best performance, do NOT
-	/// request a high detail level and then filter out messages in your callback.  Instead,
-	/// call function function to adjust the desired level of detail.
+	/// request a high detail level and then filter out messages in your callback.  This incurs
+	/// all of the expense of formatting the messages, which are then discarded.  Setting a high
+	/// priority value (low numeric value) here allows the library to avoid doing this work.
 	///
 	/// IMPORTANT: This may be called from a service thread, while we own a mutex, etc.
 	/// Your output function must be threadsafe and fast!  Do not make any other
@@ -215,22 +254,41 @@ public:
 	bool SetGlobalConfigValueInt32( ESteamNetworkingConfigValue eValue, int32 val );
 	bool SetGlobalConfigValueFloat( ESteamNetworkingConfigValue eValue, float val );
 	bool SetGlobalConfigValueString( ESteamNetworkingConfigValue eValue, const char *val );
+	bool SetGlobalConfigValuePtr( ESteamNetworkingConfigValue eValue, void *val );
 	bool SetConnectionConfigValueInt32( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, int32 val );
 	bool SetConnectionConfigValueFloat( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, float val );
 	bool SetConnectionConfigValueString( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, const char *val );
+
+	//
+	// Set global callbacks.  If you do not want to use Steam's callback dispatch mechanism and you
+	// want to use the same callback on all (or most) listen sockets and connections, then
+	// simply install these callbacks first thing, and you are good to go.
+	// See ISteamNetworkingSockets::RunCallbacks
+	//
+	bool SetGlobalCallback_SteamNetConnectionStatusChanged( FnSteamNetConnectionStatusChanged fnCallback );
+	bool SetGlobalCallback_SteamNetAuthenticationStatusChanged( FnSteamNetAuthenticationStatusChanged fnCallback );
+	bool SetGlobalCallback_SteamRelayNetworkStatusChanged( FnSteamRelayNetworkStatusChanged fnCallback );
+	bool SetGlobalCallback_MessagesSessionRequest( FnSteamNetworkingMessagesSessionRequest fnCallback );
+	bool SetGlobalCallback_MessagesSessionFailed( FnSteamNetworkingMessagesSessionFailed fnCallback );
 
 	/// Set a configuration value.
 	/// - eValue: which value is being set
 	/// - eScope: Onto what type of object are you applying the setting?
 	/// - scopeArg: Which object you want to change?  (Ignored for global scope).  E.g. connection handle, listen socket handle, interface pointer, etc.
 	/// - eDataType: What type of data is in the buffer at pValue?  This must match the type of the variable exactly!
-	/// - pArg: Value to set it to.  You can pass NULL to remove a non-global sett at this scope,
+	/// - pArg: Value to set it to.  You can pass NULL to remove a non-global setting at this scope,
 	///   causing the value for that object to use global defaults.  Or at global scope, passing NULL
 	///   will reset any custom value and restore it to the system default.
-	///   NOTE: When setting callback functions, do not pass the function pointer directly.
+	///   NOTE: When setting pointers (e.g. callback functions), do not pass the function pointer directly.
 	///   Your argument should be a pointer to a function pointer.
 	virtual bool SetConfigValue( ESteamNetworkingConfigValue eValue, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj,
 		ESteamNetworkingConfigDataType eDataType, const void *pArg ) = 0;
+
+	/// Set a configuration value, using a struct to pass the value.
+	/// (This is just a convenience shortcut; see below for the implementation and
+	/// a little insight into how SteamNetworkingConfigValue_t is used when
+	/// setting config options during listen socket and connection creation.)
+	bool SetConfigValueStruct( const SteamNetworkingConfigValue_t &opt, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj );
 
 	/// Get a configuration value.
 	/// - eValue: which value to fetch
@@ -246,6 +304,9 @@ public:
 	/// pOutNextValue can be used to iterate through all of the known configuration values.
 	/// (Use GetFirstConfigValue() to begin the iteration, will be k_ESteamNetworkingConfig_Invalid on the last value)
 	/// Any of the output parameters can be NULL if you do not need that information.
+	///
+	/// See k_ESteamNetworkingConfig_EnumerateDevVars for some more info about "dev" variables,
+	/// which are usually excluded from the set of variables enumerated using this function.
 	virtual bool GetConfigValueInfo( ESteamNetworkingConfigValue eValue, const char **pOutName, ESteamNetworkingConfigDataType *pOutDataType, ESteamNetworkingConfigScope *pOutScope, ESteamNetworkingConfigValue *pOutNextValue ) = 0;
 
 	/// Return the lowest numbered configuration value available in the current environment.
@@ -261,7 +322,7 @@ public:
 protected:
 	~ISteamNetworkingUtils(); // Silence some warnings
 };
-#define STEAMNETWORKINGUTILS_INTERFACE_VERSION "SteamNetworkingUtils001"
+#define STEAMNETWORKINGUTILS_INTERFACE_VERSION "SteamNetworkingUtils003"
 
 // Global accessor.
 #ifdef STEAMNETWORKINGSOCKETS_STANDALONELIB
@@ -274,25 +335,103 @@ protected:
 
 	// Steamworks SDK
 	inline ISteamNetworkingUtils *SteamNetworkingUtils();
-	STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamNetworkingUtils *, SteamNetworkingUtils, SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) );
+	STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamNetworkingUtils *, SteamNetworkingUtils,
+		/* Prefer user version of the interface.  But if it isn't found, then use
+		gameserver one.  Yes, this is a completely terrible hack */
+		SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) ?
+		SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) :
+		SteamInternal_FindOrCreateGameServerInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ),
+		"global",
+		STEAMNETWORKINGUTILS_INTERFACE_VERSION
+	)
 #endif
+
+/// A struct used to describe our readiness to use the relay network.
+/// To do this we first need to fetch the network configuration,
+/// which describes what POPs are available.
+struct SteamRelayNetworkStatus_t
+{ 
+	enum { k_iCallback = k_iSteamNetworkingUtilsCallbacks + 1 };
+
+	/// Summary status.  When this is "current", initialization has
+	/// completed.  Anything else means you are not ready yet, or
+	/// there is a significant problem.
+	ESteamNetworkingAvailability m_eAvail;
+
+	/// Nonzero if latency measurement is in progress (or pending,
+	/// awaiting a prerequisite).
+	int m_bPingMeasurementInProgress;
+
+	/// Status obtaining the network config.  This is a prerequisite
+	/// for relay network access.
+	///
+	/// Failure to obtain the network config almost always indicates
+	/// a problem with the local internet connection.
+	ESteamNetworkingAvailability m_eAvailNetworkConfig;
+
+	/// Current ability to communicate with ANY relay.  Note that
+	/// the complete failure to communicate with any relays almost
+	/// always indicates a problem with the local Internet connection.
+	/// (However, just because you can reach a single relay doesn't
+	/// mean that the local connection is in perfect health.)
+	ESteamNetworkingAvailability m_eAvailAnyRelay;
+
+	/// Non-localized English language status.  For diagnostic/debugging
+	/// purposes only.
+	char m_debugMsg[ 256 ];
+};
+
+/// Utility class for printing a SteamNetworkingIdentity.
+/// E.g. printf( "Identity is '%s'\n", SteamNetworkingIdentityRender( identity ).c_str() );
+struct SteamNetworkingIdentityRender
+{
+	SteamNetworkingIdentityRender( const SteamNetworkingIdentity &x ) { x.ToString( buf, sizeof(buf) ); }
+	inline const char *c_str() const { return buf; }
+private:
+	char buf[ SteamNetworkingIdentity::k_cchMaxString ];
+};
+
+/// Utility class for printing a SteamNetworkingIPAddrRender.
+struct SteamNetworkingIPAddrRender
+{
+	SteamNetworkingIPAddrRender( const SteamNetworkingIPAddr &x, bool bWithPort = true ) { x.ToString( buf, sizeof(buf), bWithPort ); }
+	inline const char *c_str() const { return buf; }
+private:
+	char buf[ SteamNetworkingIPAddr::k_cchMaxString ];
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Internal stuff
 
 #ifdef STEAMNETWORKINGSOCKETS_ENABLE_SDR
-inline bool ISteamNetworkingUtils::InitializeRelayNetworkAccess() { return CheckPingDataUpToDate( 1e10f ); }
+inline void ISteamNetworkingUtils::InitRelayNetworkAccess() { CheckPingDataUpToDate( 1e10f ); }
 #endif
 
 inline bool ISteamNetworkingUtils::SetGlobalConfigValueInt32( ESteamNetworkingConfigValue eValue, int32 val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Global, 0, k_ESteamNetworkingConfig_Int32, &val ); }
 inline bool ISteamNetworkingUtils::SetGlobalConfigValueFloat( ESteamNetworkingConfigValue eValue, float val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Global, 0, k_ESteamNetworkingConfig_Float, &val ); }
 inline bool ISteamNetworkingUtils::SetGlobalConfigValueString( ESteamNetworkingConfigValue eValue, const char *val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Global, 0, k_ESteamNetworkingConfig_String, val ); }
+inline bool ISteamNetworkingUtils::SetGlobalConfigValuePtr( ESteamNetworkingConfigValue eValue, void *val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Global, 0, k_ESteamNetworkingConfig_Ptr, &val ); } // Note: passing pointer to pointer.
 inline bool ISteamNetworkingUtils::SetConnectionConfigValueInt32( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, int32 val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Connection, hConn, k_ESteamNetworkingConfig_Int32, &val ); }
 inline bool ISteamNetworkingUtils::SetConnectionConfigValueFloat( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, float val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Connection, hConn, k_ESteamNetworkingConfig_Float, &val ); }
 inline bool ISteamNetworkingUtils::SetConnectionConfigValueString( HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, const char *val ) { return SetConfigValue( eValue, k_ESteamNetworkingConfig_Connection, hConn, k_ESteamNetworkingConfig_String, val ); }
+inline bool ISteamNetworkingUtils::SetGlobalCallback_SteamNetConnectionStatusChanged( FnSteamNetConnectionStatusChanged fnCallback ) { return SetGlobalConfigValuePtr( k_ESteamNetworkingConfig_Callback_ConnectionStatusChanged, (void*)fnCallback ); }
+inline bool ISteamNetworkingUtils::SetGlobalCallback_SteamNetAuthenticationStatusChanged( FnSteamNetAuthenticationStatusChanged fnCallback ) { return SetGlobalConfigValuePtr( k_ESteamNetworkingConfig_Callback_AuthStatusChanged, (void*)fnCallback ); }
+inline bool ISteamNetworkingUtils::SetGlobalCallback_SteamRelayNetworkStatusChanged( FnSteamRelayNetworkStatusChanged fnCallback ) { return SetGlobalConfigValuePtr( k_ESteamNetworkingConfig_Callback_RelayNetworkStatusChanged, (void*)fnCallback ); }
+inline bool ISteamNetworkingUtils::SetGlobalCallback_MessagesSessionRequest( FnSteamNetworkingMessagesSessionRequest fnCallback ) { return SetGlobalConfigValuePtr( k_ESteamNetworkingConfig_Callback_MessagesSessionRequest, (void*)fnCallback ); }
+inline bool ISteamNetworkingUtils::SetGlobalCallback_MessagesSessionFailed( FnSteamNetworkingMessagesSessionFailed fnCallback ) { return SetGlobalConfigValuePtr( k_ESteamNetworkingConfig_Callback_MessagesSessionFailed, (void*)fnCallback ); }
 
-#if !defined( STEAMNETWORKINGSOCKETS_STATIC_LINK ) && defined( STEAMNETWORKINGSOCKETS_STEAM )
+inline bool ISteamNetworkingUtils::SetConfigValueStruct( const SteamNetworkingConfigValue_t &opt, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj )
+{
+	// Locate the argument.  Strings are a special case, since the
+	// "value" (the whole string buffer) doesn't fit in the struct
+	// NOTE: for pointer values, we pass a pointer to the pointer,
+	// we do not pass the pointer directly.
+	const void *pVal = ( opt.m_eDataType == k_ESteamNetworkingConfig_String ) ? (const void *)opt.m_val.m_string : (const void *)&opt.m_val;
+	return SetConfigValue( opt.m_eValue, eScopeType, scopeObj, opt.m_eDataType, pVal );
+}
+
+#if !defined( STEAMNETWORKINGSOCKETS_STATIC_LINK ) && defined( STEAMNETWORKINGSOCKETS_STEAMCLIENT )
 inline void SteamNetworkingIPAddr::ToString( char *buf, size_t cbBuf, bool bWithPort ) const { SteamNetworkingUtils()->SteamNetworkingIPAddr_ToString( *this, buf, cbBuf, bWithPort ); }
 inline bool SteamNetworkingIPAddr::ParseString( const char *pszStr ) { return SteamNetworkingUtils()->SteamNetworkingIPAddr_ParseString( this, pszStr ); }
 inline void SteamNetworkingIdentity::ToString( char *buf, size_t cbBuf ) const { SteamNetworkingUtils()->SteamNetworkingIdentity_ToString( *this, buf, cbBuf ); }

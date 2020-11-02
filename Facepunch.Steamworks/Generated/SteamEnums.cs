@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 namespace Steamworks
 {
 	//
+	// ESteamIPType
+	//
+	internal enum SteamIPType : int
+	{
+		Type4 = 0,
+		Type6 = 1,
+	}
+	
+	//
 	// EUniverse
 	//
 	public enum Universe : int
@@ -24,6 +33,7 @@ namespace Steamworks
 	//
 	public enum Result : int
 	{
+		None = 0,
 		OK = 1,
 		Fail = 2,
 		NoConnection = 3,
@@ -136,6 +146,9 @@ namespace Steamworks
 		AccountNotFriends = 111,
 		LimitedUserAccount = 112,
 		CantRemoveItem = 113,
+		AccountDeleted = 114,
+		ExistingUserCancelledLicense = 115,
+		CommunityCooldown = 116,
 	}
 	
 	//
@@ -274,6 +287,9 @@ namespace Steamworks
 		RentalNotActivated = 65536,
 		Rental = 131072,
 		SiteLicense = 262144,
+		LegacyFreeSub = 524288,
+		InvalidOSType = 1048576,
+		TimedTrial = 2097152,
 	}
 	
 	//
@@ -295,9 +311,10 @@ namespace Steamworks
 		Franchise = 1024,
 		Video = 2048,
 		Plugin = 4096,
-		Music = 8192,
+		MusicAlbum = 8192,
 		Series = 16384,
-		Comic = 32768,
+		Comic_UNUSED = 32768,
+		Beta = 65536,
 		Shortcut = 1073741824,
 		DepotOnly = -2147483648,
 	}
@@ -449,33 +466,39 @@ namespace Steamworks
 	//
 	internal enum VRHMDType : int
 	{
-		None = -1,
-		Unknown = 0,
-		HTC_Dev = 1,
-		HTC_VivePre = 2,
-		HTC_Vive = 3,
-		HTC_VivePro = 4,
-		HTC_Unknown = 20,
-		Oculus_DK1 = 21,
-		Oculus_DK2 = 22,
-		Oculus_Rift = 23,
-		Oculus_Unknown = 40,
-		Acer_Unknown = 50,
-		Acer_WindowsMR = 51,
-		Dell_Unknown = 60,
-		Dell_Visor = 61,
-		Lenovo_Unknown = 70,
-		Lenovo_Explorer = 71,
-		HP_Unknown = 80,
-		HP_WindowsMR = 81,
-		Samsung_Unknown = 90,
-		Samsung_Odyssey = 91,
-		Unannounced_Unknown = 100,
-		Unannounced_WindowsMR = 101,
-		vridge = 110,
-		Huawei_Unknown = 120,
-		Huawei_VR2 = 121,
-		Huawei_Unannounced = 129,
+		MDType_None = -1,
+		MDType_Unknown = 0,
+		MDType_HTC_Dev = 1,
+		MDType_HTC_VivePre = 2,
+		MDType_HTC_Vive = 3,
+		MDType_HTC_VivePro = 4,
+		MDType_HTC_ViveCosmos = 5,
+		MDType_HTC_Unknown = 20,
+		MDType_Oculus_DK1 = 21,
+		MDType_Oculus_DK2 = 22,
+		MDType_Oculus_Rift = 23,
+		MDType_Oculus_RiftS = 24,
+		MDType_Oculus_Quest = 25,
+		MDType_Oculus_Unknown = 40,
+		MDType_Acer_Unknown = 50,
+		MDType_Acer_WindowsMR = 51,
+		MDType_Dell_Unknown = 60,
+		MDType_Dell_Visor = 61,
+		MDType_Lenovo_Unknown = 70,
+		MDType_Lenovo_Explorer = 71,
+		MDType_HP_Unknown = 80,
+		MDType_HP_WindowsMR = 81,
+		MDType_HP_Reverb = 82,
+		MDType_Samsung_Unknown = 90,
+		MDType_Samsung_Odyssey = 91,
+		MDType_Unannounced_Unknown = 100,
+		MDType_Unannounced_WindowsMR = 101,
+		MDType_vridge = 110,
+		MDType_Huawei_Unknown = 120,
+		MDType_Huawei_VR2 = 121,
+		MDType_Huawei_EndOfRange = 129,
+		mdType_Valve_Unknown = 130,
+		mdType_Valve_Index = 131,
 	}
 	
 	//
@@ -503,14 +526,42 @@ namespace Steamworks
 	}
 	
 	//
-	// CGameID::EGameIDType
+	// EDurationControlProgress
 	//
-	internal enum GameIDType : int
+	public enum DurationControlProgress : int
 	{
-		App = 0,
-		GameMod = 1,
-		Shortcut = 2,
-		P2P = 3,
+		Progress_Full = 0,
+		Progress_Half = 1,
+		Progress_None = 2,
+		ExitSoon_3h = 3,
+		ExitSoon_5h = 4,
+		ExitSoon_Night = 5,
+	}
+	
+	//
+	// EDurationControlNotification
+	//
+	internal enum DurationControlNotification : int
+	{
+		None = 0,
+		DurationControlNotification1Hour = 1,
+		DurationControlNotification3Hours = 2,
+		HalfProgress = 3,
+		NoProgress = 4,
+		ExitSoon_3h = 5,
+		ExitSoon_5h = 6,
+		ExitSoon_Night = 7,
+	}
+	
+	//
+	// EDurationControlOnlineState
+	//
+	internal enum DurationControlOnlineState : int
+	{
+		Invalid = 0,
+		Offline = 1,
+		Online = 2,
+		OnlineHighPri = 3,
 	}
 	
 	//
@@ -542,12 +593,23 @@ namespace Steamworks
 	}
 	
 	//
-	// IPCFailure_t::EFailureType
+	// ESteamIPv6ConnectivityProtocol
 	//
-	internal enum FailureType : int
+	internal enum SteamIPv6ConnectivityProtocol : int
 	{
-		FlushedCallbackQueue = 0,
-		PipeFail = 1,
+		Invalid = 0,
+		HTTP = 1,
+		UDP = 2,
+	}
+	
+	//
+	// ESteamIPv6ConnectivityState
+	//
+	internal enum SteamIPv6ConnectivityState : int
+	{
+		Unknown = 0,
+		Good = 1,
+		Bad = 2,
 	}
 	
 	//
@@ -585,7 +647,7 @@ namespace Steamworks
 	//
 	// EFriendFlags
 	//
-	public enum FriendFlags : int
+	internal enum FriendFlags : int
 	{
 		None = 0,
 		Blocked = 1,
@@ -619,7 +681,7 @@ namespace Steamworks
 	//
 	// EOverlayToStoreFlag
 	//
-	internal enum OverlayToStoreFlag : int
+	public enum OverlayToStoreFlag : int
 	{
 		None = 0,
 		AddToCart = 1,
@@ -688,6 +750,17 @@ namespace Steamworks
 	}
 	
 	//
+	// ETextFilteringContext
+	//
+	internal enum TextFilteringContext : int
+	{
+		Unknown = 0,
+		GameContent = 1,
+		Chat = 2,
+		Name = 3,
+	}
+	
+	//
 	// ECheckFileSignature
 	//
 	public enum CheckFileSignature : int
@@ -718,6 +791,7 @@ namespace Steamworks
 		FriendsOnly = 1,
 		Public = 2,
 		Invisible = 3,
+		PrivateUnique = 4,
 	}
 	
 	//
@@ -779,16 +853,6 @@ namespace Steamworks
 	}
 	
 	//
-	// RequestPlayersForGameResultCallback_t::PlayerAcceptState_t
-	//
-	internal enum PlayerAcceptState_t : int
-	{
-		Unknown = 0,
-		PlayerAccepted = 1,
-		PlayerDeclined = 2,
-	}
-	
-	//
 	// ERemoteStoragePlatform
 	//
 	internal enum RemoteStoragePlatform : int
@@ -798,8 +862,9 @@ namespace Steamworks
 		OSX = 2,
 		PS3 = 4,
 		Linux = 8,
-		Reserved2 = 16,
+		Switch = 16,
 		Android = 32,
+		IOS = 64,
 		All = -1,
 	}
 	
@@ -811,6 +876,7 @@ namespace Steamworks
 		Public = 0,
 		FriendsOnly = 1,
 		Private = 2,
+		Unlisted = 3,
 	}
 	
 	//
@@ -957,31 +1023,9 @@ namespace Steamworks
 	//
 	// ESNetSocketState
 	//
-	internal enum SNetSocketState : int
-	{
-		Invalid = 0,
-		Connected = 1,
-		Initiated = 10,
-		LocalCandidatesFound = 11,
-		ReceivedRemoteCandidates = 12,
-		ChallengeHandshake = 15,
-		Disconnecting = 21,
-		LocalDisconnect = 22,
-		TimeoutDuringConnect = 23,
-		RemoteEndDisconnected = 24,
-		ConnectionBroken = 25,
-	}
-	
 	//
 	// ESNetSocketConnectionType
 	//
-	internal enum SNetSocketConnectionType : int
-	{
-		NotConnected = 0,
-		UDP = 1,
-		UDPRelay = 2,
-	}
-	
 	//
 	// EVRScreenshotType
 	//
@@ -1027,74 +1071,50 @@ namespace Steamworks
 	internal enum HTTPStatusCode : int
 	{
 		Invalid = 0,
-		HTTPStatusCode100Continue = 100,
-		HTTPStatusCode101SwitchingProtocols = 101,
-		HTTPStatusCode200OK = 200,
-		HTTPStatusCode201Created = 201,
-		HTTPStatusCode202Accepted = 202,
-		HTTPStatusCode203NonAuthoritative = 203,
-		HTTPStatusCode204NoContent = 204,
-		HTTPStatusCode205ResetContent = 205,
-		HTTPStatusCode206PartialContent = 206,
-		HTTPStatusCode300MultipleChoices = 300,
-		HTTPStatusCode301MovedPermanently = 301,
-		HTTPStatusCode302Found = 302,
-		HTTPStatusCode303SeeOther = 303,
-		HTTPStatusCode304NotModified = 304,
-		HTTPStatusCode305UseProxy = 305,
-		HTTPStatusCode307TemporaryRedirect = 307,
-		HTTPStatusCode400BadRequest = 400,
-		HTTPStatusCode401Unauthorized = 401,
-		HTTPStatusCode402PaymentRequired = 402,
-		HTTPStatusCode403Forbidden = 403,
-		HTTPStatusCode404NotFound = 404,
-		HTTPStatusCode405MethodNotAllowed = 405,
-		HTTPStatusCode406NotAcceptable = 406,
-		HTTPStatusCode407ProxyAuthRequired = 407,
-		HTTPStatusCode408RequestTimeout = 408,
-		HTTPStatusCode409Conflict = 409,
-		HTTPStatusCode410Gone = 410,
-		HTTPStatusCode411LengthRequired = 411,
-		HTTPStatusCode412PreconditionFailed = 412,
-		HTTPStatusCode413RequestEntityTooLarge = 413,
-		HTTPStatusCode414RequestURITooLong = 414,
-		HTTPStatusCode415UnsupportedMediaType = 415,
-		HTTPStatusCode416RequestedRangeNotSatisfiable = 416,
-		HTTPStatusCode417ExpectationFailed = 417,
-		HTTPStatusCode4xxUnknown = 418,
-		HTTPStatusCode429TooManyRequests = 429,
-		HTTPStatusCode500InternalServerError = 500,
-		HTTPStatusCode501NotImplemented = 501,
-		HTTPStatusCode502BadGateway = 502,
-		HTTPStatusCode503ServiceUnavailable = 503,
-		HTTPStatusCode504GatewayTimeout = 504,
-		HTTPStatusCode505HTTPVersionNotSupported = 505,
-		HTTPStatusCode5xxUnknown = 599,
-	}
-	
-	//
-	// EInputSource
-	//
-	internal enum InputSource : int
-	{
-		None = 0,
-		LeftTrackpad = 1,
-		RightTrackpad = 2,
-		Joystick = 3,
-		ABXY = 4,
-		Switch = 5,
-		LeftTrigger = 6,
-		RightTrigger = 7,
-		LeftBumper = 8,
-		RightBumper = 9,
-		Gyro = 10,
-		CenterTrackpad = 11,
-		RightJoystick = 12,
-		DPad = 13,
-		Key = 14,
-		Mouse = 15,
-		LeftGyro = 16,
-		Count = 17,
+		Code100Continue = 100,
+		Code101SwitchingProtocols = 101,
+		Code200OK = 200,
+		Code201Created = 201,
+		Code202Accepted = 202,
+		Code203NonAuthoritative = 203,
+		Code204NoContent = 204,
+		Code205ResetContent = 205,
+		Code206PartialContent = 206,
+		Code300MultipleChoices = 300,
+		Code301MovedPermanently = 301,
+		Code302Found = 302,
+		Code303SeeOther = 303,
+		Code304NotModified = 304,
+		Code305UseProxy = 305,
+		Code307TemporaryRedirect = 307,
+		Code400BadRequest = 400,
+		Code401Unauthorized = 401,
+		Code402PaymentRequired = 402,
+		Code403Forbidden = 403,
+		Code404NotFound = 404,
+		Code405MethodNotAllowed = 405,
+		Code406NotAcceptable = 406,
+		Code407ProxyAuthRequired = 407,
+		Code408RequestTimeout = 408,
+		Code409Conflict = 409,
+		Code410Gone = 410,
+		Code411LengthRequired = 411,
+		Code412PreconditionFailed = 412,
+		Code413RequestEntityTooLarge = 413,
+		Code414RequestURITooLong = 414,
+		Code415UnsupportedMediaType = 415,
+		Code416RequestedRangeNotSatisfiable = 416,
+		Code417ExpectationFailed = 417,
+		Code4xxUnknown = 418,
+		Code429TooManyRequests = 429,
+		Code444ConnectionClosed = 444,
+		Code500InternalServerError = 500,
+		Code501NotImplemented = 501,
+		Code502BadGateway = 502,
+		Code503ServiceUnavailable = 503,
+		Code504GatewayTimeout = 504,
+		Code505HTTPVersionNotSupported = 505,
+		Code5xxUnknown = 599,
 	}
 	
 	//
@@ -1229,7 +1249,7 @@ namespace Steamworks
 		PS4_Gyro_Pitch = 100,
 		PS4_Gyro_Yaw = 101,
 		PS4_Gyro_Roll = 102,
-		PS4_Reserved0 = 103,
+		PS4_DPad_Move = 103,
 		PS4_Reserved1 = 104,
 		PS4_Reserved2 = 105,
 		PS4_Reserved3 = 106,
@@ -1268,7 +1288,7 @@ namespace Steamworks
 		XBoxOne_DPad_South = 139,
 		XBoxOne_DPad_West = 140,
 		XBoxOne_DPad_East = 141,
-		XBoxOne_Reserved0 = 142,
+		XBoxOne_DPad_Move = 142,
 		XBoxOne_Reserved1 = 143,
 		XBoxOne_Reserved2 = 144,
 		XBoxOne_Reserved3 = 145,
@@ -1307,7 +1327,7 @@ namespace Steamworks
 		XBox360_DPad_South = 178,
 		XBox360_DPad_West = 179,
 		XBox360_DPad_East = 180,
-		XBox360_Reserved0 = 181,
+		XBox360_DPad_Move = 181,
 		XBox360_Reserved1 = 182,
 		XBox360_Reserved2 = 183,
 		XBox360_Reserved3 = 184,
@@ -1351,7 +1371,7 @@ namespace Steamworks
 		Switch_ProGyro_Pitch = 222,
 		Switch_ProGyro_Yaw = 223,
 		Switch_ProGyro_Roll = 224,
-		Switch_Reserved0 = 225,
+		Switch_DPad_Move = 225,
 		Switch_Reserved1 = 226,
 		Switch_Reserved2 = 227,
 		Switch_Reserved3 = 228,
@@ -1462,55 +1482,6 @@ namespace Steamworks
 	{
 		SetColor = 0,
 		RestoreUserDefault = 1,
-	}
-	
-	//
-	// EControllerSource
-	//
-	internal enum ControllerSource : int
-	{
-		None = 0,
-		LeftTrackpad = 1,
-		RightTrackpad = 2,
-		Joystick = 3,
-		ABXY = 4,
-		Switch = 5,
-		LeftTrigger = 6,
-		RightTrigger = 7,
-		LeftBumper = 8,
-		RightBumper = 9,
-		Gyro = 10,
-		CenterTrackpad = 11,
-		RightJoystick = 12,
-		DPad = 13,
-		Key = 14,
-		Mouse = 15,
-		LeftGyro = 16,
-		Count = 17,
-	}
-	
-	//
-	// EControllerSourceMode
-	//
-	internal enum ControllerSourceMode : int
-	{
-		None = 0,
-		Dpad = 1,
-		Buttons = 2,
-		FourButtons = 3,
-		AbsoluteMouse = 4,
-		RelativeMouse = 5,
-		JoystickMove = 6,
-		JoystickMouse = 7,
-		JoystickCamera = 8,
-		ScrollWheel = 9,
-		Trigger = 10,
-		TouchMenu = 11,
-		MouseJoystick = 12,
-		MouseRegion = 13,
-		RadialMenu = 14,
-		SingleButton = 15,
-		Switches = 16,
 	}
 	
 	//
@@ -1759,7 +1730,11 @@ namespace Steamworks
 		Switch_LeftGrip_Upper = 238,
 		Switch_RightGrip_Lower = 239,
 		Switch_RightGrip_Upper = 240,
-		Count = 241,
+		PS4_DPad_Move = 241,
+		XBoxOne_DPad_Move = 242,
+		XBox360_DPad_Move = 243,
+		Switch_DPad_Move = 244,
+		Count = 245,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -1899,7 +1874,7 @@ namespace Steamworks
 	//
 	// EItemPreviewType
 	//
-	internal enum ItemPreviewType : int
+	public enum ItemPreviewType : int
 	{
 		Image = 0,
 		YouTubeVideo = 1,
@@ -1907,76 +1882,6 @@ namespace Steamworks
 		EnvironmentMap_HorizontalCross = 3,
 		EnvironmentMap_LatLong = 4,
 		ReservedMax = 255,
-	}
-	
-	//
-	// ISteamHTMLSurface::EHTMLMouseButton
-	//
-	internal enum HTMLMouseButton : int
-	{
-		Left = 0,
-		Right = 1,
-		Middle = 2,
-	}
-	
-	//
-	// ISteamHTMLSurface::EMouseCursor
-	//
-	internal enum MouseCursor : int
-	{
-		user = 0,
-		none = 1,
-		arrow = 2,
-		ibeam = 3,
-		hourglass = 4,
-		waitarrow = 5,
-		crosshair = 6,
-		up = 7,
-		sizenw = 8,
-		sizese = 9,
-		sizene = 10,
-		sizesw = 11,
-		sizew = 12,
-		sizee = 13,
-		sizen = 14,
-		sizes = 15,
-		sizewe = 16,
-		sizens = 17,
-		sizeall = 18,
-		no = 19,
-		hand = 20,
-		blank = 21,
-		middle_pan = 22,
-		north_pan = 23,
-		north_east_pan = 24,
-		east_pan = 25,
-		south_east_pan = 26,
-		south_pan = 27,
-		south_west_pan = 28,
-		west_pan = 29,
-		north_west_pan = 30,
-		alias = 31,
-		cell = 32,
-		colresize = 33,
-		copycur = 34,
-		verticaltext = 35,
-		rowresize = 36,
-		zoomin = 37,
-		zoomout = 38,
-		help = 39,
-		custom = 40,
-		last = 41,
-	}
-	
-	//
-	// ISteamHTMLSurface::EHTMLKeyModifiers
-	//
-	internal enum HTMLKeyModifiers : int
-	{
-		None = 0,
-		AltDown = 1,
-		CtrlDown = 2,
-		ShiftDown = 4,
 	}
 	
 	//
@@ -2007,7 +1912,241 @@ namespace Steamworks
 		ParentalSetup = 10,
 		Library = 11,
 		Test = 12,
-		Max = 13,
+		SiteLicense = 13,
+		Max = 14,
+	}
+	
+	//
+	// ESteamDeviceFormFactor
+	//
+	public enum SteamDeviceFormFactor : int
+	{
+		Unknown = 0,
+		Phone = 1,
+		Tablet = 2,
+		Computer = 3,
+		TV = 4,
+	}
+	
+	//
+	// ESteamNetworkingAvailability
+	//
+	public enum SteamNetworkingAvailability : int
+	{
+		CannotTry = -102,
+		Failed = -101,
+		Previously = -100,
+		Retrying = -10,
+		NeverTried = 1,
+		Waiting = 2,
+		Attempting = 3,
+		Current = 100,
+		Unknown = 0,
+		Force32bit = 2147483647,
+	}
+	
+	//
+	// ESteamNetworkingIdentityType
+	//
+	internal enum NetIdentityType : int
+	{
+		Invalid = 0,
+		SteamID = 16,
+		XboxPairwiseID = 17,
+		IPAddress = 1,
+		GenericString = 2,
+		GenericBytes = 3,
+		UnknownType = 4,
+		Force32bit = 2147483647,
+	}
+	
+	//
+	// ESteamNetworkingConnectionState
+	//
+	public enum ConnectionState : int
+	{
+		None = 0,
+		Connecting = 1,
+		FindingRoute = 2,
+		Connected = 3,
+		ClosedByPeer = 4,
+		ProblemDetectedLocally = 5,
+		FinWait = -1,
+		Linger = -2,
+		Dead = -3,
+	}
+	
+	//
+	// ESteamNetConnectionEnd
+	//
+	public enum NetConnectionEnd : int
+	{
+		Invalid = 0,
+		App_Min = 1000,
+		App_Generic = 1000,
+		App_Max = 1999,
+		AppException_Min = 2000,
+		AppException_Generic = 2000,
+		AppException_Max = 2999,
+		Local_Min = 3000,
+		Local_OfflineMode = 3001,
+		Local_ManyRelayConnectivity = 3002,
+		Local_HostedServerPrimaryRelay = 3003,
+		Local_NetworkConfig = 3004,
+		Local_Rights = 3005,
+		Local_P2P_ICE_NoPublicAddresses = 3006,
+		Local_Max = 3999,
+		Remote_Min = 4000,
+		Remote_Timeout = 4001,
+		Remote_BadCrypt = 4002,
+		Remote_BadCert = 4003,
+		Remote_NotLoggedIn = 4004,
+		Remote_NotRunningApp = 4005,
+		Remote_BadProtocolVersion = 4006,
+		Remote_P2P_ICE_NoPublicAddresses = 4007,
+		Remote_Max = 4999,
+		Misc_Min = 5000,
+		Misc_Generic = 5001,
+		Misc_InternalError = 5002,
+		Misc_Timeout = 5003,
+		Misc_RelayConnectivity = 5004,
+		Misc_SteamConnectivity = 5005,
+		Misc_NoRelaySessionsToClient = 5006,
+		Misc_P2P_Rendezvous = 5008,
+		Misc_P2P_NAT_Firewall = 5009,
+		Misc_PeerSentNoConnection = 5010,
+		Misc_Max = 5999,
+	}
+	
+	//
+	// ESteamNetTransportKind
+	//
+	internal enum SteamNetTransportKind : int
+	{
+		Unknown = 0,
+		LoopbackBuffers = 1,
+		LocalHost = 2,
+		UDP = 3,
+		UDPProbablyLocal = 4,
+		TURN = 5,
+		SDRP2P = 6,
+		SDRHostedServer = 7,
+	}
+	
+	//
+	// ESteamNetworkingConfigScope
+	//
+	internal enum NetConfigScope : int
+	{
+		Global = 1,
+		SocketsInterface = 2,
+		ListenSocket = 3,
+		Connection = 4,
+	}
+	
+	//
+	// ESteamNetworkingConfigDataType
+	//
+	internal enum NetConfigType : int
+	{
+		Int32 = 1,
+		Int64 = 2,
+		Float = 3,
+		String = 4,
+		Ptr = 5,
+	}
+	
+	//
+	// ESteamNetworkingConfigValue
+	//
+	internal enum NetConfig : int
+	{
+		Invalid = 0,
+		FakePacketLoss_Send = 2,
+		FakePacketLoss_Recv = 3,
+		FakePacketLag_Send = 4,
+		FakePacketLag_Recv = 5,
+		FakePacketReorder_Send = 6,
+		FakePacketReorder_Recv = 7,
+		FakePacketReorder_Time = 8,
+		FakePacketDup_Send = 26,
+		FakePacketDup_Recv = 27,
+		FakePacketDup_TimeMax = 28,
+		TimeoutInitial = 24,
+		TimeoutConnected = 25,
+		SendBufferSize = 9,
+		SendRateMin = 10,
+		SendRateMax = 11,
+		NagleTime = 12,
+		IP_AllowWithoutAuth = 23,
+		MTU_PacketSize = 32,
+		MTU_DataSize = 33,
+		Unencrypted = 34,
+		EnumerateDevVars = 35,
+		SymmetricConnect = 37,
+		LocalVirtualPort = 38,
+		Callback_ConnectionStatusChanged = 201,
+		Callback_AuthStatusChanged = 202,
+		Callback_RelayNetworkStatusChanged = 203,
+		Callback_MessagesSessionRequest = 204,
+		Callback_MessagesSessionFailed = 205,
+		P2P_STUN_ServerList = 103,
+		P2P_Transport_ICE_Enable = 104,
+		P2P_Transport_ICE_Penalty = 105,
+		P2P_Transport_SDR_Penalty = 106,
+		SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
+		SDRClient_ConsecutitivePingTimeoutsFail = 20,
+		SDRClient_MinPingsBeforePingAccurate = 21,
+		SDRClient_SingleSocket = 22,
+		SDRClient_ForceRelayCluster = 29,
+		SDRClient_DebugTicketAddress = 30,
+		SDRClient_ForceProxyAddr = 31,
+		SDRClient_FakeClusterPing = 36,
+		LogLevel_AckRTT = 13,
+		LogLevel_PacketDecode = 14,
+		LogLevel_Message = 15,
+		LogLevel_PacketGaps = 16,
+		LogLevel_P2PRendezvous = 17,
+		LogLevel_SDRRelayPings = 18,
+	}
+	
+	//
+	// ESteamNetworkingGetConfigValueResult
+	//
+	internal enum NetConfigResult : int
+	{
+		BadValue = -1,
+		BadScopeObj = -2,
+		BufferTooSmall = -3,
+		OK = 1,
+		OKInherited = 2,
+	}
+	
+	//
+	// ESteamNetworkingSocketsDebugOutputType
+	//
+	public enum NetDebugOutput : int
+	{
+		None = 0,
+		Bug = 1,
+		Error = 2,
+		Important = 3,
+		Warning = 4,
+		Msg = 5,
+		Verbose = 6,
+		Debug = 7,
+		Everything = 8,
+	}
+	
+	//
+	// EServerMode
+	//
+	internal enum ServerMode : int
+	{
+		Invalid = 0,
+		NoAuthentication = 1,
+		Authentication = 2,
+		AuthenticationAndSecure = 3,
 	}
 	
 }

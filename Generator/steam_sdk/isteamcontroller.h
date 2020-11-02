@@ -27,6 +27,8 @@
 
 #define STEAM_CONTROLLER_MAX_ORIGINS 8
 
+#define STEAM_CONTROLLER_MAX_ACTIVE_LAYERS 16
+
 // When sending an option to a specific controller handle, you can send to all controllers via this command
 #define STEAM_CONTROLLER_HANDLE_ALL_CONTROLLERS UINT64_MAX
 
@@ -40,49 +42,6 @@ enum ESteamControllerPad
 	k_ESteamControllerPad_Right
 };
 #endif
-
-enum EControllerSource
-{
-	k_EControllerSource_None,
-	k_EControllerSource_LeftTrackpad,
-	k_EControllerSource_RightTrackpad,
-	k_EControllerSource_Joystick,
-	k_EControllerSource_ABXY,
-	k_EControllerSource_Switch,
-	k_EControllerSource_LeftTrigger,
-	k_EControllerSource_RightTrigger,
-	k_EControllerSource_LeftBumper,
-	k_EControllerSource_RightBumper,
-	k_EControllerSource_Gyro,
-	k_EControllerSource_CenterTrackpad,		// PS4
-	k_EControllerSource_RightJoystick,		// Traditional Controllers
-	k_EControllerSource_DPad,				// Traditional Controllers
-	k_EControllerSource_Key,                // Keyboards with scan codes - Unused
-	k_EControllerSource_Mouse,              // Traditional mouse - Unused
-	k_EControllerSource_LeftGyro,			// Secondary Gyro - Switch - Unused
-	k_EControllerSource_Count
-};
-
-enum EControllerSourceMode
-{
-	k_EControllerSourceMode_None,
-	k_EControllerSourceMode_Dpad,
-	k_EControllerSourceMode_Buttons,
-	k_EControllerSourceMode_FourButtons,
-	k_EControllerSourceMode_AbsoluteMouse,
-	k_EControllerSourceMode_RelativeMouse,
-	k_EControllerSourceMode_JoystickMove,
-	k_EControllerSourceMode_JoystickMouse,
-	k_EControllerSourceMode_JoystickCamera,
-	k_EControllerSourceMode_ScrollWheel,
-	k_EControllerSourceMode_Trigger,
-	k_EControllerSourceMode_TouchMenu,
-	k_EControllerSourceMode_MouseJoystick,
-	k_EControllerSourceMode_MouseRegion,
-	k_EControllerSourceMode_RadialMenu,
-	k_EControllerSourceMode_SingleButton,
-	k_EControllerSourceMode_Switches
-};
 
 // Note: Please do not use action origins as a way to identify controller types. There is no
 // guarantee that they will be added in a contiguous manner - use GetInputTypeForHandle instead
@@ -345,6 +304,12 @@ enum EControllerActionOrigin
 	k_EControllerActionOrigin_Switch_RightGrip_Lower,  // Right JoyCon SL Button
 	k_EControllerActionOrigin_Switch_RightGrip_Upper,  // Right JoyCon SR Button
 
+	// Added in SDK 1.45
+	k_EControllerActionOrigin_PS4_DPad_Move,
+	k_EControllerActionOrigin_XBoxOne_DPad_Move,
+	k_EControllerActionOrigin_XBox360_DPad_Move,
+	k_EControllerActionOrigin_Switch_DPad_Move,
+
 	k_EControllerActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EControllerActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
 };
@@ -489,7 +454,7 @@ public:
 	// Enumerate currently connected controllers
 	// handlesOut should point to a STEAM_CONTROLLER_MAX_COUNT sized array of ControllerHandle_t handles
 	// Returns the number of handles written to handlesOut
-	virtual int GetConnectedControllers( ControllerHandle_t *handlesOut ) = 0;
+	virtual int GetConnectedControllers( STEAM_OUT_ARRAY_COUNT( STEAM_CONTROLLER_MAX_COUNT, Receives list of connected controllers ) ControllerHandle_t *handlesOut ) = 0;
 	
 	//-----------------------------------------------------------------------------
 	// ACTION SETS
@@ -508,7 +473,10 @@ public:
 	virtual void ActivateActionSetLayer( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetLayerHandle ) = 0;
 	virtual void DeactivateActionSetLayer( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetLayerHandle ) = 0;
 	virtual void DeactivateAllActionSetLayers( ControllerHandle_t controllerHandle ) = 0;
-	virtual int GetActiveActionSetLayers( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t *handlesOut ) = 0;
+	// Enumerate currently active layers
+	// handlesOut should point to a STEAM_CONTROLLER_MAX_ACTIVE_LAYERS sized array of ControllerActionSetHandle_t handles.
+	// Returns the number of handles written to handlesOut
+	virtual int GetActiveActionSetLayers( ControllerHandle_t controllerHandle, STEAM_OUT_ARRAY_COUNT( STEAM_CONTROLLER_MAX_ACTIVE_LAYERS, Receives list of active layers ) ControllerActionSetHandle_t *handlesOut ) = 0;
 
 	//-----------------------------------------------------------------------------
 	// ACTIONS
@@ -523,7 +491,7 @@ public:
 	// Get the origin(s) for a digital action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.
 	// originsOut should point to a STEAM_CONTROLLER_MAX_ORIGINS sized array of EControllerActionOrigin handles. The EControllerActionOrigin enum will get extended as support for new controller controllers gets added to
 	// the Steam client and will exceed the values from this header, please check bounds if you are using a look up table.
-	virtual int GetDigitalActionOrigins( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerDigitalActionHandle_t digitalActionHandle, EControllerActionOrigin *originsOut ) = 0;
+	virtual int GetDigitalActionOrigins( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerDigitalActionHandle_t digitalActionHandle, STEAM_OUT_ARRAY_COUNT( STEAM_CONTROLLER_MAX_ORIGINS, Receives list of aciton origins ) EControllerActionOrigin *originsOut ) = 0;
 	
 	// Lookup the handle for an analog action. Best to do this once on startup, and store the handles for all future API calls.
 	virtual ControllerAnalogActionHandle_t GetAnalogActionHandle( const char *pszActionName ) = 0;
@@ -534,7 +502,7 @@ public:
 	// Get the origin(s) for an analog action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.
 	// originsOut should point to a STEAM_CONTROLLER_MAX_ORIGINS sized array of EControllerActionOrigin handles. The EControllerActionOrigin enum will get extended as support for new controller controllers gets added to
 	// the Steam client and will exceed the values from this header, please check bounds if you are using a look up table.
-	virtual int GetAnalogActionOrigins( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerAnalogActionHandle_t analogActionHandle, EControllerActionOrigin *originsOut ) = 0;
+	virtual int GetAnalogActionOrigins( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerAnalogActionHandle_t analogActionHandle, STEAM_OUT_ARRAY_COUNT( STEAM_CONTROLLER_MAX_ORIGINS, Receives list of action origins ) EControllerActionOrigin *originsOut ) = 0;
 	
 	// Get a local path to art for on-screen glyph for a particular origin - this call is cheap
 	virtual const char *GetGlyphForActionOrigin( EControllerActionOrigin eOrigin ) = 0;
@@ -582,10 +550,10 @@ public:
 	// Returns the associated gamepad index for the specified controller, if emulating a gamepad or -1 if not associated with an Xinput index
 	virtual int GetGamepadIndexForController( ControllerHandle_t ulControllerHandle ) = 0;
 	
-	// Returns a localized string (from Steam's language setting) for the specified Xbox controller origin. This function is cheap.
+	// Returns a localized string (from Steam's language setting) for the specified Xbox controller origin.
 	virtual const char *GetStringForXboxOrigin( EXboxOrigin eOrigin ) = 0;
 
-	// Get a local path to art for on-screen glyph for a particular Xbox controller origin. This function is serialized.
+	// Get a local path to art for on-screen glyph for a particular Xbox controller origin. 
 	virtual const char *GetGlyphForXboxOrigin( EXboxOrigin eOrigin ) = 0;
 
 	// Get the equivalent ActionOrigin for a given Xbox controller origin this can be chained with GetGlyphForActionOrigin to provide future proof glyphs for
@@ -594,6 +562,9 @@ public:
 
 	// Convert an origin to another controller type - for inputs not present on the other controller type this will return k_EControllerActionOrigin_None
 	virtual EControllerActionOrigin TranslateActionOrigin( ESteamInputType eDestinationInputType, EControllerActionOrigin eSourceOrigin ) = 0;
+
+	// Get the binding revision for a given device. Returns false if the handle was not valid or if a mapping is not yet loaded for the device
+	virtual bool GetControllerBindingRevision( ControllerHandle_t controllerHandle, int *pMajor, int *pMinor ) = 0;
 };
 
 #define STEAMCONTROLLER_INTERFACE_VERSION "SteamController007"

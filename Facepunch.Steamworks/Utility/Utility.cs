@@ -3,12 +3,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Steamworks
 {
 	public static partial class Utility
     {
+        static internal T ToType<T>( this IntPtr ptr )
+        {
+            if ( ptr == IntPtr.Zero )
+                return default;
+
+            return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
+        }
+
+        static internal object ToType( this IntPtr ptr, System.Type t )
+        {
+            if ( ptr == IntPtr.Zero )
+                return default;
+
+            return Marshal.PtrToStructure( ptr, t );
+        }
+
         static internal uint Swap( uint x )
         {
             return ((x & 0x000000ff) << 24) +
@@ -80,7 +97,7 @@ namespace Steamworks
             }
         }
 
-		static byte[] readBuffer = new byte[1024 * 8];
+		static readonly byte[] readBuffer = new byte[1024 * 8];
 
 		public static string ReadNullTerminatedUTF8String( this BinaryReader br )
 		{

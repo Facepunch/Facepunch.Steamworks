@@ -3,44 +3,17 @@ using System.Collections.Generic;
 
 namespace Steamworks
 {
-	public static class SteamInput
+	public class SteamInput : SteamClientClass<SteamInput>
 	{
+		internal static ISteamInput Internal => Interface as ISteamInput;
+
+		internal override void InitializeInterface( bool server )
+		{
+			SetInterface( server, new ISteamInput( server ) );
+		}
+
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
 
-		static ISteamInput _internal;
-		internal static ISteamInput Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
-
-				if ( _internal == null )
-				{
-					_internal = new ISteamInput();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
-		{
-			if ( _internal != null && _internal.IsValid )
-			{
-				_internal.DoShutdown();
-			}
-
-			_internal = null;
-		}
-
-		internal static void InstallEvents()
-		{
-			Internal.DoInit();
-			Internal.RunFrame();
-
-			// None?
-		}
 
 		/// <summary>
 		/// You shouldn't really need to call this because it get called by RunCallbacks on SteamClient
@@ -52,7 +25,7 @@ namespace Steamworks
 			Internal.RunFrame();
 		}
 
-		static InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
+		static readonly InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
 
 		/// <summary>
 		/// Return a list of connected controllers.

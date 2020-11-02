@@ -11,103 +11,136 @@ namespace Steamworks
 {
 	internal abstract class SteamInterface
 	{
+		public virtual IntPtr GetUserInterfacePointer() => IntPtr.Zero;
+		public virtual IntPtr GetServerInterfacePointer() => IntPtr.Zero;
+		public virtual IntPtr GetGlobalInterfacePointer() => IntPtr.Zero;
+
 		public IntPtr Self;
-		public IntPtr VTable;
+		public IntPtr SelfGlobal;
+		public IntPtr SelfServer;
+		public IntPtr SelfClient;
 
-		public virtual string InterfaceName => null;
-		public bool IsValid => Self != IntPtr.Zero && VTable != IntPtr.Zero;
+		public bool IsValid => Self != IntPtr.Zero;
+		public bool IsServer { get; private set; }
 
-		public void Init()
+		internal void SetupInterface( bool gameServer )
 		{
-			if ( SteamClient.IsValid )
-			{
-				InitClient();
+			if ( Self != IntPtr.Zero )
 				return;
-			}
 
-			if ( SteamServer.IsValid )
-			{
-				InitServer();
+			IsServer = gameServer;
+			SelfGlobal = GetGlobalInterfacePointer();
+			Self = SelfGlobal;
+
+			if ( Self != IntPtr.Zero )
 				return;
-			}
 
-			throw new System.Exception( "Trying to initialize Steam Interface but Steam not initialized" );
-		}
-
-		public void InitClient()
-		{
-
-			//
-			// There's an issue for us using FindOrCreateUserInterface on Rust.
-			// We have a different appid for our staging branch, but we use Rust's
-			// appid so we can still test with the live data/setup. The issue is
-			// if we run the staging branch and get interfaces using FindOrCreate
-			// then some callbacks don't work. I assume this is because these interfaces
-			// have already been initialized using the old appid pipe, but since I
-			// can't see inside Steam this is just a gut feeling. Either way using
-			// CreateInterface doesn't seem to have caused any fires, so we'll just use that.
-			//
-
-			//
-			// var pipe = SteamAPI.GetHSteamPipe();
-			//
-
-			Self = SteamInternal.CreateInterface( InterfaceName );
-
-			if ( Self == IntPtr.Zero )
+			if ( gameServer )
 			{
-				var user = SteamAPI.GetHSteamUser();
-				Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
+				SelfServer = GetServerInterfacePointer();
+				Self = SelfServer;
 			}
-
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
-
-			VTable = Marshal.ReadIntPtr( Self, 0 );
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Invalid VTable for {InterfaceName}" );
-
-			InitInternals();
-			SteamClient.WatchInterface( this );
+			else
+			{
+				SelfClient = GetUserInterfacePointer();
+				Self = SelfClient;
+			}
 		}
 
-		public void InitServer()
-		{
-			var user = SteamGameServer.GetHSteamUser();
-			Self = SteamInternal.FindOrCreateGameServerInterface( user, InterfaceName );
-
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Couldn't find server interface {InterfaceName}" );
-
-			VTable = Marshal.ReadIntPtr( Self, 0 );
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Invalid VTable for server {InterfaceName}" );
-
-			InitInternals();
-			SteamServer.WatchInterface( this );
-		}
-
-		public virtual void InitUserless()
-		{
-			Self = SteamInternal.FindOrCreateUserInterface( 0, InterfaceName );
-
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
-
-			VTable = Marshal.ReadIntPtr( Self, 0 );
-			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Invalid VTable for {InterfaceName}" );
-
-			InitInternals();
-		}
-
-		internal virtual void Shutdown()
+		internal void ShutdownInterface()
 		{
 			Self = IntPtr.Zero;
-			VTable = IntPtr.Zero;
+		}
+	}
+
+	public abstract class SteamClass
+	{
+		internal abstract void InitializeInterface( bool server );
+		internal abstract void DestroyInterface( bool server );
+	}
+
+	public class SteamSharedClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface => InterfaceClient ?? InterfaceServer;
+		internal static SteamInterface InterfaceClient;
+		internal static SteamInterface InterfaceServer;
+
+		internal override void InitializeInterface( bool server )
+		{
 
 		}
 
-		public abstract void InitInternals();
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( server )
+			{
+				InterfaceServer = iface;
+			}
+
+			if ( !server )
+			{
+				InterfaceClient = iface;
+			}
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
+			if ( !server )
+			{
+				InterfaceClient = null;
+			}
+
+			if ( server )
+			{
+				InterfaceServer = null;
+			}
+		}
 	}
+
+	public class SteamClientClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface;
+
+		internal override void InitializeInterface( bool server )
+		{
+
+		}
+
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( server )
+				throw new System.NotSupportedException();
+
+			Interface = iface;
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
+			Interface = null;
+		}
+	}	
+	
+	public class SteamServerClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface;
+
+		internal override void InitializeInterface( bool server )
+		{
+
+		}
+
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( !server )
+				throw new System.NotSupportedException();
+
+			Interface = iface;
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
+			Interface = null;
+		}
+	}
+
 }

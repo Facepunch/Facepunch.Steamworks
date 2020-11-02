@@ -10,13 +10,13 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class SteamNetworkingTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class SteamNetworkingTest
     {
 		[TestMethod]
         public async Task SendP2PPacket()
         {
 			var sent = SteamNetworking.SendP2PPacket( SteamClient.SteamId, new byte[] { 1, 2, 3 } );
-
 			Assert.IsTrue( sent );
 
 			while ( !SteamNetworking.IsP2PPacketAvailable() )

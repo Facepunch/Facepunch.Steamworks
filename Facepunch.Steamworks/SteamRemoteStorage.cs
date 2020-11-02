@@ -10,27 +10,15 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamRemoteStorage
+	public class SteamRemoteStorage : SteamClientClass<SteamRemoteStorage>
 	{
-		static ISteamRemoteStorage _internal;
-		internal static ISteamRemoteStorage Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamRemoteStorage();
-					_internal.Init();
-				}
+		internal static ISteamRemoteStorage Internal => Interface as ISteamRemoteStorage;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			SetInterface( server, new ISteamRemoteStorage( server ) );
 		}
+		
 
 		/// <summary>
 		/// Creates a new file, writes the bytes to the file, and then closes the file.

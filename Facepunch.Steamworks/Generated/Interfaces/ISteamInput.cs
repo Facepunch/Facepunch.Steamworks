@@ -9,113 +9,44 @@ namespace Steamworks
 {
 	internal class ISteamInput : SteamInterface
 	{
-		public override string InterfaceName => "SteamInput001";
 		
-		public override void InitInternals()
+		internal ISteamInput( bool IsGameServer )
 		{
-			_DoInit = Marshal.GetDelegateForFunctionPointer<FDoInit>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_DoShutdown = Marshal.GetDelegateForFunctionPointer<FDoShutdown>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_RunFrame = Marshal.GetDelegateForFunctionPointer<FRunFrame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetConnectedControllers = Marshal.GetDelegateForFunctionPointer<FGetConnectedControllers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_GetActionSetHandle = Marshal.GetDelegateForFunctionPointer<FGetActionSetHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_ActivateActionSet = Marshal.GetDelegateForFunctionPointer<FActivateActionSet>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetCurrentActionSet = Marshal.GetDelegateForFunctionPointer<FGetCurrentActionSet>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_ActivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FActivateActionSetLayer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_DeactivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FDeactivateActionSetLayer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_DeactivateAllActionSetLayers = Marshal.GetDelegateForFunctionPointer<FDeactivateAllActionSetLayers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_GetActiveActionSetLayers = Marshal.GetDelegateForFunctionPointer<FGetActiveActionSetLayers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_GetDigitalActionHandle = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_GetDigitalActionData = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_GetDigitalActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionOrigins>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_GetAnalogActionHandle = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetAnalogActionData = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_GetAnalogActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionOrigins>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetGlyphForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetStringForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_StopAnalogActionMomentum = Marshal.GetDelegateForFunctionPointer<FStopAnalogActionMomentum>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetMotionData = Marshal.GetDelegateForFunctionPointer<FGetMotionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_TriggerVibration = Marshal.GetDelegateForFunctionPointer<FTriggerVibration>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_SetLEDColor = Marshal.GetDelegateForFunctionPointer<FSetLEDColor>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_TriggerHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerHapticPulse>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_TriggerRepeatedHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerRepeatedHapticPulse>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_ShowBindingPanel = Marshal.GetDelegateForFunctionPointer<FShowBindingPanel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_GetInputTypeForHandle = Marshal.GetDelegateForFunctionPointer<FGetInputTypeForHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_GetControllerForGamepadIndex = Marshal.GetDelegateForFunctionPointer<FGetControllerForGamepadIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_GetGamepadIndexForController = Marshal.GetDelegateForFunctionPointer<FGetGamepadIndexForController>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_GetStringForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
-			_GetGlyphForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
-			_GetActionOriginFromXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetActionOriginFromXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
-			_TranslateActionOrigin = Marshal.GetDelegateForFunctionPointer<FTranslateActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
+			SetupInterface( IsGameServer );
 		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-			_DoInit = null;
-			_DoShutdown = null;
-			_RunFrame = null;
-			_GetConnectedControllers = null;
-			_GetActionSetHandle = null;
-			_ActivateActionSet = null;
-			_GetCurrentActionSet = null;
-			_ActivateActionSetLayer = null;
-			_DeactivateActionSetLayer = null;
-			_DeactivateAllActionSetLayers = null;
-			_GetActiveActionSetLayers = null;
-			_GetDigitalActionHandle = null;
-			_GetDigitalActionData = null;
-			_GetDigitalActionOrigins = null;
-			_GetAnalogActionHandle = null;
-			_GetAnalogActionData = null;
-			_GetAnalogActionOrigins = null;
-			_GetGlyphForActionOrigin = null;
-			_GetStringForActionOrigin = null;
-			_StopAnalogActionMomentum = null;
-			_GetMotionData = null;
-			_TriggerVibration = null;
-			_SetLEDColor = null;
-			_TriggerHapticPulse = null;
-			_TriggerRepeatedHapticPulse = null;
-			_ShowBindingPanel = null;
-			_GetInputTypeForHandle = null;
-			_GetControllerForGamepadIndex = null;
-			_GetGamepadIndexForController = null;
-			_GetStringForXboxOrigin = null;
-			_GetGlyphForXboxOrigin = null;
-			_GetActionOriginFromXboxOrigin = null;
-			_TranslateActionOrigin = null;
-		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v001", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamInput_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v001();
+		
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Init", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FDoInit( IntPtr self );
-		private FDoInit _DoInit;
+		private static extern bool _Init( IntPtr self );
 		
 		#endregion
-		internal bool DoInit()
+		internal bool Init()
 		{
-			var returnValue = _DoInit( Self );
+			var returnValue = _Init( Self );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Shutdown", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FDoShutdown( IntPtr self );
-		private FDoShutdown _DoShutdown;
+		private static extern bool _Shutdown( IntPtr self );
 		
 		#endregion
-		internal bool DoShutdown()
+		internal bool Shutdown()
 		{
-			var returnValue = _DoShutdown( Self );
+			var returnValue = _Shutdown( Self );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FRunFrame( IntPtr self );
-		private FRunFrame _RunFrame;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_RunFrame", CallingConvention = Platform.CC)]
+		private static extern void _RunFrame( IntPtr self );
 		
 		#endregion
 		internal void RunFrame()
@@ -124,9 +55,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetConnectedControllers( IntPtr self, [In,Out] InputHandle_t[]  handlesOut );
-		private FGetConnectedControllers _GetConnectedControllers;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetConnectedControllers", CallingConvention = Platform.CC)]
+		private static extern int _GetConnectedControllers( IntPtr self, [In,Out] InputHandle_t[]  handlesOut );
 		
 		#endregion
 		internal int GetConnectedControllers( [In,Out] InputHandle_t[]  handlesOut )
@@ -136,9 +66,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputActionSetHandle_t FGetActionSetHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName );
-		private FGetActionSetHandle _GetActionSetHandle;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetActionSetHandle", CallingConvention = Platform.CC)]
+		private static extern InputActionSetHandle_t _GetActionSetHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName );
 		
 		#endregion
 		internal InputActionSetHandle_t GetActionSetHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName )
@@ -148,9 +77,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FActivateActionSet( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle );
-		private FActivateActionSet _ActivateActionSet;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_ActivateActionSet", CallingConvention = Platform.CC)]
+		private static extern void _ActivateActionSet( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle );
 		
 		#endregion
 		internal void ActivateActionSet( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle )
@@ -159,9 +87,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputActionSetHandle_t FGetCurrentActionSet( IntPtr self, InputHandle_t inputHandle );
-		private FGetCurrentActionSet _GetCurrentActionSet;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetCurrentActionSet", CallingConvention = Platform.CC)]
+		private static extern InputActionSetHandle_t _GetCurrentActionSet( IntPtr self, InputHandle_t inputHandle );
 		
 		#endregion
 		internal InputActionSetHandle_t GetCurrentActionSet( InputHandle_t inputHandle )
@@ -171,9 +98,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FActivateActionSetLayer( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle );
-		private FActivateActionSetLayer _ActivateActionSetLayer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_ActivateActionSetLayer", CallingConvention = Platform.CC)]
+		private static extern void _ActivateActionSetLayer( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle );
 		
 		#endregion
 		internal void ActivateActionSetLayer( InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle )
@@ -182,9 +108,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FDeactivateActionSetLayer( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle );
-		private FDeactivateActionSetLayer _DeactivateActionSetLayer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_DeactivateActionSetLayer", CallingConvention = Platform.CC)]
+		private static extern void _DeactivateActionSetLayer( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle );
 		
 		#endregion
 		internal void DeactivateActionSetLayer( InputHandle_t inputHandle, InputActionSetHandle_t actionSetLayerHandle )
@@ -193,9 +118,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FDeactivateAllActionSetLayers( IntPtr self, InputHandle_t inputHandle );
-		private FDeactivateAllActionSetLayers _DeactivateAllActionSetLayers;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_DeactivateAllActionSetLayers", CallingConvention = Platform.CC)]
+		private static extern void _DeactivateAllActionSetLayers( IntPtr self, InputHandle_t inputHandle );
 		
 		#endregion
 		internal void DeactivateAllActionSetLayers( InputHandle_t inputHandle )
@@ -204,9 +128,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetActiveActionSetLayers( IntPtr self, InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut );
-		private FGetActiveActionSetLayers _GetActiveActionSetLayers;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetActiveActionSetLayers", CallingConvention = Platform.CC)]
+		private static extern int _GetActiveActionSetLayers( IntPtr self, InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut );
 		
 		#endregion
 		internal int GetActiveActionSetLayers( InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut )
@@ -216,9 +139,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputDigitalActionHandle_t FGetDigitalActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
-		private FGetDigitalActionHandle _GetDigitalActionHandle;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDigitalActionHandle", CallingConvention = Platform.CC)]
+		private static extern InputDigitalActionHandle_t _GetDigitalActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
 		
 		#endregion
 		internal InputDigitalActionHandle_t GetDigitalActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
@@ -228,31 +150,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetDigitalActionData( IntPtr self, ref DigitalState retVal, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
-		#else
-		private delegate DigitalState FGetDigitalActionData( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
-		#endif
-		private FGetDigitalActionData _GetDigitalActionData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDigitalActionData", CallingConvention = Platform.CC)]
+		private static extern DigitalState _GetDigitalActionData( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
 		
 		#endregion
 		internal DigitalState GetDigitalActionData( InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( DigitalState );
-			_GetDigitalActionData( Self, ref retVal, inputHandle, digitalActionHandle );
-			return retVal;
-			#else
 			var returnValue = _GetDigitalActionData( Self, inputHandle, digitalActionHandle );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetDigitalActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut );
-		private FGetDigitalActionOrigins _GetDigitalActionOrigins;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDigitalActionOrigins", CallingConvention = Platform.CC)]
+		private static extern int _GetDigitalActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut );
 		
 		#endregion
 		internal int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut )
@@ -262,9 +172,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputAnalogActionHandle_t FGetAnalogActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
-		private FGetAnalogActionHandle _GetAnalogActionHandle;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionHandle", CallingConvention = Platform.CC)]
+		private static extern InputAnalogActionHandle_t _GetAnalogActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
 		
 		#endregion
 		internal InputAnalogActionHandle_t GetAnalogActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
@@ -274,31 +183,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetAnalogActionData( IntPtr self, ref AnalogState retVal, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
-		#else
-		private delegate AnalogState FGetAnalogActionData( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
-		#endif
-		private FGetAnalogActionData _GetAnalogActionData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionData", CallingConvention = Platform.CC)]
+		private static extern AnalogState _GetAnalogActionData( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
 		
 		#endregion
 		internal AnalogState GetAnalogActionData( InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( AnalogState );
-			_GetAnalogActionData( Self, ref retVal, inputHandle, analogActionHandle );
-			return retVal;
-			#else
 			var returnValue = _GetAnalogActionData( Self, inputHandle, analogActionHandle );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetAnalogActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut );
-		private FGetAnalogActionOrigins _GetAnalogActionOrigins;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionOrigins", CallingConvention = Platform.CC)]
+		private static extern int _GetAnalogActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut );
 		
 		#endregion
 		internal int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut )
@@ -308,9 +205,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetGlyphForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
-		private FGetGlyphForActionOrigin _GetGlyphForActionOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphForActionOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetGlyphForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
 		
 		#endregion
 		internal string GetGlyphForActionOrigin( InputActionOrigin eOrigin )
@@ -320,9 +216,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetStringForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
-		private FGetStringForActionOrigin _GetStringForActionOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetStringForActionOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetStringForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
 		
 		#endregion
 		internal string GetStringForActionOrigin( InputActionOrigin eOrigin )
@@ -332,9 +227,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FStopAnalogActionMomentum( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t eAction );
-		private FStopAnalogActionMomentum _StopAnalogActionMomentum;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_StopAnalogActionMomentum", CallingConvention = Platform.CC)]
+		private static extern void _StopAnalogActionMomentum( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t eAction );
 		
 		#endregion
 		internal void StopAnalogActionMomentum( InputHandle_t inputHandle, InputAnalogActionHandle_t eAction )
@@ -343,31 +237,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetMotionData( IntPtr self, ref MotionState retVal, InputHandle_t inputHandle );
-		#else
-		private delegate MotionState FGetMotionData( IntPtr self, InputHandle_t inputHandle );
-		#endif
-		private FGetMotionData _GetMotionData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetMotionData", CallingConvention = Platform.CC)]
+		private static extern MotionState _GetMotionData( IntPtr self, InputHandle_t inputHandle );
 		
 		#endregion
 		internal MotionState GetMotionData( InputHandle_t inputHandle )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( MotionState );
-			_GetMotionData( Self, ref retVal, inputHandle );
-			return retVal;
-			#else
 			var returnValue = _GetMotionData( Self, inputHandle );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FTriggerVibration( IntPtr self, InputHandle_t inputHandle, ushort usLeftSpeed, ushort usRightSpeed );
-		private FTriggerVibration _TriggerVibration;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerVibration", CallingConvention = Platform.CC)]
+		private static extern void _TriggerVibration( IntPtr self, InputHandle_t inputHandle, ushort usLeftSpeed, ushort usRightSpeed );
 		
 		#endregion
 		internal void TriggerVibration( InputHandle_t inputHandle, ushort usLeftSpeed, ushort usRightSpeed )
@@ -376,9 +258,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetLEDColor( IntPtr self, InputHandle_t inputHandle, byte nColorR, byte nColorG, byte nColorB, uint nFlags );
-		private FSetLEDColor _SetLEDColor;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_SetLEDColor", CallingConvention = Platform.CC)]
+		private static extern void _SetLEDColor( IntPtr self, InputHandle_t inputHandle, byte nColorR, byte nColorG, byte nColorB, uint nFlags );
 		
 		#endregion
 		internal void SetLEDColor( InputHandle_t inputHandle, byte nColorR, byte nColorG, byte nColorB, uint nFlags )
@@ -387,9 +268,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FTriggerHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec );
-		private FTriggerHapticPulse _TriggerHapticPulse;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerHapticPulse", CallingConvention = Platform.CC)]
+		private static extern void _TriggerHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec );
 		
 		#endregion
 		internal void TriggerHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec )
@@ -398,9 +278,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FTriggerRepeatedHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags );
-		private FTriggerRepeatedHapticPulse _TriggerRepeatedHapticPulse;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerRepeatedHapticPulse", CallingConvention = Platform.CC)]
+		private static extern void _TriggerRepeatedHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags );
 		
 		#endregion
 		internal void TriggerRepeatedHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags )
@@ -409,10 +288,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_ShowBindingPanel", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FShowBindingPanel( IntPtr self, InputHandle_t inputHandle );
-		private FShowBindingPanel _ShowBindingPanel;
+		private static extern bool _ShowBindingPanel( IntPtr self, InputHandle_t inputHandle );
 		
 		#endregion
 		internal bool ShowBindingPanel( InputHandle_t inputHandle )
@@ -422,9 +300,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputType FGetInputTypeForHandle( IntPtr self, InputHandle_t inputHandle );
-		private FGetInputTypeForHandle _GetInputTypeForHandle;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetInputTypeForHandle", CallingConvention = Platform.CC)]
+		private static extern InputType _GetInputTypeForHandle( IntPtr self, InputHandle_t inputHandle );
 		
 		#endregion
 		internal InputType GetInputTypeForHandle( InputHandle_t inputHandle )
@@ -434,9 +311,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputHandle_t FGetControllerForGamepadIndex( IntPtr self, int nIndex );
-		private FGetControllerForGamepadIndex _GetControllerForGamepadIndex;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetControllerForGamepadIndex", CallingConvention = Platform.CC)]
+		private static extern InputHandle_t _GetControllerForGamepadIndex( IntPtr self, int nIndex );
 		
 		#endregion
 		internal InputHandle_t GetControllerForGamepadIndex( int nIndex )
@@ -446,9 +322,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetGamepadIndexForController( IntPtr self, InputHandle_t ulinputHandle );
-		private FGetGamepadIndexForController _GetGamepadIndexForController;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGamepadIndexForController", CallingConvention = Platform.CC)]
+		private static extern int _GetGamepadIndexForController( IntPtr self, InputHandle_t ulinputHandle );
 		
 		#endregion
 		internal int GetGamepadIndexForController( InputHandle_t ulinputHandle )
@@ -458,9 +333,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetStringForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
-		private FGetStringForXboxOrigin _GetStringForXboxOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetStringForXboxOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetStringForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
 		
 		#endregion
 		internal string GetStringForXboxOrigin( XboxOrigin eOrigin )
@@ -470,9 +344,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetGlyphForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
-		private FGetGlyphForXboxOrigin _GetGlyphForXboxOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphForXboxOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetGlyphForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
 		
 		#endregion
 		internal string GetGlyphForXboxOrigin( XboxOrigin eOrigin )
@@ -482,9 +355,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputActionOrigin FGetActionOriginFromXboxOrigin( IntPtr self, InputHandle_t inputHandle, XboxOrigin eOrigin );
-		private FGetActionOriginFromXboxOrigin _GetActionOriginFromXboxOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetActionOriginFromXboxOrigin", CallingConvention = Platform.CC)]
+		private static extern InputActionOrigin _GetActionOriginFromXboxOrigin( IntPtr self, InputHandle_t inputHandle, XboxOrigin eOrigin );
 		
 		#endregion
 		internal InputActionOrigin GetActionOriginFromXboxOrigin( InputHandle_t inputHandle, XboxOrigin eOrigin )
@@ -494,14 +366,36 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate InputActionOrigin FTranslateActionOrigin( IntPtr self, InputType eDestinationInputType, InputActionOrigin eSourceOrigin );
-		private FTranslateActionOrigin _TranslateActionOrigin;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TranslateActionOrigin", CallingConvention = Platform.CC)]
+		private static extern InputActionOrigin _TranslateActionOrigin( IntPtr self, InputType eDestinationInputType, InputActionOrigin eSourceOrigin );
 		
 		#endregion
 		internal InputActionOrigin TranslateActionOrigin( InputType eDestinationInputType, InputActionOrigin eSourceOrigin )
 		{
 			var returnValue = _TranslateActionOrigin( Self, eDestinationInputType, eSourceOrigin );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDeviceBindingRevision", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetDeviceBindingRevision( IntPtr self, InputHandle_t inputHandle, ref int pMajor, ref int pMinor );
+		
+		#endregion
+		internal bool GetDeviceBindingRevision( InputHandle_t inputHandle, ref int pMajor, ref int pMinor )
+		{
+			var returnValue = _GetDeviceBindingRevision( Self, inputHandle, ref pMajor, ref pMinor );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetRemotePlaySessionID", CallingConvention = Platform.CC)]
+		private static extern uint _GetRemotePlaySessionID( IntPtr self, InputHandle_t inputHandle );
+		
+		#endregion
+		internal uint GetRemotePlaySessionID( InputHandle_t inputHandle )
+		{
+			var returnValue = _GetRemotePlaySessionID( Self, inputHandle );
 			return returnValue;
 		}
 		
