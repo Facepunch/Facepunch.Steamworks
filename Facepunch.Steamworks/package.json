@@ -1,7 +1,7 @@
 {
   "name": "com.facepunch.steamworks",
   "displayName": "Facepunch Steamworks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2020.1",
   "unityRelease": "1f10",
   "dependencies": {
