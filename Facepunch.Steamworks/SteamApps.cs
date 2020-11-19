@@ -53,7 +53,7 @@ namespace Steamworks
 		/// Checks if the license owned by the user provides low violence depots.
 		/// Low violence depots are useful for copies sold in countries that have content restrictions
 		/// </summary>
-		public static bool IsLowVoilence => Internal.BIsLowViolence();
+		public static bool IsLowViolence => Internal.BIsLowViolence();
 
 		/// <summary>
 		/// Checks whether the current App ID license is for Cyber Cafes.
