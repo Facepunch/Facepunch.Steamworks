@@ -109,7 +109,7 @@ namespace Steamworks
 			Interface?.OnDisconnected( info );
 		}
 
-		public void Receive( int bufferSize = 32 )
+		public int Receive( int bufferSize = 32, bool receiveToEnd = true )
 		{
 			int processed = 0;
 			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
@@ -131,8 +131,10 @@ namespace Steamworks
 			//
 			// Overwhelmed our buffer, keep going
 			//
-			if ( processed == bufferSize )
-				Receive( bufferSize );
+			if ( receiveToEnd && processed == bufferSize )
+				processed += Receive( bufferSize );
+
+			return processed;
 		}
 
 		internal unsafe void ReceiveMessage( IntPtr msgPtr )
