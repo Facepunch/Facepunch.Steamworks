@@ -205,6 +205,23 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Allow unencrypted (and unauthenticated) communication.
+		/// 0: Not allowed (the default)
+		/// 1: Allowed, but prefer encrypted
+		/// 2: Allowed, and preferred
+		/// 3: Required.  (Fail the connection if the peer requires encryption.)
+		///
+		/// This is a dev configuration value, since its purpose is to disable encryption.
+		/// You should not let users modify it in production.  (But note that it requires
+		/// the peer to also modify their value in order for encryption to be disabled.)
+		/// </summary>
+		public static int Unencrypted
+		{
+			get => GetConfigInt( NetConfig.Unencrypted );
+			set => SetConfigInt( NetConfig.Unencrypted, value );
+		}
+
+		/// <summary>
 		/// Get Debug Information via OnDebugOutput event
 		/// 
 		/// Except when debugging, you should only use NetDebugOutput.Msg
