@@ -161,5 +161,16 @@ namespace Steamworks
 			var result = await Internal.StopPlaytimeTrackingForAllItems();
 			return result.Value.Result == Result.OK;
 		}
-	}
+
+		/// <summary>
+		/// Suspends all workshop downloads.
+		/// Downloads will be suspended until you resume them by calling <see cref="ResumeDownloads"/> or when the game ends.
+		/// </summary>
+		public static void SuspendDownloads() => Internal.SuspendDownloads(true);
+
+		/// <summary>
+		/// Resumes all workshop downloads
+		/// </summary>
+		public static void ResumeDownloads() => Internal.SuspendDownloads(false);
+    }
 }
