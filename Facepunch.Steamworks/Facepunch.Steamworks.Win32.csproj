@@ -5,7 +5,6 @@
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN32;PLATFORM_WIN</DefineConstants>
 		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>7.1</LangVersion>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<RootNamespace>Steamworks</RootNamespace>
