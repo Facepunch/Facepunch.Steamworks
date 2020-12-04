@@ -28,7 +28,7 @@ namespace Steamworks
 		internal NetMsg AllocateMessage( int cbAllocateBuffer )
 		{
 			var returnValue = _AllocateMessage( Self, cbAllocateBuffer );
-			return returnValue.ToType<NetMsg>();
+			return returnValue.ToUnmanagedType<NetMsg>();
 		}
 		
 		#region FunctionMeta
