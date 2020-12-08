@@ -80,6 +80,22 @@ namespace Steamworks
 
 
 		/// <summary>
+		/// Marks the file as shared so other users can download it
+		/// </summary>
+		public static async Task<ulong> FileShare(string filename)
+		{
+			var result = await Internal.FileShare(filename);
+
+			if (!result.HasValue)
+				return ulong.MinValue;
+
+			if (result.Value.Result != Steamworks.Result.OK)
+				return ulong.MinValue;
+
+			return result.Value.File;
+		}
+
+		/// <summary>
 		/// Number of bytes total
 		/// </summary>
 		public static ulong QuotaBytes
