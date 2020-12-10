@@ -45,7 +45,7 @@ namespace Steamworks.Ugc
 		public static Editor NewMicrotransactionFile => new Editor( WorkshopFileType.Microtransaction );
 
 		/// <summary>
-		/// Workshop item that is meant to be voted on for the purpose of selling in-game
+		/// Workshop item that is meant to be managed by the game. It is queryable by the API, but isn't visible on the web browser.
 		/// </summary>
 		public static Editor NewMGameManagedFile => new Editor(WorkshopFileType.GameManagedItem);
 
