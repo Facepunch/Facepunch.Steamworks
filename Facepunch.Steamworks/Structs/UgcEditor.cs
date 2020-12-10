@@ -47,7 +47,7 @@ namespace Steamworks.Ugc
 		/// <summary>
 		/// Workshop item that is meant to be managed by the game. It is queryable by the API, but isn't visible on the web browser.
 		/// </summary>
-		public static Editor NewMGameManagedFile => new Editor(WorkshopFileType.GameManagedItem);
+		public static Editor NewGameManagedFile => new Editor(WorkshopFileType.GameManagedItem);
 
 		public Editor ForAppId( AppId id ) { this.consumerAppId = id; return this; }
 
