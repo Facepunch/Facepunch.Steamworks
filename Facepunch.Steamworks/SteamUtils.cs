@@ -261,5 +261,20 @@ namespace Steamworks
 		/// Returns whether this steam client is a Steam China specific client, vs the global client
 		/// </summary>
 		public static bool IsSteamChinaLauncher => Internal.IsSteamChinaLauncher();
+
+		/// <summary>
+		/// Initializes text filtering, loading dictionaries for the language the game is running in.
+		/// Users can customize the text filter behavior in their Steam Account preferences
+		/// </summary>
+		public static bool InitFilterText( uint unFilterOptions ) => Internal.InitFilterText( unFilterOptions );
+
+		/// <summary>
+		/// Filters the provided input message and places the filtered result into pchOutFilteredText,
+		/// using legally required filtering and additional filtering based on the context and user settings.
+		/// </summary>
+		public int FilterText( TextFilteringContext eContext, SteamId sourceSteamID, string pchInputMessage, out string pchOutFilteredText )
+		{
+			return Internal.FilterText( eContext, sourceSteamID, pchInputMessage, out pchOutFilteredText );
+		}
 	}
 }
