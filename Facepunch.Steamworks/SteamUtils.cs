@@ -266,15 +266,16 @@ namespace Steamworks
 		/// Initializes text filtering, loading dictionaries for the language the game is running in.
 		/// Users can customize the text filter behavior in their Steam Account preferences
 		/// </summary>
-		public static bool InitFilterText( uint unFilterOptions ) => Internal.InitFilterText( unFilterOptions );
+		public static bool InitFilterText() => Internal.InitFilterText( 0 );
 
 		/// <summary>
 		/// Filters the provided input message and places the filtered result into pchOutFilteredText,
 		/// using legally required filtering and additional filtering based on the context and user settings.
 		/// </summary>
-		public int FilterText( TextFilteringContext eContext, SteamId sourceSteamID, string pchInputMessage, out string pchOutFilteredText )
+		public string FilterText( TextFilteringContext context, SteamId sourceSteamID, string inputMessage )
 		{
-			return Internal.FilterText( eContext, sourceSteamID, pchInputMessage, out pchOutFilteredText );
+			Internal.FilterText( context, sourceSteamID, inputMessage, out var filteredString );
+			return filteredString;
 		}
 	}
 }
