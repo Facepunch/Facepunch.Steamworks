@@ -126,7 +126,7 @@ namespace Steamworks.Ugc
 			return this;
 		}
 
-		public async Task<PublishResult> SubmitAsync( IProgress<float> progress = null )
+		public async Task<PublishResult> SubmitAsync( IProgress<float> progress = null, Action<PublishResult> onItemCreated = null )
 		{
 			var result = default( PublishResult );
 
@@ -166,6 +166,9 @@ namespace Steamworks.Ugc
 				fileId = created.Value.PublishedFileId;
 				result.NeedsWorkshopAgreement = created.Value.UserNeedsToAcceptWorkshopLegalAgreement;
 				result.FileId = fileId;
+
+				if ( onItemCreated != null )
+					onItemCreated( result );
 			}
 
 
