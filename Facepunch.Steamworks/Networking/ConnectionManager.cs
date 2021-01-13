@@ -1,6 +1,5 @@
 ﻿using Steamworks.Data;
 using System;
-using System.Runtime.InteropServices;
 
 namespace Steamworks
 {
@@ -109,47 +108,46 @@ namespace Steamworks
 			Interface?.OnDisconnected( info );
 		}
 
-		public int Receive( int bufferSize = 32, bool receiveToEnd = true )
-		{
-			int processed = 0;
-			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
+		public unsafe int Receive( int bufferSize = 32, bool receiveToEnd = true )
+        {
+            if ( bufferSize > 256 ) throw new ArgumentOutOfRangeException( nameof( bufferSize ) );
 
-			try
-			{
-				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, messageBuffer, bufferSize );
+			int totalProcessed = 0;
+            NetMsg** messageBuffer = stackalloc NetMsg*[bufferSize];
+			
+			while ( true )
+            {
+				int processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, new IntPtr( &messageBuffer ), bufferSize );
+                totalProcessed += processed;
 
-				for ( int i = 0; i < processed; i++ )
-				{
-					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * IntPtr.Size ) );
-				}
+			    for ( int i = 0; i < processed; i++ )
+			    {
+				    // TODO: if this throws we will leak the remaining NetMsgs (probably not going to happen much though)
+				    ReceiveMessage( messageBuffer[i] );
+			    }
+
+			    //
+			    // Keep going if receiveToEnd and we filled the buffer
+			    //
+			    if ( !receiveToEnd || processed < bufferSize )
+				    break;
 			}
-			finally
-			{
-				Marshal.FreeHGlobal( messageBuffer );
-			}
 
-			//
-			// Overwhelmed our buffer, keep going
-			//
-			if ( receiveToEnd && processed == bufferSize )
-				processed += Receive( bufferSize );
-
-			return processed;
+			return totalProcessed;
 		}
 
-		internal unsafe void ReceiveMessage( IntPtr msgPtr )
+		internal unsafe void ReceiveMessage( NetMsg* msg )
 		{
-			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				OnMessage( msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
+				OnMessage( msg->DataPtr, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
 			}
 			finally
 			{
 				//
 				// Releases the message
 				//
-				NetMsg.InternalRelease( (NetMsg*) msgPtr );
+				NetMsg.InternalRelease( msg );
 			}
 		}
 
