@@ -110,14 +110,14 @@ namespace Steamworks
 
 		public unsafe int Receive( int bufferSize = 32, bool receiveToEnd = true )
         {
-            if ( bufferSize > 256 ) throw new ArgumentOutOfRangeException( nameof( bufferSize ) );
+            if ( bufferSize < 1 || bufferSize > 256 ) throw new ArgumentOutOfRangeException( nameof( bufferSize ) );
 
 			int totalProcessed = 0;
             NetMsg** messageBuffer = stackalloc NetMsg*[bufferSize];
 			
 			while ( true )
             {
-				int processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, new IntPtr( &messageBuffer ), bufferSize );
+				int processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, new IntPtr( &messageBuffer[0] ), bufferSize );
                 totalProcessed += processed;
 
 			    for ( int i = 0; i < processed; i++ )
