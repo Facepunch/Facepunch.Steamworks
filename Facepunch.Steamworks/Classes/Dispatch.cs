@@ -200,7 +200,7 @@ namespace Steamworks
 		/// </summary>
 		private static void ProcessResult( CallbackMsg_t msg )
 		{
-			var result = msg.Data.ToType<SteamAPICallCompleted_t>();
+			var result = msg.Data.ToUnmanagedType<SteamAPICallCompleted_t>();
 
 			//
 			// Do we have an entry added via OnCallComplete

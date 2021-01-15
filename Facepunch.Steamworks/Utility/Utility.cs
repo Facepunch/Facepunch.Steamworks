@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -16,6 +17,20 @@ namespace Steamworks
                 return default;
 
             return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // Copy method body instead of call
+        static unsafe internal T ToUnmanagedType<T>(this IntPtr ptr) where T : unmanaged
+        {
+            if (ptr == IntPtr.Zero)
+                return default;
+
+            T dest;
+            long size = sizeof(T);
+            // Can be used other memcpy method with less overhead?
+            Buffer.MemoryCopy(ptr.ToPointer(), &dest, size, size);
+
+            return dest;
         }
 
         static internal object ToType( this IntPtr ptr, System.Type t )
