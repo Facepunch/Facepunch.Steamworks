@@ -140,15 +140,21 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// Sends bytes the the chat room
-		/// this isn't exposed because there's no way to read raw bytes atm, 
-		/// and I figure people can send json if they want something more advanced
 		/// </summary>
-		internal unsafe bool SendChatBytes( byte[] data )
+		public unsafe bool SendChatBytes( byte[] data )
 		{
 			fixed ( byte* ptr = data )
 			{
-				return SteamMatchmaking.Internal.SendLobbyChatMsg( Id, (IntPtr)ptr, data.Length );
+				return SendChatBytesUnsafe( ptr, data.Length );
 			}
+		}
+
+		/// <summary>
+		/// Sends bytes the the chat room from a unsafe buffer
+		/// </summary>
+		public unsafe bool SendChatBytesUnsafe( byte* ptr, int length )
+		{
+			return SteamMatchmaking.Internal.SendLobbyChatMsg( Id, (IntPtr)ptr, length );
 		}
 
 		/// <summary>
@@ -202,7 +208,7 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// [SteamID variant]
-		/// Allows the owner to set the game server associated with the lobby. Triggers the 
+		/// Allows the owner to set the game server associated with the lobby. Triggers the
 		/// Steammatchmaking.OnLobbyGameCreated event.
 		/// </summary>
 		public void SetGameServer( SteamId steamServer )
@@ -215,7 +221,7 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// [IP/Port variant]
-		/// Allows the owner to set the game server associated with the lobby. Triggers the 
+		/// Allows the owner to set the game server associated with the lobby. Triggers the
 		/// Steammatchmaking.OnLobbyGameCreated event.
 		/// </summary>
 		public void SetGameServer( string ip, ushort port )
@@ -227,7 +233,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Gets the details of the lobby's game server, if set. Returns true if the lobby is 
+		/// Gets the details of the lobby's game server, if set. Returns true if the lobby is
 		/// valid and has a server set, otherwise returns false.
 		/// </summary>
 		public bool GetGameServer( ref uint ip, ref ushort port, ref SteamId serverId )
