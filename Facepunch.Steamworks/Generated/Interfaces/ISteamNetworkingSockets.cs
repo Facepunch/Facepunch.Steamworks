@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamNetworkingSockets : SteamInterface
+	internal unsafe class ISteamNetworkingSockets : SteamInterface
 	{
 		
 		internal ISteamNetworkingSockets( bool IsGameServer )
@@ -162,12 +162,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_SendMessages", CallingConvention = Platform.CC)]
-		private static extern void _SendMessages( IntPtr self, int nMessages, ref NetMsg pMessages, [In,Out] long[]  pOutMessageNumberOrResult );
+		private static extern void _SendMessages( IntPtr self, int nMessages, NetMsg** pMessages, [In,Out] long[]  pOutMessageNumberOrResult );
 		
 		#endregion
-		internal void SendMessages( int nMessages, ref NetMsg pMessages, [In,Out] long[]  pOutMessageNumberOrResult )
+		internal void SendMessages( int nMessages, NetMsg** pMessages, [In,Out] long[]  pOutMessageNumberOrResult )
 		{
-			_SendMessages( Self, nMessages, ref pMessages, pOutMessageNumberOrResult );
+			_SendMessages( Self, nMessages, pMessages, pOutMessageNumberOrResult );
 		}
 		
 		#region FunctionMeta

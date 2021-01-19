@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamHTMLSurface : SteamInterface
+	internal unsafe class ISteamHTMLSurface : SteamInterface
 	{
 		
 		internal ISteamHTMLSurface( bool IsGameServer )

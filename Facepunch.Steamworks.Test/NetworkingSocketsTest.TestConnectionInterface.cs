@@ -72,7 +72,7 @@ namespace Steamworks
 					Receive();
 					await Task.Delay( 100 );
 
-					if ( sw.Elapsed.TotalSeconds > 10 )
+					if ( sw.Elapsed.TotalSeconds > 30 )
 					{
 						Assert.Fail( "Client Took Too Long" );
 						break;
@@ -95,9 +95,11 @@ namespace Steamworks
 					Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: How do you like 20 messages in a row?" );
 					Connection.SendMessage( "How do you like 20 messages in a row?" );
 
+					var connections = new[] { Connection };
 					for ( int i=0; i<20; i++ )
 					{
-						Connection.SendMessage( $"BLAMMO!" );
+						Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: BLAMMO {i}!" );
+						Broadcast( connections, connections.Length, $"BLAMMO {i}!" );
 					}
 
 					Connection.Flush();

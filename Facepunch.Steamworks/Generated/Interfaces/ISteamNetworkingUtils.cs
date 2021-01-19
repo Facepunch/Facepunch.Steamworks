@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamNetworkingUtils : SteamInterface
+	internal unsafe class ISteamNetworkingUtils : SteamInterface
 	{
 		
 		internal ISteamNetworkingUtils( bool IsGameServer )
@@ -22,13 +22,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_AllocateMessage", CallingConvention = Platform.CC)]
-		private static extern IntPtr _AllocateMessage( IntPtr self, int cbAllocateBuffer );
+		private static extern NetMsg* _AllocateMessage( IntPtr self, int cbAllocateBuffer );
 		
 		#endregion
-		internal NetMsg AllocateMessage( int cbAllocateBuffer )
+		internal NetMsg* AllocateMessage( int cbAllocateBuffer )
 		{
 			var returnValue = _AllocateMessage( Self, cbAllocateBuffer );
-			return returnValue.ToType<NetMsg>();
+			return returnValue;
 		}
 		
 		#region FunctionMeta

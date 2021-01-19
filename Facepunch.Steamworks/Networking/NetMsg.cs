@@ -1,5 +1,4 @@
-﻿using Steamworks.Data;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace Steamworks.Data
@@ -17,5 +16,7 @@ namespace Steamworks.Data
 		internal IntPtr FreeDataPtr;
 		internal IntPtr ReleasePtr;
 		internal int Channel;
+		internal SendType Flags;
+		internal long UserData;
 	}
 }

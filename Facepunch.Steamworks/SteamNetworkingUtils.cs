@@ -271,6 +271,11 @@ namespace Steamworks
 			debugMessages.Enqueue( new DebugMessage { Type = nType, Msg = Helpers.MemoryToString( str ) } );
 		}
 
+		internal static void LogDebugMessage( NetDebugOutput type, string message )
+        {
+			debugMessages.Enqueue( new DebugMessage { Type = type, Msg = message } );
+        }
+
 		/// <summary>
 		/// Called regularly from the Dispatch loop so we can provide a timely
 		/// stream of messages.
@@ -285,6 +290,11 @@ namespace Steamworks
 				OnDebugOutput?.Invoke( result.Type, result.Msg );
 			}
 		}
+
+        internal static unsafe NetMsg* AllocateMessage()
+        {
+            return Internal.AllocateMessage(0);
+        }
 
 		#region Config Internals
 

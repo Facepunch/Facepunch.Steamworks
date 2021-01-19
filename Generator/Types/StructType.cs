@@ -15,17 +15,27 @@ internal class StructType : BaseType
 {
 	public string StructName;
 
-	public override string TypeName => StructName;
+    public override string TypeName => IsPointer && TreatAsPointer ? StructName + PointerSuffix : StructName;
 
-	public override string TypeNameFrom => NativeType.EndsWith( "*" ) ? "IntPtr" : base.ReturnType;
+	public override string TypeNameFrom => IsPointer && !TreatAsPointer ? "IntPtr" : TypeName;
 
-	public override string Return( string varname )
+    public override string AsArgument() => IsPointer && TreatAsPointer ? $"{TypeName} {VarName}" : base.AsArgument();
+
+    public override string AsCallArgument() => IsPointer && TreatAsPointer ? VarName : base.AsCallArgument();
+
+    public bool IsPointer => NativeType.EndsWith( "*" );
+
+    public bool TreatAsPointer => StructName == "NetMsg";
+
+    public override string Return( string varname )
 	{
-		if ( NativeType.EndsWith( "*" ) )
+		if ( IsPointer && !TreatAsPointer )
 		{
-			return $"return {varname}.ToType<{TypeName}>();";
+            return $"return {varname}.ToType<{TypeName}>();";
 		}
 
 		return base.Return( varname );
 	}
+
+    private string PointerSuffix => new string( '*', NativeType.Count( c => c == '*' ) );
 }

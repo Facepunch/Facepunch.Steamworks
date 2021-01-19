@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamRemoteStorage : SteamInterface
+	internal unsafe class ISteamRemoteStorage : SteamInterface
 	{
 		
 		internal ISteamRemoteStorage( bool IsGameServer )

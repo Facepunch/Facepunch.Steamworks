@@ -23,7 +23,7 @@ namespace Generator
 
 			StartBlock( $"namespace Steamworks" );
 			{
-				StartBlock( $"internal class {iface.Name} : SteamInterface" );
+				StartBlock( $"internal unsafe class {iface.Name} : SteamInterface" );
 				{
 					WriteLine();
 					StartBlock( $"internal {iface.Name}( bool IsGameServer )" );

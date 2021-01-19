@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamMatchmakingServerListResponse : SteamInterface
+	internal unsafe class ISteamMatchmakingServerListResponse : SteamInterface
 	{
 		
 		internal ISteamMatchmakingServerListResponse( bool IsGameServer )

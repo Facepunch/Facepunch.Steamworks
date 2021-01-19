@@ -97,7 +97,7 @@ namespace Steamworks
 					Receive();
 					await Task.Delay( 100 );
 
-					if ( sw.Elapsed.TotalSeconds > 5 )
+					if ( sw.Elapsed.TotalSeconds > 100 )
 					{
 						Console.WriteLine( "Socket: This all took too long - throwing an exception" );
 						Assert.Fail( "Socket Took Too Long" );
