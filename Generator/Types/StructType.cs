@@ -23,9 +23,9 @@ internal class StructType : BaseType
 
     public override string AsCallArgument() => IsPointer && TreatAsPointer ? VarName : base.AsCallArgument();
 
-    public bool IsPointer => NativeType.EndsWith( "*" );
+    public override bool TreatAsPointer => StructName == "NetMsg";
 
-    public bool TreatAsPointer => StructName == "NetMsg";
+    public bool IsPointer => NativeType.EndsWith( "*" );
 
     public override string Return( string varname )
 	{

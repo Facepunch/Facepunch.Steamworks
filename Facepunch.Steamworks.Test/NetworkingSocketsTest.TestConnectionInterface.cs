@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -96,10 +97,12 @@ namespace Steamworks
 					Connection.SendMessage( "How do you like 20 messages in a row?" );
 
 					var connections = new[] { Connection };
+                    var results = new Result[1];
 					for ( int i=0; i<20; i++ )
 					{
 						Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: BLAMMO {i}!" );
-						Broadcast( connections, connections.Length, $"BLAMMO {i}!" );
+						SendMessages( connections, connections.Length, $"BLAMMO {i}!", results: results );
+						Assert.AreEqual( Result.OK, results[0] );
 					}
 
 					Connection.Flush();
