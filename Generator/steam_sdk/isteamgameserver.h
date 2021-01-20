@@ -12,8 +12,6 @@
 
 #include "steam_api_common.h"
 
-#define MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE	((uint16)-1)
-
 //-----------------------------------------------------------------------------
 // Purpose: Functions for authenticating users via Steam to play on a game server
 //-----------------------------------------------------------------------------
@@ -255,19 +253,6 @@ public:
 // Global accessor
 inline ISteamGameServer *SteamGameServer();
 STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamGameServer *, SteamGameServer, STEAMGAMESERVER_INTERFACE_VERSION );
-
-// game server flags
-const uint32 k_unServerFlagNone			= 0x00;
-const uint32 k_unServerFlagActive		= 0x01;		// server has users playing
-const uint32 k_unServerFlagSecure		= 0x02;		// server wants to be secure
-const uint32 k_unServerFlagDedicated	= 0x04;		// server is dedicated
-const uint32 k_unServerFlagLinux		= 0x08;		// linux build
-const uint32 k_unServerFlagPassworded	= 0x10;		// password protected
-const uint32 k_unServerFlagPrivate		= 0x20;		// server shouldn't list on master server and
-													// won't enforce authentication of users that connect to the server.
-													// Useful when you run a server where the clients may not
-													// be connected to the internet but you want them to play (i.e LANs)
-
 
 // callbacks
 #if defined( VALVE_CALLBACK_PACK_SMALL )

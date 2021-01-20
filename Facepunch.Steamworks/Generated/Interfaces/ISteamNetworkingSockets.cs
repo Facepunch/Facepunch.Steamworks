@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_v009", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_v009();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_v009();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_v009", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_v009();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_v009();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_SteamAPI_v009", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_SteamAPI_v009();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_SteamAPI_v009();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009();
 		
 		
 		#region FunctionMeta

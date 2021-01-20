@@ -2,15 +2,14 @@
 
 #ifndef ISTEAMNETWORKINGSOCKETS
 #define ISTEAMNETWORKINGSOCKETS
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "steamnetworkingtypes.h"
+#include "steam_api_common.h"
 
 struct SteamNetAuthenticationStatus_t;
-class ISteamNetworkingConnectionCustomSignaling;
-class ISteamNetworkingCustomSignalingRecvContext;
+class ISteamNetworkingConnectionSignaling;
+class ISteamNetworkingSignalingRecvContext;
 
 //-----------------------------------------------------------------------------
 /// Lower level networking API.
@@ -84,7 +83,7 @@ public:
 	/// setting the options "immediately" after creation.
 	virtual HSteamNetConnection ConnectByIPAddress( const SteamNetworkingIPAddr &address, int nOptions, const SteamNetworkingConfigValue_t *pOptions ) = 0;
 
-	/// Like CreateListenSocketIP, but clients will connect using ConnectP2P
+	/// Like CreateListenSocketIP, but clients will connect using ConnectP2P.
 	///
 	/// nLocalVirtualPort specifies how clients can connect to this socket using
 	/// ConnectP2P.  It's very common for applications to only have one listening socket;
@@ -93,7 +92,16 @@ public:
 	/// integer (<1000) unique to each listen socket you create.
 	///
 	/// If you use this, you probably want to call ISteamNetworkingUtils::InitRelayNetworkAccess()
-	/// when your app initializes
+	/// when your app initializes.
+	///
+	/// If you are listening on a dedicated servers in known data center,
+	/// then you can listen using this function instead of CreateHostedDedicatedServerListenSocket,
+	/// to allow clients to connect without a ticket.  Any user that owns
+	/// the app and is signed into Steam will be able to attempt to connect to
+	/// your server.  Also, a connection attempt may require the client to
+	/// be connected to Steam, which is one more moving part that may fail.  When
+	/// tickets are used, then once a ticket is obtained, a client can connect to
+	/// your server even if they got disconnected from Steam or Steam is offline.
 	///
 	/// If you need to set any initial config options, pass them here.  See
 	/// SteamNetworkingConfigValue_t for more about why this is preferable to
@@ -107,6 +115,10 @@ public:
 	/// If you need to set any initial config options, pass them here.  See
 	/// SteamNetworkingConfigValue_t for more about why this is preferable to
 	/// setting the options "immediately" after creation.
+	///
+	/// To use your own signaling service, see:
+	/// - ConnectP2PCustomSignaling
+	/// - k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling
 	virtual HSteamNetConnection ConnectP2P( const SteamNetworkingIdentity &identityRemote, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t *pOptions ) = 0;
 
 	/// Accept an incoming connection that has been received on a listen socket.
@@ -437,11 +449,11 @@ public:
 	/// other connections.)
 	virtual int ReceiveMessagesOnPollGroup( HSteamNetPollGroup hPollGroup, SteamNetworkingMessage_t **ppOutMessages, int nMaxMessages ) = 0; 
 
-#ifdef STEAMNETWORKINGSOCKETS_ENABLE_SDR
-
 	//
 	// Clients connecting to dedicated servers hosted in a data center,
-	// using central-authority-granted tickets.
+	// using tickets issued by your game coordinator.  If you are not
+	// issuing your own tickets to restrict who can attempt to connect
+	// to your server, then you won't use these functions.
 	//
 
 	/// Call this when you receive a ticket from your backend / matchmaking system.  Puts the
@@ -459,7 +471,10 @@ public:
 	virtual int FindRelayAuthTicketForServer( const SteamNetworkingIdentity &identityGameServer, int nRemoteVirtualPort, SteamDatagramRelayAuthTicket *pOutParsedTicket ) = 0;
 
 	/// Client call to connect to a server hosted in a Valve data center, on the specified virtual
-	/// port.  You must have placed a ticket for this server into the cache, or else this connect attempt will fail!
+	/// port.  You must have placed a ticket for this server into the cache, or else this connect
+	/// attempt will fail!  If you are not issuing your own tickets, then to connect to a dedicated
+	/// server via SDR in auto-ticket mode, use ConnectP2P.  (The server must be configured to allow
+	/// this type of connection by listening using CreateListenSocketP2P.)
 	///
 	/// You may wonder why tickets are stored in a cache, instead of simply being passed as an argument
 	/// here.  The reason is to make reconnection to a gameserver robust, even if the client computer loses
@@ -522,7 +537,11 @@ public:
 	/// will be determined by the SDR_LISTEN_PORT environment variable.  If a UDP port is not
 	/// configured, this call will fail.
 	///
-	/// Note that this call MUST be made through the SteamGameServerNetworkingSockets() interface
+	/// This call MUST be made through the SteamGameServerNetworkingSockets() interface.
+	/// 
+	/// This function should be used when you are using the ticket generator library
+	/// to issue your own tickets.  Clients connecting to the server on this virtual
+	/// port will need a ticket, and they must connect using ConnectToHostedDedicatedServer.
 	///
 	/// If you need to set any initial config options, pass them here.  See
 	/// SteamNetworkingConfigValue_t for more about why this is preferable to
@@ -560,7 +579,6 @@ public:
 	/// NOTE: The routing blob returned here is not encrypted.  Send it to your backend
 	///       and don't share it directly with clients.
 	virtual EResult GetGameCoordinatorServerLogin( SteamDatagramGameCoordinatorServerLogin *pLoginInfo, int *pcbSignedBlob, void *pBlob ) = 0;
-#endif // #ifndef STEAMNETWORKINGSOCKETS_ENABLE_SDR
 
 
 	//
@@ -585,10 +603,10 @@ public:
 	/// This function will immediately construct a connection in the "connecting"
 	/// state.  Soon after (perhaps before this function returns, perhaps in another thread),
 	/// the connection will begin sending signaling messages by calling
-	/// ISteamNetworkingConnectionCustomSignaling::SendSignal.
+	/// ISteamNetworkingConnectionSignaling::SendSignal.
 	///
 	/// When the remote peer accepts the connection (See
-	/// ISteamNetworkingCustomSignalingRecvContext::OnConnectRequest),
+	/// ISteamNetworkingSignalingRecvContext::OnConnectRequest),
 	/// it will begin sending signaling messages.  When these messages are received,
 	/// you can pass them to the connection using ReceivedP2PCustomSignal.
 	///
@@ -603,7 +621,7 @@ public:
 	/// If you need to set any initial config options, pass them here.  See
 	/// SteamNetworkingConfigValue_t for more about why this is preferable to
 	/// setting the options "immediately" after creation.
-	virtual HSteamNetConnection ConnectP2PCustomSignaling( ISteamNetworkingConnectionCustomSignaling *pSignaling, const SteamNetworkingIdentity *pPeerIdentity, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t *pOptions ) = 0;
+	virtual HSteamNetConnection ConnectP2PCustomSignaling( ISteamNetworkingConnectionSignaling *pSignaling, const SteamNetworkingIdentity *pPeerIdentity, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t *pOptions ) = 0;
 
 	/// Called when custom signaling has received a message.  When your
 	/// signaling channel receives a message, it should save off whatever
@@ -614,7 +632,7 @@ public:
 	///
 	/// - If the signal is associated with existing connection, it is dealt
 	///   with immediately.  If any replies need to be sent, they will be
-	///   dispatched using the ISteamNetworkingConnectionCustomSignaling
+	///   dispatched using the ISteamNetworkingConnectionSignaling
 	///   associated with the connection.
 	/// - If the message represents a connection request (and the request
 	///   is not redundant for an existing connection), a new connection
@@ -634,7 +652,7 @@ public:
 	///
 	/// If you expect to be using relayed connections, then you probably want
 	/// to call ISteamNetworkingUtils::InitRelayNetworkAccess() when your app initializes
-	virtual bool ReceivedP2PCustomSignal( const void *pMsg, int cbMsg, ISteamNetworkingCustomSignalingRecvContext *pContext ) = 0;
+	virtual bool ReceivedP2PCustomSignal( const void *pMsg, int cbMsg, ISteamNetworkingSignalingRecvContext *pContext ) = 0;
 
 //
 // Certificate provision by the application.  On Steam, we normally handle all this automatically
@@ -664,28 +682,40 @@ protected:
 };
 #define STEAMNETWORKINGSOCKETS_INTERFACE_VERSION "SteamNetworkingSockets009"
 
-// Global accessor.
-#if defined( STEAMNETWORKINGSOCKETS_PARTNER )
+// Global accessors
+// Using standalone lib
+#ifdef STEAMNETWORKINGSOCKETS_STANDALONELIB
 
-	// Standalone lib.  Use different symbol name, so that we can dynamically switch between steamclient.dll
-	// and the standalone lib
-	STEAMNETWORKINGSOCKETS_INTERFACE ISteamNetworkingSockets *SteamNetworkingSockets_Lib();
-	STEAMNETWORKINGSOCKETS_INTERFACE ISteamNetworkingSockets *SteamGameServerNetworkingSockets_Lib();
-	inline ISteamNetworkingSockets *SteamNetworkingSockets() { return SteamNetworkingSockets_Lib(); }
-	inline ISteamNetworkingSockets *SteamGameServerNetworkingSockets() { return SteamGameServerNetworkingSockets_Lib(); }
+	// Standalone lib.
+	static_assert( STEAMNETWORKINGSOCKETS_INTERFACE_VERSION[24] == '9', "Version mismatch" );
+	STEAMNETWORKINGSOCKETS_INTERFACE ISteamNetworkingSockets *SteamNetworkingSockets_LibV9();
+	inline ISteamNetworkingSockets *SteamNetworkingSockets_Lib() { return SteamNetworkingSockets_LibV9(); }
 
-#elif defined( STEAMNETWORKINGSOCKETS_OPENSOURCE ) || defined( STEAMNETWORKINGSOCKETS_STREAMINGCLIENT )
+	// If running in context of steam, we also define a gameserver instance.
+	#ifdef STEAMNETWORKINGSOCKETS_STEAM
+		STEAMNETWORKINGSOCKETS_INTERFACE ISteamNetworkingSockets *SteamGameServerNetworkingSockets_LibV9();
+		inline ISteamNetworkingSockets *SteamGameServerNetworkingSockets_Lib() { return SteamGameServerNetworkingSockets_LibV9(); }
+	#endif
 
-	// Opensource GameNetworkingSockets
-	STEAMNETWORKINGSOCKETS_INTERFACE ISteamNetworkingSockets *SteamNetworkingSockets();
+	#ifndef STEAMNETWORKINGSOCKETS_STEAMAPI
+		inline ISteamNetworkingSockets *SteamNetworkingSockets() { return SteamNetworkingSockets_LibV9(); }
+		#ifdef STEAMNETWORKINGSOCKETS_STEAM
+			inline ISteamNetworkingSockets *SteamGameServerNetworkingSockets() { return SteamGameServerNetworkingSockets_LibV9(); }
+		#endif
+	#endif
+#endif
 
-#else
+// Using Steamworks SDK
+#ifdef STEAMNETWORKINGSOCKETS_STEAMAPI
 
 	// Steamworks SDK
-	inline ISteamNetworkingSockets *SteamNetworkingSockets();
-	STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamNetworkingSockets *, SteamNetworkingSockets, STEAMNETWORKINGSOCKETS_INTERFACE_VERSION );
-	inline ISteamNetworkingSockets *SteamGameServerNetworkingSockets();
-	STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamNetworkingSockets *, SteamGameServerNetworkingSockets, STEAMNETWORKINGSOCKETS_INTERFACE_VERSION );
+	STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamNetworkingSockets *, SteamNetworkingSockets_SteamAPI, STEAMNETWORKINGSOCKETS_INTERFACE_VERSION );
+	STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamNetworkingSockets *, SteamGameServerNetworkingSockets_SteamAPI, STEAMNETWORKINGSOCKETS_INTERFACE_VERSION );
+
+	#ifndef STEAMNETWORKINGSOCKETS_STANDALONELIB
+		inline ISteamNetworkingSockets *SteamNetworkingSockets() { return SteamNetworkingSockets_SteamAPI(); }
+		inline ISteamNetworkingSockets *SteamGameServerNetworkingSockets() { return SteamGameServerNetworkingSockets_SteamAPI(); }
+	#endif
 #endif
 
 /// Callback struct used to notify when a connection has changed state

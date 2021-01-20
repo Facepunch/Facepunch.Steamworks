@@ -86,8 +86,8 @@ public:
 	// the destination buffer size should be 4 * height * width * sizeof(char)
 	virtual bool GetImageRGBA( int iImage, uint8 *pubDest, int nDestBufferSize ) = 0;
 
-	// returns the IP of the reporting server for valve - currently only used in Source engine games
-	virtual bool GetCSERIPPort( uint32 *unIP, uint16 *usPort ) = 0;
+	// Deprecated.  Do not call this.
+	STEAM_PRIVATE_API( virtual bool GetCSERIPPort( uint32 *unIP, uint16 *usPort ) = 0; )
 
 	// return the amount of battery power left in the current system in % [0..100], 255 for being on AC power
 	virtual uint8 GetCurrentBatteryPower() = 0;
@@ -183,9 +183,12 @@ public:
 	// Returns whether this steam client is a Steam China specific client, vs the global client.
 	virtual bool IsSteamChinaLauncher() = 0;
 
-	// Initializes text filtering.
+	// Initializes text filtering, loading dictionaries for the language the game is running in.
 	//   unFilterOptions are reserved for future use and should be set to 0
-	// Returns false if filtering is unavailable for the language the user is currently running in.
+	// Returns false if filtering is unavailable for the game's language, in which case FilterText() will act as a passthrough.
+	//
+	// Users can customize the text filter behavior in their Steam Account preferences:
+	// https://store.steampowered.com/account/preferences#CommunityContentPreferences
 	virtual bool InitFilterText( uint32 unFilterOptions = 0 ) = 0;
 
 	// Filters the provided input message and places the filtered result into pchOutFilteredText, using legally required filtering and additional filtering based on the context and user settings

@@ -852,5 +852,15 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialogConnectString", CallingConvention = Platform.CC)]
+		private static extern void _ActivateGameOverlayInviteDialogConnectString( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString );
+		
+		#endregion
+		internal void ActivateGameOverlayInviteDialogConnectString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString )
+		{
+			_ActivateGameOverlayInviteDialogConnectString( Self, pchConnectString );
+		}
+		
 	}
 }

@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v014", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUGC_v014();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v014();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v014", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v014();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v014();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v015", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUGC_v015();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v015();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v015", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v015();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v015();
 		
 		
 		#region FunctionMeta
@@ -87,6 +87,45 @@ namespace Steamworks
 		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails )
 		{
 			var returnValue = _GetQueryUGCResult( Self, handle, index, ref pDetails );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumTags", CallingConvention = Platform.CC)]
+		private static extern uint _GetQueryUGCNumTags( IntPtr self, UGCQueryHandle_t handle, uint index );
+		
+		#endregion
+		internal uint GetQueryUGCNumTags( UGCQueryHandle_t handle, uint index )
+		{
+			var returnValue = _GetQueryUGCNumTags( Self, handle, index );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCTag", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetQueryUGCTag( IntPtr self, UGCQueryHandle_t handle, uint index, uint indexTag, IntPtr pchValue, uint cchValueSize );
+		
+		#endregion
+		internal bool GetQueryUGCTag( UGCQueryHandle_t handle, uint index, uint indexTag, out string pchValue )
+		{
+			IntPtr mempchValue = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCTag( Self, handle, index, indexTag, mempchValue, (1024 * 32) );
+			pchValue = Helpers.MemoryToString( mempchValue );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCTagDisplayName", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetQueryUGCTagDisplayName( IntPtr self, UGCQueryHandle_t handle, uint index, uint indexTag, IntPtr pchValue, uint cchValueSize );
+		
+		#endregion
+		internal bool GetQueryUGCTagDisplayName( UGCQueryHandle_t handle, uint index, uint indexTag, out string pchValue )
+		{
+			IntPtr mempchValue = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCTagDisplayName( Self, handle, index, indexTag, mempchValue, (1024 * 32) );
+			pchValue = Helpers.MemoryToString( mempchValue );
 			return returnValue;
 		}
 		

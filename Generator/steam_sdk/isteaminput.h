@@ -329,6 +329,83 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_Switch_Reserved18,
 	k_EInputActionOrigin_Switch_Reserved19,
 	k_EInputActionOrigin_Switch_Reserved20,
+	
+	// Added in SDK 1.51
+	k_EInputActionOrigin_PS5_X,
+	k_EInputActionOrigin_PS5_Circle,
+	k_EInputActionOrigin_PS5_Triangle,
+	k_EInputActionOrigin_PS5_Square,
+	k_EInputActionOrigin_PS5_LeftBumper,
+	k_EInputActionOrigin_PS5_RightBumper,
+	k_EInputActionOrigin_PS5_Option,	//Start
+	k_EInputActionOrigin_PS5_Create,		//Back
+	k_EInputActionOrigin_PS5_Mute,
+	k_EInputActionOrigin_PS5_LeftPad_Touch,
+	k_EInputActionOrigin_PS5_LeftPad_Swipe,
+	k_EInputActionOrigin_PS5_LeftPad_Click,
+	k_EInputActionOrigin_PS5_LeftPad_DPadNorth,
+	k_EInputActionOrigin_PS5_LeftPad_DPadSouth,
+	k_EInputActionOrigin_PS5_LeftPad_DPadWest,
+	k_EInputActionOrigin_PS5_LeftPad_DPadEast,
+	k_EInputActionOrigin_PS5_RightPad_Touch,
+	k_EInputActionOrigin_PS5_RightPad_Swipe,
+	k_EInputActionOrigin_PS5_RightPad_Click,
+	k_EInputActionOrigin_PS5_RightPad_DPadNorth,
+	k_EInputActionOrigin_PS5_RightPad_DPadSouth,
+	k_EInputActionOrigin_PS5_RightPad_DPadWest,
+	k_EInputActionOrigin_PS5_RightPad_DPadEast,
+	k_EInputActionOrigin_PS5_CenterPad_Touch,
+	k_EInputActionOrigin_PS5_CenterPad_Swipe,
+	k_EInputActionOrigin_PS5_CenterPad_Click,
+	k_EInputActionOrigin_PS5_CenterPad_DPadNorth,
+	k_EInputActionOrigin_PS5_CenterPad_DPadSouth,
+	k_EInputActionOrigin_PS5_CenterPad_DPadWest,
+	k_EInputActionOrigin_PS5_CenterPad_DPadEast,
+	k_EInputActionOrigin_PS5_LeftTrigger_Pull,
+	k_EInputActionOrigin_PS5_LeftTrigger_Click,
+	k_EInputActionOrigin_PS5_RightTrigger_Pull,
+	k_EInputActionOrigin_PS5_RightTrigger_Click,
+	k_EInputActionOrigin_PS5_LeftStick_Move,
+	k_EInputActionOrigin_PS5_LeftStick_Click,
+	k_EInputActionOrigin_PS5_LeftStick_DPadNorth,
+	k_EInputActionOrigin_PS5_LeftStick_DPadSouth,
+	k_EInputActionOrigin_PS5_LeftStick_DPadWest,
+	k_EInputActionOrigin_PS5_LeftStick_DPadEast,
+	k_EInputActionOrigin_PS5_RightStick_Move,
+	k_EInputActionOrigin_PS5_RightStick_Click,
+	k_EInputActionOrigin_PS5_RightStick_DPadNorth,
+	k_EInputActionOrigin_PS5_RightStick_DPadSouth,
+	k_EInputActionOrigin_PS5_RightStick_DPadWest,
+	k_EInputActionOrigin_PS5_RightStick_DPadEast,
+	k_EInputActionOrigin_PS5_DPad_North,
+	k_EInputActionOrigin_PS5_DPad_South,
+	k_EInputActionOrigin_PS5_DPad_West,
+	k_EInputActionOrigin_PS5_DPad_East,
+	k_EInputActionOrigin_PS5_Gyro_Move,
+	k_EInputActionOrigin_PS5_Gyro_Pitch,
+	k_EInputActionOrigin_PS5_Gyro_Yaw,
+	k_EInputActionOrigin_PS5_Gyro_Roll,
+	k_EInputActionOrigin_PS5_DPad_Move,
+	k_EInputActionOrigin_PS5_Reserved1,
+	k_EInputActionOrigin_PS5_Reserved2,
+	k_EInputActionOrigin_PS5_Reserved3,
+	k_EInputActionOrigin_PS5_Reserved4,
+	k_EInputActionOrigin_PS5_Reserved5,
+	k_EInputActionOrigin_PS5_Reserved6,
+	k_EInputActionOrigin_PS5_Reserved7,
+	k_EInputActionOrigin_PS5_Reserved8,
+	k_EInputActionOrigin_PS5_Reserved9,
+	k_EInputActionOrigin_PS5_Reserved10,
+	k_EInputActionOrigin_PS5_Reserved11,
+	k_EInputActionOrigin_PS5_Reserved12,
+	k_EInputActionOrigin_PS5_Reserved13,
+	k_EInputActionOrigin_PS5_Reserved14,
+	k_EInputActionOrigin_PS5_Reserved15,
+	k_EInputActionOrigin_PS5_Reserved16,
+	k_EInputActionOrigin_PS5_Reserved17,
+	k_EInputActionOrigin_PS5_Reserved18,
+	k_EInputActionOrigin_PS5_Reserved19,
+	k_EInputActionOrigin_PS5_Reserved20,
 
 	k_EInputActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EInputActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
@@ -388,6 +465,7 @@ enum ESteamInputType
 	k_ESteamInputType_SwitchProController,
 	k_ESteamInputType_MobileTouch,			// Steam Link App On-screen Virtual Controller
 	k_ESteamInputType_PS3Controller,		// Currently uses PS4 Origins
+	k_ESteamInputType_PS5Controller,		// Added in SDK 151
 	k_ESteamInputType_Count,
 	k_ESteamInputType_MaximumPossibleValue = 255,
 };
@@ -567,7 +645,8 @@ public:
 	// If the user is not in Big Picture Mode it will open up the binding in a new window
 	virtual bool ShowBindingPanel( InputHandle_t inputHandle ) = 0;
 
-	// Returns the input type for a particular handle
+	// Returns the input type for a particular handle - unlike EInputActionOrigin which update with Steam and may return unrecognized values
+	// ESteamInputType will remain static and only return valid values from your SDK version 
 	virtual ESteamInputType GetInputTypeForHandle( InputHandle_t inputHandle ) = 0;
 
 	// Returns the associated controller handle for the specified emulated gamepad - can be used with the above 2 functions
@@ -600,7 +679,7 @@ public:
 	virtual uint32 GetRemotePlaySessionID( InputHandle_t inputHandle ) = 0;
 };
 
-#define STEAMINPUT_INTERFACE_VERSION "SteamInput001"
+#define STEAMINPUT_INTERFACE_VERSION "SteamInput002"
 
 // Global interface accessor
 inline ISteamInput *SteamInput();

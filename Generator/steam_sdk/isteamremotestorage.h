@@ -241,7 +241,7 @@ class ISteamRemoteStorage
 		// The following functions are only necessary on the Playstation 3. On PC & Mac, the Steam client will handle these operations for you
 		// On Playstation 3, the game controls which files are stored in the cloud, via FilePersist, FileFetch, and FileForget.
 			
-#if defined(_PS3) || defined(_SERVER)
+#if defined(_SERVER)
 		// Connect to Steam and get a list of files in the Cloud - results in a RemoteStorageAppSyncStatusCheck_t callback
 		virtual void GetFileListFromServer() = 0;
 		// Indicate this file should be downloaded in the next sync

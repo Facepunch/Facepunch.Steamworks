@@ -6,26 +6,40 @@
 
 #ifndef STEAMNETWORKINGTYPES
 #define STEAMNETWORKINGTYPES
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include <string.h>
 #include <stdint.h>
+#include "steamtypes.h"
+#include "steamclientpublic.h"
 
-//----------------------------------------
-// SteamNetworkingSockets library config
-// Compiling in Steam public branch.
-#define STEAMNETWORKINGSOCKETS_STEAM
-#ifdef STEAMNETWORKINGSOCKETS_STATIC_LINK
-	#define STEAMNETWORKINGSOCKETS_INTERFACE extern
+//-----------------------------------------------------------------------------
+// SteamNetworkingSockets config.
+//#define STEAMNETWORKINGSOCKETS_STANDALONELIB // Comment this in to support compiling/linking with the standalone library / gamenetworkingsockets opensource
+#define STEAMNETWORKINGSOCKETS_STEAMAPI // Compiling/link with steam_api.h and Steamworks SDK
+//-----------------------------------------------------------------------------
+
+#if !defined( STEAMNETWORKINGSOCKETS_OPENSOURCE ) && !defined( STEAMNETWORKINGSOCKETS_STREAMINGCLIENT )
+	#define STEAMNETWORKINGSOCKETS_STEAM
 #endif
-#define STEAMNETWORKINGSOCKETS_STEAMCLIENT
-#define STEAMNETWORKINGSOCKETS_ENABLE_SDR
-#include "steam_api_common.h"
-// 
-//----------------------------------------
-
+#ifdef NN_NINTENDO_SDK // We always static link on Nintendo
+	#define STEAMNETWORKINGSOCKETS_STATIC_LINK
+#endif
+#if defined( STEAMNETWORKINGSOCKETS_STATIC_LINK )
+	#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C"
+#elif defined( STEAMNETWORKINGSOCKETS_FOREXPORT )
+	#ifdef _WIN32
+		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C" __declspec( dllexport )
+	#else
+		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C" __attribute__((visibility("default")))
+	#endif
+#else
+	#ifdef _WIN32
+		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C" __declspec( dllimport )
+	#else
+		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C"
+	#endif
+#endif
 
 #if defined( VALVE_CALLBACK_PACK_SMALL )
 #pragma pack( push, 4 )
@@ -195,18 +209,18 @@ struct SteamNetworkingIPAddr
 	/// (This means that you cannot tell if a zero port was explicitly specified.)
 	inline bool ParseString( const char *pszStr );
 
+	/// RFC4038, section 4.2
+	struct IPv4MappedAddress {
+		uint64 m_8zeros;
+		uint16 m_0000;
+		uint16 m_ffff;
+		uint8 m_ip[ 4 ]; // NOTE: As bytes, i.e. network byte order
+	};
+
 	union
 	{
 		uint8 m_ipv6[ 16 ];
-		#ifndef API_GEN // API generator doesn't understand this.  The bindings will just use the accessors
-		struct // IPv4 "mapped address" (rfc4038 section 4.2)
-		{
-			uint64 m_8zeros;
-			uint16 m_0000;
-			uint16 m_ffff;
-			uint8 m_ip[ 4 ]; // NOTE: As bytes, i.e. network byte order
-		} m_ipv4;
-		#endif
+		IPv4MappedAddress m_ipv4;
 	};
 	uint16 m_port; // Host byte order
 
@@ -659,6 +673,9 @@ struct SteamNetConnectionInfo_t
 	/// connection type (and peer information), and any name
 	/// given to the connection by the app.  This string is used in various
 	/// internal logging messages.
+	///
+	/// Note that the connection ID *usually* matches the HSteamNetConnection
+	/// handle, but in certain cases with symmetric connections it might not.
 	char m_szConnectionDescription[ k_cchSteamNetworkingMaxConnectionDescription ];
 
 	/// Internal stuff, room to change API easily
@@ -1297,6 +1314,12 @@ enum ESteamNetworkingConfigValue
 	/// See: ISteamNetworkingUtils::SetGlobalCallback_MessagesSessionFailed
 	k_ESteamNetworkingConfig_Callback_MessagesSessionFailed = 205,
 
+	/// [global FnSteamNetworkingSocketsCreateConnectionSignaling] Callback that will
+	/// be invoked when we need to create a signaling object for a connection
+	/// initiated locally.  See: ISteamNetworkingSockets::ConnectP2P,
+	/// ISteamNetworkingMessages.
+	k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling = 206,
+
 	//
 	// P2P settings
 	//
@@ -1599,17 +1622,6 @@ inline const uint8 *SteamNetworkingIdentity::GetGenericBytes( int &cbLen ) const
 	cbLen = m_cbSize; return m_genericBytes; }
 inline bool SteamNetworkingIdentity::operator==(const SteamNetworkingIdentity &x ) const { return m_eType == x.m_eType && m_cbSize == x.m_cbSize && memcmp( m_genericBytes, x.m_genericBytes, m_cbSize ) == 0; }
 inline void SteamNetworkingMessage_t::Release() { (*m_pfnRelease)( this ); }
-
-#if defined( STEAMNETWORKINGSOCKETS_STATIC_LINK ) || !defined( STEAMNETWORKINGSOCKETS_STEAMCLIENT )
-STEAMNETWORKINGSOCKETS_INTERFACE void SteamNetworkingIPAddr_ToString( const SteamNetworkingIPAddr *pAddr, char *buf, size_t cbBuf, bool bWithPort );
-STEAMNETWORKINGSOCKETS_INTERFACE bool SteamNetworkingIPAddr_ParseString( SteamNetworkingIPAddr *pAddr, const char *pszStr );
-STEAMNETWORKINGSOCKETS_INTERFACE void SteamNetworkingIdentity_ToString( const SteamNetworkingIdentity *pIdentity, char *buf, size_t cbBuf );
-STEAMNETWORKINGSOCKETS_INTERFACE bool SteamNetworkingIdentity_ParseString( SteamNetworkingIdentity *pIdentity, size_t sizeofIdentity, const char *pszStr );
-inline void SteamNetworkingIPAddr::ToString( char *buf, size_t cbBuf, bool bWithPort ) const { SteamNetworkingIPAddr_ToString( this, buf, cbBuf, bWithPort ); }
-inline bool SteamNetworkingIPAddr::ParseString( const char *pszStr ) { return SteamNetworkingIPAddr_ParseString( this, pszStr ); }
-inline void SteamNetworkingIdentity::ToString( char *buf, size_t cbBuf ) const { SteamNetworkingIdentity_ToString( this, buf, cbBuf ); }
-inline bool SteamNetworkingIdentity::ParseString( const char *pszStr ) { return SteamNetworkingIdentity_ParseString( this, sizeof(*this), pszStr ); }
-#endif
 
 #endif // #ifndef API_GEN
 

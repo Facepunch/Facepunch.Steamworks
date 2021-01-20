@@ -1,22 +1,5 @@
 {
   "callback_structs": [
-
-    {
-      "callback_id": 4604,
-      "fields": [
-        { "fieldname":"m_bIsRTMP", "fieldtype":"bool" }
-      ],
-      "struct": "BroadcastUploadStart_t"
-    },
-    
-    {
-      "callback_id": 4605,
-      "fields": [
-        { "fieldname":"m_eResult", "fieldtype":"EBroadcastUploadResult" }
-      ],
-      "struct": "BroadcastUploadStop_t"
-    },
-
     {
       "callback_id": 101,
       "fields": [],
@@ -1908,13 +1891,6 @@
     { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Public", "consttype":"int", "constval":"4" },
     { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_All", "consttype":"int", "constval":"0x7fffffff" },
     { "constname":"k_SteamDatagramPOPID_dev", "consttype":"SteamNetworkingPOPID", "constval":"( ( uint32 ) 'd' << 16U ) | ( ( uint32 ) 'e' << 8U ) | ( uint32 ) 'v'" },
-    { "constname":"k_unServerFlagNone", "consttype":"uint32", "constval":"0x00" },
-    { "constname":"k_unServerFlagActive", "consttype":"uint32", "constval":"0x01" },
-    { "constname":"k_unServerFlagSecure", "consttype":"uint32", "constval":"0x02" },
-    { "constname":"k_unServerFlagDedicated", "consttype":"uint32", "constval":"0x04" },
-    { "constname":"k_unServerFlagLinux", "consttype":"uint32", "constval":"0x08" },
-    { "constname":"k_unServerFlagPassworded", "consttype":"uint32", "constval":"0x10" },
-    { "constname":"k_unServerFlagPrivate", "consttype":"uint32", "constval":"0x20" },
     { "constname":"k_cbSteamDatagramMaxSerializedTicket", "consttype":"uint32", "constval":"512" },
     { "constname":"k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData", "consttype":"uint32", "constval":"2048" },
     { "constname":"k_cbMaxSteamDatagramGameCoordinatorServerLoginSerialized", "consttype":"uint32", "constval":"4096" }
@@ -2056,7 +2032,10 @@
         { "name":"k_EResultCantRemoveItem", "value":"113" },
         { "name":"k_EResultAccountDeleted", "value":"114" },
         { "name":"k_EResultExistingUserCancelledLicense", "value":"115" },
-        { "name":"k_EResultCommunityCooldown", "value":"116" }
+        { "name":"k_EResultCommunityCooldown", "value":"116" },
+        { "name":"k_EResultNoLauncherSpecified", "value":"117" },
+        { "name":"k_EResultMustAgreeToSSA", "value":"118" },
+        { "name":"k_EResultLauncherMigrated", "value":"119" }
       ]
     },
     {
@@ -2206,7 +2185,7 @@
         { "name":"k_EAppType_Comic_UNUSED", "value":"32768" },
         { "name":"k_EAppType_Beta", "value":"65536" },
         { "name":"k_EAppType_Shortcut", "value":"1073741824" },
-        { "name":"k_EAppType_DepotOnly", "value":"-2147483648" }
+        { "name":"k_EAppType_DepotOnly_DEPRECATED", "value":"-2147483648" }
       ]
     },
     {
@@ -2361,6 +2340,7 @@
         { "name":"k_eEVRHMDType_HP_Unknown", "value":"80" },
         { "name":"k_eEVRHMDType_HP_WindowsMR", "value":"81" },
         { "name":"k_eEVRHMDType_HP_Reverb", "value":"82" },
+        { "name":"k_eEVRHMDType_HP_ReverbG2", "value":"1463" },
         { "name":"k_eEVRHMDType_Samsung_Unknown", "value":"90" },
         { "name":"k_eEVRHMDType_Samsung_Odyssey", "value":"91" },
         { "name":"k_eEVRHMDType_Unannounced_Unknown", "value":"100" },
@@ -2807,10 +2787,10 @@
       "enumname": "EP2PSessionError",
       "values": [
         { "name":"k_EP2PSessionErrorNone", "value":"0" },
-        { "name":"k_EP2PSessionErrorNotRunningApp", "value":"1" },
         { "name":"k_EP2PSessionErrorNoRightsToApp", "value":"2" },
-        { "name":"k_EP2PSessionErrorDestinationNotLoggedIn", "value":"3" },
         { "name":"k_EP2PSessionErrorTimeout", "value":"4" },
+        { "name":"k_EP2PSessionErrorNotRunningApp_DELETED", "value":"1" },
+        { "name":"k_EP2PSessionErrorDestinationNotLoggedIn_DELETED", "value":"3" },
         { "name":"k_EP2PSessionErrorMax", "value":"5" }
       ]
     },
@@ -3213,7 +3193,82 @@
         { "name":"k_EInputActionOrigin_Switch_Reserved18", "value":"255" },
         { "name":"k_EInputActionOrigin_Switch_Reserved19", "value":"256" },
         { "name":"k_EInputActionOrigin_Switch_Reserved20", "value":"257" },
-        { "name":"k_EInputActionOrigin_Count", "value":"258" },
+        { "name":"k_EInputActionOrigin_PS5_X", "value":"258" },
+        { "name":"k_EInputActionOrigin_PS5_Circle", "value":"259" },
+        { "name":"k_EInputActionOrigin_PS5_Triangle", "value":"260" },
+        { "name":"k_EInputActionOrigin_PS5_Square", "value":"261" },
+        { "name":"k_EInputActionOrigin_PS5_LeftBumper", "value":"262" },
+        { "name":"k_EInputActionOrigin_PS5_RightBumper", "value":"263" },
+        { "name":"k_EInputActionOrigin_PS5_Option", "value":"264" },
+        { "name":"k_EInputActionOrigin_PS5_Create", "value":"265" },
+        { "name":"k_EInputActionOrigin_PS5_Mute", "value":"266" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_Touch", "value":"267" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_Swipe", "value":"268" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_Click", "value":"269" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_DPadNorth", "value":"270" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_DPadSouth", "value":"271" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_DPadWest", "value":"272" },
+        { "name":"k_EInputActionOrigin_PS5_LeftPad_DPadEast", "value":"273" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_Touch", "value":"274" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_Swipe", "value":"275" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_Click", "value":"276" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_DPadNorth", "value":"277" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_DPadSouth", "value":"278" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_DPadWest", "value":"279" },
+        { "name":"k_EInputActionOrigin_PS5_RightPad_DPadEast", "value":"280" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_Touch", "value":"281" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_Swipe", "value":"282" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_Click", "value":"283" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_DPadNorth", "value":"284" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_DPadSouth", "value":"285" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_DPadWest", "value":"286" },
+        { "name":"k_EInputActionOrigin_PS5_CenterPad_DPadEast", "value":"287" },
+        { "name":"k_EInputActionOrigin_PS5_LeftTrigger_Pull", "value":"288" },
+        { "name":"k_EInputActionOrigin_PS5_LeftTrigger_Click", "value":"289" },
+        { "name":"k_EInputActionOrigin_PS5_RightTrigger_Pull", "value":"290" },
+        { "name":"k_EInputActionOrigin_PS5_RightTrigger_Click", "value":"291" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_Move", "value":"292" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_Click", "value":"293" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_DPadNorth", "value":"294" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_DPadSouth", "value":"295" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_DPadWest", "value":"296" },
+        { "name":"k_EInputActionOrigin_PS5_LeftStick_DPadEast", "value":"297" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_Move", "value":"298" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_Click", "value":"299" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_DPadNorth", "value":"300" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_DPadSouth", "value":"301" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_DPadWest", "value":"302" },
+        { "name":"k_EInputActionOrigin_PS5_RightStick_DPadEast", "value":"303" },
+        { "name":"k_EInputActionOrigin_PS5_DPad_North", "value":"304" },
+        { "name":"k_EInputActionOrigin_PS5_DPad_South", "value":"305" },
+        { "name":"k_EInputActionOrigin_PS5_DPad_West", "value":"306" },
+        { "name":"k_EInputActionOrigin_PS5_DPad_East", "value":"307" },
+        { "name":"k_EInputActionOrigin_PS5_Gyro_Move", "value":"308" },
+        { "name":"k_EInputActionOrigin_PS5_Gyro_Pitch", "value":"309" },
+        { "name":"k_EInputActionOrigin_PS5_Gyro_Yaw", "value":"310" },
+        { "name":"k_EInputActionOrigin_PS5_Gyro_Roll", "value":"311" },
+        { "name":"k_EInputActionOrigin_PS5_DPad_Move", "value":"312" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved1", "value":"313" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved2", "value":"314" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved3", "value":"315" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved4", "value":"316" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved5", "value":"317" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved6", "value":"318" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved7", "value":"319" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved8", "value":"320" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved9", "value":"321" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved10", "value":"322" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved11", "value":"323" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved12", "value":"324" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved13", "value":"325" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved14", "value":"326" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved15", "value":"327" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved16", "value":"328" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved17", "value":"329" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved18", "value":"330" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved19", "value":"331" },
+        { "name":"k_EInputActionOrigin_PS5_Reserved20", "value":"332" },
+        { "name":"k_EInputActionOrigin_Count", "value":"333" },
         { "name":"k_EInputActionOrigin_MaximumPossibleValue", "value":"32767" }
       ]
     },
@@ -3274,7 +3329,8 @@
         { "name":"k_ESteamInputType_SwitchProController", "value":"10" },
         { "name":"k_ESteamInputType_MobileTouch", "value":"11" },
         { "name":"k_ESteamInputType_PS3Controller", "value":"12" },
-        { "name":"k_ESteamInputType_Count", "value":"13" },
+        { "name":"k_ESteamInputType_PS5Controller", "value":"13" },
+        { "name":"k_ESteamInputType_Count", "value":"14" },
         { "name":"k_ESteamInputType_MaximumPossibleValue", "value":"255" }
       ]
     },
@@ -3533,7 +3589,62 @@
         { "name":"k_EControllerActionOrigin_XBoxOne_DPad_Move", "value":"242" },
         { "name":"k_EControllerActionOrigin_XBox360_DPad_Move", "value":"243" },
         { "name":"k_EControllerActionOrigin_Switch_DPad_Move", "value":"244" },
-        { "name":"k_EControllerActionOrigin_Count", "value":"245" },
+        { "name":"k_EControllerActionOrigin_PS5_X", "value":"245" },
+        { "name":"k_EControllerActionOrigin_PS5_Circle", "value":"246" },
+        { "name":"k_EControllerActionOrigin_PS5_Triangle", "value":"247" },
+        { "name":"k_EControllerActionOrigin_PS5_Square", "value":"248" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftBumper", "value":"249" },
+        { "name":"k_EControllerActionOrigin_PS5_RightBumper", "value":"250" },
+        { "name":"k_EControllerActionOrigin_PS5_Option", "value":"251" },
+        { "name":"k_EControllerActionOrigin_PS5_Create", "value":"252" },
+        { "name":"k_EControllerActionOrigin_PS5_Mute", "value":"253" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_Touch", "value":"254" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_Swipe", "value":"255" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_Click", "value":"256" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_DPadNorth", "value":"257" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_DPadSouth", "value":"258" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_DPadWest", "value":"259" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftPad_DPadEast", "value":"260" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_Touch", "value":"261" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_Swipe", "value":"262" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_Click", "value":"263" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_DPadNorth", "value":"264" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_DPadSouth", "value":"265" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_DPadWest", "value":"266" },
+        { "name":"k_EControllerActionOrigin_PS5_RightPad_DPadEast", "value":"267" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_Touch", "value":"268" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_Swipe", "value":"269" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_Click", "value":"270" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_DPadNorth", "value":"271" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_DPadSouth", "value":"272" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_DPadWest", "value":"273" },
+        { "name":"k_EControllerActionOrigin_PS5_CenterPad_DPadEast", "value":"274" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftTrigger_Pull", "value":"275" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftTrigger_Click", "value":"276" },
+        { "name":"k_EControllerActionOrigin_PS5_RightTrigger_Pull", "value":"277" },
+        { "name":"k_EControllerActionOrigin_PS5_RightTrigger_Click", "value":"278" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_Move", "value":"279" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_Click", "value":"280" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_DPadNorth", "value":"281" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_DPadSouth", "value":"282" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_DPadWest", "value":"283" },
+        { "name":"k_EControllerActionOrigin_PS5_LeftStick_DPadEast", "value":"284" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_Move", "value":"285" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_Click", "value":"286" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_DPadNorth", "value":"287" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_DPadSouth", "value":"288" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_DPadWest", "value":"289" },
+        { "name":"k_EControllerActionOrigin_PS5_RightStick_DPadEast", "value":"290" },
+        { "name":"k_EControllerActionOrigin_PS5_DPad_Move", "value":"291" },
+        { "name":"k_EControllerActionOrigin_PS5_DPad_North", "value":"292" },
+        { "name":"k_EControllerActionOrigin_PS5_DPad_South", "value":"293" },
+        { "name":"k_EControllerActionOrigin_PS5_DPad_West", "value":"294" },
+        { "name":"k_EControllerActionOrigin_PS5_DPad_East", "value":"295" },
+        { "name":"k_EControllerActionOrigin_PS5_Gyro_Move", "value":"296" },
+        { "name":"k_EControllerActionOrigin_PS5_Gyro_Pitch", "value":"297" },
+        { "name":"k_EControllerActionOrigin_PS5_Gyro_Yaw", "value":"298" },
+        { "name":"k_EControllerActionOrigin_PS5_Gyro_Roll", "value":"299" },
+        { "name":"k_EControllerActionOrigin_Count", "value":"300" },
         { "name":"k_EControllerActionOrigin_MaximumPossibleValue", "value":"32767" }
       ]
     },
@@ -3724,6 +3835,8 @@
         { "name":"k_ESteamNetworkingIdentityType_Invalid", "value":"0" },
         { "name":"k_ESteamNetworkingIdentityType_SteamID", "value":"16" },
         { "name":"k_ESteamNetworkingIdentityType_XboxPairwiseID", "value":"17" },
+        { "name":"k_ESteamNetworkingIdentityType_SonyPSN", "value":"18" },
+        { "name":"k_ESteamNetworkingIdentityType_GoogleStadia", "value":"19" },
         { "name":"k_ESteamNetworkingIdentityType_IPAddress", "value":"1" },
         { "name":"k_ESteamNetworkingIdentityType_GenericString", "value":"2" },
         { "name":"k_ESteamNetworkingIdentityType_GenericBytes", "value":"3" },
@@ -3854,6 +3967,7 @@
         { "name":"k_ESteamNetworkingConfig_Callback_RelayNetworkStatusChanged", "value":"203" },
         { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionRequest", "value":"204" },
         { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionFailed", "value":"205" },
+        { "name":"k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling", "value":"206" },
         { "name":"k_ESteamNetworkingConfig_P2P_STUN_ServerList", "value":"103" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Enable", "value":"104" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Penalty", "value":"105" },
@@ -5197,6 +5311,14 @@
             { "paramname":"pchProtocol", "paramtype":"const char *" }
           ],
           "returntype": "bool"
+        },
+        {
+          "methodname": "ActivateGameOverlayInviteDialogConnectString",
+          "methodname_flat": "SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialogConnectString",
+          "params": [
+            { "paramname":"pchConnectString", "paramtype":"const char *" }
+          ],
+          "returntype": "void"
         }
       ],
       "version_string": "SteamFriends017"
@@ -5264,15 +5386,6 @@
             { "paramname":"iImage", "paramtype":"int" },
             { "paramname":"pubDest", "paramtype":"uint8 *" },
             { "paramname":"nDestBufferSize", "paramtype":"int" }
-          ],
-          "returntype": "bool"
-        },
-        {
-          "methodname": "GetCSERIPPort",
-          "methodname_flat": "SteamAPI_ISteamUtils_GetCSERIPPort",
-          "params": [
-            { "paramname":"unIP", "paramtype":"uint32 *" },
-            { "paramname":"usPort", "paramtype":"uint16 *" }
           ],
           "returntype": "bool"
         },
@@ -8555,7 +8668,7 @@
         {
           "kind": "user",
           "name": "SteamInput",
-          "name_flat": "SteamAPI_SteamInput_v001"
+          "name_flat": "SteamAPI_SteamInput_v002"
         }
       ],
       "classname": "ISteamInput",
@@ -8886,14 +8999,14 @@
           "returntype": "uint32"
         }
       ],
-      "version_string": "SteamInput001"
+      "version_string": "SteamInput002"
     },
     {
       "accessors": [
         {
           "kind": "user",
           "name": "SteamController",
-          "name_flat": "SteamAPI_SteamController_v007"
+          "name_flat": "SteamAPI_SteamController_v008"
         }
       ],
       "classname": "ISteamController",
@@ -9216,19 +9329,19 @@
           "returntype": "bool"
         }
       ],
-      "version_string": "SteamController007"
+      "version_string": "SteamController008"
     },
     {
       "accessors": [
         {
           "kind": "user",
           "name": "SteamUGC",
-          "name_flat": "SteamAPI_SteamUGC_v014"
+          "name_flat": "SteamAPI_SteamUGC_v015"
         },
         {
           "kind": "gameserver",
           "name": "SteamGameServerUGC",
-          "name_flat": "SteamAPI_SteamGameServerUGC_v014"
+          "name_flat": "SteamAPI_SteamGameServerUGC_v015"
         }
       ],
       "classname": "ISteamUGC",
@@ -9297,6 +9410,47 @@
             { "paramname":"handle", "paramtype":"UGCQueryHandle_t" },
             { "paramname":"index", "paramtype":"uint32" },
             { "paramname":"pDetails", "paramtype":"SteamUGCDetails_t *" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetQueryUGCNumTags",
+          "methodname_flat": "SteamAPI_ISteamUGC_GetQueryUGCNumTags",
+          "params": [
+            { "paramname":"handle", "paramtype":"UGCQueryHandle_t" },
+            { "paramname":"index", "paramtype":"uint32" }
+          ],
+          "returntype": "uint32"
+        },
+        {
+          "methodname": "GetQueryUGCTag",
+          "methodname_flat": "SteamAPI_ISteamUGC_GetQueryUGCTag",
+          "params": [
+            { "paramname":"handle", "paramtype":"UGCQueryHandle_t" },
+            { "paramname":"index", "paramtype":"uint32" },
+            { "paramname":"indexTag", "paramtype":"uint32" },
+            {
+              "out_string_count": "cchValueSize",
+              "paramname": "pchValue",
+              "paramtype": "char *"
+            },
+            { "paramname":"cchValueSize", "paramtype":"uint32" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetQueryUGCTagDisplayName",
+          "methodname_flat": "SteamAPI_ISteamUGC_GetQueryUGCTagDisplayName",
+          "params": [
+            { "paramname":"handle", "paramtype":"UGCQueryHandle_t" },
+            { "paramname":"index", "paramtype":"uint32" },
+            { "paramname":"indexTag", "paramtype":"uint32" },
+            {
+              "out_string_count": "cchValueSize",
+              "paramname": "pchValue",
+              "paramtype": "char *"
+            },
+            { "paramname":"cchValueSize", "paramtype":"uint32" }
           ],
           "returntype": "bool"
         },
@@ -10025,7 +10179,7 @@
           "returntype": "SteamAPICall_t"
         }
       ],
-      "version_string": "STEAMUGC_INTERFACE_VERSION014"
+      "version_string": "STEAMUGC_INTERFACE_VERSION015"
     },
     {
       "accessors": [
@@ -11200,13 +11354,13 @@
       "accessors": [
         {
           "kind": "user",
-          "name": "SteamNetworkingMessages",
-          "name_flat": "SteamAPI_SteamNetworkingMessages_v002"
+          "name": "SteamNetworkingMessages_SteamAPI",
+          "name_flat": "SteamAPI_SteamNetworkingMessages_SteamAPI_v002"
         },
         {
           "kind": "gameserver",
-          "name": "SteamGameServerNetworkingMessages",
-          "name_flat": "SteamAPI_SteamGameServerNetworkingMessages_v002"
+          "name": "SteamGameServerNetworkingMessages_SteamAPI",
+          "name_flat": "SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002"
         }
       ],
       "classname": "ISteamNetworkingMessages",
@@ -11276,13 +11430,13 @@
       "accessors": [
         {
           "kind": "user",
-          "name": "SteamNetworkingSockets",
-          "name_flat": "SteamAPI_SteamNetworkingSockets_v009"
+          "name": "SteamNetworkingSockets_SteamAPI",
+          "name_flat": "SteamAPI_SteamNetworkingSockets_SteamAPI_v009"
         },
         {
           "kind": "gameserver",
-          "name": "SteamGameServerNetworkingSockets",
-          "name_flat": "SteamAPI_SteamGameServerNetworkingSockets_v009"
+          "name": "SteamGameServerNetworkingSockets_SteamAPI",
+          "name_flat": "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009"
         }
       ],
       "classname": "ISteamNetworkingSockets",
@@ -11611,7 +11765,7 @@
           "methodname": "ConnectP2PCustomSignaling",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_ConnectP2PCustomSignaling",
           "params": [
-            { "paramname":"pSignaling", "paramtype":"ISteamNetworkingConnectionCustomSignaling *" },
+            { "paramname":"pSignaling", "paramtype":"ISteamNetworkingConnectionSignaling *" },
             { "paramname":"pPeerIdentity", "paramtype":"const SteamNetworkingIdentity *" },
             { "paramname":"nRemoteVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
@@ -11625,7 +11779,7 @@
           "params": [
             { "paramname":"pMsg", "paramtype":"const void *" },
             { "paramname":"cbMsg", "paramtype":"int" },
-            { "paramname":"pContext", "paramtype":"ISteamNetworkingCustomSignalingRecvContext *" }
+            { "paramname":"pContext", "paramtype":"ISteamNetworkingSignalingRecvContext *" }
           ],
           "returntype": "bool"
         },
@@ -11662,8 +11816,8 @@
       "accessors": [
         {
           "kind": "global",
-          "name": "SteamNetworkingUtils",
-          "name_flat": "SteamAPI_SteamNetworkingUtils_v003"
+          "name": "SteamNetworkingUtils_SteamAPI",
+          "name_flat": "SteamAPI_SteamNetworkingUtils_SteamAPI_v003"
         }
       ],
       "classname": "ISteamNetworkingUtils",
@@ -12927,6 +13081,34 @@
           "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetXboxPairwiseID",
           "params": [],
           "returntype": "const char *"
+        },
+        {
+          "methodname": "SetPSNID",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_SetPSNID",
+          "params": [
+            { "paramname":"id", "paramtype":"uint64" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "GetPSNID",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetPSNID",
+          "params": [],
+          "returntype": "uint64"
+        },
+        {
+          "methodname": "SetStadiaID",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_SetStadiaID",
+          "params": [
+            { "paramname":"id", "paramtype":"uint64" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "GetStadiaID",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetStadiaID",
+          "params": [],
+          "returntype": "uint64"
         },
         {
           "methodname": "SetIPAddr",

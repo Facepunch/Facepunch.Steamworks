@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingUtils_v003", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamNetworkingUtils_v003();
-		public override IntPtr GetGlobalInterfacePointer() => SteamAPI_SteamNetworkingUtils_v003();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingUtils_SteamAPI_v003", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamNetworkingUtils_SteamAPI_v003();
+		public override IntPtr GetGlobalInterfacePointer() => SteamAPI_SteamNetworkingUtils_SteamAPI_v003();
 		
 		
 		#region FunctionMeta

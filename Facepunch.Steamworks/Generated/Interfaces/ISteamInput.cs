@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v001", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamInput_v001();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v001();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v002", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamInput_v002();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v002();
 		
 		
 		#region FunctionMeta

@@ -358,7 +358,7 @@ public:
 
 	// Rich invite support.
 	// If the target accepts the invite, a GameRichPresenceJoinRequested_t callback is posted containing the connect string.
-	// (Or you can configure yout game so that it is passed on the command line instead.  This is a deprecated path; ask us if you really need this.)
+	// (Or you can configure your game so that it is passed on the command line instead.  This is a deprecated path; ask us if you really need this.)
 	virtual bool InviteUserToGame( CSteamID steamIDFriend, const char *pchConnectString ) = 0;
 
 	// recently-played-with friends iteration
@@ -419,6 +419,9 @@ public:
 	// to your specified protocol (scheme) uris and instead dispatch a OverlayBrowserProtocolNavigation_t callback to your game.
 	// ActivateGameOverlayToWebPage() must have been called with k_EActivateGameOverlayToWebPageMode_Modal
 	virtual bool RegisterProtocolInOverlayBrowser( const char *pchProtocol ) = 0;
+
+	// Activates the game overlay to open an invite dialog that will send the provided Rich Presence connect string to selected friends
+	virtual void ActivateGameOverlayInviteDialogConnectString( const char *pchConnectString ) = 0;
 };
 
 #define STEAMFRIENDS_INTERFACE_VERSION "SteamFriends017"

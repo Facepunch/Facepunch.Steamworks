@@ -142,6 +142,9 @@ enum EResult
 	k_EResultAccountDeleted = 114,				// account has been deleted
 	k_EResultExistingUserCancelledLicense = 115,	// A license for this already exists, but cancelled
 	k_EResultCommunityCooldown = 116,			// access is denied because of a community cooldown (probably from support profile data resets)
+	k_EResultNoLauncherSpecified = 117,			// No launcher was specified, but a launcher was needed to choose correct realm for operation.
+	k_EResultMustAgreeToSSA = 118,				// User must agree to china SSA or global SSA before login
+	k_EResultLauncherMigrated = 119,			// The specified launcher type is no longer supported; the user should be directed elsewhere
 };
 
 // Error codes for use with the voice functions
@@ -311,7 +314,7 @@ enum EAppType
 	k_EAppType_Beta					= 0x10000,	// this is a beta version of a game
 		
 	k_EAppType_Shortcut				= 0x40000000,	// just a shortcut, client side only
-	k_EAppType_DepotOnly			= 0x80000000,	// placeholder since depots and apps share the same namespace
+	k_EAppType_DepotOnly_DEPRECATED = 0x80000000,	// there shouldn't be any appinfo for depots
 };
 
 
@@ -556,6 +559,7 @@ enum EVRHMDType
 	k_eEVRHMDType_HP_Unknown = 80, // HP unknown HMD
 	k_eEVRHMDType_HP_WindowsMR = 81, // HP Windows MR headset
 	k_eEVRHMDType_HP_Reverb = 82, // HP Reverb Windows MR headset
+	k_eEVRHMDType_HP_ReverbG2 = 1463, // HP Reverb G2 Windows MR headset
 
 	k_eEVRHMDType_Samsung_Unknown = 90, // Samsung unknown HMD
 	k_eEVRHMDType_Samsung_Odyssey = 91, // Samsung Odyssey Windows MR headset

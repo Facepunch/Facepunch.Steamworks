@@ -103,18 +103,6 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCSERIPPort", CallingConvention = Platform.CC)]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetCSERIPPort( IntPtr self, ref uint unIP, ref ushort usPort );
-		
-		#endregion
-		internal bool GetCSERIPPort( ref uint unIP, ref ushort usPort )
-		{
-			var returnValue = _GetCSERIPPort( Self, ref unIP, ref usPort );
-			return returnValue;
-		}
-		
-		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower", CallingConvention = Platform.CC)]
 		private static extern byte _GetCurrentBatteryPower( IntPtr self );
 		
