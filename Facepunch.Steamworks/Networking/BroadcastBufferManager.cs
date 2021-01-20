@@ -48,7 +48,7 @@ namespace Steamworks
 			}
 		}
 
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		[UnmanagedFunctionPointer( CallingConvention.Cdecl )]
 		private delegate void FreeFn( NetMsg* msg );
 
 		private static readonly Stack<ReferenceCounter> ReferenceCounterPool =
@@ -246,7 +246,7 @@ namespace Steamworks
 			}
 		}
 
-        private const int Bucket512 = 512;
+		private const int Bucket512 = 512;
 		private const int Bucket1Kb = 1 * 1024;
 		private const int Bucket4Kb = 4 * 1024;
 		private const int Bucket16Kb = 16 * 1024;
@@ -254,8 +254,8 @@ namespace Steamworks
 		private const int Bucket256Kb = 256 * 1024;
 
 		private static int GetBucketSize( int size )
-        {
-            if ( size <= Bucket512 ) return Bucket512;
+		{
+			if ( size <= Bucket512 ) return Bucket512;
 			if ( size <= Bucket1Kb ) return Bucket1Kb;
 			if ( size <= Bucket4Kb ) return Bucket4Kb;
 			if ( size <= Bucket16Kb ) return Bucket16Kb;

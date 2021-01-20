@@ -65,11 +65,30 @@ namespace Steamworks.Data
 		/// <summary>
 		/// This is the best version to use.
 		/// </summary>
-		public Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
+		public unsafe Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
 		{
+            if ( ptr == IntPtr.Zero )
+                throw new ArgumentNullException( nameof( ptr ) );
+            if ( size == 0 )
+                throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
+
+            var copyPtr = BroadcastBufferManager.Get( size, 1 );
+            Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
+
+            var message = SteamNetworkingUtils.AllocateMessage();
+            message->Connection = this;
+            message->Flags = sendType;
+            message->DataPtr = copyPtr;
+			message->DataSize = size;
+            message->FreeDataPtr = BroadcastBufferManager.FreeFunctionPointer;
+
 			long messageNumber = 0;
-			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType, ref messageNumber );
-		}
+			SteamNetworkingSockets.Internal.SendMessages( 1, &message, &messageNumber );
+
+            return messageNumber >= 0
+                ? Result.OK
+                : (Result)(-messageNumber);
+        }
 
 		/// <summary>
 		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
