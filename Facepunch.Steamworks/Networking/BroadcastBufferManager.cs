@@ -6,7 +6,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal static unsafe class BroadcastBufferManager
+	internal static unsafe class BufferManager
 	{
 		private sealed class ReferenceCounter
 		{
@@ -30,7 +30,7 @@ namespace Steamworks
 				if (prevCount != 0)
 				{
 #if DEBUG
-					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Warning, $"{nameof( BroadcastBufferManager )} set reference count when current count was not 0" );
+					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Warning, $"{nameof( BufferManager )} set reference count when current count was not 0" );
 #endif
 				}
 			}
@@ -40,7 +40,7 @@ namespace Steamworks
 				var newCount = Interlocked.Decrement( ref _count );
 				if ( newCount < 0 )
 				{
-					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug, $"Prevented double free of {nameof(BroadcastBufferManager)} pointer" );
+					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug, $"Prevented double free of {nameof(BufferManager)} pointer" );
 					return false;
 				}
 
@@ -75,7 +75,7 @@ namespace Steamworks
 
 #if DEBUG
 			SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-				$"{nameof( BroadcastBufferManager )} allocated {ptr.ToInt64():X8} (size={size}, actualSize={actualSize}) with {referenceCount} references" );
+				$"{nameof( BufferManager )} allocated {ptr.ToInt64():X8} (size={size}, actualSize={actualSize}) with {referenceCount} references" );
 #endif
 
 			lock ( ReferenceCounters )
@@ -95,30 +95,30 @@ namespace Steamworks
 			{
 				if ( !ReferenceCounters.TryGetValue( ptr, out var counter ) )
 				{
-					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug, $"Attempt to free pointer not tracked by {nameof(BroadcastBufferManager)}: {ptr.ToInt64():X8}" );
+					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug, $"Attempt to free pointer not tracked by {nameof(BufferManager)}: {ptr.ToInt64():X8}" );
 					return;
 				}
 
 #if DEBUG
-				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose, $"{nameof( BroadcastBufferManager )} decrementing reference count of {ptr.ToInt64():X8}" );
+				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose, $"{nameof( BufferManager )} decrementing reference count of {ptr.ToInt64():X8}" );
 #endif
 
 				if ( counter.Decrement() )
 				{
 #if DEBUG
-					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose, $"{nameof( BroadcastBufferManager )} freeing {ptr.ToInt64():X8} as it is now unreferenced" );
+					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose, $"{nameof( BufferManager )} freeing {ptr.ToInt64():X8} as it is now unreferenced" );
 
 					if ( ptr != counter.Pointer )
 					{
 						SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug,
-							$"{nameof( BroadcastBufferManager )} freed pointer ({ptr.ToInt64():X8}) does not match counter pointer ({counter.Pointer.ToInt64():X8})" );
+							$"{nameof( BufferManager )} freed pointer ({ptr.ToInt64():X8}) does not match counter pointer ({counter.Pointer.ToInt64():X8})" );
 					}
 
 					var bucketSize = GetBucketSize( counter.Size );
 					if ( counter.Size != bucketSize )
 					{
 						SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Bug,
-							$"{nameof( BroadcastBufferManager )} freed pointer size ({counter.Size}) does not match bucket size ({bucketSize})" );
+							$"{nameof( BufferManager )} freed pointer size ({counter.Size}) does not match bucket size ({bucketSize})" );
 					}
 #endif
 
@@ -171,7 +171,7 @@ namespace Steamworks
 
 #if DEBUG
 				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-					$"{nameof( BroadcastBufferManager )} allocated unpooled pointer {ptr.ToInt64():X8} (size={size})" );
+					$"{nameof( BufferManager )} allocated unpooled pointer {ptr.ToInt64():X8} (size={size})" );
 #endif
 				return;
 			}
@@ -186,7 +186,7 @@ namespace Steamworks
 
 #if DEBUG
 					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-						$"{nameof( BroadcastBufferManager )} allocated new poolable pointer {ptr.ToInt64():X8} (size={size})" );
+						$"{nameof( BufferManager )} allocated new poolable pointer {ptr.ToInt64():X8} (size={size})" );
 #endif
 					return;
 				}
@@ -195,7 +195,7 @@ namespace Steamworks
 				size = bucketSize;
 #if DEBUG
 				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-					$"{nameof( BroadcastBufferManager )} allocated pointer from pool {ptr.ToInt64():X8} (size={size})" );
+					$"{nameof( BufferManager )} allocated pointer from pool {ptr.ToInt64():X8} (size={size})" );
 #endif
 			}
 		}
@@ -212,7 +212,7 @@ namespace Steamworks
 
 #if DEBUG
 				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-					$"{nameof( BroadcastBufferManager )} freed unpooled pointer {ptr.ToInt64():X8} (size={size})" );
+					$"{nameof( BufferManager )} freed unpooled pointer {ptr.ToInt64():X8} (size={size})" );
 #endif
 				return;
 			}
@@ -232,7 +232,7 @@ namespace Steamworks
 
 #if DEBUG
 					SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-						$"{nameof( BroadcastBufferManager )} pool overflow, freed pooled pointer {ptr.ToInt64():X8} (size={size})" );
+						$"{nameof( BufferManager )} pool overflow, freed pooled pointer {ptr.ToInt64():X8} (size={size})" );
 #endif
 					return;
 				}
@@ -241,7 +241,7 @@ namespace Steamworks
 				
 #if DEBUG
 				SteamNetworkingUtils.LogDebugMessage( NetDebugOutput.Verbose,
-					$"{nameof( BroadcastBufferManager )} returned pointer to pool {ptr.ToInt64():X8} (size={size})" );
+					$"{nameof( BufferManager )} returned pointer to pool {ptr.ToInt64():X8} (size={size})" );
 #endif
 			}
 		}

@@ -72,7 +72,7 @@ namespace Steamworks.Data
             if ( size == 0 )
                 throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
 
-            var copyPtr = BroadcastBufferManager.Get( size, 1 );
+            var copyPtr = BufferManager.Get( size, 1 );
             Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
 
             var message = SteamNetworkingUtils.AllocateMessage();
@@ -80,7 +80,7 @@ namespace Steamworks.Data
             message->Flags = sendType;
             message->DataPtr = copyPtr;
 			message->DataSize = size;
-            message->FreeDataPtr = BroadcastBufferManager.FreeFunctionPointer;
+            message->FreeDataPtr = BufferManager.FreeFunctionPointer;
 
 			long messageNumber = 0;
 			SteamNetworkingSockets.Internal.SendMessages( 1, &message, &messageNumber );

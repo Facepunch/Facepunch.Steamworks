@@ -182,7 +182,7 @@ namespace Steamworks
 			//   1. We don't want a copy per message. They all refer to the same data. This is the benefit of using Broadcast vs. many sends.
 			//   2. We need to use unmanaged memory. Managed memory may move around and invalidate pointers so it's not an option.
 			//   3. We'll use a reference counter and custom free() function to release this unmanaged memory.
-			var copyPtr = BroadcastBufferManager.Get( size, connectionCount );
+			var copyPtr = BufferManager.Get( size, connectionCount );
 			Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
 
 			var messages = stackalloc NetMsg*[connectionCount];
@@ -195,7 +195,7 @@ namespace Steamworks
 				messages[i]->Flags = sendType;
 				messages[i]->DataPtr = copyPtr;
 				messages[i]->DataSize = size;
-				messages[i]->FreeDataPtr = BroadcastBufferManager.FreeFunctionPointer;
+				messages[i]->FreeDataPtr = BufferManager.FreeFunctionPointer;
 			}
 
 			SteamNetworkingSockets.Internal.SendMessages( connectionCount, messages, messageNumberOrResults );
