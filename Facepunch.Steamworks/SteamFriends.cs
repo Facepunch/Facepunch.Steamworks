@@ -31,6 +31,8 @@ namespace Steamworks
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			Dispatch.Install<GameConnectedClanChatMsg_t>( OnGameConnectedClanChatMessage );
+			Dispatch.Install<GameConnectedChatLeave_t>( x => OnClanChatLeave?.Invoke(new Clan(x.SteamIDClanChat), new Friend(x.SteamIDUser), x.Kicked, x.Dropped) );
+			Dispatch.Install<GameConnectedChatLeave_t>(x => OnClanChatJoin?.Invoke(new Clan(x.SteamIDClanChat), new Friend(x.SteamIDUser) ));
 			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke( x.Active != 0 ) );
 			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
@@ -48,6 +50,16 @@ namespace Steamworks
 		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
 		/// </summary>
 		public static event Action<Friend, string, string> OnClanChatMessage;
+
+		/// <summary>
+		/// Called when a user has joined a Steam group chat that the we are in. (clan, friend)
+		/// </summary>
+		public static event Action<Clan, Friend> OnClanChatJoin;
+
+		/// <summary>
+		/// Called when a user has left a Steam group chat that the we are in. (clan friend, kicked, dropped)
+		/// </summary>
+		public static event Action<Clan, Friend, bool, bool> OnClanChatLeave;
 
 		/// <summary>
 		/// called when a friends' status changes
