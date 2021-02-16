@@ -47,9 +47,9 @@ namespace Steamworks
 		public static event Action<Friend, string, string> OnChatMessage;
 
 		/// <summary>
-		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
+		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (clan, friend, msgtype, message)
 		/// </summary>
-		public static event Action<Friend, string, string> OnClanChatMessage;
+		public static event Action<Clan, Friend, string, string> OnClanChatMessage;
 
 		/// <summary>
 		/// Called when a user has joined a Steam group chat that the we are in. (clan, friend)
@@ -127,6 +127,7 @@ namespace Steamworks
 		{
 			if ( OnClanChatMessage == null ) return;
 
+			var clan = new Clan( data.SteamIDClanChat );
 			var friend = new Friend( data.SteamIDUser );
 
 			var buffer = Helpers.TakeMemory();
@@ -141,7 +142,7 @@ namespace Steamworks
 			var typeName = type.ToString();
 			var message = Helpers.MemoryToString( buffer );
 
-			OnClanChatMessage( friend, typeName, message );
+			OnClanChatMessage( clan, friend, typeName, message );
 		}
 
 		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
