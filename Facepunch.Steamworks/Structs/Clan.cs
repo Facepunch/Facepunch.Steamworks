@@ -29,6 +29,12 @@ namespace Steamworks
         /// </summary>
         public bool Official => SteamFriends.Internal.IsClanOfficialGameGroup(Id);
 
+        public int Online => GetActivity().Online;
+
+        public int Chatting => GetActivity().Chatting;
+
+        public int InGame => GetActivity().InGame;
+
         /// <summary>
         /// Asynchronously fetches the officer list for a given clan
         /// </summary>
@@ -46,5 +52,33 @@ namespace Steamworks
                 yield return new Friend(SteamFriends.Internal.GetClanOfficerByIndex(Id, i));
             }
         }
+
+        public SteamId GetChatMember(int index)
+        {
+            return SteamFriends.Internal.GetChatMemberByIndex(Id, index);
+        }
+
+        public IEnumerable<SteamId> GetChatMembers()
+        {
+            for(int i = 0; i < ChatMemberCount; i++)
+            {
+                yield return GetChatMember(i);
+            }
+        }
+
+        private ClanActivity GetActivity()
+        {
+            var result = new ClanActivity();
+            SteamFriends.Internal.GetClanActivityCounts(Id, ref result.Online, ref result.InGame, ref result.Chatting);
+            return result;
+        }
+
+        private struct ClanActivity
+        {
+            public int Online;
+            public int InGame;
+            public int Chatting;
+        }
+
     }
 }

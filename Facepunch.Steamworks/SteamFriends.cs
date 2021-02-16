@@ -396,6 +396,11 @@ namespace Steamworks
 			return result.Value.ChatRoomEnterResponse == RoomEnter.Success ;
 		}
 
+		public static bool LeaveClanChatRoom(SteamId chatId)
+        {
+			return Internal.LeaveClanChatRoom(chatId);
+        }
+
 		public static bool SendClanChatRoomMessage( SteamId chatId, string message )
 		{
 			return Internal.SendClanChatMessage( chatId, message );
