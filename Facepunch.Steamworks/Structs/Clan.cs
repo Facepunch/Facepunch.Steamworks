@@ -53,12 +53,12 @@ namespace Steamworks
             }
         }
 
-        public SteamId GetChatMember(int index)
+        public Friend GetChatMember(int index)
         {
-            return SteamFriends.Internal.GetChatMemberByIndex(Id, index);
+            return new Friend(SteamFriends.Internal.GetChatMemberByIndex(Id, index));
         }
 
-        public IEnumerable<SteamId> GetChatMembers()
+        public IEnumerable<Friend> GetChatMembers()
         {
             for(int i = 0; i < ChatMemberCount; i++)
             {
