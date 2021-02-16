@@ -248,6 +248,18 @@ namespace Steamworks
 		public static void OpenGameInviteOverlay( SteamId lobby ) => Internal.ActivateGameOverlayInviteDialog( lobby );
 
 		/// <summary>
+		/// Opens the specified Steam group chat room in the Steam UI.
+		/// </summary>
+		/// <param name="clanid"></param>
+		public static void OpenClanChatWindowInSteam(SteamId clanid) => Internal.OpenClanChatWindowInSteam(clanid);
+
+		/// <summary>
+		/// Closes the specified Steam group chat room in the Steam UI.
+		/// </summary>
+		/// <param name="clanid"></param>
+		public static void CloseClanChatWindowInSteam(SteamId clanid) => Internal.CloseClanChatWindowInSteam(clanid);
+
+		/// <summary>
 		/// Mark a target user as 'played with'.
 		/// NOTE: The current user must be in game with the other player for the association to work.
 		/// </summary>
