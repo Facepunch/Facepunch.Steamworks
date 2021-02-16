@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
+using Steamworks.Structs;
 
 namespace Steamworks
 {
@@ -31,8 +32,8 @@ namespace Steamworks
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			Dispatch.Install<GameConnectedClanChatMsg_t>( OnGameConnectedClanChatMessage );
-			Dispatch.Install<GameConnectedChatLeave_t>( x => OnClanChatLeave?.Invoke(new Clan(x.SteamIDClanChat), new Friend(x.SteamIDUser), x.Kicked, x.Dropped) );
-			Dispatch.Install<GameConnectedChatLeave_t>(x => OnClanChatJoin?.Invoke(new Clan(x.SteamIDClanChat), new Friend(x.SteamIDUser) ));
+			Dispatch.Install<GameConnectedChatLeave_t>( x => OnClanChatLeave?.Invoke(x.SteamIDClanChat, new Friend(x.SteamIDUser), x.Kicked, x.Dropped) );
+			Dispatch.Install<GameConnectedChatJoin_t>(x => OnClanChatJoin?.Invoke(x.SteamIDClanChat, new Friend(x.SteamIDUser) ));
 			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke( x.Active != 0 ) );
 			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
@@ -47,19 +48,19 @@ namespace Steamworks
 		public static event Action<Friend, string, string> OnChatMessage;
 
 		/// <summary>
-		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (clan, friend, msgtype, message)
+		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (SteamIDClanChat, friend, msgtype, message)
 		/// </summary>
-		public static event Action<Clan, Friend, string, string> OnClanChatMessage;
+		public static event Action<SteamId, Friend, string, string> OnClanChatMessage;
 
 		/// <summary>
-		/// Called when a user has joined a Steam group chat that the we are in. (clan, friend)
+		/// Called when a user has joined a Steam group chat that the we are in. (SteamIDClanChat, friend)
 		/// </summary>
-		public static event Action<Clan, Friend> OnClanChatJoin;
+		public static event Action<SteamId, Friend> OnClanChatJoin;
 
 		/// <summary>
-		/// Called when a user has left a Steam group chat that the we are in. (clan friend, kicked, dropped)
+		/// Called when a user has left a Steam group chat that the we are in. (SteamIDClanChat, friend, kicked, dropped)
 		/// </summary>
-		public static event Action<Clan, Friend, bool, bool> OnClanChatLeave;
+		public static event Action<SteamId, Friend, bool, bool> OnClanChatLeave;
 
 		/// <summary>
 		/// called when a friends' status changes
@@ -127,13 +128,12 @@ namespace Steamworks
 		{
 			if ( OnClanChatMessage == null ) return;
 
-			var clan = new Clan( data.SteamIDClanChat );
 			var friend = new Friend( data.SteamIDUser );
 
 			var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
 			SteamId chatter = data.SteamIDUser;
-
+			
 			var len = Internal.GetClanChatMessage( data.SteamIDClanChat, data.MessageID, buffer, Helpers.MemoryBufferSize, ref type, ref chatter );
 
 			if ( len == 0 && type == ChatEntryType.Invalid )
@@ -142,7 +142,7 @@ namespace Steamworks
 			var typeName = type.ToString();
 			var message = Helpers.MemoryToString( buffer );
 
-			OnClanChatMessage( clan, friend, typeName, message );
+			OnClanChatMessage( data.SteamIDClanChat, friend, typeName, message );
 		}
 
 		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
@@ -412,13 +412,18 @@ namespace Steamworks
 			return Internal.RegisterProtocolInOverlayBrowser( protocol );
         }
 
-		public static async Task<bool> JoinClanChatRoom( SteamId chatId )
+		public static async Task<JoinClanChatRoomResult> JoinClanChatRoom( SteamId clanId )
 		{
-			var result = await Internal.JoinClanChatRoom( chatId );
+			var result = await Internal.JoinClanChatRoom(clanId);
 			if ( !result.HasValue )
-				return false;
-
-			return result.Value.ChatRoomEnterResponse == RoomEnter.Success ;
+            {
+				return default;
+            }
+			return new JoinClanChatRoomResult()
+			{
+				Success = result.Value.ChatRoomEnterResponse == RoomEnter.Success,
+				Id = result.Value.SteamIDClanChat
+			};
 		}
 
 		public static bool LeaveClanChatRoom(SteamId chatId)
