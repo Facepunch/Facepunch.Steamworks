@@ -59,12 +59,21 @@ namespace Steamworks
 		public static bool CloseP2PSessionWithUser( SteamId user ) => Internal.CloseP2PSessionWithUser( user );
 
 		/// <summary>
-		/// Checks if a P2P packet is available to read, and gets the size of the message if there is one.
+		/// Checks if a P2P packet is available to read.
 		/// </summary>
 		public static bool IsP2PPacketAvailable( int channel = 0 )
 		{
 			uint _ = 0;
 			return Internal.IsP2PPacketAvailable( ref _, channel );
+		}
+		
+		/// <summary>
+		/// Checks if a P2P packet is available to read, and gets the size of the message if there is one.
+		/// </summary>
+		public static bool IsP2PPacketAvailable( out uint msgSize, int channel = 0 )
+		{
+			msgSize = 0;
+			return Internal.IsP2PPacketAvailable( ref msgSize, channel );
 		}
 
 		/// <summary>
