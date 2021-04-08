@@ -16,9 +16,13 @@ namespace Steamworks.Data
 		public uint Id { get; set; }
 
 		public bool Equals( Connection other ) => Id == other.Id;
+		public override bool Equals( object obj ) => obj is Connection other && Id == other.Id;
+		public override int GetHashCode() => Id.GetHashCode();
 		public override string ToString() => Id.ToString();
 		public static implicit operator Connection( uint value ) => new Connection() { Id = value };
 		public static implicit operator uint( Connection value ) => value.Id;
+		public static bool operator ==( Connection value1, Connection value2 ) => value1.Equals(value2);
+		public static bool operator !=( Connection value1, Connection value2 ) => !value1.Equals(value2);
 
 		/// <summary>
 		/// Accept an incoming connection that has been received on a listen socket.
