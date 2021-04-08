@@ -96,7 +96,7 @@ List them
 ```csharp
     foreach ( var a in SteamUserStats.Achievements )
     {
-        Console.WriteLine( $"{a.Name} ({a.State}})" );
+        Console.WriteLine( $"{a.Name} ({a.State})" );
     }	
 ```
 
