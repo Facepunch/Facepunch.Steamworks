@@ -17,11 +17,13 @@ namespace Steamworks
 	{
 		internal static ISteamMusic Internal => Interface as ISteamMusic;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamMusic( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents();
+			return true;
 		}
 
 		internal static void InstallEvents()

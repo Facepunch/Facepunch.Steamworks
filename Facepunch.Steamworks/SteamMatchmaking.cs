@@ -14,11 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamMatchmaking Internal => Interface as ISteamMatchmaking;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamMatchmaking( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents();
+
+			return true;
 		}
 	
 		/// <summary>

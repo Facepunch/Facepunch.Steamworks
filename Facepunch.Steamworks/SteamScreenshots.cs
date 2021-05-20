@@ -14,10 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamScreenshots Internal => Interface as ISteamScreenshots;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamScreenshots( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents();
+
+			return true;
 		}
 
 		internal static void InstallEvents()

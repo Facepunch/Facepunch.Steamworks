@@ -14,10 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamUtils Internal => Interface as ISteamUtils;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamUtils( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents( server );
+
+			return true;
 		}
 
 		internal static void InstallEvents( bool server )

@@ -1,4 +1,5 @@
-﻿using Steamworks.Data;
+﻿using System;
+using Steamworks.Data;
 using System.Collections.Generic;
 
 namespace Steamworks
@@ -7,9 +8,12 @@ namespace Steamworks
 	{
 		internal static ISteamInput Internal => Interface as ISteamInput;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamInput( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			return true;
 		}
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
