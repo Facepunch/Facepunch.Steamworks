@@ -60,6 +60,8 @@ namespace Steamworks
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
 
+			initialized = openInterfaces.Count > 0;
+
 			if ( asyncCallbacks )
 			{
 				//
