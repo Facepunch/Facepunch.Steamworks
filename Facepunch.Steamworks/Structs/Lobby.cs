@@ -139,7 +139,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Sends bytes the the chat room
+		/// Sends bytes to the chat room
 		/// </summary>
 		public unsafe bool SendChatBytes( byte[] data )
 		{
@@ -150,7 +150,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Sends bytes the the chat room from a unsafe buffer
+		/// Sends bytes to the chat room from an unsafe buffer
 		/// </summary>
 		public unsafe bool SendChatBytesUnsafe( byte* ptr, int length )
 		{
