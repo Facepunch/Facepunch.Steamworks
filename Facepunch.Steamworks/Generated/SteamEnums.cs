@@ -756,7 +756,7 @@ namespace Steamworks
 	//
 	// ETextFilteringContext
 	//
-	internal enum TextFilteringContext : int
+	public enum TextFilteringContext : int
 	{
 		Unknown = 0,
 		GameContent = 1,
