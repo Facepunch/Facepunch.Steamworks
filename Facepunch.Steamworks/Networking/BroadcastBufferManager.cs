@@ -60,7 +60,9 @@ namespace Steamworks
 		private static readonly Dictionary<IntPtr, ReferenceCounter> ReferenceCounters =
 			new Dictionary<IntPtr, ReferenceCounter>( 1024 );
 
-		public static readonly IntPtr FreeFunctionPointer = Marshal.GetFunctionPointerForDelegate<FreeFn>( Free );
+		private static readonly FreeFn FreeFunctionPin = new FreeFn( Free );
+
+		public static readonly IntPtr FreeFunctionPointer = Marshal.GetFunctionPointerForDelegate( FreeFunctionPin );
 
 		public static IntPtr Get( int size, int referenceCount )
 		{
