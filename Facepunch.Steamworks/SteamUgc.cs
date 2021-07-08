@@ -25,13 +25,27 @@ namespace Steamworks
 
 		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( new DownloadItemResult( x ) ), server );
 		}
 
 		/// <summary>
 		/// Posted after Download call
 		/// </summary>
-		public static event Action<Result> OnDownloadItemResult;
+		public static event Action<DownloadItemResult> OnDownloadItemResult;
+
+		public struct DownloadItemResult
+		{
+			internal DownloadItemResult( DownloadItemResult_t result )
+			{
+				AppID = result.AppID;
+				PublishedFileId = result.PublishedFileId;
+				Result = result.Result;
+			}
+
+			public AppId AppID { get; }
+			public PublishedFileId PublishedFileId { get; }
+			public Result Result { get; }
+		}
 
 		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
 		{
@@ -58,70 +72,91 @@ namespace Steamworks
 		/// <param name="ct">Allows you to send a message to cancel the download anywhere during the process</param>
 		/// <param name="milisecondsUpdateDelay">How often to call the progress function</param>
 		/// <returns>true if downloaded and installed correctly</returns>
-		public static async Task<bool> DownloadAsync( PublishedFileId fileId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
+		public static async Task<bool> DownloadAsync(
+			PublishedFileId fileId,
+			Action<float> progress = null,
+			Action<string> onError = null,
+			int milisecondsUpdateDelay = 60,
+			CancellationToken ct = default,
+			bool highPriority = true )
 		{
-			var item = new Steamworks.Ugc.Item( fileId );
+			progress?.Invoke( 0.00f );
 
 			if ( ct == default )
 				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
 
-			progress?.Invoke( 0.0f );
+			Ugc.Item? itemNullable = await Ugc.Item.GetAsync( fileId );
 
-			if ( Download( fileId, true ) == false )
-				return item.IsInstalled;
+			progress?.Invoke( 0.05f );
 
-			// Steam docs about Download:
-			// If the return value is true then register and wait
-			// for the Callback DownloadItemResult_t before calling 
-			// GetItemInstallInfo or accessing the workshop item on disk.
-
-			// Wait for DownloadItemResult_t
+			if ( !itemNullable.HasValue )
 			{
-				Action<Result> onDownloadStarted = null;
-
-				try
-				{
-					var downloadStarted = false;
-					
-					onDownloadStarted = r => downloadStarted = true;
-					OnDownloadItemResult += onDownloadStarted;
-
-					while ( downloadStarted == false )
-					{
-						if ( ct.IsCancellationRequested )
-							break;
-
-						await Task.Delay( milisecondsUpdateDelay );
-					}
-				}
-				finally
-				{
-					OnDownloadItemResult -= onDownloadStarted;
-				}
+				onError?.Invoke( $"Workshop item (id: " + fileId.Value + ") failed to load or doesn't exist." );
+				return false;
 			}
 
-			progress?.Invoke( 0.2f );
-			await Task.Delay( milisecondsUpdateDelay );
+			Ugc.Item item = itemNullable.Value;
 
-			//Wait for downloading completion
+			bool itemDownloaded = false;
+			Result? downloadError = null;
+
+			Action<DownloadItemResult> onDownloadResult = r =>
 			{
-				while ( true )
+				if ( r.AppID == SteamClient.AppId && r.PublishedFileId == fileId )
 				{
+					if( r.Result != Result.OK )
+						downloadError = r.Result;
+					else
+						itemDownloaded = true;
+				}
+			};
+
+			try
+			{
+				OnDownloadItemResult += onDownloadResult;
+
+				progress?.Invoke( 0.1f );
+				if ( Download( fileId, highPriority ) == false )
+					return false;
+
+				await Task.Delay( milisecondsUpdateDelay ); //have to wait here otherwise first DownloadAmount is 1
+
+				while ( itemDownloaded == false && downloadError == null )
+				{
+					var state = item.State;
 					if ( ct.IsCancellationRequested )
 						break;
 
-					progress?.Invoke( 0.2f + item.DownloadAmount * 0.8f );
+					//waiting for download to start
+					if ( state.HasFlag( ItemState.DownloadPending )
+						&& !state.HasFlag( ItemState.Downloading ) )
+						progress?.Invoke( 0.2f );
+					else
+						progress?.Invoke( 0.2f + item.DownloadAmount * 0.8f );
 
-					if ( !item.IsDownloading && item.IsInstalled )
+					//skip whole OnDownloadItemResult call as it doesn't work for everyone
+					if ( !state.HasFlag( ItemState.DownloadPending )
+						&& !state.HasFlag( ItemState.Downloading )
+						&& !state.HasFlag( ItemState.NeedsUpdate ) )
 						break;
 
 					await Task.Delay( milisecondsUpdateDelay );
 				}
+
+				await Task.Delay( milisecondsUpdateDelay );
+				if ( downloadError != null )
+				{
+					onError?.Invoke( "Download item result error: " + downloadError.ToString() );
+					return false;
+				}
+
+				progress?.Invoke( 1.0f );
+				return true;
 			}
-
-			progress?.Invoke( 1.0f );
-
-			return item.IsInstalled;
+			finally
+			{
+				OnDownloadItemResult -= onDownloadResult;
+			}
 		}
 
 		/// <summary>
