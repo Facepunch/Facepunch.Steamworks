@@ -60,6 +60,8 @@ namespace Steamworks
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
 
+			initialized = openInterfaces.Count > 0;
+
 			if ( asyncCallbacks )
 			{
 				//
@@ -73,8 +75,15 @@ namespace Steamworks
 		internal static void AddInterface<T>() where T : SteamClass, new()
 		{
 			var t = new T();
-			t.InitializeInterface( false );
-			openInterfaces.Add( t );
+			bool valid = t.InitializeInterface( false );
+			if ( valid )
+			{
+				openInterfaces.Add( t );
+			}
+			else
+			{
+				t.DestroyInterface( false );
+			}
 		}
 
 		static readonly List<SteamClass> openInterfaces = new List<SteamClass>();

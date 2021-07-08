@@ -14,9 +14,12 @@ namespace Steamworks
 	{
 		internal static ISteamMatchmakingServers Internal => Interface as ISteamMatchmakingServers;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamMatchmakingServers( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			return true;
 		}
 	}
 }

@@ -17,13 +17,17 @@ namespace Steamworks
 	{
 		internal static ISteamUser Internal => Interface as ISteamUser;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamUser( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents();
 
 			richPresence = new Dictionary<string, string>();
 			SampleRate = OptimalSampleRate;
+
+			return true;
 		}
 
 		static Dictionary<string, string> richPresence;

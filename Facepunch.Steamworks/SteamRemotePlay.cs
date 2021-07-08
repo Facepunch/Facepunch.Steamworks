@@ -14,11 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamRemotePlay Internal => Interface as ISteamRemotePlay;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamRemotePlay( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents( server );
+
+			return true;
 		}
 
 		internal void InstallEvents( bool server )

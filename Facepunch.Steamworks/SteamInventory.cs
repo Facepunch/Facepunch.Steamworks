@@ -16,11 +16,14 @@ namespace Steamworks
 	{
 		internal static ISteamInventory Internal => Interface as ISteamInventory;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamInventory( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents( server );
+
+			return true;
 		}
 	
 		internal static void InstallEvents( bool server )

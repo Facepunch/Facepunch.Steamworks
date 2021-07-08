@@ -14,13 +14,16 @@ namespace Steamworks
 	{
 		internal static ISteamFriends Internal => Interface as ISteamFriends;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamFriends( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			richPresence = new Dictionary<string, string>();
 
 			InstallEvents();
+
+			return true;
 		}
 
 		static Dictionary<string, string> richPresence;

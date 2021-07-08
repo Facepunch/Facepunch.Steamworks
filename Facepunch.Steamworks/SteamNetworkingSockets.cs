@@ -31,10 +31,13 @@ namespace Steamworks
 			}
 		}
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamNetworkingSockets( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents( server );
+			return true;
 		}
 	
 #region SocketInterface

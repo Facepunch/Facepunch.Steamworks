@@ -14,10 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamParentalSettings Internal => Interface as ISteamParentalSettings;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamParentalSettings( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents( server );
+
+			return true;
 		}
 
 		internal static void InstallEvents( bool server )
