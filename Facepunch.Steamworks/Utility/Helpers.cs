@@ -9,30 +9,50 @@ namespace Steamworks
 	{
 		public const int MemoryBufferSize = 1024 * 32;
 
-		private static IntPtr[] MemoryPool = new IntPtr[]
+		internal struct Memory : IDisposable
 		{
-			Marshal.AllocHGlobal( MemoryBufferSize ),
-			Marshal.AllocHGlobal( MemoryBufferSize ),
-			Marshal.AllocHGlobal( MemoryBufferSize ),
-			Marshal.AllocHGlobal( MemoryBufferSize )
-		};
-		private static int MemoryPoolIndex;
+			private const int MaxBagSize = 4;
+			private static readonly Queue<IntPtr> BufferBag = new Queue<IntPtr>();
 
-		public static unsafe IntPtr TakeMemory()
-		{
-			lock ( MemoryPool )
+			public IntPtr Ptr { get; private set; }
+
+			public static implicit operator IntPtr(in Memory m) => m.Ptr;
+
+			internal static unsafe Memory Take()
 			{
-				MemoryPoolIndex++;
-
-				if ( MemoryPoolIndex >= MemoryPool.Length )
-					MemoryPoolIndex = 0;
-
-				var take = MemoryPool[MemoryPoolIndex];
-
-				((byte*)take)[0] = 0;
-
-				return take;
+				IntPtr ptr;
+				lock (BufferBag)
+				{
+					ptr = BufferBag.Count > 0 ? BufferBag.Dequeue() : Marshal.AllocHGlobal(MemoryBufferSize);
+				}
+				((byte*)ptr)[0] = 0;
+				return new Memory
+				{
+					Ptr = ptr
+				};
 			}
+
+			public void Dispose()
+			{
+				if (Ptr == IntPtr.Zero) { return; }
+				lock (BufferBag)
+				{
+					if (BufferBag.Count < MaxBagSize)
+					{
+						BufferBag.Enqueue(Ptr);
+					}
+					else
+					{
+						Marshal.FreeHGlobal(Ptr);
+					}
+				}
+				Ptr = IntPtr.Zero;
+			}
+		}
+
+		public static Memory TakeMemory()
+		{
+			return Memory.Take();
 		}
 
 
