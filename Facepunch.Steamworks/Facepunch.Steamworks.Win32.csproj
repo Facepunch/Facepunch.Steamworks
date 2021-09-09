@@ -3,9 +3,8 @@
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win32</AssemblyName>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN32;PLATFORM_WIN</DefineConstants>
-		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>7.1</LangVersion>	
+		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<RootNamespace>Steamworks</RootNamespace>
@@ -19,7 +18,7 @@
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
 		<PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>10</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
