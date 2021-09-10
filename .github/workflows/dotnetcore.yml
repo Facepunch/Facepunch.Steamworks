@@ -9,10 +9,11 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Setup dotnet 6.x
+    - name: Setup dotnet 6.0.x
       uses: actions/setup-dotnet@v1
       with:
-          dotnet-version: '6.x'
+          dotnet-version: '6.0.x'
+          include-prerelease: true
     - name: Display dotnet version
       run: dotnet --version
           
