@@ -14,11 +14,6 @@ jobs:
       with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-    - name: Display dotnet version
-      run: dotnet --version
-          
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1
 
     - name: Restore Win64
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
