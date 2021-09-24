@@ -60,7 +60,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetResultItemProperty( SteamInventoryResult_t resultHandle, uint unItemIndex, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSizeOut )
 		{
-			IntPtr mempchValueBuffer = Helpers.TakeMemory();
+			using var mempchValueBuffer = Helpers.TakeMemory();
 			var returnValue = _GetResultItemProperty( Self, resultHandle, unItemIndex, pchPropertyName, mempchValueBuffer, ref punValueBufferSizeOut );
 			pchValueBuffer = Helpers.MemoryToString( mempchValueBuffer );
 			return returnValue;
@@ -327,7 +327,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemDefinitionProperty( InventoryDefId iDefinition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSizeOut )
 		{
-			IntPtr mempchValueBuffer = Helpers.TakeMemory();
+			using var mempchValueBuffer = Helpers.TakeMemory();
 			var returnValue = _GetItemDefinitionProperty( Self, iDefinition, pchPropertyName, mempchValueBuffer, ref punValueBufferSizeOut );
 			pchValueBuffer = Helpers.MemoryToString( mempchValueBuffer );
 			return returnValue;

@@ -433,7 +433,7 @@ namespace Steamworks
 		#endregion
 		internal int GetMostAchievedAchievementInfo( out string pchName, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			IntPtr mempchName = Helpers.TakeMemory();
+			using var mempchName = Helpers.TakeMemory();
 			var returnValue = _GetMostAchievedAchievementInfo( Self, mempchName, (1024 * 32), ref pflPercent, ref pbAchieved );
 			pchName = Helpers.MemoryToString( mempchName );
 			return returnValue;
@@ -446,7 +446,7 @@ namespace Steamworks
 		#endregion
 		internal int GetNextMostAchievedAchievementInfo( int iIteratorPrevious, out string pchName, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			IntPtr mempchName = Helpers.TakeMemory();
+			using var mempchName = Helpers.TakeMemory();
 			var returnValue = _GetNextMostAchievedAchievementInfo( Self, iIteratorPrevious, mempchName, (1024 * 32), ref pflPercent, ref pbAchieved );
 			pchName = Helpers.MemoryToString( mempchName );
 			return returnValue;

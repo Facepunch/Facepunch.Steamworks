@@ -159,7 +159,7 @@ namespace Steamworks
 		#endregion
 		internal bool BGetDLCDataByIndex( int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, out string pchName )
 		{
-			IntPtr mempchName = Helpers.TakeMemory();
+			using var mempchName = Helpers.TakeMemory();
 			var returnValue = _BGetDLCDataByIndex( Self, iDLC, ref pAppID, ref pbAvailable, mempchName, (1024 * 32) );
 			pchName = Helpers.MemoryToString( mempchName );
 			return returnValue;
@@ -203,7 +203,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetCurrentBetaName( out string pchName )
 		{
-			IntPtr mempchName = Helpers.TakeMemory();
+			using var mempchName = Helpers.TakeMemory();
 			var returnValue = _GetCurrentBetaName( Self, mempchName, (1024 * 32) );
 			pchName = Helpers.MemoryToString( mempchName );
 			return returnValue;
@@ -239,7 +239,7 @@ namespace Steamworks
 		#endregion
 		internal uint GetAppInstallDir( AppId appID, out string pchFolder )
 		{
-			IntPtr mempchFolder = Helpers.TakeMemory();
+			using var mempchFolder = Helpers.TakeMemory();
 			var returnValue = _GetAppInstallDir( Self, appID, mempchFolder, (1024 * 32) );
 			pchFolder = Helpers.MemoryToString( mempchFolder );
 			return returnValue;
@@ -330,7 +330,7 @@ namespace Steamworks
 		#endregion
 		internal int GetLaunchCommandLine( out string pszCommandLine )
 		{
-			IntPtr mempszCommandLine = Helpers.TakeMemory();
+			using var mempszCommandLine = Helpers.TakeMemory();
 			var returnValue = _GetLaunchCommandLine( Self, mempszCommandLine, (1024 * 32) );
 			pszCommandLine = Helpers.MemoryToString( mempszCommandLine );
 			return returnValue;

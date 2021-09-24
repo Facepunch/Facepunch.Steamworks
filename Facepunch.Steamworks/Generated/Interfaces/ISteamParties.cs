@@ -50,7 +50,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetBeaconDetails( PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, out string pchMetadata )
 		{
-			IntPtr mempchMetadata = Helpers.TakeMemory();
+			using var mempchMetadata = Helpers.TakeMemory();
 			var returnValue = _GetBeaconDetails( Self, ulBeaconID, ref pSteamIDBeaconOwner, ref pLocation, mempchMetadata, (1024 * 32) );
 			pchMetadata = Helpers.MemoryToString( mempchMetadata );
 			return returnValue;
@@ -153,7 +153,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetBeaconLocationData( SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, out string pchDataStringOut )
 		{
-			IntPtr mempchDataStringOut = Helpers.TakeMemory();
+			using var mempchDataStringOut = Helpers.TakeMemory();
 			var returnValue = _GetBeaconLocationData( Self, BeaconLocation, eData, mempchDataStringOut, (1024 * 32) );
 			pchDataStringOut = Helpers.MemoryToString( mempchDataStringOut );
 			return returnValue;

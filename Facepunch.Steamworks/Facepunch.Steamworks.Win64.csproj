@@ -3,9 +3,8 @@
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win64</AssemblyName>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN64;PLATFORM_WIN;PLATFORM_64</DefineConstants>
-		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>7.1</LangVersion>	
+		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<RootNamespace>Steamworks</RootNamespace>
@@ -19,23 +18,23 @@
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
 		<PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>10</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
   
 	<ItemGroup>
-		<Content Include="steam_api64.dll" PackagePath="\content\" Pack="true" PackageCopyToOutput="true">
-			<CopyToOutputDirectory></CopyToOutputDirectory>
-      </Content>
-      <None Include="Facepunch.Steamworks.jpg" Pack="true" PackagePath="\" />
-	</ItemGroup>
-  
-	<ItemGroup>
-	  <None Update="steam_api.dll">
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
-	  </None>
+		<None Include="Facepunch.Steamworks.jpg">
+			<Pack>true</Pack>
+			<PackagePath>/</PackagePath>
+		</None>
+		<None Include="steam_api64.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<Pack>true</Pack>
+			<PackagePath>content</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />

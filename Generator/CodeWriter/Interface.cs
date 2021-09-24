@@ -152,7 +152,7 @@ namespace Generator
 				{
 					if ( arg is FetchStringType sb )
 					{
-						WriteLine( $"IntPtr mem{sb.VarName} = Helpers.TakeMemory();" );
+						WriteLine( $"using var mem{sb.VarName} = Helpers.TakeMemory();" );
 					}
 				}
 

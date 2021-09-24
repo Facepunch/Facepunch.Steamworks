@@ -147,7 +147,7 @@ namespace Steamworks.Data
 
 		public override string ToString()
 		{
-			var ptr = Helpers.TakeMemory();
+			using var ptr = Helpers.TakeMemory();
 			var self = this;
 			InternalToString( ref self, ptr, Helpers.MemoryBufferSize, true );
 			return Helpers.MemoryToString( ptr );

@@ -97,7 +97,7 @@ namespace Steamworks
 
 			var friend = new Friend( data.SteamIDUser );
 
-			var buffer = Helpers.TakeMemory();
+			using var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
 
 			var len = Internal.GetFriendMessage( data.SteamIDUser, data.MessageID, buffer, Helpers.MemoryBufferSize, ref type );
@@ -117,7 +117,7 @@ namespace Steamworks
 
 			var friend = new Friend( data.SteamIDUser );
 
-			var buffer = Helpers.TakeMemory();
+			using var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
 			SteamId chatter = data.SteamIDUser;
 
