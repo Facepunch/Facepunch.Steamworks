@@ -26,12 +26,22 @@ namespace Steamworks
 		internal static void InstallEvents( bool server )
 		{
 			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
+			Dispatch.Install<RemoteStoragePublishedFileSubscribed_t>( x => OnItemSubscribed?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
+			Dispatch.Install<RemoteStoragePublishedFileUnsubscribed_t>( x => OnItemUnsubscribed?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
+			Dispatch.Install<ItemInstalled_t>( x => OnItemInstalled?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
 		}
 
 		/// <summary>
 		/// Posted after Download call
 		/// </summary>
 		public static event Action<Result> OnDownloadItemResult;
+		
+		/// <summary>
+		/// Posted when new item is subscribed
+		/// </summary>
+		public static event Action<AppId, PublishedFileId> OnItemSubscribed;
+		public static event Action<AppId, PublishedFileId> OnItemUnsubscribed;
+		public static event Action<AppId, PublishedFileId> OnItemInstalled;
 
 		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
 		{
