@@ -69,9 +69,6 @@ namespace Steamworks
 
 			uint ipaddress = 0; // Any Port
 
-			if ( init.SteamPort == 0 )
-				init = init.WithRandomSteamPort();
-
 			if ( init.IpAddress != null )
 				ipaddress = Utility.IpToInt32( init.IpAddress );
 
@@ -82,9 +79,9 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !SteamInternal.GameServer_Init( ipaddress, init.SteamPort, init.GamePort, init.QueryPort, secure, init.VersionString ) )
+			if ( !SteamInternal.GameServer_Init( ipaddress, 0, init.GamePort, init.QueryPort, secure, init.VersionString ) )
 			{
-				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.SteamPort},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
+				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{0},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
 
 			//
