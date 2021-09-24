@@ -182,5 +182,14 @@ namespace Steamworks
 		/// Resumes all workshop downloads
 		/// </summary>
 		public static void ResumeDownloads() => Internal.SuspendDownloads(false);
-    }
+
+		/// <summary>
+		/// Show the app's latest Workshop EULA to the user in an overlay window, where they can accept it or not
+		/// </summary>
+		public static bool ShowWorkshopEula()
+		{
+			return Internal.ShowWorkshopEULA();
+		}
+
+	}
 }
