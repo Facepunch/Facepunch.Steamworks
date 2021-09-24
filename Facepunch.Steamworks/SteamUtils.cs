@@ -282,5 +282,17 @@ namespace Steamworks
 		/// returns true if Steam itself is running on the Steam Deck
 		/// </summary>
 		public bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
+
+
+		/// <summary>
+		/// In game launchers that don't have controller support you can call this to have 
+		/// Steam Input translate the controller input into mouse/kb to navigate the launcher
+		/// </summary>
+		public void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
+
+		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
+		//{
+		//	Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
+		//}
 	}
 }

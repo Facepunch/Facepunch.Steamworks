@@ -62,6 +62,7 @@ public static class Cleanup
 		type = type.Replace( "SteamIPAddress_t", "SteamIPAddress" );
 		type = type.Replace( "SteamNetworkingQuickConnectionStatus", "ConnectionStatus" );
 		type = type.Replace( "SteamInputGlyphSize", "GlyphSize" );
+		type = type.Replace( "FloatingGamepadTextInputMode", "TextInputMode" );
 
 		type = type.Replace( "::", "." );
 
@@ -148,6 +149,7 @@ public static class Cleanup
 		if ( name == "OverlayToStoreFlag" ) return "public";
 		if ( name == "TextFilteringContext" ) return "public";
 		if ( name == "GlyphSize" ) return "public";
+		if ( name == "TextInputMode" ) return "public";
 
 		return "internal";
 	}
