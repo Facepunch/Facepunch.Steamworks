@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemoteStorage_v014", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamRemoteStorage_v014();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemoteStorage_v014();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemoteStorage_v016", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamRemoteStorage_v016();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemoteStorage_v016();
 		
 		
 		#region FunctionMeta
@@ -373,6 +373,52 @@ namespace Steamworks
 		{
 			var returnValue = _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority );
 			return new CallResult<RemoteStorageDownloadUGCResult_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemoteStorage_GetLocalFileChangeCount", CallingConvention = Platform.CC)]
+		private static extern int _GetLocalFileChangeCount( IntPtr self );
+		
+		#endregion
+		internal int GetLocalFileChangeCount()
+		{
+			var returnValue = _GetLocalFileChangeCount( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemoteStorage_GetLocalFileChange", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetLocalFileChange( IntPtr self, int iFile, ref RemoteStorageLocalFileChange pEChangeType, ref RemoteStorageFilePathType pEFilePathType );
+		
+		#endregion
+		internal string GetLocalFileChange( int iFile, ref RemoteStorageLocalFileChange pEChangeType, ref RemoteStorageFilePathType pEFilePathType )
+		{
+			var returnValue = _GetLocalFileChange( Self, iFile, ref pEChangeType, ref pEFilePathType );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemoteStorage_BeginFileWriteBatch", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BeginFileWriteBatch( IntPtr self );
+		
+		#endregion
+		internal bool BeginFileWriteBatch()
+		{
+			var returnValue = _BeginFileWriteBatch( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemoteStorage_EndFileWriteBatch", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _EndFileWriteBatch( IntPtr self );
+		
+		#endregion
+		internal bool EndFileWriteBatch()
+		{
+			var returnValue = _EndFileWriteBatch( Self );
+			return returnValue;
 		}
 		
 	}

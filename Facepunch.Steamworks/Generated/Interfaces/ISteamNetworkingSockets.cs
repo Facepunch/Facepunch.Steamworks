@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_SteamAPI_v009", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_SteamAPI_v009();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_SteamAPI_v009();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_SteamAPI_v011", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_SteamAPI_v011();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_SteamAPI_v011();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011();
 		
 		
 		#region FunctionMeta
@@ -467,6 +467,16 @@ namespace Steamworks
 		{
 			var returnValue = _SetCertificate( Self, pCertificate, cbCertificate, ref errMsg );
 			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_ResetIdentity", CallingConvention = Platform.CC)]
+		private static extern void _ResetIdentity( IntPtr self, ref NetIdentity pIdentity );
+		
+		#endregion
+		internal void ResetIdentity( ref NetIdentity pIdentity )
+		{
+			_ResetIdentity( Self, ref pIdentity );
 		}
 		
 		#region FunctionMeta

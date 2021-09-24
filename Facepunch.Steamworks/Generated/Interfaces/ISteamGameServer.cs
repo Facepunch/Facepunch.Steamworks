@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServer_v013", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServer_v013();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServer_v013();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServer_v014", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServer_v014();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServer_v014();
 		
 		
 		#region FunctionMeta
@@ -258,48 +258,13 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate", CallingConvention = Platform.CC)]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SendUserConnectAndAuthenticate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetAdvertiseServerActive", CallingConvention = Platform.CC)]
+		private static extern void _SetAdvertiseServerActive( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
 		
 		#endregion
-		internal bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
+		internal void SetAdvertiseServerActive( [MarshalAs( UnmanagedType.U1 )] bool bActive )
 		{
-			var returnValue = _SendUserConnectAndAuthenticate( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
-			return returnValue;
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection", CallingConvention = Platform.CC)]
-		private static extern SteamId _CreateUnauthenticatedUserConnection( IntPtr self );
-		
-		#endregion
-		internal SteamId CreateUnauthenticatedUserConnection()
-		{
-			var returnValue = _CreateUnauthenticatedUserConnection( Self );
-			return returnValue;
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserDisconnect", CallingConvention = Platform.CC)]
-		private static extern void _SendUserDisconnect( IntPtr self, SteamId steamIDUser );
-		
-		#endregion
-		internal void SendUserDisconnect( SteamId steamIDUser )
-		{
-			_SendUserDisconnect( Self, steamIDUser );
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData", CallingConvention = Platform.CC)]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _BUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore );
-		
-		#endregion
-		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore )
-		{
-			var returnValue = _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
-			return returnValue;
+			_SetAdvertiseServerActive( Self, bActive );
 		}
 		
 		#region FunctionMeta
@@ -423,36 +388,6 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_EnableHeartbeats", CallingConvention = Platform.CC)]
-		private static extern void _EnableHeartbeats( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
-		
-		#endregion
-		internal void EnableHeartbeats( [MarshalAs( UnmanagedType.U1 )] bool bActive )
-		{
-			_EnableHeartbeats( Self, bActive );
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetHeartbeatInterval", CallingConvention = Platform.CC)]
-		private static extern void _SetHeartbeatInterval( IntPtr self, int iHeartbeatInterval );
-		
-		#endregion
-		internal void SetHeartbeatInterval( int iHeartbeatInterval )
-		{
-			_SetHeartbeatInterval( Self, iHeartbeatInterval );
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_ForceHeartbeat", CallingConvention = Platform.CC)]
-		private static extern void _ForceHeartbeat( IntPtr self );
-		
-		#endregion
-		internal void ForceHeartbeat()
-		{
-			_ForceHeartbeat( Self );
-		}
-		
-		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_AssociateWithClan", CallingConvention = Platform.CC)]
 		private static extern SteamAPICall_t _AssociateWithClan( IntPtr self, SteamId steamIDClan );
 		
@@ -472,6 +407,51 @@ namespace Steamworks
 		{
 			var returnValue = _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer );
 			return new CallResult<ComputeNewPlayerCompatibilityResult_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate_DEPRECATED", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SendUserConnectAndAuthenticate_DEPRECATED( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
+		
+		#endregion
+		internal bool SendUserConnectAndAuthenticate_DEPRECATED( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
+		{
+			var returnValue = _SendUserConnectAndAuthenticate_DEPRECATED( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection", CallingConvention = Platform.CC)]
+		private static extern SteamId _CreateUnauthenticatedUserConnection( IntPtr self );
+		
+		#endregion
+		internal SteamId CreateUnauthenticatedUserConnection()
+		{
+			var returnValue = _CreateUnauthenticatedUserConnection( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserDisconnect_DEPRECATED", CallingConvention = Platform.CC)]
+		private static extern void _SendUserDisconnect_DEPRECATED( IntPtr self, SteamId steamIDUser );
+		
+		#endregion
+		internal void SendUserDisconnect_DEPRECATED( SteamId steamIDUser )
+		{
+			_SendUserDisconnect_DEPRECATED( Self, steamIDUser );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore );
+		
+		#endregion
+		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore )
+		{
+			var returnValue = _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
+			return returnValue;
 		}
 		
 	}

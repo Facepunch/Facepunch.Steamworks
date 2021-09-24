@@ -106,6 +106,16 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamInputActionEvent_t
+	{
+		internal ulong ControllerHandle; // controllerHandle InputHandle_t
+		internal SteamInputActionEventType EEventType; // eEventType ESteamInputActionEventType
+		internal ulong AnalogAction_actionHandle; // analogAction_actionHandle InputAnalogActionHandle_t
+		internal AnalogState AnalogAction_analogActionData; // analogAction_analogActionData InputAnalogActionData_t
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamUGCDetails_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t

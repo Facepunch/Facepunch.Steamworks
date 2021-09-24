@@ -983,5 +983,28 @@ namespace Steamworks
 			return new CallResult<DeleteItemResult_t>( returnValue, IsServer );
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_ShowWorkshopEULA", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _ShowWorkshopEULA( IntPtr self );
+		
+		#endregion
+		internal bool ShowWorkshopEULA()
+		{
+			var returnValue = _ShowWorkshopEULA( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetWorkshopEULAStatus", CallingConvention = Platform.CC)]
+		private static extern SteamAPICall_t _GetWorkshopEULAStatus( IntPtr self );
+		
+		#endregion
+		internal CallResult<WorkshopEULAStatus_t> GetWorkshopEULAStatus()
+		{
+			var returnValue = _GetWorkshopEULAStatus( Self );
+			return new CallResult<WorkshopEULAStatus_t>( returnValue, IsServer );
+		}
+		
 	}
 }

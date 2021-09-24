@@ -8,22 +8,9 @@ namespace Steamworks.Data
 {
 	internal static class Defines
 	{
-		internal static readonly int k_cubSaltSize = 8;
-		internal static readonly GID_t k_GIDNil = 0xffffffffffffffff;
-		internal static readonly GID_t k_TxnIDNil = k_GIDNil;
-		internal static readonly GID_t k_TxnIDUnknown = 0;
-		internal static readonly JobID_t k_JobIDNil = 0xffffffffffffffff;
-		internal static readonly PackageId_t k_uPackageIdInvalid = 0xFFFFFFFF;
-		internal static readonly BundleId_t k_uBundleIdInvalid = 0;
 		internal static readonly AppId k_uAppIdInvalid = 0x0;
-		internal static readonly AssetClassId_t k_ulAssetClassIdInvalid = 0x0;
-		internal static readonly PhysicalItemId_t k_uPhysicalItemIdInvalid = 0x0;
 		internal static readonly DepotId_t k_uDepotIdInvalid = 0x0;
-		internal static readonly CellID_t k_uCellIDInvalid = 0xFFFFFFFF;
 		internal static readonly SteamAPICall_t k_uAPICallInvalid = 0x0;
-		internal static readonly PartnerId_t k_uPartnerIdInvalid = 0;
-		internal static readonly ManifestId_t k_uManifestIdInvalid = 0;
-		internal static readonly SiteId_t k_ulSiteIdInvalid = 0;
 		internal static readonly PartyBeaconID_t k_ulPartyBeaconIdInvalid = 0;
 		internal static readonly HAuthTicket k_HAuthTicketInvalid = 0;
 		internal static readonly uint k_unSteamAccountIDMask = 0xFFFFFFFF;
@@ -77,6 +64,12 @@ namespace Steamworks.Data
 		internal static readonly int k_cchMaxSteamNetworkingErrMsg = 1024;
 		internal static readonly int k_cchSteamNetworkingMaxConnectionCloseReason = 128;
 		internal static readonly int k_cchSteamNetworkingMaxConnectionDescription = 128;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Unauthenticated = 1;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Unencrypted = 2;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_LoopbackBuffers = 4;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Fast = 8;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Relayed = 16;
+		internal static readonly int k_nSteamNetworkConnectionInfoFlags_DualWifi = 32;
 		internal static readonly int k_cbMaxSteamNetworkingSocketsMessageSizeSend = 512 * 1024;
 		internal static readonly int k_nSteamNetworkingSend_Unreliable = 0;
 		internal static readonly int k_nSteamNetworkingSend_NoNagle = 1;
@@ -97,6 +90,8 @@ namespace Steamworks.Data
 		internal static readonly int k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Public = 4;
 		internal static readonly int k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_All = 0x7fffffff;
 		internal static readonly SteamNetworkingPOPID k_SteamDatagramPOPID_dev = ( ( uint ) 'd' << 16 ) | ( ( uint ) 'e' << 8 ) | ( uint ) 'v';
+		internal static readonly ushort STEAMGAMESERVER_QUERY_PORT_SHARED = 0xffff;
+		internal static readonly ushort MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE = STEAMGAMESERVER_QUERY_PORT_SHARED;
 		internal static readonly uint k_cbSteamDatagramMaxSerializedTicket = 512;
 		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData = 2048;
 		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginSerialized = 4096;

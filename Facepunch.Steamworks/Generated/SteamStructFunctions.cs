@@ -153,6 +153,12 @@ namespace Steamworks.Data
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetIPAddr", CallingConvention = Platform.CC)]
 		internal static extern IntPtr InternalGetIPAddr( ref NetIdentity self );
 		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_SetIPv4Addr", CallingConvention = Platform.CC)]
+		internal static extern void InternalSetIPv4Addr( ref NetIdentity self, uint nIPv4, ushort nPort );
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetIPv4", CallingConvention = Platform.CC)]
+		internal static extern uint InternalGetIPv4( ref NetIdentity self );
+		
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_SetLocalHost", CallingConvention = Platform.CC)]
 		internal static extern void InternalSetLocalHost( ref NetIdentity self );
 		

@@ -109,7 +109,7 @@ namespace Steamworks
 			//
 			// Initial settings
 			//
-			AutomaticHeartbeats = true;
+			AdvertiseServer = true;
 			MaxPlayers = 32;
 			BotCount = 0;
 			Product = $"{appid.Value}";
@@ -311,27 +311,29 @@ namespace Steamworks
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
 		/// Enabled by default.
 		/// </summary>
+		[Obsolete( "Renamed to AdvertiseServer in 1.52" )]
 		public static bool AutomaticHeartbeats
 		{
-			set { Internal.EnableHeartbeats( value ); }
-		}
-
+			set { Internal.SetAdvertiseServerActive( value ); }
+		}		
+		
+		
 		/// <summary>
-		/// Set heartbeat interval, if automatic heartbeats are enabled.
-		/// You can leave this at the default.
+		/// Enable or disable heartbeats, which are sent regularly to the master server.
+		/// Enabled by default.
 		/// </summary>
-		public static int AutomaticHeartbeatRate
+		public static bool AdvertiseServer
 		{
-			set { Internal.SetHeartbeatInterval( value ); }
+			set { Internal.SetAdvertiseServerActive( value ); }
 		}
 
 		/// <summary>
 		/// Force send a heartbeat to the master server instead of waiting
 		/// for the next automatic update (if you've left them enabled)
 		/// </summary>
+		[Obsolete( "No longer used" )]
 		public static void ForceHeartbeat()
 		{
-			Internal.ForceHeartbeat();
 		}
 
 		/// <summary>

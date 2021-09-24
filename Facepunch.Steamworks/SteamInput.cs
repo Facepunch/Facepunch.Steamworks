@@ -22,7 +22,7 @@ namespace Steamworks
 		/// </summary>
 		public static void RunFrame()
 		{
-			Internal.RunFrame();
+			Internal.RunFrame( false );
 		}
 
 		static readonly InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
@@ -63,10 +63,39 @@ namespace Steamworks
                 ref origin
             );
 
-            return Internal.GetGlyphForActionOrigin(origin);
+            return Internal.GetGlyphForActionOrigin_Legacy(origin);
         }
 
-        internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
+
+		/// <summary>
+		/// Return an absolute path to the PNG image glyph for the provided digital action name. The current
+		/// action set in use for the controller will be used for the lookup. You should cache the result and
+		/// maintain your own list of loaded PNG assets.
+		/// </summary>
+		public static string GetPngActionGlyph( Controller controller, string action, GlyphSize size )
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
+
+			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
+
+			return Internal.GetGlyphPNGForActionOrigin( origin, size, 0 );
+		}
+
+		/// <summary>
+		/// Return an absolute path to the SVF image glyph for the provided digital action name. The current
+		/// action set in use for the controller will be used for the lookup. You should cache the result and
+		/// maintain your own list of loaded PNG assets.
+		/// </summary>
+		public static string GetSvgActionGlyph( Controller controller, string action )
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
+
+			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
+
+			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
+		}
+
+		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
 		internal static InputDigitalActionHandle_t GetDigitalActionHandle( string name )
 		{
 			if ( DigitalHandles.TryGetValue( name, out var val ) )

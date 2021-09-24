@@ -15,20 +15,20 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v002", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamInput_v002();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v002();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v005", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamInput_v005();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v005();
 		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Init", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _Init( IntPtr self );
+		private static extern bool _Init( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bExplicitlyCallRunFrame );
 		
 		#endregion
-		internal bool Init()
+		internal bool Init( [MarshalAs( UnmanagedType.U1 )] bool bExplicitlyCallRunFrame )
 		{
-			var returnValue = _Init( Self );
+			var returnValue = _Init( Self, bExplicitlyCallRunFrame );
 			return returnValue;
 		}
 		
@@ -45,13 +45,49 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_RunFrame", CallingConvention = Platform.CC)]
-		private static extern void _RunFrame( IntPtr self );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_SetInputActionManifestFilePath", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SetInputActionManifestFilePath( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputActionManifestAbsolutePath );
 		
 		#endregion
-		internal void RunFrame()
+		internal bool SetInputActionManifestFilePath( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputActionManifestAbsolutePath )
 		{
-			_RunFrame( Self );
+			var returnValue = _SetInputActionManifestFilePath( Self, pchInputActionManifestAbsolutePath );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_RunFrame", CallingConvention = Platform.CC)]
+		private static extern void _RunFrame( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bReservedValue );
+		
+		#endregion
+		internal void RunFrame( [MarshalAs( UnmanagedType.U1 )] bool bReservedValue )
+		{
+			_RunFrame( Self, bReservedValue );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_BWaitForData", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BWaitForData( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bWaitForever, uint unTimeout );
+		
+		#endregion
+		internal bool BWaitForData( [MarshalAs( UnmanagedType.U1 )] bool bWaitForever, uint unTimeout )
+		{
+			var returnValue = _BWaitForData( Self, bWaitForever, unTimeout );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_BNewDataAvailable", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BNewDataAvailable( IntPtr self );
+		
+		#endregion
+		internal bool BNewDataAvailable()
+		{
+			var returnValue = _BNewDataAvailable( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -63,6 +99,16 @@ namespace Steamworks
 		{
 			var returnValue = _GetConnectedControllers( Self, handlesOut );
 			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_EnableDeviceCallbacks", CallingConvention = Platform.CC)]
+		private static extern void _EnableDeviceCallbacks( IntPtr self );
+		
+		#endregion
+		internal void EnableDeviceCallbacks()
+		{
+			_EnableDeviceCallbacks( Self );
 		}
 		
 		#region FunctionMeta
@@ -172,6 +218,17 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetStringForDigitalActionName", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetStringForDigitalActionName( IntPtr self, InputDigitalActionHandle_t eActionHandle );
+		
+		#endregion
+		internal string GetStringForDigitalActionName( InputDigitalActionHandle_t eActionHandle )
+		{
+			var returnValue = _GetStringForDigitalActionName( Self, eActionHandle );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionHandle", CallingConvention = Platform.CC)]
 		private static extern InputAnalogActionHandle_t _GetAnalogActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
 		
@@ -205,13 +262,35 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphForActionOrigin", CallingConvention = Platform.CC)]
-		private static extern Utf8StringPointer _GetGlyphForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphPNGForActionOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetGlyphPNGForActionOrigin( IntPtr self, InputActionOrigin eOrigin, GlyphSize eSize, uint unFlags );
 		
 		#endregion
-		internal string GetGlyphForActionOrigin( InputActionOrigin eOrigin )
+		internal string GetGlyphPNGForActionOrigin( InputActionOrigin eOrigin, GlyphSize eSize, uint unFlags )
 		{
-			var returnValue = _GetGlyphForActionOrigin( Self, eOrigin );
+			var returnValue = _GetGlyphPNGForActionOrigin( Self, eOrigin, eSize, unFlags );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphSVGForActionOrigin", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetGlyphSVGForActionOrigin( IntPtr self, InputActionOrigin eOrigin, uint unFlags );
+		
+		#endregion
+		internal string GetGlyphSVGForActionOrigin( InputActionOrigin eOrigin, uint unFlags )
+		{
+			var returnValue = _GetGlyphSVGForActionOrigin( Self, eOrigin, unFlags );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetGlyphForActionOrigin_Legacy", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetGlyphForActionOrigin_Legacy( IntPtr self, InputActionOrigin eOrigin );
+		
+		#endregion
+		internal string GetGlyphForActionOrigin_Legacy( InputActionOrigin eOrigin )
+		{
+			var returnValue = _GetGlyphForActionOrigin_Legacy( Self, eOrigin );
 			return returnValue;
 		}
 		
@@ -223,6 +302,17 @@ namespace Steamworks
 		internal string GetStringForActionOrigin( InputActionOrigin eOrigin )
 		{
 			var returnValue = _GetStringForActionOrigin( Self, eOrigin );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetStringForAnalogActionName", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetStringForAnalogActionName( IntPtr self, InputAnalogActionHandle_t eActionHandle );
+		
+		#endregion
+		internal string GetStringForAnalogActionName( InputAnalogActionHandle_t eActionHandle )
+		{
+			var returnValue = _GetStringForAnalogActionName( Self, eActionHandle );
 			return returnValue;
 		}
 		
@@ -258,6 +348,26 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerVibrationExtended", CallingConvention = Platform.CC)]
+		private static extern void _TriggerVibrationExtended( IntPtr self, InputHandle_t inputHandle, ushort usLeftSpeed, ushort usRightSpeed, ushort usLeftTriggerSpeed, ushort usRightTriggerSpeed );
+		
+		#endregion
+		internal void TriggerVibrationExtended( InputHandle_t inputHandle, ushort usLeftSpeed, ushort usRightSpeed, ushort usLeftTriggerSpeed, ushort usRightTriggerSpeed )
+		{
+			_TriggerVibrationExtended( Self, inputHandle, usLeftSpeed, usRightSpeed, usLeftTriggerSpeed, usRightTriggerSpeed );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerSimpleHapticEvent", CallingConvention = Platform.CC)]
+		private static extern void _TriggerSimpleHapticEvent( IntPtr self, InputHandle_t inputHandle, ControllerHapticLocation eHapticLocation, byte nIntensity, char nGainDB, byte nOtherIntensity, char nOtherGainDB );
+		
+		#endregion
+		internal void TriggerSimpleHapticEvent( InputHandle_t inputHandle, ControllerHapticLocation eHapticLocation, byte nIntensity, char nGainDB, byte nOtherIntensity, char nOtherGainDB )
+		{
+			_TriggerSimpleHapticEvent( Self, inputHandle, eHapticLocation, nIntensity, nGainDB, nOtherIntensity, nOtherGainDB );
+		}
+		
+		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_SetLEDColor", CallingConvention = Platform.CC)]
 		private static extern void _SetLEDColor( IntPtr self, InputHandle_t inputHandle, byte nColorR, byte nColorG, byte nColorB, uint nFlags );
 		
@@ -268,23 +378,23 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerHapticPulse", CallingConvention = Platform.CC)]
-		private static extern void _TriggerHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Legacy_TriggerHapticPulse", CallingConvention = Platform.CC)]
+		private static extern void _Legacy_TriggerHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec );
 		
 		#endregion
-		internal void TriggerHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec )
+		internal void Legacy_TriggerHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec )
 		{
-			_TriggerHapticPulse( Self, inputHandle, eTargetPad, usDurationMicroSec );
+			_Legacy_TriggerHapticPulse( Self, inputHandle, eTargetPad, usDurationMicroSec );
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_TriggerRepeatedHapticPulse", CallingConvention = Platform.CC)]
-		private static extern void _TriggerRepeatedHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Legacy_TriggerRepeatedHapticPulse", CallingConvention = Platform.CC)]
+		private static extern void _Legacy_TriggerRepeatedHapticPulse( IntPtr self, InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags );
 		
 		#endregion
-		internal void TriggerRepeatedHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags )
+		internal void Legacy_TriggerRepeatedHapticPulse( InputHandle_t inputHandle, SteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags )
 		{
-			_TriggerRepeatedHapticPulse( Self, inputHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags );
+			_Legacy_TriggerRepeatedHapticPulse( Self, inputHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags );
 		}
 		
 		#region FunctionMeta
@@ -396,6 +506,17 @@ namespace Steamworks
 		internal uint GetRemotePlaySessionID( InputHandle_t inputHandle )
 		{
 			var returnValue = _GetRemotePlaySessionID( Self, inputHandle );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetSessionInputConfigurationSettings", CallingConvention = Platform.CC)]
+		private static extern ushort _GetSessionInputConfigurationSettings( IntPtr self );
+		
+		#endregion
+		internal ushort GetSessionInputConfigurationSettings()
+		{
+			var returnValue = _GetSessionInputConfigurationSettings( Self );
 			return returnValue;
 		}
 		

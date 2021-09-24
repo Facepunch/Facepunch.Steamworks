@@ -387,5 +387,39 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _IsSteamRunningOnSteamDeck( IntPtr self );
+		
+		#endregion
+		internal bool IsSteamRunningOnSteamDeck()
+		{
+			var returnValue = _IsSteamRunningOnSteamDeck( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_ShowModalGamepadTextInput", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _ShowModalGamepadTextInput( IntPtr self, GamepadTextInputLineMode eLineInputMode );
+		
+		#endregion
+		internal bool ShowModalGamepadTextInput( GamepadTextInputLineMode eLineInputMode )
+		{
+			var returnValue = _ShowModalGamepadTextInput( Self, eLineInputMode );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetGameLauncherMode", CallingConvention = Platform.CC)]
+		private static extern void _SetGameLauncherMode( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bLauncherMode );
+		
+		#endregion
+		internal void SetGameLauncherMode( [MarshalAs( UnmanagedType.U1 )] bool bLauncherMode )
+		{
+			_SetGameLauncherMode( Self, bLauncherMode );
+		}
+		
 	}
 }

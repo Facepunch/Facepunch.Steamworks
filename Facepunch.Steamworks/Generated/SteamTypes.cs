@@ -6,118 +6,6 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
-	internal struct GID_t : IEquatable<GID_t>, IComparable<GID_t>
-	{
-		// Name: GID_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator GID_t( ulong value ) => new GID_t(){ Value = value };
-		public static implicit operator ulong( GID_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (GID_t) p );
-		public bool Equals( GID_t p ) => p.Value == Value;
-		public static bool operator ==( GID_t a, GID_t b ) => a.Equals( b );
-		public static bool operator !=( GID_t a, GID_t b ) => !a.Equals( b );
-		public int CompareTo( GID_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct JobID_t : IEquatable<JobID_t>, IComparable<JobID_t>
-	{
-		// Name: JobID_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator JobID_t( ulong value ) => new JobID_t(){ Value = value };
-		public static implicit operator ulong( JobID_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (JobID_t) p );
-		public bool Equals( JobID_t p ) => p.Value == Value;
-		public static bool operator ==( JobID_t a, JobID_t b ) => a.Equals( b );
-		public static bool operator !=( JobID_t a, JobID_t b ) => !a.Equals( b );
-		public int CompareTo( JobID_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct TxnID_t : IEquatable<TxnID_t>, IComparable<TxnID_t>
-	{
-		// Name: TxnID_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator TxnID_t( ulong value ) => new TxnID_t(){ Value = value };
-		public static implicit operator ulong( TxnID_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (TxnID_t) p );
-		public bool Equals( TxnID_t p ) => p.Value == Value;
-		public static bool operator ==( TxnID_t a, TxnID_t b ) => a.Equals( b );
-		public static bool operator !=( TxnID_t a, TxnID_t b ) => !a.Equals( b );
-		public int CompareTo( TxnID_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct PackageId_t : IEquatable<PackageId_t>, IComparable<PackageId_t>
-	{
-		// Name: PackageId_t, Type: unsigned int
-		public uint Value;
-		
-		public static implicit operator PackageId_t( uint value ) => new PackageId_t(){ Value = value };
-		public static implicit operator uint( PackageId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (PackageId_t) p );
-		public bool Equals( PackageId_t p ) => p.Value == Value;
-		public static bool operator ==( PackageId_t a, PackageId_t b ) => a.Equals( b );
-		public static bool operator !=( PackageId_t a, PackageId_t b ) => !a.Equals( b );
-		public int CompareTo( PackageId_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct BundleId_t : IEquatable<BundleId_t>, IComparable<BundleId_t>
-	{
-		// Name: BundleId_t, Type: unsigned int
-		public uint Value;
-		
-		public static implicit operator BundleId_t( uint value ) => new BundleId_t(){ Value = value };
-		public static implicit operator uint( BundleId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (BundleId_t) p );
-		public bool Equals( BundleId_t p ) => p.Value == Value;
-		public static bool operator ==( BundleId_t a, BundleId_t b ) => a.Equals( b );
-		public static bool operator !=( BundleId_t a, BundleId_t b ) => !a.Equals( b );
-		public int CompareTo( BundleId_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct AssetClassId_t : IEquatable<AssetClassId_t>, IComparable<AssetClassId_t>
-	{
-		// Name: AssetClassId_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator AssetClassId_t( ulong value ) => new AssetClassId_t(){ Value = value };
-		public static implicit operator ulong( AssetClassId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (AssetClassId_t) p );
-		public bool Equals( AssetClassId_t p ) => p.Value == Value;
-		public static bool operator ==( AssetClassId_t a, AssetClassId_t b ) => a.Equals( b );
-		public static bool operator !=( AssetClassId_t a, AssetClassId_t b ) => !a.Equals( b );
-		public int CompareTo( AssetClassId_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct PhysicalItemId_t : IEquatable<PhysicalItemId_t>, IComparable<PhysicalItemId_t>
-	{
-		// Name: PhysicalItemId_t, Type: unsigned int
-		public uint Value;
-		
-		public static implicit operator PhysicalItemId_t( uint value ) => new PhysicalItemId_t(){ Value = value };
-		public static implicit operator uint( PhysicalItemId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (PhysicalItemId_t) p );
-		public bool Equals( PhysicalItemId_t p ) => p.Value == Value;
-		public static bool operator ==( PhysicalItemId_t a, PhysicalItemId_t b ) => a.Equals( b );
-		public static bool operator !=( PhysicalItemId_t a, PhysicalItemId_t b ) => !a.Equals( b );
-		public int CompareTo( PhysicalItemId_t other ) => Value.CompareTo( other.Value );
-	}
-	
 	internal struct DepotId_t : IEquatable<DepotId_t>, IComparable<DepotId_t>
 	{
 		// Name: DepotId_t, Type: unsigned int
@@ -148,22 +36,6 @@ namespace Steamworks.Data
 		public static bool operator ==( RTime32 a, RTime32 b ) => a.Equals( b );
 		public static bool operator !=( RTime32 a, RTime32 b ) => !a.Equals( b );
 		public int CompareTo( RTime32 other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct CellID_t : IEquatable<CellID_t>, IComparable<CellID_t>
-	{
-		// Name: CellID_t, Type: unsigned int
-		public uint Value;
-		
-		public static implicit operator CellID_t( uint value ) => new CellID_t(){ Value = value };
-		public static implicit operator uint( CellID_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (CellID_t) p );
-		public bool Equals( CellID_t p ) => p.Value == Value;
-		public static bool operator ==( CellID_t a, CellID_t b ) => a.Equals( b );
-		public static bool operator !=( CellID_t a, CellID_t b ) => !a.Equals( b );
-		public int CompareTo( CellID_t other ) => Value.CompareTo( other.Value );
 	}
 	
 	internal struct SteamAPICall_t : IEquatable<SteamAPICall_t>, IComparable<SteamAPICall_t>
@@ -198,54 +70,6 @@ namespace Steamworks.Data
 		public int CompareTo( AccountID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PartnerId_t : IEquatable<PartnerId_t>, IComparable<PartnerId_t>
-	{
-		// Name: PartnerId_t, Type: unsigned int
-		public uint Value;
-		
-		public static implicit operator PartnerId_t( uint value ) => new PartnerId_t(){ Value = value };
-		public static implicit operator uint( PartnerId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (PartnerId_t) p );
-		public bool Equals( PartnerId_t p ) => p.Value == Value;
-		public static bool operator ==( PartnerId_t a, PartnerId_t b ) => a.Equals( b );
-		public static bool operator !=( PartnerId_t a, PartnerId_t b ) => !a.Equals( b );
-		public int CompareTo( PartnerId_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct ManifestId_t : IEquatable<ManifestId_t>, IComparable<ManifestId_t>
-	{
-		// Name: ManifestId_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator ManifestId_t( ulong value ) => new ManifestId_t(){ Value = value };
-		public static implicit operator ulong( ManifestId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (ManifestId_t) p );
-		public bool Equals( ManifestId_t p ) => p.Value == Value;
-		public static bool operator ==( ManifestId_t a, ManifestId_t b ) => a.Equals( b );
-		public static bool operator !=( ManifestId_t a, ManifestId_t b ) => !a.Equals( b );
-		public int CompareTo( ManifestId_t other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct SiteId_t : IEquatable<SiteId_t>, IComparable<SiteId_t>
-	{
-		// Name: SiteId_t, Type: unsigned long long
-		public ulong Value;
-		
-		public static implicit operator SiteId_t( ulong value ) => new SiteId_t(){ Value = value };
-		public static implicit operator ulong( SiteId_t value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (SiteId_t) p );
-		public bool Equals( SiteId_t p ) => p.Value == Value;
-		public static bool operator ==( SiteId_t a, SiteId_t b ) => a.Equals( b );
-		public static bool operator !=( SiteId_t a, SiteId_t b ) => !a.Equals( b );
-		public int CompareTo( SiteId_t other ) => Value.CompareTo( other.Value );
-	}
-	
 	internal struct PartyBeaconID_t : IEquatable<PartyBeaconID_t>, IComparable<PartyBeaconID_t>
 	{
 		// Name: PartyBeaconID_t, Type: unsigned long long
@@ -276,22 +100,6 @@ namespace Steamworks.Data
 		public static bool operator ==( HAuthTicket a, HAuthTicket b ) => a.Equals( b );
 		public static bool operator !=( HAuthTicket a, HAuthTicket b ) => !a.Equals( b );
 		public int CompareTo( HAuthTicket other ) => Value.CompareTo( other.Value );
-	}
-	
-	internal struct BREAKPAD_HANDLE : IEquatable<BREAKPAD_HANDLE>, IComparable<BREAKPAD_HANDLE>
-	{
-		// Name: BREAKPAD_HANDLE, Type: void *
-		public IntPtr Value;
-		
-		public static implicit operator BREAKPAD_HANDLE( IntPtr value ) => new BREAKPAD_HANDLE(){ Value = value };
-		public static implicit operator IntPtr( BREAKPAD_HANDLE value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (BREAKPAD_HANDLE) p );
-		public bool Equals( BREAKPAD_HANDLE p ) => p.Value == Value;
-		public static bool operator ==( BREAKPAD_HANDLE a, BREAKPAD_HANDLE b ) => a.Equals( b );
-		public static bool operator !=( BREAKPAD_HANDLE a, BREAKPAD_HANDLE b ) => !a.Equals( b );
-		public int CompareTo( BREAKPAD_HANDLE other ) => Value.ToInt64().CompareTo( other.Value.ToInt64() );
 	}
 	
 	internal struct HSteamPipe : IEquatable<HSteamPipe>, IComparable<HSteamPipe>
