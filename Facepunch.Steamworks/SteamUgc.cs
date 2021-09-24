@@ -191,5 +191,14 @@ namespace Steamworks
 			return Internal.ShowWorkshopEULA();
 		}
 
+		/// <summary>
+		/// Retrieve information related to the user's acceptance or not of the app's specific Workshop EULA
+		/// </summary>
+		public static async Task<bool?> GetWorkshopEulaStatus()
+		{
+			var status = await Internal.GetWorkshopEULAStatus();
+			return status?.Accepted;
+		}
+
 	}
 }
