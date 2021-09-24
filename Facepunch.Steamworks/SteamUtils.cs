@@ -277,5 +277,10 @@ namespace Steamworks
 			Internal.FilterText( context, sourceSteamID, inputMessage, out var filteredString );
 			return filteredString;
 		}
+
+		/// <summary>
+		/// returns true if Steam itself is running on the Steam Deck
+		/// </summary>
+		public bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
 	}
 }
