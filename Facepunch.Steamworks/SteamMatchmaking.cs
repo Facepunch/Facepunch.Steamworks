@@ -72,7 +72,7 @@ namespace Steamworks
 		{
 			SteamId steamid = default;
 			ChatEntryType chatEntryType = default;
-			var buffer = Helpers.TakeMemory();
+			using var buffer = Helpers.TakeMemory();
 
 			var readData = Internal.GetLobbyChatEntry( callback.SteamIDLobby, (int)callback.ChatID, ref steamid, buffer, Helpers.MemoryBufferSize, ref chatEntryType );
 

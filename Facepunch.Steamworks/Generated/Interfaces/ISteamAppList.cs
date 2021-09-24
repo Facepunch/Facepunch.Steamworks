@@ -49,7 +49,7 @@ namespace Steamworks
 		#endregion
 		internal int GetAppName( AppId nAppID, out string pchName )
 		{
-			IntPtr mempchName = Helpers.TakeMemory();
+			using var mempchName = Helpers.TakeMemory();
 			var returnValue = _GetAppName( Self, nAppID, mempchName, (1024 * 32) );
 			pchName = Helpers.MemoryToString( mempchName );
 			return returnValue;
@@ -62,7 +62,7 @@ namespace Steamworks
 		#endregion
 		internal int GetAppInstallDir( AppId nAppID, out string pchDirectory )
 		{
-			IntPtr mempchDirectory = Helpers.TakeMemory();
+			using var mempchDirectory = Helpers.TakeMemory();
 			var returnValue = _GetAppInstallDir( Self, nAppID, mempchDirectory, (1024 * 32) );
 			pchDirectory = Helpers.MemoryToString( mempchDirectory );
 			return returnValue;

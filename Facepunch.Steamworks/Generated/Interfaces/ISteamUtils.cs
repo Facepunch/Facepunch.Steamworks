@@ -256,7 +256,7 @@ namespace Steamworks
 		#endregion
 		internal bool GetEnteredGamepadTextInput( out string pchText )
 		{
-			IntPtr mempchText = Helpers.TakeMemory();
+			using var mempchText = Helpers.TakeMemory();
 			var returnValue = _GetEnteredGamepadTextInput( Self, mempchText, (1024 * 32) );
 			pchText = Helpers.MemoryToString( mempchText );
 			return returnValue;
@@ -370,7 +370,7 @@ namespace Steamworks
 		#endregion
 		internal int FilterText( TextFilteringContext eContext, SteamId sourceSteamID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputMessage, out string pchOutFilteredText )
 		{
-			IntPtr mempchOutFilteredText = Helpers.TakeMemory();
+			using var mempchOutFilteredText = Helpers.TakeMemory();
 			var returnValue = _FilterText( Self, eContext, sourceSteamID, pchInputMessage, mempchOutFilteredText, (1024 * 32) );
 			pchOutFilteredText = Helpers.MemoryToString( mempchOutFilteredText );
 			return returnValue;
