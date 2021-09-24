@@ -144,7 +144,7 @@ public static class Cleanup
 		if ( name == "NetDebugOutput" ) return "public";
 		if ( name == "ItemPreviewType" ) return "public";
 		if ( name == "OverlayToStoreFlag" ) return "public";
-		if ( name == "TextFilteringContext " ) return "public";
+		if ( name == "TextFilteringContext" ) return "public";
 
 		return "internal";
 	}
