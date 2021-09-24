@@ -210,8 +210,7 @@ public:
 	// as above, but downloads leaderboard entries for an arbitrary set of users - ELeaderboardDataRequest is k_ELeaderboardDataRequestUsers
 	// if a user doesn't have a leaderboard entry, they won't be included in the result
 	// a max of 100 users can be downloaded at a time, with only one outstanding call at a time
-	STEAM_METHOD_DESC(Downloads leaderboard entries for an arbitrary set of users - ELeaderboardDataRequest is k_ELeaderboardDataRequestUsers)
-		STEAM_CALL_RESULT( LeaderboardScoresDownloaded_t )
+	STEAM_CALL_RESULT( LeaderboardScoresDownloaded_t )
 	virtual SteamAPICall_t DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard,
 															   STEAM_ARRAY_COUNT_D(cUsers, Array of users to retrieve) CSteamID *prgUsers, int cUsers ) = 0;
 

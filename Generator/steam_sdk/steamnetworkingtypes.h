@@ -132,7 +132,7 @@ enum ESteamNetworkingAvailability
 enum ESteamNetworkingIdentityType
 {
 	// Dummy/empty/invalid.
-	// Plese note that if we parse a string that we don't recognize
+	// Please note that if we parse a string that we don't recognize
 	// but that appears reasonable, we will NOT use this type.  Instead
 	// we'll use k_ESteamNetworkingIdentityType_UnknownType.
 	k_ESteamNetworkingIdentityType_Invalid = 0,
@@ -535,13 +535,9 @@ enum ESteamNetConnectionEnd
 		// - etc
 		k_ESteamNetConnectionEnd_Remote_BadCert = 4003,
 
-		// We couldn't rendezvous with the remote host because
-		// they aren't logged into Steam
-		k_ESteamNetConnectionEnd_Remote_NotLoggedIn = 4004,
-
-		// We couldn't rendezvous with the remote host because
-		// they aren't running the right application.
-		k_ESteamNetConnectionEnd_Remote_NotRunningApp = 4005,
+		// These will never be returned
+		//k_ESteamNetConnectionEnd_Remote_NotLoggedIn_DEPRECATED = 4004,
+		//k_ESteamNetConnectionEnd_Remote_NotRunningApp_DEPRECATED = 4005,
 
 		// Something wrong with the protocol version you are using.
 		// (Probably the code you are running is too old.)
@@ -575,10 +571,7 @@ enum ESteamNetConnectionEnd
 		// or on their end.
 		k_ESteamNetConnectionEnd_Misc_Timeout = 5003,
 
-		// We're having trouble talking to the relevant relay.
-		// We don't have enough information to say whether the
-		// problem is on our end or not.
-		k_ESteamNetConnectionEnd_Misc_RelayConnectivity = 5004,
+		//k_ESteamNetConnectionEnd_Misc_RelayConnectivity_DEPRECATED = 5004,
 
 		// There's some trouble talking to Steam.
 		k_ESteamNetConnectionEnd_Misc_SteamConnectivity = 5005,
@@ -1057,31 +1050,9 @@ enum ESteamNetworkingConfigValue
 {
 	k_ESteamNetworkingConfig_Invalid = 0,
 
-	/// [global float, 0--100] Randomly discard N pct of packets instead of sending/recv
-	/// This is a global option only, since it is applied at a low level
-	/// where we don't have much context
-	k_ESteamNetworkingConfig_FakePacketLoss_Send = 2,
-	k_ESteamNetworkingConfig_FakePacketLoss_Recv = 3,
-
-	/// [global int32].  Delay all outbound/inbound packets by N ms
-	k_ESteamNetworkingConfig_FakePacketLag_Send = 4,
-	k_ESteamNetworkingConfig_FakePacketLag_Recv = 5,
-
-	/// [global float] 0-100 Percentage of packets we will add additional delay
-	/// to (causing them to be reordered)
-	k_ESteamNetworkingConfig_FakePacketReorder_Send = 6,
-	k_ESteamNetworkingConfig_FakePacketReorder_Recv = 7,
-
-	/// [global int32] Extra delay, in ms, to apply to reordered packets.
-	k_ESteamNetworkingConfig_FakePacketReorder_Time = 8,
-
-	/// [global float 0--100] Globally duplicate some percentage of packets we send
-	k_ESteamNetworkingConfig_FakePacketDup_Send = 26,
-	k_ESteamNetworkingConfig_FakePacketDup_Recv = 27,
-
-	/// [global int32] Amount of delay, in ms, to delay duplicated packets.
-	/// (We chose a random delay between 0 and this value)
-	k_ESteamNetworkingConfig_FakePacketDup_TimeMax = 28,
+//
+// Connection options
+//
 
 	/// [connection int32] Timeout value (in ms) to use when first connecting
 	k_ESteamNetworkingConfig_TimeoutInitial = 24,
@@ -1093,6 +1064,41 @@ enum ESteamNetworkingConfigValue
 	/// if this is reached SendMessage will return k_EResultLimitExceeded
 	/// Default is 512k (524288 bytes)
 	k_ESteamNetworkingConfig_SendBufferSize = 9,
+
+	/// [connection int64] Get/set userdata as a configuration option.
+	/// The default value is -1.   You may want to set the user data as
+	/// a config value, instead of using ISteamNetworkingSockets::SetConnectionUserData
+	/// in two specific instances:
+	///
+	/// - You wish to set the userdata atomically when creating
+	///   an outbound connection, so that the userdata is filled in properly
+	///   for any callbacks that happen.  However, note that this trick
+	///   only works for connections initiated locally!  For incoming
+	///   connections, multiple state transitions may happen and
+	///   callbacks be queued, before you are able to service the first
+	///   callback!  Be careful!
+	///
+	/// - You can set the default userdata for all newly created connections
+	///   by setting this value at a higher level (e.g. on the listen
+	///   socket or at the global level.)  Then this default
+	///   value will be inherited when the connection is created.
+	///   This is useful in case -1 is a valid userdata value, and you
+	///   wish to use something else as the default value so you can
+	///   tell if it has been set or not.
+	///
+	///   HOWEVER: once a connection is created, the effective value is
+	///   then bound to the connection.  Unlike other connection options,
+	///   if you change it again at a higher level, the new value will not
+	///   be inherited by connections.
+	///
+	/// Using the userdata field in callback structs is not advised because
+	/// of tricky race conditions.  Instead, you might try one of these methods:
+	///
+	/// - Use a separate map with the HSteamNetConnection as the key.
+	/// - Fetch the userdata from the connection in your callback
+	///   using ISteamNetworkingSockets::GetConnectionUserData, to
+	//    ensure you have the current value.
+	k_ESteamNetworkingConfig_ConnectionUserData = 40,
 
 	/// [connection int32] Minimum/maximum send rate clamp, 0 is no limit.
 	/// This value will control the min/max allowed sending rate that 
@@ -1253,9 +1259,62 @@ enum ESteamNetworkingConfigValue
 	/// This value should not be read or written in any other context.
 	k_ESteamNetworkingConfig_LocalVirtualPort = 38,
 
-	//
-	// Callbacks
-	//
+
+//
+// Simulating network conditions
+//
+// These are global (not per-connection) because they apply at
+// a relatively low UDP layer.
+//
+
+	/// [global float, 0--100] Randomly discard N pct of packets instead of sending/recv
+	/// This is a global option only, since it is applied at a low level
+	/// where we don't have much context
+	k_ESteamNetworkingConfig_FakePacketLoss_Send = 2,
+	k_ESteamNetworkingConfig_FakePacketLoss_Recv = 3,
+
+	/// [global int32].  Delay all outbound/inbound packets by N ms
+	k_ESteamNetworkingConfig_FakePacketLag_Send = 4,
+	k_ESteamNetworkingConfig_FakePacketLag_Recv = 5,
+
+	/// [global float] 0-100 Percentage of packets we will add additional delay
+	/// to (causing them to be reordered)
+	k_ESteamNetworkingConfig_FakePacketReorder_Send = 6,
+	k_ESteamNetworkingConfig_FakePacketReorder_Recv = 7,
+
+	/// [global int32] Extra delay, in ms, to apply to reordered packets.
+	k_ESteamNetworkingConfig_FakePacketReorder_Time = 8,
+
+	/// [global float 0--100] Globally duplicate some percentage of packets we send
+	k_ESteamNetworkingConfig_FakePacketDup_Send = 26,
+	k_ESteamNetworkingConfig_FakePacketDup_Recv = 27,
+
+	/// [global int32] Amount of delay, in ms, to delay duplicated packets.
+	/// (We chose a random delay between 0 and this value)
+	k_ESteamNetworkingConfig_FakePacketDup_TimeMax = 28,
+
+	/// [global int32] Trace every UDP packet, similar to Wireshark or tcpdump.
+	/// Value is max number of bytes to dump.  -1 disables tracing.
+	// 0 only traces the info but no actual data bytes
+	k_ESteamNetworkingConfig_PacketTraceMaxBytes = 41,
+
+
+	// [global int32] Global UDP token bucket rate limits.
+	// "Rate" refers to the steady state rate. (Bytes/sec, the
+	// rate that tokens are put into the bucket.)  "Burst"
+	// refers to the max amount that could be sent in a single
+	// burst.  (In bytes, the max capacity of the bucket.)
+	// Rate=0 disables the limiter entirely, which is the default.
+	// Burst=0 disables burst.  (This is not realistic.  A
+	// burst of at least 4K is recommended; the default is higher.)
+	k_ESteamNetworkingConfig_FakeRateLimit_Send_Rate = 42,
+	k_ESteamNetworkingConfig_FakeRateLimit_Send_Burst = 43,
+	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Rate = 44,
+	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Burst = 45,
+
+//
+// Callbacks
+//
 
 	// On Steam, you may use the default Steam callback dispatch mechanism.  If you prefer
 	// to not use this dispatch mechanism (or you are not running with Steam), or you want
@@ -1320,9 +1379,9 @@ enum ESteamNetworkingConfigValue
 	/// ISteamNetworkingMessages.
 	k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling = 206,
 
-	//
-	// P2P settings
-	//
+//
+// P2P connection settings
+//
 
 //	/// [listen socket int32] When you create a P2P listen socket, we will automatically
 //	/// open up a UDP port to listen for LAN connections.  LAN connections can be made
@@ -1353,9 +1412,9 @@ enum ESteamNetworkingConfigValue
 	k_ESteamNetworkingConfig_P2P_Transport_SDR_Penalty = 106,
 	//k_ESteamNetworkingConfig_P2P_Transport_LANBeacon_Penalty = 107,
 
-	//
-	// Settings for SDR relayed connections
-	//
+//
+// Settings for SDR relayed connections
+//
 
 	/// [int32 global] If the first N pings to a port all fail, mark that port as unavailable for
 	/// a while, and try a different one.  Some ISPs and routers may drop the first
@@ -1402,14 +1461,14 @@ enum ESteamNetworkingConfigValue
 	/// in production.
 	k_ESteamNetworkingConfig_SDRClient_FakeClusterPing = 36,
 
-	//
-	// Log levels for debugging information of various subsystems.
-	// Higher numeric values will cause more stuff to be printed.
-	// See ISteamNetworkingUtils::SetDebugOutputFunction for more
-	// information
-	//
-	// The default for all values is k_ESteamNetworkingSocketsDebugOutputType_Warning.
-	//
+//
+// Log levels for debugging information of various subsystems.
+// Higher numeric values will cause more stuff to be printed.
+// See ISteamNetworkingUtils::SetDebugOutputFunction for more
+// information
+//
+// The default for all values is k_ESteamNetworkingSocketsDebugOutputType_Warning.
+//
 	k_ESteamNetworkingConfig_LogLevel_AckRTT = 13, // [connection int32] RTT calculations for inline pings and replies
 	k_ESteamNetworkingConfig_LogLevel_PacketDecode = 14, // [connection int32] log SNP packets send/recv
 	k_ESteamNetworkingConfig_LogLevel_Message = 15, // [connection int32] log each message send/recv

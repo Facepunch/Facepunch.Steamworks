@@ -23,10 +23,13 @@ enum EServerMode
 };													
 
 /// Pass to SteamGameServer_Init to indicate that the same UDP port will be used for game traffic
-/// UDP queries.  In this case, Steam will not open up a socket to handle server browser queries,
-/// and you must use ISteamGameServer::HandleIncomingPacket and ISteamGameServer::GetNextOutgoingPacket
-/// to handle packets related to server discovery on your socket.
-#define MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE	((uint16)-1)
+/// UDP queries for server browser pings and LAN discovery.  In this case, Steam will not open up a
+/// socket to handle server browser queries, and you must use ISteamGameServer::HandleIncomingPacket
+/// and ISteamGameServer::GetNextOutgoingPacket to handle packets related to server discovery on your socket.
+const uint16 STEAMGAMESERVER_QUERY_PORT_SHARED = 0xffff;
+
+// DEPRECATED: This old name was really confusing.
+const uint16 MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE = STEAMGAMESERVER_QUERY_PORT_SHARED;
 
 // Initialize SteamGameServer client and interface objects, and set server properties which may not be changed.
 //
@@ -39,9 +42,10 @@ enum EServerMode
 // - usGamePort is the port that clients will connect to for gameplay.  You will usually open up your
 //   own socket bound to this port.
 // - usQueryPort is the port that will manage server browser related duties and info
-//		pings from clients.  If you pass MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE for usQueryPort, then it
+//		pings from clients.  If you pass STEAMGAMESERVER_QUERY_PORT_SHARED for usQueryPort, then it
 //		will use "GameSocketShare" mode, which means that the game is responsible for sending and receiving
-//		UDP packets for the master  server updater. See references to GameSocketShare in isteamgameserver.h.
+//		UDP packets for the master  server updater.  (See ISteamGameServer::HandleIncomingPacket and
+//		ISteamGameServer::GetNextOutgoingPacket.)
 // - The version string should be in the form x.x.x.x, and is used by the master server to detect when the
 //		server is out of date.  (Only servers with the latest version will be listed.)
 inline bool SteamGameServer_Init( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString );
@@ -89,9 +93,8 @@ inline bool CSteamGameServerAPIContext::Init()
 	m_pSteamHTTP = ::SteamGameServerHTTP();
 	m_pSteamInventory = ::SteamGameServerInventory();
 	m_pSteamUGC = ::SteamGameServerUGC();
-	m_pSteamApps = ::SteamGameServerApps();
 	if ( !m_pSteamGameServer || !m_pSteamGameServerUtils || !m_pSteamGameServerNetworking || !m_pSteamGameServerStats
-		|| !m_pSteamHTTP || !m_pSteamInventory || !m_pSteamUGC || !m_pSteamApps )
+		|| !m_pSteamHTTP || !m_pSteamInventory || !m_pSteamUGC )
 		return false;
 
 	return true;

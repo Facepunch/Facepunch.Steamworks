@@ -99,6 +99,7 @@ enum EUGCQuery
 	k_EUGCQuery_RankedByLifetimeAveragePlaytime				  = 16,
 	k_EUGCQuery_RankedByPlaytimeSessionsTrend				  = 17,
 	k_EUGCQuery_RankedByLifetimePlaytimeSessions			  = 18,
+	k_EUGCQuery_RankedByLastUpdatedDate						  = 19,
 };
 
 enum EItemUpdateStatus
@@ -360,6 +361,12 @@ public:
 	// delete the item without prompting the user
 	STEAM_CALL_RESULT( DeleteItemResult_t )
 	virtual SteamAPICall_t DeleteItem( PublishedFileId_t nPublishedFileID ) = 0;
+
+	// Show the app's latest Workshop EULA to the user in an overlay window, where they can accept it or not
+	virtual bool ShowWorkshopEULA() = 0;
+	// Retrieve information related to the user's acceptance or not of the app's specific Workshop EULA
+	STEAM_CALL_RESULT( WorkshopEULAStatus_t )
+	virtual SteamAPICall_t GetWorkshopEULAStatus() = 0;
 };
 
 #define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION015"
@@ -564,6 +571,31 @@ struct DeleteItemResult_t
 	enum { k_iCallback = k_iClientUGCCallbacks + 17 };
 	EResult m_eResult;
 	PublishedFileId_t m_nPublishedFileId;
+};
+
+
+//-----------------------------------------------------------------------------
+// Purpose: signal that the list of subscribed items changed
+//-----------------------------------------------------------------------------
+struct UserSubscribedItemsListChanged_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 18 };
+	AppId_t m_nAppID;
+};
+
+
+//-----------------------------------------------------------------------------
+// Purpose: Status of the user's acceptable/rejection of the app's specific Workshop EULA
+//-----------------------------------------------------------------------------
+struct WorkshopEULAStatus_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 20 };
+	EResult m_eResult;
+	AppId_t m_nAppID;
+	uint32 m_unVersion;
+	RTime32 m_rtAction;
+	bool m_bAccepted;
+	bool m_bNeedsAction;
 };
 
 #pragma pack( pop )

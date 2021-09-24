@@ -15,10 +15,13 @@ class ISteamNetworkingSignalingRecvContext;
 /// Lower level networking API.
 ///
 /// - Connection-oriented API (like TCP, not UDP).  When sending and receiving
-///   messages, a connection handle is used.  (For a UDP-style interface, see
-///   ISteamNetworkingMessages.)  In this TCP-style interface, the "server" will
-///   "listen" on a "listen socket."  A "client" will "connect" to the server,
-///   and the server will "accept" the connection.
+///   messages, a connection handle is used.  (For a UDP-style interface, where
+///   the peer is identified by their address with each send/recv call, see
+///   ISteamNetworkingMessages.)  The typical pattern is for a "server" to "listen"
+///   on a "listen socket."  A "client" will "connect" to the server, and the
+///   server will "accept" the connection.  If you have a symmetric situation
+///   where either peer may initiate the connection and server/client roles are
+///   not clearly defined, check out k_ESteamNetworkingConfig_SymmetricConnect.
 /// - But unlike TCP, it's message-oriented, not stream-oriented.
 /// - Mix of reliable and unreliable messages
 /// - Fragmentation and reassembly
@@ -192,7 +195,23 @@ public:
 	/// Set connection user data.  the data is returned in the following places
 	/// - You can query it using GetConnectionUserData.
 	/// - The SteamNetworkingmessage_t structure.
-	/// - The SteamNetConnectionInfo_t structure.  (Which is a member of SteamNetConnectionStatusChangedCallback_t.)
+	/// - The SteamNetConnectionInfo_t structure.
+	///   (Which is a member of SteamNetConnectionStatusChangedCallback_t -- but see WARNINGS below!!!!)
+	///
+	/// Do you need to set this atomically when the connection is created?
+	/// See k_ESteamNetworkingConfig_ConnectionUserData.
+	///
+	/// WARNING: Be *very careful* when using the value provided in callbacks structs.
+	/// Callbacks are queued, and the value that you will receive in your
+	/// callback is the userdata that was effective at the time the callback
+	/// was queued.  There are subtle race conditions that can happen if you
+	/// don't understand this!
+	///
+	/// If any incoming messages for this connection are queued, the userdata
+	/// field is updated, so that when when you receive messages (e.g. with
+	/// ReceiveMessagesOnConnection), they will always have the very latest
+	/// userdata.  So the tricky race conditions that can happen with callbacks
+	/// do not apply to retrieving messages.
 	///
 	/// Returns false if the handle is invalid.
 	virtual bool SetConnectionUserData( HSteamNetConnection hPeer, int64 nUserData ) = 0;
@@ -258,7 +277,7 @@ public:
 	/// m_pData at your buffer and set the callback to the appropriate function
 	/// to free it.  Note that if you use your own buffer, it MUST remain valid
 	/// until the callback is executed.  And also note that your callback can be
-	/// invoked at ant time from any thread (perhaps even before SendMessages
+	/// invoked at any time from any thread (perhaps even before SendMessages
 	/// returns!), so it MUST be fast and threadsafe.
 	///
 	/// You MUST also fill in:
@@ -654,15 +673,15 @@ public:
 	/// to call ISteamNetworkingUtils::InitRelayNetworkAccess() when your app initializes
 	virtual bool ReceivedP2PCustomSignal( const void *pMsg, int cbMsg, ISteamNetworkingSignalingRecvContext *pContext ) = 0;
 
-//
-// Certificate provision by the application.  On Steam, we normally handle all this automatically
-// and you will not need to use these advanced functions.
-//
+	//
+	// Certificate provision by the application.  On Steam, we normally handle all this automatically
+	// and you will not need to use these advanced functions.
+	//
 
 	/// Get blob that describes a certificate request.  You can send this to your game coordinator.
 	/// Upon entry, *pcbBlob should contain the size of the buffer.  On successful exit, it will
 	/// return the number of bytes that were populated.  You can pass pBlob=NULL to query for the required
-	/// size.  (256 bytes is a very conservative estimate.)
+	/// size.  (512 bytes is a conservative estimate.)
 	///
 	/// Pass this blob to your game coordinator and call SteamDatagram_CreateCert.
 	virtual bool GetCertificateRequest( int *pcbBlob, void *pBlob, SteamNetworkingErrMsg &errMsg ) = 0;

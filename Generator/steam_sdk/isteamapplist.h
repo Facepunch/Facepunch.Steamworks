@@ -11,7 +11,6 @@
 #endif
 
 #include "steam_api_common.h"
-#include "steamtypes.h"
 
 //-----------------------------------------------------------------------------
 // Purpose: This is a restricted interface that can only be used by previously approved apps,
@@ -51,16 +50,18 @@ STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamAppList *, SteamAppList, STEAMAPPLIS
 // Purpose: Sent when a new app is installed
 //---------------------------------------------------------------------------------
 STEAM_CALLBACK_BEGIN( SteamAppInstalled_t, k_iSteamAppListCallbacks + 1 )
-	STEAM_CALLBACK_MEMBER( 0,	AppId_t,	m_nAppID )			// ID of the app that installs
-STEAM_CALLBACK_END(1)
+STEAM_CALLBACK_MEMBER( 0, AppId_t, m_nAppID )			// ID of the app that installs
+STEAM_CALLBACK_MEMBER( 1, int, m_iInstallFolderIndex ) // library folder the app is installed 
+STEAM_CALLBACK_END( 2 )
 
 
 //---------------------------------------------------------------------------------
 // Purpose: Sent when an app is uninstalled
 //---------------------------------------------------------------------------------
 STEAM_CALLBACK_BEGIN( SteamAppUninstalled_t, k_iSteamAppListCallbacks + 2 )
-	STEAM_CALLBACK_MEMBER( 0,	AppId_t,	m_nAppID )			// ID of the app that installs
-STEAM_CALLBACK_END(1)
+STEAM_CALLBACK_MEMBER( 0, AppId_t, m_nAppID )			// ID of the app that installs
+STEAM_CALLBACK_MEMBER( 1, int, m_iInstallFolderIndex ) // library folder the app was installed 
+STEAM_CALLBACK_END(2)
 
 
 #pragma pack( pop )

@@ -367,6 +367,11 @@ enum EControllerActionOrigin
 	k_EControllerActionOrigin_PS5_Gyro_Yaw,
 	k_EControllerActionOrigin_PS5_Gyro_Roll,
 
+	k_EControllerActionOrigin_XBoxOne_LeftGrip_Lower, 
+	k_EControllerActionOrigin_XBoxOne_LeftGrip_Upper, 
+	k_EControllerActionOrigin_XBoxOne_RightGrip_Lower,
+	k_EControllerActionOrigin_XBoxOne_RightGrip_Upper,
+	k_EControllerActionOrigin_XBoxOne_Share,
 
 	k_EControllerActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EControllerActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
@@ -592,7 +597,7 @@ public:
 	virtual void SetLEDColor( ControllerHandle_t controllerHandle, uint8 nColorR, uint8 nColorG, uint8 nColorB, unsigned int nFlags ) = 0;
 
 	//-----------------------------------------------------------------------------
-	// Utility functions availible without using the rest of Steam Input API
+	// Utility functions available without using the rest of Steam Input API
 	//-----------------------------------------------------------------------------
 
 	// Invokes the Steam overlay and brings up the binding screen if the user is using Big Picture Mode

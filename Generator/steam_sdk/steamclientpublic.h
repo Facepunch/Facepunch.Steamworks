@@ -1,23 +1,11 @@
 //========= Copyright � 1996-2008, Valve LLC, All rights reserved. ============
 //
-// Purpose:
+// Declare common types used by the Steamworks SDK.
 //
 //=============================================================================
 
 #ifndef STEAMCLIENTPUBLIC_H
 #define STEAMCLIENTPUBLIC_H
-#ifdef _WIN32
-#pragma once
-#endif
-//lint -save -e1931 -e1927 -e1924 -e613 -e726
-
-// This header file defines the interface between the calling application and the code that
-// knows how to communicate with the connection manager (CM) from the Steam service 
-
-// This header file is intended to be portable; ideally this 1 header file plus a lib or dll
-// is all you need to integrate the client library into some other tree.  So please avoid
-// including or requiring other header files if possible.  This header should only describe the 
-// interface layer, no need to include anything about the implementation.
 
 #include "steamtypes.h"
 #include "steamuniverse.h"
@@ -145,6 +133,9 @@ enum EResult
 	k_EResultNoLauncherSpecified = 117,			// No launcher was specified, but a launcher was needed to choose correct realm for operation.
 	k_EResultMustAgreeToSSA = 118,				// User must agree to china SSA or global SSA before login
 	k_EResultLauncherMigrated = 119,			// The specified launcher type is no longer supported; the user should be directed elsewhere
+	k_EResultSteamRealmMismatch = 120,			// The user's realm does not match the realm of the requested resource
+	k_EResultInvalidSignature = 121,			// signature check did not match
+	k_EResultParseFailure = 122,				// Failed to parse input
 };
 
 // Error codes for use with the voice functions
@@ -245,100 +236,6 @@ enum EAccountType
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-enum EAppReleaseState
-{
-	k_EAppReleaseState_Unknown			= 0,	// unknown, required appinfo or license info is missing
-	k_EAppReleaseState_Unavailable		= 1,	// even owners can't see game in library yet, no AppInfo released
-	k_EAppReleaseState_Prerelease		= 2,	// app can be purchased and is visible in library, nothing else. Only Common AppInfo section released
-	k_EAppReleaseState_PreloadOnly		= 3,	// owners can preload app, but not play it. All AppInfo sections fully released
-	k_EAppReleaseState_Released			= 4,	// owners can download and play app.
-};
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-enum EAppOwnershipFlags
-{
-	k_EAppOwnershipFlags_None				= 0x0000,	// unknown
-	k_EAppOwnershipFlags_OwnsLicense		= 0x0001,	// owns license for this game
-	k_EAppOwnershipFlags_FreeLicense		= 0x0002,	// not paid for game
-	k_EAppOwnershipFlags_RegionRestricted	= 0x0004,	// owns app, but not allowed to play in current region
-	k_EAppOwnershipFlags_LowViolence		= 0x0008,	// only low violence version
-	k_EAppOwnershipFlags_InvalidPlatform	= 0x0010,	// app not supported on current platform
-	k_EAppOwnershipFlags_SharedLicense		= 0x0020,	// license was granted by authorized local device
-	k_EAppOwnershipFlags_FreeWeekend		= 0x0040,	// owned by a free weekend licenses
-	k_EAppOwnershipFlags_RetailLicense		= 0x0080,	// has a retail license for game, (CD-Key etc)
-	k_EAppOwnershipFlags_LicenseLocked		= 0x0100,	// shared license is locked (in use) by other user
-	k_EAppOwnershipFlags_LicensePending		= 0x0200,	// owns app, but transaction is still pending. Can't install or play
-	k_EAppOwnershipFlags_LicenseExpired		= 0x0400,	// doesn't own app anymore since license expired
-	k_EAppOwnershipFlags_LicensePermanent	= 0x0800,	// permanent license, not borrowed, or guest or freeweekend etc
-	k_EAppOwnershipFlags_LicenseRecurring	= 0x1000,	// Recurring license, user is charged periodically
-	k_EAppOwnershipFlags_LicenseCanceled	= 0x2000,	// Mark as canceled, but might be still active if recurring
-	k_EAppOwnershipFlags_AutoGrant			= 0x4000,	// Ownership is based on any kind of autogrant license
-	k_EAppOwnershipFlags_PendingGift		= 0x8000,	// user has pending gift to redeem
-	k_EAppOwnershipFlags_RentalNotActivated	= 0x10000,	// Rental hasn't been activated yet
-	k_EAppOwnershipFlags_Rental				= 0x20000,	// Is a rental
-	k_EAppOwnershipFlags_SiteLicense		= 0x40000,	// Is from a site license
-	k_EAppOwnershipFlags_LegacyFreeSub		= 0x80000,	// App only owned through Steam's legacy free sub
-	k_EAppOwnershipFlags_InvalidOSType		= 0x100000,	// app not supported on current OS version, used to indicate a game is 32-bit on post-catalina. Currently it's own flag so the library will display a notice.
-	k_EAppOwnershipFlags_TimedTrial			= 0x200000,	// App is playable only for limited time
-};
-
-
-//-----------------------------------------------------------------------------
-// Purpose: designed as flags to allow filters masks
-// NOTE: If you add to this, please update PackageAppType (SteamConfig) as well as populatePackageAppType 
-//-----------------------------------------------------------------------------
-enum EAppType
-{
-	k_EAppType_Invalid				= 0x000,	// unknown / invalid
-	k_EAppType_Game					= 0x001,	// playable game, default type
-	k_EAppType_Application			= 0x002,	// software application
-	k_EAppType_Tool					= 0x004,	// SDKs, editors & dedicated servers
-	k_EAppType_Demo					= 0x008,	// game demo
-	k_EAppType_Media_DEPRECATED		= 0x010,	// legacy - was used for game trailers, which are now just videos on the web
-	k_EAppType_DLC					= 0x020,	// down loadable content
-	k_EAppType_Guide				= 0x040,	// game guide, PDF etc
-	k_EAppType_Driver				= 0x080,	// hardware driver updater (ATI, Razor etc)
-	k_EAppType_Config				= 0x100,	// hidden app used to config Steam features (backpack, sales, etc)
-	k_EAppType_Hardware				= 0x200,	// a hardware device (Steam Machine, Steam Controller, Steam Link, etc.)
-	k_EAppType_Franchise			= 0x400,	// A hub for collections of multiple apps, eg films, series, games
-	k_EAppType_Video				= 0x800,	// A video component of either a Film or TVSeries (may be the feature, an episode, preview, making-of, etc)
-	k_EAppType_Plugin				= 0x1000,	// Plug-in types for other Apps
-	k_EAppType_MusicAlbum			= 0x2000,	// "Video game soundtrack album"
-	k_EAppType_Series				= 0x4000,	// Container app for video series
-	k_EAppType_Comic_UNUSED			= 0x8000,	// Comic Book
-	k_EAppType_Beta					= 0x10000,	// this is a beta version of a game
-		
-	k_EAppType_Shortcut				= 0x40000000,	// just a shortcut, client side only
-	k_EAppType_DepotOnly_DEPRECATED = 0x80000000,	// there shouldn't be any appinfo for depots
-};
-
-
-
-//-----------------------------------------------------------------------------
-// types of user game stats fields
-// WARNING: DO NOT RENUMBER EXISTING VALUES - STORED IN DATABASE
-//-----------------------------------------------------------------------------
-enum ESteamUserStatType
-{
-	k_ESteamUserStatTypeINVALID = 0,
-	k_ESteamUserStatTypeINT = 1,
-	k_ESteamUserStatTypeFLOAT = 2,
-	// Read as FLOAT, set with count / session length
-	k_ESteamUserStatTypeAVGRATE = 3,
-	k_ESteamUserStatTypeACHIEVEMENTS = 4,
-	k_ESteamUserStatTypeGROUPACHIEVEMENTS = 5,
-
-	// max, for sanity checks
-	k_ESteamUserStatTypeMAX
-};
-
-
-//-----------------------------------------------------------------------------
 // Purpose: Chat Entry Types (previously was only friend-to-friend message types)
 //-----------------------------------------------------------------------------
 enum EChatEntryType
@@ -385,9 +282,6 @@ enum EChatRoomEnterResponse
 };
 
 
-typedef void (*PFNLegacyKeyRegistration)( const char *pchCDKey, const char *pchInstallPath );
-typedef bool (*PFNLegacyKeyInstalled)();
-
 const unsigned int k_unSteamAccountIDMask = 0xFFFFFFFF;
 const unsigned int k_unSteamAccountInstanceMask = 0x000FFFFF;
 const unsigned int k_unSteamUserDefaultInstance	= 1; // fixed instance for all individual users
@@ -404,26 +298,6 @@ enum EChatSteamIDInstanceFlags
 
 	// Max of 8 flags
 };
-
-
-//-----------------------------------------------------------------------------
-// Purpose: Marketing message flags that change how a client should handle them
-//-----------------------------------------------------------------------------
-enum EMarketingMessageFlags
-{
-	k_EMarketingMessageFlagsNone = 0,
-	k_EMarketingMessageFlagsHighPriority = 1 << 0,
-	k_EMarketingMessageFlagsPlatformWindows = 1 << 1,
-	k_EMarketingMessageFlagsPlatformMac = 1 << 2,
-	k_EMarketingMessageFlagsPlatformLinux = 1 << 3,
-
-	//aggregate flags
-	k_EMarketingMessageFlagsPlatformRestrictions = 
-		k_EMarketingMessageFlagsPlatformWindows |
-		k_EMarketingMessageFlagsPlatformMac |
-		k_EMarketingMessageFlagsPlatformLinux,
-};
-
 
 
 //-----------------------------------------------------------------------------
@@ -468,151 +342,6 @@ enum EBroadcastUploadResult
 	k_EBroadcastUploadResultVideoInitFailed = 22,	// invalid video settings 
 	k_EBroadcastUploadResultAudioInitFailed = 23,	// invalid audio settings 
 };
-
-
-//-----------------------------------------------------------------------------
-// Purpose: codes for well defined launch options
-//-----------------------------------------------------------------------------
-enum ELaunchOptionType
-{
-	k_ELaunchOptionType_None		= 0,	// unknown what launch option does
-	k_ELaunchOptionType_Default		= 1,	// runs the game, app, whatever in default mode
-	k_ELaunchOptionType_SafeMode	= 2,	// runs the game in safe mode
-	k_ELaunchOptionType_Multiplayer = 3,	// runs the game in multiplayer mode
-	k_ELaunchOptionType_Config		= 4,	// runs config tool for this game
-	k_ELaunchOptionType_OpenVR		= 5,	// runs game in VR mode using OpenVR
-	k_ELaunchOptionType_Server		= 6,	// runs dedicated server for this game
-	k_ELaunchOptionType_Editor		= 7,	// runs game editor
-	k_ELaunchOptionType_Manual		= 8,	// shows game manual
-	k_ELaunchOptionType_Benchmark	= 9,	// runs game benchmark
-	k_ELaunchOptionType_Option1		= 10,	// generic run option, uses description field for game name
-	k_ELaunchOptionType_Option2		= 11,	// generic run option, uses description field for game name
-	k_ELaunchOptionType_Option3     = 12,	// generic run option, uses description field for game name
-	k_ELaunchOptionType_OculusVR	= 13,	// runs game in VR mode using the Oculus SDK 
-	k_ELaunchOptionType_OpenVROverlay = 14,	// runs an OpenVR dashboard overlay
-	k_ELaunchOptionType_OSVR		= 15,	// runs game in VR mode using the OSVR SDK
-
-	
-	k_ELaunchOptionType_Dialog 		= 1000, // show launch options dialog
-};
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this launch option is any of the vr launching types
-//-----------------------------------------------------------------------------
-static inline bool BIsVRLaunchOptionType( const ELaunchOptionType  eType )
-{
-	return eType == k_ELaunchOptionType_OpenVR 
-		|| eType == k_ELaunchOptionType_OpenVROverlay 
-		|| eType == k_ELaunchOptionType_OculusVR
-		|| eType == k_ELaunchOptionType_OSVR;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this launch option is any of the vr launching types
-//-----------------------------------------------------------------------------
-static inline bool BIsLaunchOptionTypeExemptFromGameTheater( const ELaunchOptionType  eType )
-{
-	return eType == k_ELaunchOptionType_Config
-		|| eType == k_ELaunchOptionType_Server
-		|| eType == k_ELaunchOptionType_Editor
-		|| eType == k_ELaunchOptionType_Manual;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: code points for VR HMD vendors and models 
-// WARNING: DO NOT RENUMBER EXISTING VALUES - STORED IN A DATABASE
-//-----------------------------------------------------------------------------
-enum EVRHMDType
-{
-	k_eEVRHMDType_None = -1, // unknown vendor and model
-
-	k_eEVRHMDType_Unknown = 0, // unknown vendor and model
-
-	k_eEVRHMDType_HTC_Dev = 1,	// original HTC dev kits
-	k_eEVRHMDType_HTC_VivePre = 2,	// htc vive pre
-	k_eEVRHMDType_HTC_Vive = 3,	// htc vive consumer release
-	k_eEVRHMDType_HTC_VivePro = 4,	// htc vive pro release
-	k_eEVRHMDType_HTC_ViveCosmos = 5,	// HTC Vive Cosmos
-
-	k_eEVRHMDType_HTC_Unknown = 20, // unknown htc hmd
-
-	k_eEVRHMDType_Oculus_DK1 = 21, // Oculus DK1 
-	k_eEVRHMDType_Oculus_DK2 = 22, // Oculus DK2
-	k_eEVRHMDType_Oculus_Rift = 23, // Oculus Rift
-	k_eEVRHMDType_Oculus_RiftS = 24, // Oculus Rift S
-	k_eEVRHMDType_Oculus_Quest = 25, // Oculus Quest
-
-	k_eEVRHMDType_Oculus_Unknown = 40, // // Oculus unknown HMD
-
-	k_eEVRHMDType_Acer_Unknown = 50, // Acer unknown HMD
-	k_eEVRHMDType_Acer_WindowsMR = 51, // Acer QHMD Windows MR headset
-
-	k_eEVRHMDType_Dell_Unknown = 60, // Dell unknown HMD
-	k_eEVRHMDType_Dell_Visor = 61, // Dell Visor Windows MR headset
-
-	k_eEVRHMDType_Lenovo_Unknown = 70, // Lenovo unknown HMD
-	k_eEVRHMDType_Lenovo_Explorer = 71, // Lenovo Explorer Windows MR headset
-
-	k_eEVRHMDType_HP_Unknown = 80, // HP unknown HMD
-	k_eEVRHMDType_HP_WindowsMR = 81, // HP Windows MR headset
-	k_eEVRHMDType_HP_Reverb = 82, // HP Reverb Windows MR headset
-	k_eEVRHMDType_HP_ReverbG2 = 1463, // HP Reverb G2 Windows MR headset
-
-	k_eEVRHMDType_Samsung_Unknown = 90, // Samsung unknown HMD
-	k_eEVRHMDType_Samsung_Odyssey = 91, // Samsung Odyssey Windows MR headset
-
-	k_eEVRHMDType_Unannounced_Unknown = 100, // Unannounced unknown HMD
-	k_eEVRHMDType_Unannounced_WindowsMR = 101, // Unannounced Windows MR headset
-
-	k_eEVRHMDType_vridge = 110, // VRIDGE tool
-	
-	k_eEVRHMDType_Huawei_Unknown = 120, // Huawei unknown HMD
-	k_eEVRHMDType_Huawei_VR2 = 121, // Huawei VR2 3DOF headset
-	k_eEVRHMDType_Huawei_EndOfRange = 129, // end of Huawei HMD range
-
-	k_eEVRHmdType_Valve_Unknown = 130, // Valve Unknown HMD
-	k_eEVRHmdType_Valve_Index = 131, // Valve Index HMD
-
-};
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this is from an Oculus HMD
-//-----------------------------------------------------------------------------
-static inline bool BIsOculusHMD( EVRHMDType eType )
-{
-	return eType == k_eEVRHMDType_Oculus_DK1 || eType == k_eEVRHMDType_Oculus_DK2 || eType == k_eEVRHMDType_Oculus_Rift || eType == k_eEVRHMDType_Oculus_RiftS || eType == k_eEVRHMDType_Oculus_Quest || eType == k_eEVRHMDType_Oculus_Unknown;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this is from a Windows MR HMD
-//-----------------------------------------------------------------------------
-static inline bool BIsWindowsMRHeadset( EVRHMDType eType )
-{
-	return eType >= k_eEVRHMDType_Acer_WindowsMR && eType <= k_eEVRHMDType_Unannounced_WindowsMR;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this is from a Hauwei HMD
-//-----------------------------------------------------------------------------
-static inline bool BIsHuaweiHeadset( EVRHMDType eType )
-{
-	return eType >= k_eEVRHMDType_Huawei_Unknown && eType <= k_eEVRHMDType_Huawei_EndOfRange;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: true if this is from an Vive HMD
-//-----------------------------------------------------------------------------
-static inline bool BIsViveHMD( EVRHMDType eType )
-{
-	return eType == k_eEVRHMDType_HTC_Dev || eType == k_eEVRHMDType_HTC_VivePre || eType == k_eEVRHMDType_HTC_Vive || eType == k_eEVRHMDType_HTC_Unknown || eType == k_eEVRHMDType_HTC_VivePro;
-}
 
 
 //-----------------------------------------------------------------------------
@@ -1225,72 +954,6 @@ public:
 	const char *Render() const;					// render this Game ID to string
 	static const char *Render( uint64 ulGameID );		// static method to render a uint64 representation of a Game ID to a string
 
-	// must include checksum_crc.h first to get this functionality
-#if defined( CHECKSUM_CRC_H )
-	CGameID( uint32 nAppID, const char *pchModPath )
-	{
-		m_ulGameID = 0;
-		m_gameID.m_nAppID = nAppID;
-		m_gameID.m_nType = k_EGameIDTypeGameMod;
-
-		char rgchModDir[MAX_PATH];
-		V_FileBase( pchModPath, rgchModDir, sizeof( rgchModDir ) );
-		CRC32_t crc32;
-		CRC32_Init( &crc32 );
-		CRC32_ProcessBuffer( &crc32, rgchModDir, V_strlen( rgchModDir ) );
-		CRC32_Final( &crc32 );
-
-		// set the high-bit on the mod-id 
-		// reduces crc32 to 31bits, but lets us use the modID as a guaranteed unique
-		// replacement for appID's
-		m_gameID.m_nModID = crc32 | (0x80000000);
-	}
-
-	CGameID( const char *pchExePath, const char *pchAppName )
-	{
-		m_ulGameID = 0;
-		m_gameID.m_nAppID = k_uAppIdInvalid;
-		m_gameID.m_nType = k_EGameIDTypeShortcut;
-
-		CRC32_t crc32;
-		CRC32_Init( &crc32 );
-		if ( pchExePath )
-			CRC32_ProcessBuffer( &crc32, pchExePath, V_strlen( pchExePath ) );
-		if ( pchAppName )
-			CRC32_ProcessBuffer( &crc32, pchAppName, V_strlen( pchAppName ) );
-		CRC32_Final( &crc32 );
-
-		// set the high-bit on the mod-id 
-		// reduces crc32 to 31bits, but lets us use the modID as a guaranteed unique
-		// replacement for appID's
-		m_gameID.m_nModID = crc32 | (0x80000000);
-	}
-
-#if defined( VSTFILEID_H )
-
-	CGameID( VstFileID vstFileID )
-	{
-		m_ulGameID = 0;
-		m_gameID.m_nAppID = k_uAppIdInvalid;
-		m_gameID.m_nType = k_EGameIDTypeP2P;
-
-		CRC32_t crc32;
-		CRC32_Init( &crc32 );
-		const char *pchFileId = vstFileID.Render();
-		CRC32_ProcessBuffer( &crc32, pchFileId, V_strlen( pchFileId ) );
-		CRC32_Final( &crc32 );
-
-		// set the high-bit on the mod-id 
-		// reduces crc32 to 31bits, but lets us use the modID as a guaranteed unique
-		// replacement for appID's
-		m_gameID.m_nModID = crc32 | (0x80000000);		
-	}
-
-#endif /* VSTFILEID_H */
-
-#endif /* CHECKSUM_CRC_H */
-
-
 	uint64 ToUint64() const
 	{
 		return m_ulGameID;
@@ -1379,9 +1042,9 @@ public:
 		m_ulGameID = 0;
 	}
 
-
-
-private:
+//
+// Internal stuff.  Use the accessors above if possible
+//
 
 	enum EGameIDType
 	{
@@ -1417,24 +1080,10 @@ const int k_cchGameExtraInfoMax = 64;
 
 
 //-----------------------------------------------------------------------------
-// Constants used for query ports.
-//-----------------------------------------------------------------------------
-
-#define QUERY_PORT_NOT_INITIALIZED		0xFFFF	// We haven't asked the GS for this query port's actual value yet.
-#define QUERY_PORT_ERROR				0xFFFE	// We were unable to get the query port for this server.
-
-
-//-----------------------------------------------------------------------------
 // Purpose: Passed as argument to SteamAPI_UseBreakpadCrashHandler to enable optional callback
 //  just before minidump file is captured after a crash has occurred.  (Allows app to append additional comment data to the dump, etc.)
 //-----------------------------------------------------------------------------
 typedef void (*PFNPreMinidumpCallback)(void *context);
-
-//-----------------------------------------------------------------------------
-// Purpose: Used by ICrashHandler interfaces to reference particular installed crash handlers
-//-----------------------------------------------------------------------------
-typedef void *BREAKPAD_HANDLE;
-#define BREAKPAD_INVALID_HANDLE (BREAKPAD_HANDLE)0 
 
 enum EGameSearchErrorCode_t
 {

@@ -116,10 +116,6 @@ public:
 inline ISteamApps *SteamApps();
 STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamApps *, SteamApps, STEAMAPPS_INTERFACE_VERSION );
 
-// Global accessor for the gameserver client
-inline ISteamApps *SteamGameServerApps();
-STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamApps *, SteamGameServerApps, STEAMAPPS_INTERFACE_VERSION );
-
 // callbacks
 #if defined( VALVE_CALLBACK_PACK_SMALL )
 #pragma pack( push, 4 )
