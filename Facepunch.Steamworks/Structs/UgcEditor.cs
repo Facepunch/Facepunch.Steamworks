@@ -246,7 +246,7 @@ namespace Steamworks.Ugc
 							case ItemUpdateStatus.UploadingContent:
 								{
 									var uploaded = total > 0 ? ((float)processed / (float)total) : 0.0f;
-									progress?.Report( 0.2f + uploaded * 0.7f );
+									progress?.Report( 0.2f + uploaded * 0.6f );
 									break;
 								}
 							case ItemUpdateStatus.UploadingPreviewFile:
