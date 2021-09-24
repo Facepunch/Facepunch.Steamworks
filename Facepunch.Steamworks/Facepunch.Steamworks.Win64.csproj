@@ -22,19 +22,19 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
   
 	<ItemGroup>
-		<Content Include="steam_api64.dll" PackagePath="\content\" Pack="true" PackageCopyToOutput="true">
-			<CopyToOutputDirectory></CopyToOutputDirectory>
-      </Content>
-      <None Include="Facepunch.Steamworks.jpg" Pack="true" PackagePath="\" />
-	</ItemGroup>
-  
-	<ItemGroup>
-	  <None Update="steam_api.dll">
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
-	  </None>
+		<None Include="Facepunch.Steamworks.jpg">
+			<Pack>true</Pack>
+			<PackagePath>/</PackagePath>
+		</None>
+		<None Include="steam_api64.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<Pack>true</Pack>
+			<PackagePath>content</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />
