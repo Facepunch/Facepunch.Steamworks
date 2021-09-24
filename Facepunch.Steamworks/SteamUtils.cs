@@ -272,7 +272,7 @@ namespace Steamworks
 		/// Filters the provided input message and places the filtered result into pchOutFilteredText,
 		/// using legally required filtering and additional filtering based on the context and user settings.
 		/// </summary>
-		public string FilterText( TextFilteringContext context, SteamId sourceSteamID, string inputMessage )
+		public static string FilterText( TextFilteringContext context, SteamId sourceSteamID, string inputMessage )
 		{
 			Internal.FilterText( context, sourceSteamID, inputMessage, out var filteredString );
 			return filteredString;
@@ -281,14 +281,14 @@ namespace Steamworks
 		/// <summary>
 		/// returns true if Steam itself is running on the Steam Deck
 		/// </summary>
-		public bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
+		public static bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
 
 
 		/// <summary>
 		/// In game launchers that don't have controller support you can call this to have 
 		/// Steam Input translate the controller input into mouse/kb to navigate the launcher
 		/// </summary>
-		public void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
+		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
 
 		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
 		//{
