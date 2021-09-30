@@ -435,6 +435,12 @@ namespace Steamworks
 		public static bool IsPhoneRequiringVerification => Internal.BIsPhoneRequiringVerification();
 
 		/// <summary>
+		/// Sets the rich presence data for an unsecured game server that the user is playing on.
+		/// This allows friends to be able to view the game info and join your game.
+		/// </summary>
+		public static void AdvertiseGame( SteamId steamId, uint ipServer, ushort portServer ) => Internal.AdvertiseGame( steamId, ipServer, portServer );
+
+		/// <summary>
 		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
 		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
 		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
