@@ -80,9 +80,9 @@ namespace Generator
             }
 
 			{
-			//	GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
-			//	GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
-			//	GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
+				//	GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
+				//	GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
+				//	GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
 			}
 
             foreach ( var iface in def.Interfaces )
