@@ -92,7 +92,7 @@ namespace Steamworks.Data
 				SteamUserStats.Internal.GetStat( Name, ref val );
 			}
 
-			return 0;
+			return val;
 		}
 
 		public int GetInt()
