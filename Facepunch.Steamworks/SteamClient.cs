@@ -13,7 +13,7 @@ namespace Steamworks
 
 		/// <summary>
 		/// Initialize the steam client.
-		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// If <paramref name="asyncCallbacks"/> is false you need to call <see cref="RunCallbacks"/> manually every frame.
 		/// </summary>
 		public static void Init( uint appid, bool asyncCallbacks = true )
 		{
@@ -25,7 +25,7 @@ namespace Steamworks
 
 			if ( !SteamAPI.Init() )
 			{
-				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, AppId is ureleased, Don't own AppId." );
+				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, App ID is ureleased, Don't own App ID." );
 			}
 
 			AppId = appid;
@@ -94,6 +94,9 @@ namespace Steamworks
 		/// </summary>		
 		public static bool IsValid => initialized;
 
+		/// <summary>
+		/// Shuts down the steam client.
+		/// </summary>
 		public static void Shutdown()
 		{
 			if ( !IsValid ) return;
@@ -119,13 +122,15 @@ namespace Steamworks
 
 		/// <summary>
 		/// Checks if the current user's Steam client is connected to the Steam servers.
-		/// If it's not then no real-time services provided by the Steamworks API will be enabled. The Steam 
+		/// <para>
+		/// If it's not, no real-time services provided by the Steamworks API will be enabled. The Steam 
 		/// client will automatically be trying to recreate the connection as often as possible. When the 
 		/// connection is restored a SteamServersConnected_t callback will be posted.
 		/// You usually don't need to check for this yourself. All of the API calls that rely on this will 
 		/// check internally. Forcefully disabling stuff when the player loses access is usually not a 
 		/// very good experience for the player and you could be preventing them from accessing APIs that do not 
 		/// need a live connection to Steam.
+		/// </para>
 		/// </summary>
 		public static bool IsLoggedOn => SteamUser.Internal.BLoggedOn();
 
@@ -138,28 +143,30 @@ namespace Steamworks
 		public static SteamId SteamId => SteamUser.Internal.GetSteamID();
 
 		/// <summary>
-		/// returns the local players name - guaranteed to not be NULL.
-		/// this is the same name as on the users community profile page
+		/// returns the local players name - guaranteed to not be <see langword="null"/>.
+		/// This is the same name as on the user's community profile page.
 		/// </summary>
 		public static string Name => SteamFriends.Internal.GetPersonaName();
 
 		/// <summary>
-		/// gets the status of the current user
+		/// Gets the status of the current user.
 		/// </summary>
 		public static FriendState State => SteamFriends.Internal.GetPersonaState();
 
 		/// <summary>
-		/// returns the appID of the current process
+		/// Returns the App ID of the current process.
 		/// </summary>
 		public static AppId AppId { get; internal set; }
 
 		/// <summary>
-		/// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't
-		///  this returns true then it starts the Steam client if required and launches your game again through it, 
+		/// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't.
+		/// <para>
+		///  This returns true then it starts the Steam client if required and launches your game again through it, 
 		///  and you should quit your process as soon as possible. This effectively runs steam://run/AppId so it 
 		///  may not relaunch the exact executable that called it, as it will always relaunch from the version 
 		///  installed in your Steam library folder/
 		///  Note that during development, when not launching via Steam, this might always return true.
+		///  </para>
 		/// </summary>
 		public static bool RestartAppIfNecessary( uint appid )
 		{
