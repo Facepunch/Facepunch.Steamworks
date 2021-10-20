@@ -8,7 +8,7 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Friends API.
 	/// </summary>
 	public class SteamFriends : SteamClientClass<SteamFriends>
 	{

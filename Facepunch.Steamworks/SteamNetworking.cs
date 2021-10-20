@@ -8,6 +8,9 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Class for utilizing the Steam Network API.
+	/// </summary>
 	public class SteamNetworking : SteamSharedClass<SteamNetworking>
 	{
 		internal static ISteamNetworking Internal => Interface as ISteamNetworking;
@@ -26,20 +29,20 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// This SteamId wants to send you a message. You should respond by calling AcceptP2PSessionWithUser
-		/// if you want to recieve their messages
+		/// Invoked when a <see cref="SteamId"/> wants to send the current user a message. You should respond by calling <see cref="AcceptP2PSessionWithUser(SteamId)"/>
+		/// if you want to recieve their messages.
 		/// </summary>
 		public static Action<SteamId> OnP2PSessionRequest;
 
 		/// <summary>
-		/// Called when packets can't get through to the specified user.
+		/// Invoked when packets can't get through to the specified user.
 		/// All queued packets unsent at this point will be dropped, further attempts
 		/// to send will retry making the connection (but will be dropped if we fail again).
 		/// </summary>
 		public static Action<SteamId, P2PSessionError> OnP2PConnectionFailed;
 
 		/// <summary>
-		/// This should be called in response to a OnP2PSessionRequest
+		/// This should be called in response to a <see cref="OnP2PSessionRequest"/>.
 		/// </summary>
 		public static bool AcceptP2PSessionWithUser( SteamId user ) => Internal.AcceptP2PSessionWithUser( user );
 
@@ -53,7 +56,7 @@ namespace Steamworks
 		/// <summary>
 		/// This should be called when you're done communicating with a user, as this will
 		/// free up all of the resources allocated for the connection under-the-hood.
-		/// If the remote user tries to send data to you again, a new OnP2PSessionRequest 
+		/// If the remote user tries to send data to you again, a new <see cref="OnP2PSessionRequest"/> 
 		/// callback will be posted
 		/// </summary>
 		public static bool CloseP2PSessionWithUser( SteamId user ) => Internal.CloseP2PSessionWithUser( user );
@@ -77,7 +80,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static P2Packet? ReadP2PPacket( int channel = 0 )
 		{
@@ -106,7 +109,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static bool ReadP2PPacket( byte[] buffer, ref uint size, ref SteamId steamid, int channel = 0 )
 		{
@@ -116,7 +119,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static bool ReadP2PPacket( byte* buffer, uint cbuf, ref uint size, ref SteamId steamid, int channel = 0 )
 		{

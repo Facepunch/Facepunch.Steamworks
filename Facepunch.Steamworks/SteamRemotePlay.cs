@@ -28,30 +28,30 @@ namespace Steamworks
 		}
 		
 		/// <summary>
-		/// Called when a session is connected
+		/// Invoked when a session is connected.
 		/// </summary>
 		public static event Action<RemotePlaySession> OnSessionConnected;
 
 		/// <summary>
-		/// Called when a session becomes disconnected
+		/// Invoked when a session becomes disconnected.
 		/// </summary>
 		public static event Action<RemotePlaySession> OnSessionDisconnected;
 
 		/// <summary>
-		/// Get the number of currently connected Steam Remote Play sessions
+		/// Gets the number of currently connected Steam Remote Play sessions
 		/// </summary>
 		public static int SessionCount => (int) Internal.GetSessionCount();
 
 		/// <summary>
 		/// Get the currently connected Steam Remote Play session ID at the specified index.
-		/// IsValid will return false if it's out of bounds
+		/// IsValid will return <see langword="false"/> if it's out of bounds
 		/// </summary>
 		public static RemotePlaySession GetSession( int index ) => (RemotePlaySession) Internal.GetSessionID( index ).Value;
 
 
 		/// <summary>
-		/// Invite a friend to Remote Play Together
-		/// This returns false if the invite can't be sent
+		/// Invite a friend to Remote Play Together.
+		/// This returns <see langword="false"/> if the invite can't be sent
 		/// </summary>
 		public static bool SendInvite( SteamId steamid ) => Internal.BSendRemotePlayTogetherInvite( steamid );
 	}

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Class for utilizing Steam Input.
+	/// </summary>
 	public class SteamInput : SteamClientClass<SteamInput>
 	{
 		internal static ISteamInput Internal => Interface as ISteamInput;
@@ -16,7 +19,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// You shouldn't really need to call this because it get called by RunCallbacks on SteamClient
+		/// You shouldn't really need to call this because it gets called by <see cref="SteamClient.RunCallbacks"/>
 		/// but Valve think it might be a nice idea if you call it right before you get input info -
 		/// just to make sure the info you're getting is 100% up to date.
 		/// </summary>
@@ -28,7 +31,7 @@ namespace Steamworks
 		static readonly InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
 
 		/// <summary>
-		/// Return a list of connected controllers.
+		/// Gets a list of connected controllers.
 		/// </summary>
 		public static IEnumerable<Controller> Controllers
 		{

@@ -32,35 +32,35 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// User has been authed or rejected
+		/// Invoked when aser has been authed or rejected
 		/// </summary>
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
 		/// <summary>
-		/// Called when a connections to the Steam back-end has been established.
+		/// Invoked when a connection to the Steam back-end has been established.
 		/// This means the server now is logged on and has a working connection to the Steam master server.
 		/// </summary>
 		public static event Action OnSteamServersConnected;
 
 		/// <summary>
-		/// This will occur periodically if the Steam client is not connected, and has failed when retrying to establish a connection (result, stilltrying)
+		/// This will occur periodically if the Steam client is not connected, and has failed when retrying to establish a connection (result, stilltrying).
 		/// </summary>
 		public static event Action<Result, bool> OnSteamServerConnectFailure;
 
 		/// <summary>
-		/// Disconnected from Steam
+		/// Invoked when the server is disconnected from Steam
 		/// </summary>
 		public static event Action<Result> OnSteamServersDisconnected;
 
 		/// <summary>
-		/// Called when authentication status changes, useful for grabbing SteamId once aavailability is current
+		/// Invoked when authentication status changes, useful for grabbing <see cref="SteamId"/> once availability is current.
 		/// </summary>
 		public static event Action<SteamNetworkingAvailability> OnSteamNetAuthenticationStatus;
 
 
 		/// <summary>
 		/// Initialize the steam server.
-		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// If <paramref name="asyncCallbacks"/> is <see langword="false"/> you need to call <see cref="RunCallbacks"/> manually every frame.
 		/// </summary>
 		public static void Init( AppId appid, SteamServerInit init, bool asyncCallbacks = true )
 		{
@@ -207,7 +207,7 @@ namespace Steamworks
 		private static string _mapname;
 
 		/// <summary>
-		/// Gets or sets the current ModDir
+		/// Gets or sets the current ModDir.
 		/// </summary>
 		public static string ModDir
 		{
@@ -217,7 +217,7 @@ namespace Steamworks
 		private static string _modDir = "";
 
 		/// <summary>
-		/// Gets the current product
+		/// Gets the current product.
 		/// </summary>
 		public static string Product
 		{
@@ -227,7 +227,7 @@ namespace Steamworks
 		private static string _product = "";
 
 		/// <summary>
-		/// Gets or sets the current Product
+		/// Gets or sets the current Product.
 		/// </summary>
 		public static string GameDescription
 		{
@@ -237,7 +237,7 @@ namespace Steamworks
 		private static string _gameDescription = "";
 
 		/// <summary>
-		/// Gets or sets the current ServerName
+		/// Gets or sets the current ServerName.
 		/// </summary>
 		public static string ServerName
 		{
@@ -247,7 +247,7 @@ namespace Steamworks
 		private static string _serverName = "";
 
 		/// <summary>
-		/// Set whether the server should report itself as passworded
+		/// Set whether the server should report itself as passworded.
 		/// </summary>
 		public static bool Passworded
 		{
@@ -272,6 +272,9 @@ namespace Steamworks
 		}
 		private static string _gametags = "";
 
+		/// <summary>
+		/// Gets the SteamId of the server.
+		/// </summary>
 		public static SteamId SteamId => Internal.GetSteamID();
 
 		/// <summary>
@@ -284,7 +287,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Log onto Steam anonymously.
+		/// Log off of Steam.
 		/// </summary>
 		public static void LogOff()
 		{
@@ -293,14 +296,14 @@ namespace Steamworks
 
 		/// <summary>
 		/// Returns true if the server is connected and registered with the Steam master server
-		/// You should have called LogOnAnonymous etc on startup.
+		/// You should have called <see cref="LogOnAnonymous"/> etc on startup.
 		/// </summary>
 		public static bool LoggedOn => Internal.BLoggedOn();
 
 		/// <summary>
 		/// To the best of its ability this tries to get the server's
-		/// current public ip address. Be aware that this is likely to return
-		/// null for the first few seconds after initialization.
+		/// current public IP address. Be aware that this is likely to return
+		/// <see langword="null"/> for the first few seconds after initialization.
 		/// </summary>
 		public static System.Net.IPAddress PublicIp => Internal.GetPublicIP();
 
@@ -369,7 +372,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Remove all key values
+		/// Remove all key values.
 		/// </summary>
 		public static void ClearKeys()
 		{
@@ -449,7 +452,7 @@ namespace Steamworks
 		}		
 		
 		/// <summary>
-		/// Does the user own this app (which could be DLC)
+		/// Does the user own this app (which could be DLC).
 		/// </summary>
 		public static UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamid, AppId appid )
 		{
