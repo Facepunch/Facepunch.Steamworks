@@ -208,7 +208,7 @@ namespace Steamworks
 		public static string SteamUILanguage => Internal.GetSteamUILanguage();
 
 		/// <summary>
-		/// Returns true if Steam itself is running in VR mode.
+		/// Returns <see langword="true"/> if Steam itself is running in VR mode.
 		/// </summary>
 		public static bool IsSteamRunningInVR => Internal.IsSteamRunningInVR();
 
@@ -221,24 +221,26 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// returns true if Steam and the Steam Overlay are running in Big Picture mode
+		/// returns <see langword="true"/> if Steam and the Steam Overlay are running in Big Picture mode
 		/// Games much be launched through the Steam client to enable the Big Picture overlay. During development,
-		/// a game can be added as a non-steam game to the developers library to test this feature
+		/// a game can be added as a non-steam game to the developers library to test this feature.
 		/// </summary>
 		public static bool IsSteamInBigPictureMode => Internal.IsSteamInBigPictureMode();
 
 
 		/// <summary>
-		/// ask SteamUI to create and render its OpenVR dashboard
+		/// Ask Steam UI to create and render its OpenVR dashboard.
 		/// </summary>
 		public static void StartVRDashboard() => Internal.StartVRDashboard();
 
 		/// <summary>
-		/// Set whether the HMD content will be streamed via Steam In-Home Streaming
-		/// If this is set to true, then the scene in the HMD headset will be streamed, and remote input will not be allowed.
-		/// If this is set to false, then the application window will be streamed instead, and remote input will be allowed.
-		/// The default is true unless "VRHeadsetStreaming" "0" is in the extended appinfo for a game.
-		/// (this is useful for games that have asymmetric multiplayer gameplay)
+		/// Gets or sets whether the HMD content will be streamed via Steam In-Home Streaming.
+		/// <para>
+		/// If this is set to <see langword="true"/>, then the scene in the HMD headset will be streamed, and remote input will not be allowed.
+		/// If this is set to <see langword="false"/>, then the application window will be streamed instead, and remote input will be allowed.
+		/// The default is <see langword="true"/> unless "VRHeadsetStreaming" "0" is in the extended app info for a game
+		/// (this is useful for games that have asymmetric multiplayer gameplay).
+		/// </para>
 		/// </summary>
 		public static bool VrHeadsetStreaming
 		{
@@ -258,13 +260,13 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Returns whether this steam client is a Steam China specific client, vs the global client
+		/// Gets whether this steam client is a Steam China specific client (<see langword="true"/>), or the global client (<see langword="false"/>).
 		/// </summary>
 		public static bool IsSteamChinaLauncher => Internal.IsSteamChinaLauncher();
 
 		/// <summary>
 		/// Initializes text filtering, loading dictionaries for the language the game is running in.
-		/// Users can customize the text filter behavior in their Steam Account preferences
+		/// Users can customize the text filter behavior in their Steam Account preferences.
 		/// </summary>
 		public static bool InitFilterText() => Internal.InitFilterText( 0 );
 
@@ -279,13 +281,13 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// returns true if Steam itself is running on the Steam Deck
+		/// Gets whether or not Steam itself is running on the Steam Deck.
 		/// </summary>
 		public static bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
 
 
 		/// <summary>
-		/// In game launchers that don't have controller support you can call this to have 
+		/// In game launchers that don't have controller support: You can call this to have 
 		/// Steam Input translate the controller input into mouse/kb to navigate the launcher
 		/// </summary>
 		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );

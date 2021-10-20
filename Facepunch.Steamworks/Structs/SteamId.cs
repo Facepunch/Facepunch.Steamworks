@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Represents the ID of a user or steam lobby.
+	/// </summary>
 	public struct SteamId
 	{
 		public ulong Value;

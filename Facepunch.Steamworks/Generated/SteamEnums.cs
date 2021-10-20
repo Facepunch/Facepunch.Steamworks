@@ -9,9 +9,19 @@ namespace Steamworks
 	//
 	// ESteamIPType
 	//
+	/// <summary>
+	/// Specifies the type of IP.
+	/// </summary>
 	internal enum SteamIPType : int
 	{
+		/// <summary>
+		/// IPv4
+		/// </summary>
 		Type4 = 0,
+
+		/// <summary>
+		/// IPv6
+		/// </summary>
 		Type6 = 1,
 	}
 	
@@ -31,6 +41,9 @@ namespace Steamworks
 	//
 	// EResult
 	//
+	/// <summary>
+	/// Determines the result of a request.
+	/// </summary>
 	public enum Result : int
 	{
 		None = 0,
