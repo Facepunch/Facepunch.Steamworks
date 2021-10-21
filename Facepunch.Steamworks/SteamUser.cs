@@ -43,7 +43,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Called when a connections to the Steam back-end has been established.
+		/// Invoked when a connections to the Steam back-end has been established.
 		/// This means the Steam client now has a working connection to the Steam servers. 
 		/// Usually this will have occurred before the game has launched, and should only be seen if the 
 		/// user has dropped connection due to a networking issue or a Steam server update.
@@ -51,14 +51,14 @@ namespace Steamworks
 		public static event Action OnSteamServersConnected;
 
 		/// <summary>
-		/// Called when a connection attempt has failed.
+		/// Invoked when a connection attempt has failed.
 		///	This will occur periodically if the Steam client is not connected, 
 		///	and has failed when retrying to establish a connection.
 		/// </summary>
 		public static event Action OnSteamServerConnectFailure;
 
 		/// <summary>
-		/// Called if the client has lost connection to the Steam servers.
+		/// Invoked when the client has lost connection to the Steam servers.
 		/// Real-time services will be disabled until a matching OnSteamServersConnected has been posted.
 		/// </summary>
 		public static event Action OnSteamServersDisconnected;
@@ -72,25 +72,25 @@ namespace Steamworks
 		public static event Action OnClientGameServerDeny;
 
 		/// <summary>
-		/// Called whenever the users licenses (owned packages) changes.
+		/// Invoked whenever the users licenses (owned packages) changes.
 		/// </summary>
 		public static event Action OnLicensesUpdated;
 
 		/// <summary>
-		/// Called when an auth ticket has been validated. 
-		/// The first parameter is the steamid of this user
-		/// The second is the Steam ID that owns the game, this will be different from the first 
-		/// if the game is being borrowed via Steam Family Sharing
+		/// Invoked when an auth ticket has been validated. 
+		/// The first parameter is the <see cref="SteamId"/> of this user
+		/// The second is the <see cref="SteamId"/> that owns the game, which will be different from the first 
+		/// if the game is being borrowed via Steam Family Sharing.
 		/// </summary>
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
 		/// <summary>
-		/// Used internally for GetAuthSessionTicketAsync
+		/// Used internally for <see cref="GetAuthSessionTicketAsync(double)"/>.
 		/// </summary>
 		internal static event Action<GetAuthSessionTicketResponse_t> OnGetAuthSessionTicketResponse;
 
 		/// <summary>
-		/// Called when a user has responded to a microtransaction authorization request.
+		/// Invoked when a user has responded to a microtransaction authorization request.
 		/// ( appid, orderid, user authorized )
 		/// </summary>
 		public static event Action<AppId, ulong, bool> OnMicroTxnAuthorizationResponse;
@@ -110,9 +110,6 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<DurationControl> OnDurationControl;
 
-
-
-
 		static bool _recordingVoice;
 
 		/// <summary>
@@ -120,7 +117,6 @@ namespace Steamworks
 		/// Once started, use GetAvailableVoice and GetVoice to get the data, and then call StopVoiceRecording 
 		/// when the user has released their push-to-talk hotkey or the game session has completed.
 		/// </summary>
-
 		public static bool VoiceRecord
 		{
 			get => _recordingVoice;
@@ -134,7 +130,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Returns true if we have voice data waiting to be read
+		/// Returns true if we have voice data waiting to be read.
 		/// </summary>
 		public static bool HasVoiceData
 		{
@@ -304,7 +300,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Retrieve a authentication ticket to be sent to the entity who wishes to authenticate you.
+		/// Retrieve an authentication ticket to be sent to the entity who wishes to authenticate you.
 		/// </summary>
 		public static unsafe AuthTicket GetAuthSessionTicket()
 		{
@@ -329,7 +325,7 @@ namespace Steamworks
 		/// <summary>
 		/// Retrieve a authentication ticket to be sent to the entity who wishes to authenticate you.
 		/// This waits for a positive response from the backend before returning the ticket. This means
-		/// the ticket is definitely ready to go as soon as it returns. Will return null if the callback
+		/// the ticket is definitely ready to go as soon as it returns. Will return <see langword="null"/> if the callback
 		/// times out or returns negatively.
 		/// </summary>
 		public static async Task<AuthTicket> GetAuthSessionTicketAsync( double timeoutSeconds = 10.0f )

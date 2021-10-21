@@ -114,7 +114,7 @@ namespace Steamworks
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// 
-		/// To use this derive a class from SocketManager and override as much as you want.
+		/// To use this derive a class from <see cref="SocketManager"/> and override as much as you want.
 		/// 
 		/// </summary>
 		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketManager, new()
@@ -132,7 +132,7 @@ namespace Steamworks
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6).
 		/// 
-		/// To use this you should pass a class that inherits ISocketManager. You can use
+		/// To use this you should pass a class that inherits <see cref="ISocketManager"/>. You can use
 		/// SocketManager to get connections and send messages, but the ISocketManager class
 		/// will received all the appropriate callbacks.
 		/// 
@@ -155,7 +155,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Connect to a socket created via <method>CreateListenSocketIP</method>
+		/// Connect to a socket created via <c>CreateListenSocketIP</c>.
 		/// </summary>
 		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionManager, new()
 		{
@@ -167,7 +167,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Connect to a socket created via <method>CreateListenSocketIP</method>
+		/// Connect to a socket created via <c>CreateListenSocketIP</c>.
 		/// </summary>
 		public static ConnectionManager ConnectNormal( NetAddress address, IConnectionManager iface )
 		{
@@ -185,9 +185,9 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
+		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping).
 		/// 
-		/// To use this derive a class from SocketManager and override as much as you want.
+		/// To use this derive a class from <see cref="SocketManager"/> and override as much as you want.
 		/// 
 		/// </summary>
 		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketManager, new()
@@ -201,10 +201,10 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
+		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping).
 		/// 
-		/// To use this you should pass a class that inherits ISocketManager. You can use
-		/// SocketManager to get connections and send messages, but the ISocketManager class
+		/// To use this you should pass a class that inherits <see cref="ISocketManager"/>. You can use
+		/// <see cref="SocketManager"/> to get connections and send messages, but the <see cref="ISocketManager"/> class
 		/// will received all the appropriate callbacks.
 		/// 
 		/// </summary>
@@ -226,7 +226,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Connect to a relay server
+		/// Connect to a relay server.
 		/// </summary>
 		public static T ConnectRelay<T>( SteamId serverId, int virtualport = 0 ) where T : ConnectionManager, new()
 		{
@@ -239,7 +239,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Connect to a relay server
+		/// Connect to a relay server.
 		/// </summary>
 		public static ConnectionManager ConnectRelay( SteamId serverId, int virtualport, IConnectionManager iface )
 		{

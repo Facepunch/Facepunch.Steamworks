@@ -7,10 +7,17 @@ namespace Steamworks.Data
 		public uint Height;
 		public byte[] Data;
 
+		/// <summary>
+		/// Returns the color of the pixel at the specified position.
+		/// </summary>
+		/// <param name="x">X-coordinate</param>
+		/// <param name="y">Y-coordinate</param>
+		/// <returns>The color.</returns>
+		/// <exception cref="System.ArgumentException">If the X and Y or out of bounds.</exception>
 		public Color GetPixel( int x, int y )
 		{
-			if ( x < 0 || x >= Width ) throw new System.Exception( "x out of bounds" );
-			if ( y < 0 || y >= Height ) throw new System.Exception( "y out of bounds" );
+			if ( x < 0 || x >= Width ) throw new System.ArgumentException( "x out of bounds" );
+			if ( y < 0 || y >= Height ) throw new System.ArgumentException( "y out of bounds" );
 
 			Color c = new Color();
 
@@ -24,12 +31,19 @@ namespace Steamworks.Data
 			return c;
 		}
 
+		/// <summary>
+		/// Returns "{Width}x{Height} ({length of <see cref="Data"/>}bytes)"
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return $"{Width}x{Height} ({Data.Length}bytes)";
 		}
 	}
 
+	/// <summary>
+	/// Represents a color.
+	/// </summary>
 	public struct Color
 	{
 		public byte r, g, b, a;

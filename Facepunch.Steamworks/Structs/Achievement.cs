@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
+	/// <summary>
+	/// Represents a Steam Achievement.
+	/// </summary>
 	public struct Achievement
 	{
 		internal string Value;
@@ -18,7 +21,7 @@ namespace Steamworks.Data
 		public override string ToString() => Value;
 
 		/// <summary>
-		/// True if unlocked
+		/// Gets whether or not the achievement has been unlocked.
 		/// </summary>
 		public bool State
 		{
@@ -30,15 +33,24 @@ namespace Steamworks.Data
 			}
 		}
 
+		/// <summary>
+		/// Gets the identifier of the achievement. This is the "API Name" on Steamworks.
+		/// </summary>
 		public string Identifier => Value;
 
+		/// <summary>
+		/// Gets the display name of the achievement.
+		/// </summary>
 		public string Name => SteamUserStats.Internal.GetAchievementDisplayAttribute( Value, "name" );
 
+		/// <summary>
+		/// Gets the description of the achievement.
+		/// </summary>
 		public string Description => SteamUserStats.Internal.GetAchievementDisplayAttribute( Value, "desc" );
 
 
 		/// <summary>
-		/// Should hold the unlock time if State is true
+		/// If <see cref="State"/> is <see langword="true"/>, this value represents the time that the achievement was unlocked.
 		/// </summary>
 		public DateTime? UnlockTime
 		{
@@ -56,7 +68,7 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// Gets the icon of the achievement. This can return a null image even though the image exists if the image
-		/// hasn't been downloaded by Steam yet. You can use GetIconAsync if you want to wait for the image to be downloaded.
+		/// hasn't been downloaded by Steam yet. You should use <see cref="GetIconAsync(int)"/> if you want to wait for the image to be downloaded.
 		/// </summary>
 		public Image? GetIcon()
 		{
@@ -65,8 +77,9 @@ namespace Steamworks.Data
 
 
 		/// <summary>
-		/// Gets the icon of the achievement, waits for it to load if we have to
+		/// Gets the icon of the achievement, yielding until the icon is received or the <paramref name="timeout"/> is reached.
 		/// </summary>
+		/// <param name="timeout">The timeout in milliseconds before the request will be canceled. Defaults to <c>5000</c>.</param>
 		public async Task<Image?> GetIconAsync( int timeout = 5000 )
 		{
 			var i = SteamUserStats.Internal.GetAchievementIcon( Value );
@@ -107,7 +120,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Returns the fraction (0-1) of users who have unlocked the specified achievement, or -1 if no data available.
+		/// Gets a decimal (0-1) representing the global amount of users who have unlocked the specified achievement, or -1 if no data available.
 		/// </summary>
 		public float GlobalUnlocked
 		{
@@ -123,7 +136,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Make this achievement earned
+		/// Unlock this achievement.
 		/// </summary>
 		public bool Trigger( bool apply = true )
 		{
@@ -138,7 +151,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Reset this achievement to not achieved
+		/// Reset this achievement to be locked.
 		/// </summary>
 		public bool Clear()
 		{

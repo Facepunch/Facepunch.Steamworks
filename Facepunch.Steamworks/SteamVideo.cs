@@ -8,7 +8,7 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Video API.
 	/// </summary>
 	public class SteamVideo : SteamClientClass<SteamVideo>
 	{
@@ -25,7 +25,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Return true if currently using Steam's live broadcasting
+		/// Return <see langword="true"/> if currently using Steam's live broadcasting
 		/// </summary>
 		public static bool IsBroadcasting
 		{
@@ -37,7 +37,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// If we're broadcasting, will return the number of live viewers
+		/// Returns the number of viewers that are watching the stream, or <c>0</c> if <see cref="IsBroadcasting"/> is <see langword="false"/>.
 		/// </summary>
 		public static int NumViewers
 		{

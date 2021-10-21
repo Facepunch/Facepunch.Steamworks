@@ -8,7 +8,7 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Friends API.
 	/// </summary>
 	public class SteamFriends : SteamClientClass<SteamFriends>
 	{
@@ -39,54 +39,54 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Called when chat message has been received from a friend. You'll need to turn on
-		/// ListenForFriendsMessages to recieve this. (friend, msgtype, message)
+		/// Invoked when a chat message has been received from a friend. You'll need to enable
+		/// <see cref="ListenForFriendsMessages"/> to recieve this. (friend, msgtype, message)
 		/// </summary>
 		public static event Action<Friend, string, string> OnChatMessage;
 
 		/// <summary>
-		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
+		/// Invoked when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
 		/// </summary>
 		public static event Action<Friend, string, string> OnClanChatMessage;
 
 		/// <summary>
-		/// called when a friends' status changes
+		/// Invoked when a friends' status changes.
 		/// </summary>
 		public static event Action<Friend> OnPersonaStateChange;
 
 
 		/// <summary>
-		/// Called when the user tries to join a game from their friends list
-		///	rich presence will have been set with the "connect" key which is set here
+		/// Invoked when the user tries to join a game from their friends list.
+		///	Rich presence will have been set with the "connect" key which is set here.
 		/// </summary>
 		public static event Action<Friend, string> OnGameRichPresenceJoinRequested;
 
 		/// <summary>
-		/// Posted when game overlay activates or deactivates
-		///	the game can use this to be pause or resume single player games
+		/// Invoked when game overlay activates or deactivates.
+		///	The game can use this to be pause or resume single player games.
 		/// </summary>
 		public static event Action<bool> OnGameOverlayActivated;
 
 		/// <summary>
-		/// Called when the user tries to join a different game server from their friends list
-		///	game client should attempt to connect to specified server when this is received
+		/// Invoked when the user tries to join a different game server from their friends list.
+		///	Game client should attempt to connect to specified server when this is received.
 		/// </summary>
 		public static event Action<string, string> OnGameServerChangeRequested;
 
 		/// <summary>
-		/// Called when the user tries to join a lobby from their friends list
-		///	game client should attempt to connect to specified lobby when this is received
+		/// Invoked when the user tries to join a lobby from their friends list.
+		///	Game client should attempt to connect to specified lobby when this is received.
 		/// </summary>
 		public static event Action<Lobby, SteamId> OnGameLobbyJoinRequested;
 
 		/// <summary>
-		/// Callback indicating updated data about friends rich presence information
+		/// Invoked when a friend's rich presence data is updated.
 		/// </summary>
 		public static event Action<Friend> OnFriendRichPresenceUpdate;
 
 		/// <summary>
-		/// Dispatched when an overlay browser instance is navigated to a
-		/// protocol/scheme registered by RegisterProtocolInOverlayBrowser()
+		/// Invoked when an overlay browser instance is navigated to a
+		/// protocol/scheme registered by <see cref="RegisterProtocolInOverlayBrowser(string)"/>.
 		/// </summary>
 		public static event Action<string> OnOverlayBrowserProtocol;
 
@@ -140,16 +140,28 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Gets an <see cref="IEnumerable{T}"/> of friends that the current user has.
+		/// </summary>
+		/// <returns>An <see cref="IEnumerable{T}"/> of friends.</returns>
 		public static IEnumerable<Friend> GetFriends()
 		{
 			return GetFriendsWithFlag(FriendFlags.Immediate);
 		}
 
+		/// <summary>
+		/// Gets an <see cref="IEnumerable{T}"/> of blocked users that the current user has.
+		/// </summary>
+		/// <returns>An <see cref="IEnumerable{T}"/> of blocked users.</returns>
 		public static IEnumerable<Friend> GetBlocked()
 		{
 			return GetFriendsWithFlag(FriendFlags.Blocked);
 		}
 
+		/// <summary>
+		/// Gets an <see cref="IEnumerable{T}"/> of friend requests that the current user has.
+		/// </summary>
+		/// <returns>An <see cref="IEnumerable{T}"/> of friend requests.</returns>
 		public static IEnumerable<Friend> GetFriendsRequested()
 		{
 			return GetFriendsWithFlag( FriendFlags.FriendshipRequested );
@@ -195,7 +207,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// The dialog to open. Valid options are: 
+		/// Opens a specific overlay window. Valid options are:
 		/// "friends", 
 		/// "community", 
 		/// "players", 
@@ -267,18 +279,33 @@ namespace Steamworks
 			await Task.Delay( 500 );
 		}
 
+		/// <summary>
+		/// Returns a small avatar of the user with the given <paramref name="steamid"/>.
+		/// </summary>
+		/// <param name="steamid">The <see cref="SteamId"/> of the user to get.</param>
+		/// <returns>A <see cref="Data.Image"/> with a value if the image was successfully retrieved.</returns>
 		public static async Task<Data.Image?> GetSmallAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
 			return SteamUtils.GetImage( Internal.GetSmallFriendAvatar( steamid ) );
 		}
 
+		/// <summary>
+		/// Returns a medium avatar of the user with the given <paramref name="steamid"/>.
+		/// </summary>
+		/// <param name="steamid">The <see cref="SteamId"/> of the user to get.</param>
+		/// <returns>A <see cref="Data.Image"/> with a value if the image was successfully retrieved.</returns>
 		public static async Task<Data.Image?> GetMediumAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
 			return SteamUtils.GetImage( Internal.GetMediumFriendAvatar( steamid ) );
 		}
 
+		/// <summary>
+		/// Returns a large avatar of the user with the given <paramref name="steamid"/>.
+		/// </summary>
+		/// <param name="steamid">The <see cref="SteamId"/> of the user to get.</param>
+		/// <returns>A <see cref="Data.Image"/> with a value if the image was successfully retrieved.</returns>
 		public static async Task<Data.Image?> GetLargeAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
@@ -346,6 +373,11 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Gets whether or not the current user is following the user with the given <paramref name="steamID"/>.
+		/// </summary>
+		/// <param name="steamID">The <see cref="SteamId"/> to check.</param>
+		/// <returns>Boolean.</returns>
 		public static async Task<bool> IsFollowing(SteamId steamID)
 		{
 			var r = await Internal.IsFollowing(steamID);

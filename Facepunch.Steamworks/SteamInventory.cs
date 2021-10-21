@@ -10,7 +10,7 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Inventory API.
 	/// </summary>
 	public class SteamInventory : SteamSharedClass<SteamInventory>
 	{
@@ -65,7 +65,7 @@ namespace Steamworks
 		/// <summary>
 		/// Call this if you're going to want to access definition information. You should be able to get 
 		/// away with calling this once at the start if your game, assuming your items don't change all the time.
-		/// This will trigger OnDefinitionsUpdated at which point Definitions should be set.
+		/// This will trigger <see cref="OnDefinitionsUpdated"/> at which point Definitions should be set.
 		/// </summary>
 		public static void LoadItemDefinitions()
 		{
@@ -83,7 +83,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Will call LoadItemDefinitions and wait until Definitions is not null
+		/// Will call <see cref="LoadItemDefinitions"/> and wait until Definitions is not null
 		/// </summary>
 		public static async Task<bool> WaitForDefinitions( float timeoutSeconds = 30 )
 		{
@@ -300,7 +300,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Grant all promotional items the user is eligible for
+		/// Grant all promotional items the user is eligible for.
 		/// </summary>
 		public static async Task<InventoryResult?> GrantPromoItemsAsync()
 		{

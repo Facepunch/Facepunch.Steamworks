@@ -8,7 +8,7 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Remote Storage API.
 	/// </summary>
 	public class SteamRemoteStorage : SteamClientClass<SteamRemoteStorage>
 	{
@@ -18,12 +18,15 @@ namespace Steamworks
 		{
 			SetInterface( server, new ISteamRemoteStorage( server ) );
 		}
-		
+
 
 		/// <summary>
 		/// Creates a new file, writes the bytes to the file, and then closes the file.
 		/// If the target file already exists, it is overwritten
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
+		/// <param name="data">The bytes of data.</param>
+		/// <returns>A boolean, detailing whether or not the operation was successful.</returns>
 		public unsafe static bool FileWrite( string filename, byte[] data )
 		{
 			fixed ( byte* ptr = data )
@@ -35,6 +38,7 @@ namespace Steamworks
 		/// <summary>
 		/// Opens a binary file, reads the contents of the file into a byte array, and then closes the file.
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
 		public unsafe static byte[] FileRead( string filename )
 		{
 			var size = FileSize( filename );
@@ -51,26 +55,35 @@ namespace Steamworks
 		/// <summary>
 		/// Checks whether the specified file exists.
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
+		/// <returns>Whether or not the file exists.</returns>
 		public static bool FileExists( string filename ) => Internal.FileExists( filename );
 
 		/// <summary>
 		/// Checks if a specific file is persisted in the steam cloud.
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
+		/// <returns>Boolean.</returns>
 		public static bool FilePersisted( string filename ) => Internal.FilePersisted( filename );
 
 		/// <summary>
 		/// Gets the specified file's last modified date/time.
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
+		/// <returns>A <see cref="DateTime"/> describing when the file was modified last.</returns>
 		public static DateTime FileTime( string filename ) => Epoch.ToDateTime( Internal.GetFileTimestamp( filename ) );
 
 		/// <summary>
-		/// Gets the specified files size in bytes. 0 if not exists.
+		/// Returns the specified files size in bytes, or <c>0</c> if the file does not exist.
 		/// </summary>
+		/// <param name="filename">The path of the file.</param>
+		/// <returns>The size of the file in bytes, or <c>0</c> if the file doesn't exist.</returns>
 		public static int FileSize( string filename ) => Internal.GetFileSize( filename );
 
 		/// <summary>
 		/// Deletes the file from remote storage, but leaves it on the local disk and remains accessible from the API.
 		/// </summary>
+		/// <returns>A boolean, detailing whether or not the operation was successful.</returns>
 		public static bool FileForget( string filename ) => Internal.FileForget( filename );
 
 		/// <summary>
@@ -80,7 +93,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Number of bytes total
+		/// Gets the total number of quota bytes.
 		/// </summary>
 		public static ulong QuotaBytes
 		{
@@ -93,7 +106,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Number of bytes used
+		/// Gets the total number of quota bytes that have been used.
 		/// </summary>
 		public static ulong QuotaUsedBytes
 		{
@@ -106,7 +119,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Number of bytes remaining until your quota is used
+		/// Number of bytes remaining until the quota is used.
 		/// </summary>
 		public static ulong QuotaRemainingBytes
 		{
@@ -119,7 +132,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// returns true if IsCloudEnabledForAccount AND IsCloudEnabledForApp
+		/// returns <see langword="true"/> if <see cref="IsCloudEnabledForAccount"/> AND <see cref="IsCloudEnabledForApp"/> are <see langword="true"/>.
 		/// </summary>
 		public static bool IsCloudEnabled => IsCloudEnabledForAccount && IsCloudEnabledForApp;
 
@@ -149,7 +162,7 @@ namespace Steamworks
 		public static int FileCount => Internal.GetFileCount();
 
 		/// <summary>
-		/// Get a list of filenames synchronized by Steam Cloud
+		/// Gets a list of filenames synchronized by Steam Cloud.
 		/// </summary>
 		public static IEnumerable<string> Files
 		{
