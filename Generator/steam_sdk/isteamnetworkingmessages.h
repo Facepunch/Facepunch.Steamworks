@@ -73,10 +73,12 @@ public:
 	///
 	/// Returns:
 	/// - k_EREsultOK on success.
-	/// - k_EResultNoConnection will be returned if the session has failed or was closed by the peer,
-	///   and k_nSteamNetworkingSend_AutoRestartBrokenSession is not used.  (You can use
-	///   GetSessionConnectionInfo to get the details.)  In order to acknowledge the broken session
-	///   and start a new one, you must call CloseSessionWithUser
+	/// - k_EResultNoConnection, if the session has failed or was closed by the peer and
+	///   k_nSteamNetworkingSend_AutoRestartBrokenSession was not specified.  (You can
+	///   use GetSessionConnectionInfo to get the details.)  In order to acknowledge the
+	///   broken session and start a new one, you must call CloseSessionWithUser, or you may
+	///   repeat the call with k_nSteamNetworkingSend_AutoRestartBrokenSession.  See
+	///   k_nSteamNetworkingSend_AutoRestartBrokenSession for more details.
 	/// - See ISteamNetworkingSockets::SendMessageToConnection for more possible return values
 	virtual EResult SendMessageToUser( const SteamNetworkingIdentity &identityRemote, const void *pubData, uint32 cubData, int nSendFlags, int nRemoteChannel ) = 0;
 
@@ -120,7 +122,7 @@ public:
 	/// you do not need the corresponding details.  Note that sessions time out after a while,
 	/// so if a connection fails, or SendMessageToUser returns k_EResultNoConnection, you cannot wait
 	/// indefinitely to obtain the reason for failure.
-	virtual ESteamNetworkingConnectionState GetSessionConnectionInfo( const SteamNetworkingIdentity &identityRemote, SteamNetConnectionInfo_t *pConnectionInfo, SteamNetworkingQuickConnectionStatus *pQuickStatus ) = 0;
+	virtual ESteamNetworkingConnectionState GetSessionConnectionInfo( const SteamNetworkingIdentity &identityRemote, SteamNetConnectionInfo_t *pConnectionInfo, SteamNetConnectionRealTimeStatus_t *pQuickStatus ) = 0;
 };
 #define STEAMNETWORKINGMESSAGES_INTERFACE_VERSION "SteamNetworkingMessages002"
 

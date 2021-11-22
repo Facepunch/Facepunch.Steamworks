@@ -161,7 +161,7 @@ STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamHTTP *, SteamGameServerHTTP, S
 
 struct HTTPRequestCompleted_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 1 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 1 };
 
 	// Handle value for the request that has completed.
 	HTTPRequestHandle m_hRequest;
@@ -174,6 +174,10 @@ struct HTTPRequestCompleted_t
 	// It will be false if we failed due to an internal error or client side network failure.
 	bool m_bRequestSuccessful;
 
+	bool m_TMP_bSuccessfulA;
+	bool m_TMP_bSuccessfulB;
+
+
 	// Will be the HTTP status code value returned by the server, k_EHTTPStatusCode200OK is the normal
 	// OK response, if you get something else you probably need to treat it as a failure.
 	EHTTPStatusCode m_eStatusCode;
@@ -184,7 +188,7 @@ struct HTTPRequestCompleted_t
 
 struct HTTPRequestHeadersReceived_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 2 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 2 };
 
 	// Handle value for the request that has received headers.
 	HTTPRequestHandle m_hRequest;
@@ -196,7 +200,7 @@ struct HTTPRequestHeadersReceived_t
 
 struct HTTPRequestDataReceived_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 3 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 3 };
 
 	// Handle value for the request that has received data.
 	HTTPRequestHandle m_hRequest;

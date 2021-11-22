@@ -136,6 +136,7 @@ enum EResult
 	k_EResultSteamRealmMismatch = 120,			// The user's realm does not match the realm of the requested resource
 	k_EResultInvalidSignature = 121,			// signature check did not match
 	k_EResultParseFailure = 122,				// Failed to parse input
+	k_EResultNoVerifiedPhone = 123,				// account does not have a verified phone number
 };
 
 // Error codes for use with the voice functions
