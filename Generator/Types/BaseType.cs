@@ -108,6 +108,8 @@ internal class BaseType
 			if ( VarName == "pOutMessageNumber" ) return false;
 			if ( VarName == "pOptions" ) return true;
 			if ( VarName == "pLanes" ) return true;
+			if ( VarName == "pLanePriorities" ) return true;
+			if ( VarName == "pLaneWeights" ) return true;
 
 			if ( VarName == "pOut" ) return false;
 			if ( VarName == "pOutBuffer" ) return false;

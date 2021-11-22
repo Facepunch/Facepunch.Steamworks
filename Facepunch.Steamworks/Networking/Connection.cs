@@ -21,8 +21,8 @@ namespace Steamworks.Data
 		public override string ToString() => Id.ToString();
 		public static implicit operator Connection( uint value ) => new Connection() { Id = value };
 		public static implicit operator uint( Connection value ) => value.Id;
-		public static bool operator ==( Connection value1, Connection value2 ) => value1.Equals(value2);
-		public static bool operator !=( Connection value1, Connection value2 ) => !value1.Equals(value2);
+		public static bool operator ==( Connection value1, Connection value2 ) => value1.Equals( value2 );
+		public static bool operator !=( Connection value1, Connection value2 ) => !value1.Equals( value2 );
 
 		/// <summary>
 		/// Accept an incoming connection that has been received on a listen socket.
@@ -69,30 +69,31 @@ namespace Steamworks.Data
 		/// <summary>
 		/// This is the best version to use.
 		/// </summary>
-		public unsafe Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
+		public unsafe Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
 		{
-            if ( ptr == IntPtr.Zero )
-                throw new ArgumentNullException( nameof( ptr ) );
-            if ( size == 0 )
-                throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
+			if ( ptr == IntPtr.Zero )
+				throw new ArgumentNullException( nameof( ptr ) );
+			if ( size == 0 )
+				throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
 
-            var copyPtr = BufferManager.Get( size, 1 );
-            Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
+			var copyPtr = BufferManager.Get( size, 1 );
+			Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
 
-            var message = SteamNetworkingUtils.AllocateMessage();
-            message->Connection = this;
-            message->Flags = sendType;
-            message->DataPtr = copyPtr;
+			var message = SteamNetworkingUtils.AllocateMessage();
+			message->Connection = this;
+			message->Flags = sendType;
+			message->DataPtr = copyPtr;
 			message->DataSize = size;
-            message->FreeDataPtr = BufferManager.FreeFunctionPointer;
+			message->FreeDataPtr = BufferManager.FreeFunctionPointer;
+			message->IdxLane = laneIndex;
 
 			long messageNumber = 0;
 			SteamNetworkingSockets.Internal.SendMessages( 1, &message, &messageNumber );
 
-            return messageNumber >= 0
-                ? Result.OK
-                : (Result)(-messageNumber);
-        }
+			return messageNumber >= 0
+				? Result.OK
+				: (Result)(-messageNumber);
+		}
 
 		/// <summary>
 		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
@@ -156,6 +157,15 @@ namespace Steamworks.Data
 			SteamNetworkingSockets.Internal.GetConnectionRealTimeStatus( this, ref connectionStatus, 0, null );
 
 			return connectionStatus;
+		}
+
+		/// <summary>
+		/// Configure multiple outbound messages streams ("lanes") on a connection, and
+		/// control head-of-line blocking between them.
+		/// </summary>
+		public Result ConfigureConnectionLanes( int[] lanePriorities, ushort[] laneWeights )
+		{
+			return SteamNetworkingSockets.Internal.ConfigureConnectionLanes( this, lanePriorities.Length, lanePriorities, laneWeights );
 		}
 	}
 }

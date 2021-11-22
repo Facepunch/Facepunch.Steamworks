@@ -254,12 +254,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_ConfigureConnectionLanes", CallingConvention = Platform.CC)]
-		private static extern Result _ConfigureConnectionLanes( IntPtr self, Connection hConn, int nNumLanes, ref int pLanePriorities, ref ushort pLaneWeights );
+		private static extern Result _ConfigureConnectionLanes( IntPtr self, Connection hConn, int nNumLanes, [In,Out] int[]  pLanePriorities, [In,Out] ushort[]  pLaneWeights );
 		
 		#endregion
-		internal Result ConfigureConnectionLanes( Connection hConn, int nNumLanes, ref int pLanePriorities, ref ushort pLaneWeights )
+		internal Result ConfigureConnectionLanes( Connection hConn, int nNumLanes, [In,Out] int[]  pLanePriorities, [In,Out] ushort[]  pLaneWeights )
 		{
-			var returnValue = _ConfigureConnectionLanes( Self, hConn, nNumLanes, ref pLanePriorities, ref pLaneWeights );
+			var returnValue = _ConfigureConnectionLanes( Self, hConn, nNumLanes, pLanePriorities, pLaneWeights );
 			return returnValue;
 		}
 		
