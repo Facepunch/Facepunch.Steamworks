@@ -146,6 +146,11 @@ namespace Generator
                     WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
                 }
 
+                if ( t == "SteamInputActionEvent_t.AnalogAction_t" )
+                {
+                    Write( "// " );
+                }
+
                 WriteLine( $"internal {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
         }
