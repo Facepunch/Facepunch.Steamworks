@@ -153,7 +153,7 @@ namespace Steamworks.Data
 		{
 			ConnectionStatus connectionStatus = default( ConnectionStatus );
 
-			SteamNetworkingSockets.Internal.GetQuickConnectionStatus( this, ref connectionStatus );
+			SteamNetworkingSockets.Internal.GetConnectionRealTimeStatus( this, ref connectionStatus, 0, null );
 
 			return connectionStatus;
 		}

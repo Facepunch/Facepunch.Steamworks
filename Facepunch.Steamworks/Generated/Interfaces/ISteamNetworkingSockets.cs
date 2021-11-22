@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_SteamAPI_v011", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_SteamAPI_v011();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_SteamAPI_v011();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_SteamAPI_v012", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_SteamAPI_v012();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_SteamAPI_v012();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012();
 		
 		
 		#region FunctionMeta
@@ -205,14 +205,13 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_GetQuickConnectionStatus", CallingConvention = Platform.CC)]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetQuickConnectionStatus( IntPtr self, Connection hConn, ref ConnectionStatus pStats );
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_GetConnectionRealTimeStatus", CallingConvention = Platform.CC)]
+		private static extern Result _GetConnectionRealTimeStatus( IntPtr self, Connection hConn, ref ConnectionStatus pStatus, int nLanes, [In,Out] ConnectionLaneStatus[]  pLanes );
 		
 		#endregion
-		internal bool GetQuickConnectionStatus( Connection hConn, ref ConnectionStatus pStats )
+		internal Result GetConnectionRealTimeStatus( Connection hConn, ref ConnectionStatus pStatus, int nLanes, [In,Out] ConnectionLaneStatus[]  pLanes )
 		{
-			var returnValue = _GetQuickConnectionStatus( Self, hConn, ref pStats );
+			var returnValue = _GetConnectionRealTimeStatus( Self, hConn, ref pStatus, nLanes, pLanes );
 			return returnValue;
 		}
 		
@@ -250,6 +249,17 @@ namespace Steamworks
 		internal bool CreateSocketPair( [In,Out] Connection[]  pOutConnection1, [In,Out] Connection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref NetIdentity pIdentity1, ref NetIdentity pIdentity2 )
 		{
 			var returnValue = _CreateSocketPair( Self, pOutConnection1, pOutConnection2, bUseNetworkLoopback, ref pIdentity1, ref pIdentity2 );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_ConfigureConnectionLanes", CallingConvention = Platform.CC)]
+		private static extern Result _ConfigureConnectionLanes( IntPtr self, Connection hConn, int nNumLanes, ref int pLanePriorities, ref ushort pLaneWeights );
+		
+		#endregion
+		internal Result ConfigureConnectionLanes( Connection hConn, int nNumLanes, ref int pLanePriorities, ref ushort pLaneWeights )
+		{
+			var returnValue = _ConfigureConnectionLanes( Self, hConn, nNumLanes, ref pLanePriorities, ref pLaneWeights );
 			return returnValue;
 		}
 		
@@ -487,6 +497,17 @@ namespace Steamworks
 		internal void RunCallbacks()
 		{
 			_RunCallbacks( Self );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_CreateFakeUDPPort", CallingConvention = Platform.CC)]
+		private static extern IntPtr _CreateFakeUDPPort( IntPtr self, int idxFakeServerPort );
+		
+		#endregion
+		internal IntPtr CreateFakeUDPPort( int idxFakeServerPort )
+		{
+			var returnValue = _CreateFakeUDPPort( Self, idxFakeServerPort );
+			return returnValue;
 		}
 		
 	}

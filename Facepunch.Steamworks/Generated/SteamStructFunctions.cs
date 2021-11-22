@@ -193,13 +193,6 @@ namespace Steamworks.Data
 		
 	}
 	
-	internal partial struct NetIdentityRender
-	{
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentityRender_c_str", CallingConvention = Platform.CC)]
-		internal static extern Utf8StringPointer Internalc_str( ref NetIdentityRender self );
-		
-	}
-	
 	public partial struct NetAddress
 	{
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIPAddr_Clear", CallingConvention = Platform.CC)]
@@ -242,24 +235,10 @@ namespace Steamworks.Data
 		
 	}
 	
-	internal partial struct NetAddressRender
-	{
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIPAddrRender_c_str", CallingConvention = Platform.CC)]
-		internal static extern Utf8StringPointer Internalc_str( ref NetAddressRender self );
-		
-	}
-	
 	internal partial struct NetMsg
 	{
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingMessage_t_Release", CallingConvention = Platform.CC)]
 		internal static unsafe extern void InternalRelease( NetMsg* self );
-		
-	}
-	
-	internal partial struct SteamNetworkingPOPIDRender
-	{
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingPOPIDRender_c_str", CallingConvention = Platform.CC)]
-		internal static extern Utf8StringPointer Internalc_str( ref SteamNetworkingPOPIDRender self );
 		
 	}
 	

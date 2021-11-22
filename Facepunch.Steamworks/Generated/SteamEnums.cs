@@ -9,19 +9,9 @@ namespace Steamworks
 	//
 	// ESteamIPType
 	//
-	/// <summary>
-	/// Specifies the type of IP.
-	/// </summary>
 	internal enum SteamIPType : int
 	{
-		/// <summary>
-		/// IPv4
-		/// </summary>
 		Type4 = 0,
-
-		/// <summary>
-		/// IPv6
-		/// </summary>
 		Type6 = 1,
 	}
 	
@@ -41,9 +31,6 @@ namespace Steamworks
 	//
 	// EResult
 	//
-	/// <summary>
-	/// Determines the result of a request.
-	/// </summary>
 	public enum Result : int
 	{
 		None = 0,
@@ -168,6 +155,7 @@ namespace Steamworks
 		SteamRealmMismatch = 120,
 		InvalidSignature = 121,
 		ParseFailure = 122,
+		NoVerifiedPhone = 123,
 	}
 	
 	//
@@ -606,6 +594,17 @@ namespace Steamworks
 	{
 		SingleLine = 0,
 		MultipleLines = 1,
+	}
+	
+	//
+	// EFloatingGamepadTextInputMode
+	//
+	public enum TextInputMode : int
+	{
+		SingleLine = 0,
+		MultipleLines = 1,
+		Email = 2,
+		Numeric = 3,
 	}
 	
 	//
@@ -1358,7 +1357,80 @@ namespace Steamworks
 		PS5_Reserved18 = 330,
 		PS5_Reserved19 = 331,
 		PS5_Reserved20 = 332,
-		Count = 333,
+		SteamDeck_A = 333,
+		SteamDeck_B = 334,
+		SteamDeck_X = 335,
+		SteamDeck_Y = 336,
+		SteamDeck_L1 = 337,
+		SteamDeck_R1 = 338,
+		SteamDeck_Menu = 339,
+		SteamDeck_View = 340,
+		SteamDeck_LeftPad_Touch = 341,
+		SteamDeck_LeftPad_Swipe = 342,
+		SteamDeck_LeftPad_Click = 343,
+		SteamDeck_LeftPad_DPadNorth = 344,
+		SteamDeck_LeftPad_DPadSouth = 345,
+		SteamDeck_LeftPad_DPadWest = 346,
+		SteamDeck_LeftPad_DPadEast = 347,
+		SteamDeck_RightPad_Touch = 348,
+		SteamDeck_RightPad_Swipe = 349,
+		SteamDeck_RightPad_Click = 350,
+		SteamDeck_RightPad_DPadNorth = 351,
+		SteamDeck_RightPad_DPadSouth = 352,
+		SteamDeck_RightPad_DPadWest = 353,
+		SteamDeck_RightPad_DPadEast = 354,
+		SteamDeck_L2_SoftPull = 355,
+		SteamDeck_L2 = 356,
+		SteamDeck_R2_SoftPull = 357,
+		SteamDeck_R2 = 358,
+		SteamDeck_LeftStick_Move = 359,
+		SteamDeck_L3 = 360,
+		SteamDeck_LeftStick_DPadNorth = 361,
+		SteamDeck_LeftStick_DPadSouth = 362,
+		SteamDeck_LeftStick_DPadWest = 363,
+		SteamDeck_LeftStick_DPadEast = 364,
+		SteamDeck_LeftStick_Touch = 365,
+		SteamDeck_RightStick_Move = 366,
+		SteamDeck_R3 = 367,
+		SteamDeck_RightStick_DPadNorth = 368,
+		SteamDeck_RightStick_DPadSouth = 369,
+		SteamDeck_RightStick_DPadWest = 370,
+		SteamDeck_RightStick_DPadEast = 371,
+		SteamDeck_RightStick_Touch = 372,
+		SteamDeck_L4 = 373,
+		SteamDeck_R4 = 374,
+		SteamDeck_L5 = 375,
+		SteamDeck_R5 = 376,
+		SteamDeck_DPad_Move = 377,
+		SteamDeck_DPad_North = 378,
+		SteamDeck_DPad_South = 379,
+		SteamDeck_DPad_West = 380,
+		SteamDeck_DPad_East = 381,
+		SteamDeck_Gyro_Move = 382,
+		SteamDeck_Gyro_Pitch = 383,
+		SteamDeck_Gyro_Yaw = 384,
+		SteamDeck_Gyro_Roll = 385,
+		SteamDeck_Reserved1 = 386,
+		SteamDeck_Reserved2 = 387,
+		SteamDeck_Reserved3 = 388,
+		SteamDeck_Reserved4 = 389,
+		SteamDeck_Reserved5 = 390,
+		SteamDeck_Reserved6 = 391,
+		SteamDeck_Reserved7 = 392,
+		SteamDeck_Reserved8 = 393,
+		SteamDeck_Reserved9 = 394,
+		SteamDeck_Reserved10 = 395,
+		SteamDeck_Reserved11 = 396,
+		SteamDeck_Reserved12 = 397,
+		SteamDeck_Reserved13 = 398,
+		SteamDeck_Reserved14 = 399,
+		SteamDeck_Reserved15 = 400,
+		SteamDeck_Reserved16 = 401,
+		SteamDeck_Reserved17 = 402,
+		SteamDeck_Reserved18 = 403,
+		SteamDeck_Reserved19 = 404,
+		SteamDeck_Reserved20 = 405,
+		Count = 406,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -1479,6 +1551,19 @@ namespace Steamworks
 		Small = 0,
 		Medium = 1,
 		Large = 2,
+		Count = 3,
+	}
+	
+	//
+	// ESteamInputGlyphStyle
+	//
+	internal enum SteamInputGlyphStyle : int
+	{
+		Standard = 0,
+		Light = 1,
+		Dark = 2,
+		NeutralColorABXY = 16,
+		OutlineOnlyABXY = 32,
 	}
 	
 	//
@@ -1800,7 +1885,80 @@ namespace Steamworks
 		XBoxOne_RightGrip_Lower = 302,
 		XBoxOne_RightGrip_Upper = 303,
 		XBoxOne_Share = 304,
-		Count = 305,
+		SteamDeck_A = 305,
+		SteamDeck_B = 306,
+		SteamDeck_X = 307,
+		SteamDeck_Y = 308,
+		SteamDeck_L1 = 309,
+		SteamDeck_R1 = 310,
+		SteamDeck_Menu = 311,
+		SteamDeck_View = 312,
+		SteamDeck_LeftPad_Touch = 313,
+		SteamDeck_LeftPad_Swipe = 314,
+		SteamDeck_LeftPad_Click = 315,
+		SteamDeck_LeftPad_DPadNorth = 316,
+		SteamDeck_LeftPad_DPadSouth = 317,
+		SteamDeck_LeftPad_DPadWest = 318,
+		SteamDeck_LeftPad_DPadEast = 319,
+		SteamDeck_RightPad_Touch = 320,
+		SteamDeck_RightPad_Swipe = 321,
+		SteamDeck_RightPad_Click = 322,
+		SteamDeck_RightPad_DPadNorth = 323,
+		SteamDeck_RightPad_DPadSouth = 324,
+		SteamDeck_RightPad_DPadWest = 325,
+		SteamDeck_RightPad_DPadEast = 326,
+		SteamDeck_L2_SoftPull = 327,
+		SteamDeck_L2 = 328,
+		SteamDeck_R2_SoftPull = 329,
+		SteamDeck_R2 = 330,
+		SteamDeck_LeftStick_Move = 331,
+		SteamDeck_L3 = 332,
+		SteamDeck_LeftStick_DPadNorth = 333,
+		SteamDeck_LeftStick_DPadSouth = 334,
+		SteamDeck_LeftStick_DPadWest = 335,
+		SteamDeck_LeftStick_DPadEast = 336,
+		SteamDeck_LeftStick_Touch = 337,
+		SteamDeck_RightStick_Move = 338,
+		SteamDeck_R3 = 339,
+		SteamDeck_RightStick_DPadNorth = 340,
+		SteamDeck_RightStick_DPadSouth = 341,
+		SteamDeck_RightStick_DPadWest = 342,
+		SteamDeck_RightStick_DPadEast = 343,
+		SteamDeck_RightStick_Touch = 344,
+		SteamDeck_L4 = 345,
+		SteamDeck_R4 = 346,
+		SteamDeck_L5 = 347,
+		SteamDeck_R5 = 348,
+		SteamDeck_DPad_Move = 349,
+		SteamDeck_DPad_North = 350,
+		SteamDeck_DPad_South = 351,
+		SteamDeck_DPad_West = 352,
+		SteamDeck_DPad_East = 353,
+		SteamDeck_Gyro_Move = 354,
+		SteamDeck_Gyro_Pitch = 355,
+		SteamDeck_Gyro_Yaw = 356,
+		SteamDeck_Gyro_Roll = 357,
+		SteamDeck_Reserved1 = 358,
+		SteamDeck_Reserved2 = 359,
+		SteamDeck_Reserved3 = 360,
+		SteamDeck_Reserved4 = 361,
+		SteamDeck_Reserved5 = 362,
+		SteamDeck_Reserved6 = 363,
+		SteamDeck_Reserved7 = 364,
+		SteamDeck_Reserved8 = 365,
+		SteamDeck_Reserved9 = 366,
+		SteamDeck_Reserved10 = 367,
+		SteamDeck_Reserved11 = 368,
+		SteamDeck_Reserved12 = 369,
+		SteamDeck_Reserved13 = 370,
+		SteamDeck_Reserved14 = 371,
+		SteamDeck_Reserved15 = 372,
+		SteamDeck_Reserved16 = 373,
+		SteamDeck_Reserved17 = 374,
+		SteamDeck_Reserved18 = 375,
+		SteamDeck_Reserved19 = 376,
+		SteamDeck_Reserved20 = 377,
+		Count = 378,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -2127,6 +2285,7 @@ namespace Steamworks
 		SymmetricConnect = 37,
 		LocalVirtualPort = 38,
 		DualWifi_Enable = 39,
+		EnableDiagnosticsUI = 46,
 		FakePacketLoss_Send = 2,
 		FakePacketLoss_Recv = 3,
 		FakePacketLag_Send = 4,
