@@ -99,11 +99,11 @@ namespace Steamworks.Data
 		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
 		/// you're not creating a new one every frame (like using .ToArray())
 		/// </summary>
-		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable )
+		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
 		{
 			fixed ( byte* ptr = data )
 			{
-				return SendMessage( (IntPtr)ptr, data.Length, sendType );
+				return SendMessage( (IntPtr)ptr, data.Length, sendType, laneIndex );
 			}
 		}
 
@@ -111,21 +111,21 @@ namespace Steamworks.Data
 		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
 		/// you're not creating a new one every frame (like using .ToArray())
 		/// </summary>
-		public unsafe Result SendMessage( byte[] data, int offset, int length, SendType sendType = SendType.Reliable )
+		public unsafe Result SendMessage( byte[] data, int offset, int length, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
 		{
 			fixed ( byte* ptr = data )
 			{
-				return SendMessage( (IntPtr)ptr + offset, length, sendType );
+				return SendMessage( (IntPtr)ptr + offset, length, sendType, laneIndex );
 			}
 		}
 
 		/// <summary>
 		/// This creates a ton of garbage - so don't do anything with this beyond testing!
 		/// </summary>
-		public unsafe Result SendMessage( string str, SendType sendType = SendType.Reliable )
+		public unsafe Result SendMessage( string str, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
 		{
 			var bytes = System.Text.Encoding.UTF8.GetBytes( str );
-			return SendMessage( bytes, sendType );
+			return SendMessage( bytes, sendType, laneIndex );
 		}
 
 		/// <summary>
