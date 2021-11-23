@@ -57,6 +57,39 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_GetFakeIP", CallingConvention = Platform.CC)]
+		private static extern void _GetFakeIP( IntPtr self, int idxFirstPort, ref SteamNetworkingFakeIPResult_t pInfo );
+		
+		#endregion
+		internal void GetFakeIP( int idxFirstPort, ref SteamNetworkingFakeIPResult_t pInfo )
+		{
+			_GetFakeIP( Self, idxFirstPort, ref pInfo );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BeginAsyncRequestFakeIP( IntPtr self, int nNumPorts );
+		
+		#endregion
+		internal bool BeginAsyncRequestFakeIP( int nNumPorts )
+		{
+			var returnValue = _BeginAsyncRequestFakeIP( Self, nNumPorts );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP", CallingConvention = Platform.CC)]
+		private static extern Socket _CreateListenSocketP2PFakeIP( IntPtr self, int idxFakePort, int nOptions, [In,Out] NetKeyValue[]  pOptions );
+		
+		#endregion
+		internal Socket CreateListenSocketP2PFakeIP( int idxFakePort, int nOptions, [In,Out] NetKeyValue[]  pOptions )
+		{
+			var returnValue = _CreateListenSocketP2PFakeIP( Self, idxFakePort, nOptions, pOptions );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_ConnectP2P", CallingConvention = Platform.CC)]
 		private static extern Connection _ConnectP2P( IntPtr self, ref NetIdentity identityRemote, int nRemoteVirtualPort, int nOptions, [In,Out] NetKeyValue[]  pOptions );
 		
