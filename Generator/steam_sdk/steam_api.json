@@ -11771,6 +11771,33 @@
           "returntype": "HSteamListenSocket"
         },
         {
+          "methodname": "GetFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_GetFakeIP",
+          "params": [
+            { "paramname":"idxFirstPort", "paramtype":"int" },
+            { "paramname":"pInfo", "paramtype":"SteamNetworkingFakeIPResult_t *" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "BeginAsyncRequestFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP",
+          "params": [
+            { "paramname":"nNumPorts", "paramtype":"int" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "CreateListenSocketP2PFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP",
+          "params": [
+            { "paramname":"idxFakePort", "paramtype":"int" },
+            { "paramname":"nOptions", "paramtype":"int" },
+            { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
+          ],
+          "returntype": "HSteamListenSocket"
+        },
+        {
           "methodname": "ConnectP2P",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_ConnectP2P",
           "params": [
