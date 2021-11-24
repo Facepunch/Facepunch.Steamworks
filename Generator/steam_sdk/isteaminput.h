@@ -555,6 +555,7 @@ enum ESteamInputType
 	k_ESteamInputType_MobileTouch,			// Steam Link App On-screen Virtual Controller
 	k_ESteamInputType_PS3Controller,		// Currently uses PS4 Origins
 	k_ESteamInputType_PS5Controller,		// Added in SDK 151
+	k_ESteamInputType_SteamDeckController,	// Added in SDK 153
 	k_ESteamInputType_Count,
 	k_ESteamInputType_MaximumPossibleValue = 255,
 };
@@ -581,23 +582,24 @@ enum ESteamInputLEDFlag
 // These values are passed into GetGlyphPNGForActionOrigin
 enum ESteamInputGlyphSize
 {
-	k_ESteamInputGlyphSize_Small,
-	k_ESteamInputGlyphSize_Medium,
-	k_ESteamInputGlyphSize_Large,
+	k_ESteamInputGlyphSize_Small,	// 32x32 pixels
+	k_ESteamInputGlyphSize_Medium,	// 128x128 pixels
+	k_ESteamInputGlyphSize_Large,	// 256x256 pixels
 	k_ESteamInputGlyphSize_Count,
 };
 
 enum ESteamInputGlyphStyle
 {
 	// Base-styles - cannot mix
-	ESteamInputGlyphStyle_Standard 	= 0x0,
+	ESteamInputGlyphStyle_Knockout 	= 0x0, // Face buttons will have colored labels/outlines on a knocked out background
+										   // Rest of inputs will have white detail/borders on a knocked out background
 	ESteamInputGlyphStyle_Light		= 0x1, // Black detail/borders on a white background
 	ESteamInputGlyphStyle_Dark 		= 0x2, // White detail/borders on a black background
 
 	// Modifiers
 	// Default ABXY/PS equivalent glyphs have a solid fill w/ color matching the physical buttons on the device
 	ESteamInputGlyphStyle_NeutralColorABXY 	= 0x10, // ABXY Buttons will match the base style color instead of their normal associated color
-	ESteamInputGlyphStyle_OutlineOnlyABXY 	= 0x20, // ABXY Buttons will have colored outline and label text without fill
+	ESteamInputGlyphStyle_SolidABXY 		= 0x20,	// ABXY Buttons will have a solid fill
 };
 
 enum ESteamInputActionEventType
@@ -895,7 +897,7 @@ public:
 	virtual uint16 GetSessionInputConfigurationSettings() = 0;
 };
 
-#define STEAMINPUT_INTERFACE_VERSION "SteamInput005"
+#define STEAMINPUT_INTERFACE_VERSION "SteamInput006"
 
 // Global interface accessor
 inline ISteamInput *SteamInput();

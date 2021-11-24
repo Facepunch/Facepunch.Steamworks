@@ -174,10 +174,6 @@ struct HTTPRequestCompleted_t
 	// It will be false if we failed due to an internal error or client side network failure.
 	bool m_bRequestSuccessful;
 
-	bool m_TMP_bSuccessfulA;
-	bool m_TMP_bSuccessfulB;
-
-
 	// Will be the HTTP status code value returned by the server, k_EHTTPStatusCode200OK is the normal
 	// OK response, if you get something else you probably need to treat it as a failure.
 	EHTTPStatusCode m_eStatusCode;

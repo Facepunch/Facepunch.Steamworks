@@ -1129,8 +1129,6 @@
         { "fieldname":"m_hRequest", "fieldtype":"HTTPRequestHandle" },
         { "fieldname":"m_ulContextValue", "fieldtype":"uint64" },
         { "fieldname":"m_bRequestSuccessful", "fieldtype":"bool" },
-        { "fieldname":"m_TMP_bSuccessfulA", "fieldtype":"bool" },
-        { "fieldname":"m_TMP_bSuccessfulB", "fieldtype":"bool" },
         { "fieldname":"m_eStatusCode", "fieldtype":"EHTTPStatusCode" },
         { "fieldname":"m_unBodySize", "fieldtype":"uint32" }
       ],
@@ -3340,7 +3338,8 @@
         { "name":"k_ESteamInputType_MobileTouch", "value":"11" },
         { "name":"k_ESteamInputType_PS3Controller", "value":"12" },
         { "name":"k_ESteamInputType_PS5Controller", "value":"13" },
-        { "name":"k_ESteamInputType_Count", "value":"14" },
+        { "name":"k_ESteamInputType_SteamDeckController", "value":"14" },
+        { "name":"k_ESteamInputType_Count", "value":"15" },
         { "name":"k_ESteamInputType_MaximumPossibleValue", "value":"255" }
       ]
     },
@@ -3373,11 +3372,11 @@
     {
       "enumname": "ESteamInputGlyphStyle",
       "values": [
-        { "name":"ESteamInputGlyphStyle_Standard", "value":"0" },
+        { "name":"ESteamInputGlyphStyle_Knockout", "value":"0" },
         { "name":"ESteamInputGlyphStyle_Light", "value":"1" },
         { "name":"ESteamInputGlyphStyle_Dark", "value":"2" },
         { "name":"ESteamInputGlyphStyle_NeutralColorABXY", "value":"16" },
-        { "name":"ESteamInputGlyphStyle_OutlineOnlyABXY", "value":"32" }
+        { "name":"ESteamInputGlyphStyle_SolidABXY", "value":"32" }
       ]
     },
     {
@@ -3970,6 +3969,16 @@
       ]
     },
     {
+      "enumname": "ESteamNetworkingFakeIPType",
+      "values": [
+        { "name":"k_ESteamNetworkingFakeIPType_Invalid", "value":"0" },
+        { "name":"k_ESteamNetworkingFakeIPType_NotFake", "value":"1" },
+        { "name":"k_ESteamNetworkingFakeIPType_GlobalIPv4", "value":"2" },
+        { "name":"k_ESteamNetworkingFakeIPType_LocalIPv4", "value":"3" },
+        { "name":"k_ESteamNetworkingFakeIPType__Force32Bit", "value":"2147483647" }
+      ]
+    },
+    {
       "enumname": "ESteamNetworkingConnectionState",
       "values": [
         { "name":"k_ESteamNetworkingConnectionState_None", "value":"0" },
@@ -4083,6 +4092,7 @@
         { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionRequest", "value":"204" },
         { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionFailed", "value":"205" },
         { "name":"k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling", "value":"206" },
+        { "name":"k_ESteamNetworkingConfig_Callback_FakeIPResult", "value":"207" },
         { "name":"k_ESteamNetworkingConfig_P2P_STUN_ServerList", "value":"103" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Enable", "value":"104" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Penalty", "value":"105" },
@@ -8838,7 +8848,7 @@
         {
           "kind": "user",
           "name": "SteamInput",
-          "name_flat": "SteamAPI_SteamInput_v005"
+          "name_flat": "SteamAPI_SteamInput_v006"
         }
       ],
       "classname": "ISteamInput",
@@ -9278,7 +9288,7 @@
           "returntype": "uint16"
         }
       ],
-      "version_string": "SteamInput005"
+      "version_string": "SteamInput006"
     },
     {
       "accessors": [
@@ -11771,33 +11781,6 @@
           "returntype": "HSteamListenSocket"
         },
         {
-          "methodname": "GetFakeIP",
-          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_GetFakeIP",
-          "params": [
-            { "paramname":"idxFirstPort", "paramtype":"int" },
-            { "paramname":"pInfo", "paramtype":"SteamNetworkingFakeIPResult_t *" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "BeginAsyncRequestFakeIP",
-          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP",
-          "params": [
-            { "paramname":"nNumPorts", "paramtype":"int" }
-          ],
-          "returntype": "bool"
-        },
-        {
-          "methodname": "CreateListenSocketP2PFakeIP",
-          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP",
-          "params": [
-            { "paramname":"idxFakePort", "paramtype":"int" },
-            { "paramname":"nOptions", "paramtype":"int" },
-            { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
-          ],
-          "returntype": "HSteamListenSocket"
-        },
-        {
           "methodname": "ConnectP2P",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_ConnectP2P",
           "params": [
@@ -12156,6 +12139,42 @@
           "returntype": "void"
         },
         {
+          "methodname": "BeginAsyncRequestFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP",
+          "params": [
+            { "paramname":"nNumPorts", "paramtype":"int" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_GetFakeIP",
+          "params": [
+            { "paramname":"idxFirstPort", "paramtype":"int" },
+            { "paramname":"pInfo", "paramtype":"SteamNetworkingFakeIPResult_t *" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "CreateListenSocketP2PFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP",
+          "params": [
+            { "paramname":"idxFakePort", "paramtype":"int" },
+            { "paramname":"nOptions", "paramtype":"int" },
+            { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
+          ],
+          "returntype": "HSteamListenSocket"
+        },
+        {
+          "methodname": "GetRemoteFakeIPForConnection",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_GetRemoteFakeIPForConnection",
+          "params": [
+            { "paramname":"hConn", "paramtype":"HSteamNetConnection" },
+            { "paramname":"pOutAddr", "paramtype":"SteamNetworkingIPAddr *" }
+          ],
+          "returntype": "EResult"
+        },
+        {
           "methodname": "CreateFakeUDPPort",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateFakeUDPPort",
           "params": [
@@ -12299,6 +12318,31 @@
           "returntype": "void"
         },
         {
+          "methodname": "IsFakeIPv4",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_IsFakeIPv4",
+          "params": [
+            { "paramname":"nIPv4", "paramtype":"uint32" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetIPv4FakeIPType",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_GetIPv4FakeIPType",
+          "params": [
+            { "paramname":"nIPv4", "paramtype":"uint32" }
+          ],
+          "returntype": "ESteamNetworkingFakeIPType"
+        },
+        {
+          "methodname": "GetRealIdentityForFakeIP",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_GetRealIdentityForFakeIP",
+          "params": [
+            { "paramname":"fakeIP", "paramtype":"const SteamNetworkingIPAddr &" },
+            { "paramname":"pOutRealIdentity", "paramtype":"SteamNetworkingIdentity *" }
+          ],
+          "returntype": "EResult"
+        },
+        {
           "methodname": "SetGlobalConfigValueInt32",
           "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueInt32",
           "params": [
@@ -12385,6 +12429,14 @@
           "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamRelayNetworkStatusChanged",
           "params": [
             { "paramname":"fnCallback", "paramtype":"FnSteamRelayNetworkStatusChanged" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_FakeIPResult",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_FakeIPResult",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamNetworkingFakeIPResult" }
           ],
           "returntype": "bool"
         },
@@ -12477,6 +12529,14 @@
             { "paramname":"pszStr", "paramtype":"const char *" }
           ],
           "returntype": "bool"
+        },
+        {
+          "methodname": "SteamNetworkingIPAddr_GetFakeIPType",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_GetFakeIPType",
+          "params": [
+            { "paramname":"addr", "paramtype":"const SteamNetworkingIPAddr &" }
+          ],
+          "returntype": "ESteamNetworkingFakeIPType"
         },
         {
           "methodname": "SteamNetworkingIdentity_ToString",
@@ -13399,6 +13459,18 @@
             { "paramname":"x", "paramtype":"const SteamNetworkingIPAddr &" }
           ],
           "returntype": "bool"
+        },
+        {
+          "methodname": "GetFakeIPType",
+          "methodname_flat": "SteamAPI_SteamNetworkingIPAddr_GetFakeIPType",
+          "params": [],
+          "returntype": "ESteamNetworkingFakeIPType"
+        },
+        {
+          "methodname": "IsFakeIP",
+          "methodname_flat": "SteamAPI_SteamNetworkingIPAddr_IsFakeIP",
+          "params": [],
+          "returntype": "bool"
         }
       ],
       "struct": "SteamNetworkingIPAddr"
@@ -13527,6 +13599,18 @@
           "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetIPv4",
           "params": [],
           "returntype": "uint32"
+        },
+        {
+          "methodname": "GetFakeIPType",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetFakeIPType",
+          "params": [],
+          "returntype": "ESteamNetworkingFakeIPType"
+        },
+        {
+          "methodname": "IsFakeIP",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_IsFakeIP",
+          "params": [],
+          "returntype": "bool"
         },
         {
           "methodname": "SetLocalHost",
@@ -13837,6 +13921,7 @@
     { "typedef":"FnSteamRelayNetworkStatusChanged", "type":"void (*)(SteamRelayNetworkStatus_t *)" },
     { "typedef":"FnSteamNetworkingMessagesSessionRequest", "type":"void (*)(SteamNetworkingMessagesSessionRequest_t *)" },
     { "typedef":"FnSteamNetworkingMessagesSessionFailed", "type":"void (*)(SteamNetworkingMessagesSessionFailed_t *)" },
+    { "typedef":"FnSteamNetworkingFakeIPResult", "type":"void (*)(SteamNetworkingFakeIPResult_t *)" },
     { "typedef":"HSteamNetConnection", "type":"unsigned int" },
     { "typedef":"HSteamListenSocket", "type":"unsigned int" },
     { "typedef":"HSteamNetPollGroup", "type":"unsigned int" },

@@ -269,6 +269,7 @@ enum { k_iSteam2AsyncCallbacks = 1900 };
 enum { k_iSteamGameStatsCallbacks = 2000 };
 enum { k_iSteamHTTPCallbacks = 2100 };
 enum { k_iSteamScreenshotsCallbacks = 2300 };
+// NOTE: 2500-2599 are reserved
 enum { k_iSteamStreamLauncherCallbacks = 2600 };
 enum { k_iSteamControllerCallbacks = 2800 };
 enum { k_iSteamUGCCallbacks = 3400 };

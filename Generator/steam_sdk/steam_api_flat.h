@@ -652,9 +652,9 @@ S_API bool SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut( ISteamHTTP* self, HTTP
 // ISteamInput
 
 // A versioned accessor is exported by the library
-S_API ISteamInput *SteamAPI_SteamInput_v005();
+S_API ISteamInput *SteamAPI_SteamInput_v006();
 // Inline, unversioned accessor to get the current version.  Essentially the same as SteamInput(), but using this ensures that you are using a matching library.
-inline ISteamInput *SteamAPI_SteamInput() { return SteamAPI_SteamInput_v005(); }
+inline ISteamInput *SteamAPI_SteamInput() { return SteamAPI_SteamInput_v006(); }
 S_API bool SteamAPI_ISteamInput_Init( ISteamInput* self, bool bExplicitlyCallRunFrame );
 S_API bool SteamAPI_ISteamInput_Shutdown( ISteamInput* self );
 S_API bool SteamAPI_ISteamInput_SetInputActionManifestFilePath( ISteamInput* self, const char * pchInputActionManifestAbsolutePath );
