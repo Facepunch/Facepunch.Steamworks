@@ -46,6 +46,11 @@ namespace Steamworks
 
 			Steamworks.SteamServer.Init( 252490, serverInit );
 
+			//
+			// Needs to happen before LogOnAnonymous
+			//
+			SteamNetworkingSockets.RequestFakeIP();
+
 			SteamServer.LogOnAnonymous();
 
 		}

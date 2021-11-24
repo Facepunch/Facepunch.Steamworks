@@ -57,8 +57,6 @@ namespace Steamworks
 			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
 			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
 
-			SteamNetworkingSockets.RequestFakeIP();
-
 			var si = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
 
 			Console.WriteLine( $"Created Socket: {si}" );
@@ -130,9 +128,6 @@ namespace Steamworks
 			// For some reason giving steam a couple of seconds here 
 			// seems to prevent it returning null connections from ConnectNormal
 			await Task.Delay( 2000 );
-
-			Console.WriteLine( $"----- Requesting Fake IP.." );
-			SteamNetworkingSockets.RequestFakeIP();
 
 			Console.WriteLine( $"----- Creating Socket Relay Socket.." );
 			var socket = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
