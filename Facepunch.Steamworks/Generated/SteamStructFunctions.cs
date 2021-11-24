@@ -159,6 +159,13 @@ namespace Steamworks.Data
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetIPv4", CallingConvention = Platform.CC)]
 		internal static extern uint InternalGetIPv4( ref NetIdentity self );
 		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetFakeIPType", CallingConvention = Platform.CC)]
+		internal static extern SteamNetworkingFakeIPType InternalGetFakeIPType( ref NetIdentity self );
+		
+		[return: MarshalAs( UnmanagedType.I1 )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_IsFakeIP", CallingConvention = Platform.CC)]
+		internal static extern bool InternalIsFakeIP( ref NetIdentity self );
+		
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_SetLocalHost", CallingConvention = Platform.CC)]
 		internal static extern void InternalSetLocalHost( ref NetIdentity self );
 		
@@ -232,6 +239,13 @@ namespace Steamworks.Data
 		[return: MarshalAs( UnmanagedType.I1 )]
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIPAddr_IsEqualTo", CallingConvention = Platform.CC)]
 		internal static extern bool InternalIsEqualTo( ref NetAddress self, ref NetAddress x );
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIPAddr_GetFakeIPType", CallingConvention = Platform.CC)]
+		internal static extern SteamNetworkingFakeIPType InternalGetFakeIPType( ref NetAddress self );
+		
+		[return: MarshalAs( UnmanagedType.I1 )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIPAddr_IsFakeIP", CallingConvention = Platform.CC)]
+		internal static extern bool InternalIsFakeIP( ref NetAddress self );
 		
 	}
 	

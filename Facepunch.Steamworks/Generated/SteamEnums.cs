@@ -1518,7 +1518,8 @@ namespace Steamworks
 		MobileTouch = 11,
 		PS3Controller = 12,
 		PS5Controller = 13,
-		Count = 14,
+		SteamDeckController = 14,
+		Count = 15,
 		MaximumPossibleValue = 255,
 	}
 	
@@ -1559,11 +1560,11 @@ namespace Steamworks
 	//
 	internal enum SteamInputGlyphStyle : int
 	{
-		Standard = 0,
+		Knockout = 0,
 		Light = 1,
 		Dark = 2,
 		NeutralColorABXY = 16,
-		OutlineOnlyABXY = 32,
+		SolidABXY = 32,
 	}
 	
 	//
@@ -2188,6 +2189,17 @@ namespace Steamworks
 	}
 	
 	//
+	// ESteamNetworkingFakeIPType
+	//
+	internal enum SteamNetworkingFakeIPType : int
+	{
+		Invalid = 0,
+		NotFake = 1,
+		GlobalIPv4 = 2,
+		LocalIPv4 = 3,
+	}
+	
+	//
 	// ESteamNetworkingConnectionState
 	//
 	public enum ConnectionState : int
@@ -2307,6 +2319,7 @@ namespace Steamworks
 		Callback_MessagesSessionRequest = 204,
 		Callback_MessagesSessionFailed = 205,
 		Callback_CreateConnectionSignaling = 206,
+		Callback_FakeIPResult = 207,
 		P2P_STUN_ServerList = 103,
 		P2P_Transport_ICE_Enable = 104,
 		P2P_Transport_ICE_Penalty = 105,

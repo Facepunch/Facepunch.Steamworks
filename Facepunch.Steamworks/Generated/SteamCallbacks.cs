@@ -1849,10 +1849,6 @@ namespace Steamworks.Data
 		internal ulong ContextValue; // m_ulContextValue uint64
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool RequestSuccessful; // m_bRequestSuccessful bool
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool TMP_bSuccessfulA; // m_TMP_bSuccessfulA bool
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool TMP_bSuccessfulB; // m_TMP_bSuccessfulB bool
 		internal HTTPStatusCode StatusCode; // m_eStatusCode EHTTPStatusCode
 		internal uint BodySize; // m_unBodySize uint32
 		
