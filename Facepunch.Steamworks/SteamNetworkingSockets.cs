@@ -272,7 +272,12 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Return info about the FakeIP and port that we have been assigned, if any.
+		/// Begin asynchronous process of allocating a fake IPv4 address that other
+		/// peers can use to contact us via P2P. IP addresses returned by this
+		/// function are globally unique for a given appid.
+		///
+		/// For gameservers, you *must* call this after initializing the SDK but before
+		/// beginning login.  Steam needs to know in advance that FakeIP will be used.
 		/// </summary>
 		public static bool RequestFakeIP( int numFakePorts = 1 )
 		{
@@ -280,9 +285,8 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Begin asynchronous process of allocating a fake IPv4 address that other
-		/// peers can use to contact us via P2P. IP addresses returned by this
-		/// function are globally unique for a given appid.
+		/// Return info about the FakeIP and port that we have been assigned, if any.
+		/// 
 		/// </summary>
 		public static Result GetFakeIP( int fakePortIndex, out NetAddress address )
 		{
