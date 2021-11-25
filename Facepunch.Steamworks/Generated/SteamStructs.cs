@@ -110,8 +110,7 @@ namespace Steamworks.Data
 	{
 		internal ulong ControllerHandle; // controllerHandle InputHandle_t
 		internal SteamInputActionEventType EEventType; // eEventType ESteamInputActionEventType
-		internal ulong AnalogAction_actionHandle; // analogAction_actionHandle InputAnalogActionHandle_t
-		internal AnalogState AnalogAction_analogActionData; // analogAction_analogActionData InputAnalogActionData_t
+		// internal SteamInputActionEvent_t.AnalogAction_t AnalogAction; // analogAction SteamInputActionEvent_t::AnalogAction_t
 		
 	}
 	
@@ -167,33 +166,6 @@ namespace Steamworks.Data
 		internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
 		internal ushort Quantity; // m_unQuantity uint16
 		internal ushort Flags; // m_unFlags uint16
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal partial struct SteamNetworkingPOPIDRender
-	{
-		internal string BufUTF8() => System.Text.Encoding.UTF8.GetString( Buf, 0, System.Array.IndexOf<byte>( Buf, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)] // byte[] buf
-		internal byte[] Buf; // buf char [8]
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal partial struct NetIdentityRender
-	{
-		internal string BufUTF8() => System.Text.Encoding.UTF8.GetString( Buf, 0, System.Array.IndexOf<byte>( Buf, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] buf
-		internal byte[] Buf; // buf char [128]
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal partial struct NetAddressRender
-	{
-		internal string BufUTF8() => System.Text.Encoding.UTF8.GetString( Buf, 0, System.Array.IndexOf<byte>( Buf, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 48)] // byte[] buf
-		internal byte[] Buf; // buf char [48]
 		
 	}
 	

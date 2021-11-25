@@ -52,6 +52,22 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task CreateRelayServerFakeIP()
+		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
+			var si = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
+
+			Console.WriteLine( $"Created Socket: {si}" );
+
+			// Give it a second for something to happen
+			await Task.Delay( 1000 );
+
+			si.Close();
+		}
+
+		[TestMethod]
 		public async Task RelayEndtoEnd()
 		{
 			SteamNetworkingUtils.InitRelayNetworkAccess();
@@ -97,6 +113,33 @@ namespace Steamworks
 			//
 			Console.WriteLine( "ConnectNormal" );
 			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( "127.0.0.1", 12445 ) );
+			var client = connection.RunAsync();
+
+			await Task.WhenAll( server, client );
+		}
+
+		[TestMethod]
+		public async Task RelayEndtoEndFakeIP()
+		{
+			SteamNetworkingUtils.InitRelayNetworkAccess();
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Warning;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
+			// For some reason giving steam a couple of seconds here 
+			// seems to prevent it returning null connections from ConnectNormal
+			await Task.Delay( 2000 );
+
+			Console.WriteLine( $"----- Creating Socket Relay Socket.." );
+			var socket = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
+			var server = socket.RunAsync();
+
+			await Task.Delay( 1000 );
+
+			Console.WriteLine( $"----- Retrieving Fake IP.." );
+			SteamNetworkingSockets.GetFakeIP( 0, out NetAddress address );
+
+			Console.WriteLine( $"----- Connecting To Socket via Fake IP ({address})" );
+			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( address );
 			var client = connection.RunAsync();
 
 			await Task.WhenAll( server, client );

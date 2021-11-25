@@ -64,6 +64,7 @@ namespace Steamworks.Data
 		internal static readonly int k_cchMaxSteamNetworkingErrMsg = 1024;
 		internal static readonly int k_cchSteamNetworkingMaxConnectionCloseReason = 128;
 		internal static readonly int k_cchSteamNetworkingMaxConnectionDescription = 128;
+		internal static readonly int k_cchSteamNetworkingMaxConnectionAppName = 32;
 		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Unauthenticated = 1;
 		internal static readonly int k_nSteamNetworkConnectionInfoFlags_Unencrypted = 2;
 		internal static readonly int k_nSteamNetworkConnectionInfoFlags_LoopbackBuffers = 4;
@@ -95,5 +96,7 @@ namespace Steamworks.Data
 		internal static readonly uint k_cbSteamDatagramMaxSerializedTicket = 512;
 		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData = 2048;
 		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginSerialized = 4096;
+		internal static readonly int k_cbSteamNetworkingSocketsFakeUDPPortRecommendedMTU = 1200;
+		internal static readonly int k_cbSteamNetworkingSocketsFakeUDPPortMaxMessageSize = 4096;
 	}
 }

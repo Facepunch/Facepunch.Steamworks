@@ -56,7 +56,11 @@ S_API ISteamParties * SteamAPI_ISteamClient_GetISteamParties( ISteamClient* self
 S_API ISteamRemotePlay * SteamAPI_ISteamClient_GetISteamRemotePlay( ISteamClient* self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char * pchVersion );
 
 // ISteamUser
+
+// A versioned accessor is exported by the library
 S_API ISteamUser *SteamAPI_SteamUser_v021();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamUser(), but using this ensures that you are using a matching library.
+inline ISteamUser *SteamAPI_SteamUser() { return SteamAPI_SteamUser_v021(); }
 S_API HSteamUser SteamAPI_ISteamUser_GetHSteamUser( ISteamUser* self );
 S_API bool SteamAPI_ISteamUser_BLoggedOn( ISteamUser* self );
 S_API uint64_steamid SteamAPI_ISteamUser_GetSteamID( ISteamUser* self );
@@ -91,7 +95,11 @@ S_API SteamAPICall_t SteamAPI_ISteamUser_GetDurationControl( ISteamUser* self );
 S_API bool SteamAPI_ISteamUser_BSetDurationControlOnlineState( ISteamUser* self, EDurationControlOnlineState eNewState );
 
 // ISteamFriends
+
+// A versioned accessor is exported by the library
 S_API ISteamFriends *SteamAPI_SteamFriends_v017();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamFriends(), but using this ensures that you are using a matching library.
+inline ISteamFriends *SteamAPI_SteamFriends() { return SteamAPI_SteamFriends_v017(); }
 S_API const char * SteamAPI_ISteamFriends_GetPersonaName( ISteamFriends* self );
 S_API SteamAPICall_t SteamAPI_ISteamFriends_SetPersonaName( ISteamFriends* self, const char * pchPersonaName );
 S_API EPersonaState SteamAPI_ISteamFriends_GetPersonaState( ISteamFriends* self );
@@ -170,8 +178,16 @@ S_API bool SteamAPI_ISteamFriends_RegisterProtocolInOverlayBrowser( ISteamFriend
 S_API void SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialogConnectString( ISteamFriends* self, const char * pchConnectString );
 
 // ISteamUtils
+
+// A versioned accessor is exported by the library
 S_API ISteamUtils *SteamAPI_SteamUtils_v010();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamUtils(), but using this ensures that you are using a matching library.
+inline ISteamUtils *SteamAPI_SteamUtils() { return SteamAPI_SteamUtils_v010(); }
+
+// A versioned accessor is exported by the library
 S_API ISteamUtils *SteamAPI_SteamGameServerUtils_v010();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerUtils(), but using this ensures that you are using a matching library.
+inline ISteamUtils *SteamAPI_SteamGameServerUtils() { return SteamAPI_SteamGameServerUtils_v010(); }
 S_API uint32 SteamAPI_ISteamUtils_GetSecondsSinceAppActive( ISteamUtils* self );
 S_API uint32 SteamAPI_ISteamUtils_GetSecondsSinceComputerActive( ISteamUtils* self );
 S_API EUniverse SteamAPI_ISteamUtils_GetConnectedUniverse( ISteamUtils* self );
@@ -205,11 +221,16 @@ S_API bool SteamAPI_ISteamUtils_InitFilterText( ISteamUtils* self, uint32 unFilt
 S_API int SteamAPI_ISteamUtils_FilterText( ISteamUtils* self, ETextFilteringContext eContext, uint64_steamid sourceSteamID, const char * pchInputMessage, char * pchOutFilteredText, uint32 nByteSizeOutFilteredText );
 S_API ESteamIPv6ConnectivityState SteamAPI_ISteamUtils_GetIPv6ConnectivityState( ISteamUtils* self, ESteamIPv6ConnectivityProtocol eProtocol );
 S_API bool SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck( ISteamUtils* self );
-S_API bool SteamAPI_ISteamUtils_ShowModalGamepadTextInput( ISteamUtils* self, EGamepadTextInputLineMode eLineInputMode );
+S_API bool SteamAPI_ISteamUtils_ShowFloatingGamepadTextInput( ISteamUtils* self, EFloatingGamepadTextInputMode eKeyboardMode, int nTextFieldXPosition, int nTextFieldYPosition, int nTextFieldWidth, int nTextFieldHeight );
 S_API void SteamAPI_ISteamUtils_SetGameLauncherMode( ISteamUtils* self, bool bLauncherMode );
+S_API bool SteamAPI_ISteamUtils_DismissFloatingGamepadTextInput( ISteamUtils* self );
 
 // ISteamMatchmaking
+
+// A versioned accessor is exported by the library
 S_API ISteamMatchmaking *SteamAPI_SteamMatchmaking_v009();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamMatchmaking(), but using this ensures that you are using a matching library.
+inline ISteamMatchmaking *SteamAPI_SteamMatchmaking() { return SteamAPI_SteamMatchmaking_v009(); }
 S_API int SteamAPI_ISteamMatchmaking_GetFavoriteGameCount( ISteamMatchmaking* self );
 S_API bool SteamAPI_ISteamMatchmaking_GetFavoriteGame( ISteamMatchmaking* self, int iGame, AppId_t * pnAppID, uint32 * pnIP, uint16 * pnConnPort, uint16 * pnQueryPort, uint32 * punFlags, uint32 * pRTime32LastPlayedOnServer );
 S_API int SteamAPI_ISteamMatchmaking_AddFavoriteGame( ISteamMatchmaking* self, AppId_t nAppID, uint32 nIP, uint16 nConnPort, uint16 nQueryPort, uint32 unFlags, uint32 rTime32LastPlayedOnServer );
@@ -269,7 +290,11 @@ S_API void SteamAPI_ISteamMatchmakingRulesResponse_RulesFailedToRespond( ISteamM
 S_API void SteamAPI_ISteamMatchmakingRulesResponse_RulesRefreshComplete( ISteamMatchmakingRulesResponse* self );
 
 // ISteamMatchmakingServers
+
+// A versioned accessor is exported by the library
 S_API ISteamMatchmakingServers *SteamAPI_SteamMatchmakingServers_v002();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamMatchmakingServers(), but using this ensures that you are using a matching library.
+inline ISteamMatchmakingServers *SteamAPI_SteamMatchmakingServers() { return SteamAPI_SteamMatchmakingServers_v002(); }
 S_API HServerListRequest SteamAPI_ISteamMatchmakingServers_RequestInternetServerList( ISteamMatchmakingServers* self, AppId_t iApp, MatchMakingKeyValuePair_t ** ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse * pRequestServersResponse );
 S_API HServerListRequest SteamAPI_ISteamMatchmakingServers_RequestLANServerList( ISteamMatchmakingServers* self, AppId_t iApp, ISteamMatchmakingServerListResponse * pRequestServersResponse );
 S_API HServerListRequest SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList( ISteamMatchmakingServers* self, AppId_t iApp, MatchMakingKeyValuePair_t ** ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse * pRequestServersResponse );
@@ -289,7 +314,11 @@ S_API HServerQuery SteamAPI_ISteamMatchmakingServers_ServerRules( ISteamMatchmak
 S_API void SteamAPI_ISteamMatchmakingServers_CancelServerQuery( ISteamMatchmakingServers* self, HServerQuery hServerQuery );
 
 // ISteamGameSearch
+
+// A versioned accessor is exported by the library
 S_API ISteamGameSearch *SteamAPI_SteamGameSearch_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameSearch(), but using this ensures that you are using a matching library.
+inline ISteamGameSearch *SteamAPI_SteamGameSearch() { return SteamAPI_SteamGameSearch_v001(); }
 S_API EGameSearchErrorCode_t SteamAPI_ISteamGameSearch_AddGameSearchParams( ISteamGameSearch* self, const char * pchKeyToFind, const char * pchValuesToFind );
 S_API EGameSearchErrorCode_t SteamAPI_ISteamGameSearch_SearchForGameWithLobby( ISteamGameSearch* self, uint64_steamid steamIDLobby, int nPlayerMin, int nPlayerMax );
 S_API EGameSearchErrorCode_t SteamAPI_ISteamGameSearch_SearchForGameSolo( ISteamGameSearch* self, int nPlayerMin, int nPlayerMax );
@@ -306,7 +335,11 @@ S_API EGameSearchErrorCode_t SteamAPI_ISteamGameSearch_SubmitPlayerResult( IStea
 S_API EGameSearchErrorCode_t SteamAPI_ISteamGameSearch_EndGame( ISteamGameSearch* self, uint64 ullUniqueGameID );
 
 // ISteamParties
+
+// A versioned accessor is exported by the library
 S_API ISteamParties *SteamAPI_SteamParties_v002();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamParties(), but using this ensures that you are using a matching library.
+inline ISteamParties *SteamAPI_SteamParties() { return SteamAPI_SteamParties_v002(); }
 S_API uint32 SteamAPI_ISteamParties_GetNumActiveBeacons( ISteamParties* self );
 S_API PartyBeaconID_t SteamAPI_ISteamParties_GetBeaconByIndex( ISteamParties* self, uint32 unIndex );
 S_API bool SteamAPI_ISteamParties_GetBeaconDetails( ISteamParties* self, PartyBeaconID_t ulBeaconID, CSteamID * pSteamIDBeaconOwner, SteamPartyBeaconLocation_t * pLocation, char * pchMetadata, int cchMetadata );
@@ -321,7 +354,11 @@ S_API bool SteamAPI_ISteamParties_DestroyBeacon( ISteamParties* self, PartyBeaco
 S_API bool SteamAPI_ISteamParties_GetBeaconLocationData( ISteamParties* self, SteamPartyBeaconLocation_t BeaconLocation, ESteamPartyBeaconLocationData eData, char * pchDataStringOut, int cchDataStringOut );
 
 // ISteamRemoteStorage
+
+// A versioned accessor is exported by the library
 S_API ISteamRemoteStorage *SteamAPI_SteamRemoteStorage_v016();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamRemoteStorage(), but using this ensures that you are using a matching library.
+inline ISteamRemoteStorage *SteamAPI_SteamRemoteStorage() { return SteamAPI_SteamRemoteStorage_v016(); }
 S_API bool SteamAPI_ISteamRemoteStorage_FileWrite( ISteamRemoteStorage* self, const char * pchFile, const void * pvData, int32 cubData );
 S_API int32 SteamAPI_ISteamRemoteStorage_FileRead( ISteamRemoteStorage* self, const char * pchFile, void * pvData, int32 cubDataToRead );
 S_API SteamAPICall_t SteamAPI_ISteamRemoteStorage_FileWriteAsync( ISteamRemoteStorage* self, const char * pchFile, const void * pvData, uint32 cubData );
@@ -383,7 +420,11 @@ S_API bool SteamAPI_ISteamRemoteStorage_BeginFileWriteBatch( ISteamRemoteStorage
 S_API bool SteamAPI_ISteamRemoteStorage_EndFileWriteBatch( ISteamRemoteStorage* self );
 
 // ISteamUserStats
+
+// A versioned accessor is exported by the library
 S_API ISteamUserStats *SteamAPI_SteamUserStats_v012();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamUserStats(), but using this ensures that you are using a matching library.
+inline ISteamUserStats *SteamAPI_SteamUserStats() { return SteamAPI_SteamUserStats_v012(); }
 S_API bool SteamAPI_ISteamUserStats_RequestCurrentStats( ISteamUserStats* self );
 S_API bool SteamAPI_ISteamUserStats_GetStatInt32( ISteamUserStats* self, const char * pchName, int32 * pData );
 S_API bool SteamAPI_ISteamUserStats_GetStatFloat( ISteamUserStats* self, const char * pchName, float * pData );
@@ -431,7 +472,11 @@ S_API bool SteamAPI_ISteamUserStats_GetAchievementProgressLimitsInt32( ISteamUse
 S_API bool SteamAPI_ISteamUserStats_GetAchievementProgressLimitsFloat( ISteamUserStats* self, const char * pchName, float * pfMinProgress, float * pfMaxProgress );
 
 // ISteamApps
+
+// A versioned accessor is exported by the library
 S_API ISteamApps *SteamAPI_SteamApps_v008();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamApps(), but using this ensures that you are using a matching library.
+inline ISteamApps *SteamAPI_SteamApps() { return SteamAPI_SteamApps_v008(); }
 S_API bool SteamAPI_ISteamApps_BIsSubscribed( ISteamApps* self );
 S_API bool SteamAPI_ISteamApps_BIsLowViolence( ISteamApps* self );
 S_API bool SteamAPI_ISteamApps_BIsCybercafe( ISteamApps* self );
@@ -463,8 +508,16 @@ S_API bool SteamAPI_ISteamApps_BIsSubscribedFromFamilySharing( ISteamApps* self 
 S_API bool SteamAPI_ISteamApps_BIsTimedTrial( ISteamApps* self, uint32 * punSecondsAllowed, uint32 * punSecondsPlayed );
 
 // ISteamNetworking
+
+// A versioned accessor is exported by the library
 S_API ISteamNetworking *SteamAPI_SteamNetworking_v006();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamNetworking(), but using this ensures that you are using a matching library.
+inline ISteamNetworking *SteamAPI_SteamNetworking() { return SteamAPI_SteamNetworking_v006(); }
+
+// A versioned accessor is exported by the library
 S_API ISteamNetworking *SteamAPI_SteamGameServerNetworking_v006();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerNetworking(), but using this ensures that you are using a matching library.
+inline ISteamNetworking *SteamAPI_SteamGameServerNetworking() { return SteamAPI_SteamGameServerNetworking_v006(); }
 S_API bool SteamAPI_ISteamNetworking_SendP2PPacket( ISteamNetworking* self, uint64_steamid steamIDRemote, const void * pubData, uint32 cubData, EP2PSend eP2PSendType, int nChannel );
 S_API bool SteamAPI_ISteamNetworking_IsP2PPacketAvailable( ISteamNetworking* self, uint32 * pcubMsgSize, int nChannel );
 S_API bool SteamAPI_ISteamNetworking_ReadP2PPacket( ISteamNetworking* self, void * pubDest, uint32 cubDest, uint32 * pcubMsgSize, CSteamID * psteamIDRemote, int nChannel );
@@ -489,7 +542,11 @@ S_API ESNetSocketConnectionType SteamAPI_ISteamNetworking_GetSocketConnectionTyp
 S_API int SteamAPI_ISteamNetworking_GetMaxPacketSize( ISteamNetworking* self, SNetSocket_t hSocket );
 
 // ISteamScreenshots
+
+// A versioned accessor is exported by the library
 S_API ISteamScreenshots *SteamAPI_SteamScreenshots_v003();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamScreenshots(), but using this ensures that you are using a matching library.
+inline ISteamScreenshots *SteamAPI_SteamScreenshots() { return SteamAPI_SteamScreenshots_v003(); }
 S_API ScreenshotHandle SteamAPI_ISteamScreenshots_WriteScreenshot( ISteamScreenshots* self, void * pubRGB, uint32 cubRGB, int nWidth, int nHeight );
 S_API ScreenshotHandle SteamAPI_ISteamScreenshots_AddScreenshotToLibrary( ISteamScreenshots* self, const char * pchFilename, const char * pchThumbnailFilename, int nWidth, int nHeight );
 S_API void SteamAPI_ISteamScreenshots_TriggerScreenshot( ISteamScreenshots* self );
@@ -501,7 +558,11 @@ S_API bool SteamAPI_ISteamScreenshots_IsScreenshotsHooked( ISteamScreenshots* se
 S_API ScreenshotHandle SteamAPI_ISteamScreenshots_AddVRScreenshotToLibrary( ISteamScreenshots* self, EVRScreenshotType eType, const char * pchFilename, const char * pchVRFilename );
 
 // ISteamMusic
+
+// A versioned accessor is exported by the library
 S_API ISteamMusic *SteamAPI_SteamMusic_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamMusic(), but using this ensures that you are using a matching library.
+inline ISteamMusic *SteamAPI_SteamMusic() { return SteamAPI_SteamMusic_v001(); }
 S_API bool SteamAPI_ISteamMusic_BIsEnabled( ISteamMusic* self );
 S_API bool SteamAPI_ISteamMusic_BIsPlaying( ISteamMusic* self );
 S_API AudioPlayback_Status SteamAPI_ISteamMusic_GetPlaybackStatus( ISteamMusic* self );
@@ -513,7 +574,11 @@ S_API void SteamAPI_ISteamMusic_SetVolume( ISteamMusic* self, float flVolume );
 S_API float SteamAPI_ISteamMusic_GetVolume( ISteamMusic* self );
 
 // ISteamMusicRemote
+
+// A versioned accessor is exported by the library
 S_API ISteamMusicRemote *SteamAPI_SteamMusicRemote_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamMusicRemote(), but using this ensures that you are using a matching library.
+inline ISteamMusicRemote *SteamAPI_SteamMusicRemote() { return SteamAPI_SteamMusicRemote_v001(); }
 S_API bool SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote( ISteamMusicRemote* self, const char * pchName );
 S_API bool SteamAPI_ISteamMusicRemote_DeregisterSteamMusicRemote( ISteamMusicRemote* self );
 S_API bool SteamAPI_ISteamMusicRemote_BIsCurrentMusicRemote( ISteamMusicRemote* self );
@@ -548,8 +613,16 @@ S_API bool SteamAPI_ISteamMusicRemote_SetCurrentPlaylistEntry( ISteamMusicRemote
 S_API bool SteamAPI_ISteamMusicRemote_PlaylistDidChange( ISteamMusicRemote* self );
 
 // ISteamHTTP
+
+// A versioned accessor is exported by the library
 S_API ISteamHTTP *SteamAPI_SteamHTTP_v003();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamHTTP(), but using this ensures that you are using a matching library.
+inline ISteamHTTP *SteamAPI_SteamHTTP() { return SteamAPI_SteamHTTP_v003(); }
+
+// A versioned accessor is exported by the library
 S_API ISteamHTTP *SteamAPI_SteamGameServerHTTP_v003();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerHTTP(), but using this ensures that you are using a matching library.
+inline ISteamHTTP *SteamAPI_SteamGameServerHTTP() { return SteamAPI_SteamGameServerHTTP_v003(); }
 S_API HTTPRequestHandle SteamAPI_ISteamHTTP_CreateHTTPRequest( ISteamHTTP* self, EHTTPMethod eHTTPRequestMethod, const char * pchAbsoluteURL );
 S_API bool SteamAPI_ISteamHTTP_SetHTTPRequestContextValue( ISteamHTTP* self, HTTPRequestHandle hRequest, uint64 ulContextValue );
 S_API bool SteamAPI_ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( ISteamHTTP* self, HTTPRequestHandle hRequest, uint32 unTimeoutSeconds );
@@ -577,7 +650,11 @@ S_API bool SteamAPI_ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( ISteamHTTP* self
 S_API bool SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut( ISteamHTTP* self, HTTPRequestHandle hRequest, bool * pbWasTimedOut );
 
 // ISteamInput
-S_API ISteamInput *SteamAPI_SteamInput_v005();
+
+// A versioned accessor is exported by the library
+S_API ISteamInput *SteamAPI_SteamInput_v006();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamInput(), but using this ensures that you are using a matching library.
+inline ISteamInput *SteamAPI_SteamInput() { return SteamAPI_SteamInput_v006(); }
 S_API bool SteamAPI_ISteamInput_Init( ISteamInput* self, bool bExplicitlyCallRunFrame );
 S_API bool SteamAPI_ISteamInput_Shutdown( ISteamInput* self );
 S_API bool SteamAPI_ISteamInput_SetInputActionManifestFilePath( ISteamInput* self, const char * pchInputActionManifestAbsolutePath );
@@ -627,7 +704,11 @@ S_API uint32 SteamAPI_ISteamInput_GetRemotePlaySessionID( ISteamInput* self, Inp
 S_API uint16 SteamAPI_ISteamInput_GetSessionInputConfigurationSettings( ISteamInput* self );
 
 // ISteamController
+
+// A versioned accessor is exported by the library
 S_API ISteamController *SteamAPI_SteamController_v008();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamController(), but using this ensures that you are using a matching library.
+inline ISteamController *SteamAPI_SteamController() { return SteamAPI_SteamController_v008(); }
 S_API bool SteamAPI_ISteamController_Init( ISteamController* self );
 S_API bool SteamAPI_ISteamController_Shutdown( ISteamController* self );
 S_API void SteamAPI_ISteamController_RunFrame( ISteamController* self );
@@ -664,8 +745,16 @@ S_API EControllerActionOrigin SteamAPI_ISteamController_TranslateActionOrigin( I
 S_API bool SteamAPI_ISteamController_GetControllerBindingRevision( ISteamController* self, ControllerHandle_t controllerHandle, int * pMajor, int * pMinor );
 
 // ISteamUGC
-S_API ISteamUGC *SteamAPI_SteamUGC_v015();
-S_API ISteamUGC *SteamAPI_SteamGameServerUGC_v015();
+
+// A versioned accessor is exported by the library
+S_API ISteamUGC *SteamAPI_SteamUGC_v016();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamUGC(), but using this ensures that you are using a matching library.
+inline ISteamUGC *SteamAPI_SteamUGC() { return SteamAPI_SteamUGC_v016(); }
+
+// A versioned accessor is exported by the library
+S_API ISteamUGC *SteamAPI_SteamGameServerUGC_v016();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerUGC(), but using this ensures that you are using a matching library.
+inline ISteamUGC *SteamAPI_SteamGameServerUGC() { return SteamAPI_SteamGameServerUGC_v016(); }
 S_API UGCQueryHandle_t SteamAPI_ISteamUGC_CreateQueryUserUGCRequest( ISteamUGC* self, AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage );
 S_API UGCQueryHandle_t SteamAPI_ISteamUGC_CreateQueryAllUGCRequestPage( ISteamUGC* self, EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage );
 S_API UGCQueryHandle_t SteamAPI_ISteamUGC_CreateQueryAllUGCRequestCursor( ISteamUGC* self, EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, const char * pchCursor );
@@ -702,6 +791,8 @@ S_API bool SteamAPI_ISteamUGC_SetCloudFileNameFilter( ISteamUGC* self, UGCQueryH
 S_API bool SteamAPI_ISteamUGC_SetMatchAnyTag( ISteamUGC* self, UGCQueryHandle_t handle, bool bMatchAnyTag );
 S_API bool SteamAPI_ISteamUGC_SetSearchText( ISteamUGC* self, UGCQueryHandle_t handle, const char * pSearchText );
 S_API bool SteamAPI_ISteamUGC_SetRankedByTrendDays( ISteamUGC* self, UGCQueryHandle_t handle, uint32 unDays );
+S_API bool SteamAPI_ISteamUGC_SetTimeCreatedDateRange( ISteamUGC* self, UGCQueryHandle_t handle, RTime32 rtStart, RTime32 rtEnd );
+S_API bool SteamAPI_ISteamUGC_SetTimeUpdatedDateRange( ISteamUGC* self, UGCQueryHandle_t handle, RTime32 rtStart, RTime32 rtEnd );
 S_API bool SteamAPI_ISteamUGC_AddRequiredKeyValueTag( ISteamUGC* self, UGCQueryHandle_t handle, const char * pKey, const char * pValue );
 S_API SteamAPICall_t SteamAPI_ISteamUGC_RequestUGCDetails( ISteamUGC* self, PublishedFileId_t nPublishedFileID, uint32 unMaxAgeSeconds );
 S_API SteamAPICall_t SteamAPI_ISteamUGC_CreateItem( ISteamUGC* self, AppId_t nConsumerAppId, EWorkshopFileType eFileType );
@@ -752,7 +843,11 @@ S_API bool SteamAPI_ISteamUGC_ShowWorkshopEULA( ISteamUGC* self );
 S_API SteamAPICall_t SteamAPI_ISteamUGC_GetWorkshopEULAStatus( ISteamUGC* self );
 
 // ISteamAppList
+
+// A versioned accessor is exported by the library
 S_API ISteamAppList *SteamAPI_SteamAppList_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamAppList(), but using this ensures that you are using a matching library.
+inline ISteamAppList *SteamAPI_SteamAppList() { return SteamAPI_SteamAppList_v001(); }
 S_API uint32 SteamAPI_ISteamAppList_GetNumInstalledApps( ISteamAppList* self );
 S_API uint32 SteamAPI_ISteamAppList_GetInstalledApps( ISteamAppList* self, AppId_t * pvecAppID, uint32 unMaxAppIDs );
 S_API int SteamAPI_ISteamAppList_GetAppName( ISteamAppList* self, AppId_t nAppID, char * pchName, int cchNameMax );
@@ -760,7 +855,11 @@ S_API int SteamAPI_ISteamAppList_GetAppInstallDir( ISteamAppList* self, AppId_t 
 S_API int SteamAPI_ISteamAppList_GetAppBuildId( ISteamAppList* self, AppId_t nAppID );
 
 // ISteamHTMLSurface
+
+// A versioned accessor is exported by the library
 S_API ISteamHTMLSurface *SteamAPI_SteamHTMLSurface_v005();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamHTMLSurface(), but using this ensures that you are using a matching library.
+inline ISteamHTMLSurface *SteamAPI_SteamHTMLSurface() { return SteamAPI_SteamHTMLSurface_v005(); }
 S_API bool SteamAPI_ISteamHTMLSurface_Init( ISteamHTMLSurface* self );
 S_API bool SteamAPI_ISteamHTMLSurface_Shutdown( ISteamHTMLSurface* self );
 S_API SteamAPICall_t SteamAPI_ISteamHTMLSurface_CreateBrowser( ISteamHTMLSurface* self, const char * pchUserAgent, const char * pchUserCSS );
@@ -800,8 +899,16 @@ S_API void SteamAPI_ISteamHTMLSurface_JSDialogResponse( ISteamHTMLSurface* self,
 S_API void SteamAPI_ISteamHTMLSurface_FileLoadDialogResponse( ISteamHTMLSurface* self, HHTMLBrowser unBrowserHandle, const char ** pchSelectedFiles );
 
 // ISteamInventory
+
+// A versioned accessor is exported by the library
 S_API ISteamInventory *SteamAPI_SteamInventory_v003();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamInventory(), but using this ensures that you are using a matching library.
+inline ISteamInventory *SteamAPI_SteamInventory() { return SteamAPI_SteamInventory_v003(); }
+
+// A versioned accessor is exported by the library
 S_API ISteamInventory *SteamAPI_SteamGameServerInventory_v003();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerInventory(), but using this ensures that you are using a matching library.
+inline ISteamInventory *SteamAPI_SteamGameServerInventory() { return SteamAPI_SteamGameServerInventory_v003(); }
 S_API EResult SteamAPI_ISteamInventory_GetResultStatus( ISteamInventory* self, SteamInventoryResult_t resultHandle );
 S_API bool SteamAPI_ISteamInventory_GetResultItems( ISteamInventory* self, SteamInventoryResult_t resultHandle, SteamItemDetails_t * pOutItemsArray, uint32 * punOutItemsArraySize );
 S_API bool SteamAPI_ISteamInventory_GetResultItemProperty( ISteamInventory* self, SteamInventoryResult_t resultHandle, uint32 unItemIndex, const char * pchPropertyName, char * pchValueBuffer, uint32 * punValueBufferSizeOut );
@@ -842,14 +949,22 @@ S_API bool SteamAPI_ISteamInventory_SubmitUpdateProperties( ISteamInventory* sel
 S_API bool SteamAPI_ISteamInventory_InspectItem( ISteamInventory* self, SteamInventoryResult_t * pResultHandle, const char * pchItemToken );
 
 // ISteamVideo
+
+// A versioned accessor is exported by the library
 S_API ISteamVideo *SteamAPI_SteamVideo_v002();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamVideo(), but using this ensures that you are using a matching library.
+inline ISteamVideo *SteamAPI_SteamVideo() { return SteamAPI_SteamVideo_v002(); }
 S_API void SteamAPI_ISteamVideo_GetVideoURL( ISteamVideo* self, AppId_t unVideoAppID );
 S_API bool SteamAPI_ISteamVideo_IsBroadcasting( ISteamVideo* self, int * pnNumViewers );
 S_API void SteamAPI_ISteamVideo_GetOPFSettings( ISteamVideo* self, AppId_t unVideoAppID );
 S_API bool SteamAPI_ISteamVideo_GetOPFStringForApp( ISteamVideo* self, AppId_t unVideoAppID, char * pchBuffer, int32 * pnBufferSize );
 
 // ISteamParentalSettings
+
+// A versioned accessor is exported by the library
 S_API ISteamParentalSettings *SteamAPI_SteamParentalSettings_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamParentalSettings(), but using this ensures that you are using a matching library.
+inline ISteamParentalSettings *SteamAPI_SteamParentalSettings() { return SteamAPI_SteamParentalSettings_v001(); }
 S_API bool SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled( ISteamParentalSettings* self );
 S_API bool SteamAPI_ISteamParentalSettings_BIsParentalLockLocked( ISteamParentalSettings* self );
 S_API bool SteamAPI_ISteamParentalSettings_BIsAppBlocked( ISteamParentalSettings* self, AppId_t nAppID );
@@ -858,7 +973,11 @@ S_API bool SteamAPI_ISteamParentalSettings_BIsFeatureBlocked( ISteamParentalSett
 S_API bool SteamAPI_ISteamParentalSettings_BIsFeatureInBlockList( ISteamParentalSettings* self, EParentalFeature eFeature );
 
 // ISteamRemotePlay
+
+// A versioned accessor is exported by the library
 S_API ISteamRemotePlay *SteamAPI_SteamRemotePlay_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamRemotePlay(), but using this ensures that you are using a matching library.
+inline ISteamRemotePlay *SteamAPI_SteamRemotePlay() { return SteamAPI_SteamRemotePlay_v001(); }
 S_API uint32 SteamAPI_ISteamRemotePlay_GetSessionCount( ISteamRemotePlay* self );
 S_API RemotePlaySessionID_t SteamAPI_ISteamRemotePlay_GetSessionID( ISteamRemotePlay* self, int iSessionIndex );
 S_API uint64_steamid SteamAPI_ISteamRemotePlay_GetSessionSteamID( ISteamRemotePlay* self, RemotePlaySessionID_t unSessionID );
@@ -868,18 +987,34 @@ S_API bool SteamAPI_ISteamRemotePlay_BGetSessionClientResolution( ISteamRemotePl
 S_API bool SteamAPI_ISteamRemotePlay_BSendRemotePlayTogetherInvite( ISteamRemotePlay* self, uint64_steamid steamIDFriend );
 
 // ISteamNetworkingMessages
+
+// A versioned accessor is exported by the library
 S_API ISteamNetworkingMessages *SteamAPI_SteamNetworkingMessages_SteamAPI_v002();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamNetworkingMessages_SteamAPI(), but using this ensures that you are using a matching library.
+inline ISteamNetworkingMessages *SteamAPI_SteamNetworkingMessages_SteamAPI() { return SteamAPI_SteamNetworkingMessages_SteamAPI_v002(); }
+
+// A versioned accessor is exported by the library
 S_API ISteamNetworkingMessages *SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerNetworkingMessages_SteamAPI(), but using this ensures that you are using a matching library.
+inline ISteamNetworkingMessages *SteamAPI_SteamGameServerNetworkingMessages_SteamAPI() { return SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002(); }
 S_API EResult SteamAPI_ISteamNetworkingMessages_SendMessageToUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, const void * pubData, uint32 cubData, int nSendFlags, int nRemoteChannel );
 S_API int SteamAPI_ISteamNetworkingMessages_ReceiveMessagesOnChannel( ISteamNetworkingMessages* self, int nLocalChannel, SteamNetworkingMessage_t ** ppOutMessages, int nMaxMessages );
 S_API bool SteamAPI_ISteamNetworkingMessages_AcceptSessionWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote );
 S_API bool SteamAPI_ISteamNetworkingMessages_CloseSessionWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote );
 S_API bool SteamAPI_ISteamNetworkingMessages_CloseChannelWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, int nLocalChannel );
-S_API ESteamNetworkingConnectionState SteamAPI_ISteamNetworkingMessages_GetSessionConnectionInfo( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, SteamNetConnectionInfo_t * pConnectionInfo, SteamNetworkingQuickConnectionStatus * pQuickStatus );
+S_API ESteamNetworkingConnectionState SteamAPI_ISteamNetworkingMessages_GetSessionConnectionInfo( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, SteamNetConnectionInfo_t * pConnectionInfo, SteamNetConnectionRealTimeStatus_t * pQuickStatus );
 
 // ISteamNetworkingSockets
-S_API ISteamNetworkingSockets *SteamAPI_SteamNetworkingSockets_SteamAPI_v011();
-S_API ISteamNetworkingSockets *SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011();
+
+// A versioned accessor is exported by the library
+S_API ISteamNetworkingSockets *SteamAPI_SteamNetworkingSockets_SteamAPI_v012();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamNetworkingSockets_SteamAPI(), but using this ensures that you are using a matching library.
+inline ISteamNetworkingSockets *SteamAPI_SteamNetworkingSockets_SteamAPI() { return SteamAPI_SteamNetworkingSockets_SteamAPI_v012(); }
+
+// A versioned accessor is exported by the library
+S_API ISteamNetworkingSockets *SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerNetworkingSockets_SteamAPI(), but using this ensures that you are using a matching library.
+inline ISteamNetworkingSockets *SteamAPI_SteamGameServerNetworkingSockets_SteamAPI() { return SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012(); }
 S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketIP( ISteamNetworkingSockets* self, const SteamNetworkingIPAddr & localAddress, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectByIPAddress( ISteamNetworkingSockets* self, const SteamNetworkingIPAddr & address, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2P( ISteamNetworkingSockets* self, int nLocalVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
@@ -896,10 +1031,11 @@ S_API void SteamAPI_ISteamNetworkingSockets_SendMessages( ISteamNetworkingSocket
 S_API EResult SteamAPI_ISteamNetworkingSockets_FlushMessagesOnConnection( ISteamNetworkingSockets* self, HSteamNetConnection hConn );
 S_API int SteamAPI_ISteamNetworkingSockets_ReceiveMessagesOnConnection( ISteamNetworkingSockets* self, HSteamNetConnection hConn, SteamNetworkingMessage_t ** ppOutMessages, int nMaxMessages );
 S_API bool SteamAPI_ISteamNetworkingSockets_GetConnectionInfo( ISteamNetworkingSockets* self, HSteamNetConnection hConn, SteamNetConnectionInfo_t * pInfo );
-S_API bool SteamAPI_ISteamNetworkingSockets_GetQuickConnectionStatus( ISteamNetworkingSockets* self, HSteamNetConnection hConn, SteamNetworkingQuickConnectionStatus * pStats );
+S_API EResult SteamAPI_ISteamNetworkingSockets_GetConnectionRealTimeStatus( ISteamNetworkingSockets* self, HSteamNetConnection hConn, SteamNetConnectionRealTimeStatus_t * pStatus, int nLanes, SteamNetConnectionRealTimeLaneStatus_t * pLanes );
 S_API int SteamAPI_ISteamNetworkingSockets_GetDetailedConnectionStatus( ISteamNetworkingSockets* self, HSteamNetConnection hConn, char * pszBuf, int cbBuf );
 S_API bool SteamAPI_ISteamNetworkingSockets_GetListenSocketAddress( ISteamNetworkingSockets* self, HSteamListenSocket hSocket, SteamNetworkingIPAddr * address );
 S_API bool SteamAPI_ISteamNetworkingSockets_CreateSocketPair( ISteamNetworkingSockets* self, HSteamNetConnection * pOutConnection1, HSteamNetConnection * pOutConnection2, bool bUseNetworkLoopback, const SteamNetworkingIdentity * pIdentity1, const SteamNetworkingIdentity * pIdentity2 );
+S_API EResult SteamAPI_ISteamNetworkingSockets_ConfigureConnectionLanes( ISteamNetworkingSockets* self, HSteamNetConnection hConn, int nNumLanes, const int * pLanePriorities, const uint16 * pLaneWeights );
 S_API bool SteamAPI_ISteamNetworkingSockets_GetIdentity( ISteamNetworkingSockets* self, SteamNetworkingIdentity * pIdentity );
 S_API ESteamNetworkingAvailability SteamAPI_ISteamNetworkingSockets_InitAuthentication( ISteamNetworkingSockets* self );
 S_API ESteamNetworkingAvailability SteamAPI_ISteamNetworkingSockets_GetAuthenticationStatus( ISteamNetworkingSockets* self, SteamNetAuthenticationStatus_t * pDetails );
@@ -921,9 +1057,18 @@ S_API bool SteamAPI_ISteamNetworkingSockets_GetCertificateRequest( ISteamNetwork
 S_API bool SteamAPI_ISteamNetworkingSockets_SetCertificate( ISteamNetworkingSockets* self, const void * pCertificate, int cbCertificate, SteamNetworkingErrMsg & errMsg );
 S_API void SteamAPI_ISteamNetworkingSockets_ResetIdentity( ISteamNetworkingSockets* self, const SteamNetworkingIdentity * pIdentity );
 S_API void SteamAPI_ISteamNetworkingSockets_RunCallbacks( ISteamNetworkingSockets* self );
+S_API bool SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP( ISteamNetworkingSockets* self, int nNumPorts );
+S_API void SteamAPI_ISteamNetworkingSockets_GetFakeIP( ISteamNetworkingSockets* self, int idxFirstPort, SteamNetworkingFakeIPResult_t * pInfo );
+S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP( ISteamNetworkingSockets* self, int idxFakePort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API EResult SteamAPI_ISteamNetworkingSockets_GetRemoteFakeIPForConnection( ISteamNetworkingSockets* self, HSteamNetConnection hConn, SteamNetworkingIPAddr * pOutAddr );
+S_API ISteamNetworkingFakeUDPPort * SteamAPI_ISteamNetworkingSockets_CreateFakeUDPPort( ISteamNetworkingSockets* self, int idxFakeServerPort );
 
 // ISteamNetworkingUtils
+
+// A versioned accessor is exported by the library
 S_API ISteamNetworkingUtils *SteamAPI_SteamNetworkingUtils_SteamAPI_v004();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamNetworkingUtils_SteamAPI(), but using this ensures that you are using a matching library.
+inline ISteamNetworkingUtils *SteamAPI_SteamNetworkingUtils_SteamAPI() { return SteamAPI_SteamNetworkingUtils_SteamAPI_v004(); }
 S_API SteamNetworkingMessage_t * SteamAPI_ISteamNetworkingUtils_AllocateMessage( ISteamNetworkingUtils* self, int cbAllocateBuffer );
 S_API void SteamAPI_ISteamNetworkingUtils_InitRelayNetworkAccess( ISteamNetworkingUtils* self );
 S_API ESteamNetworkingAvailability SteamAPI_ISteamNetworkingUtils_GetRelayNetworkStatus( ISteamNetworkingUtils* self, SteamRelayNetworkStatus_t * pDetails );
@@ -939,6 +1084,9 @@ S_API int SteamAPI_ISteamNetworkingUtils_GetPOPCount( ISteamNetworkingUtils* sel
 S_API int SteamAPI_ISteamNetworkingUtils_GetPOPList( ISteamNetworkingUtils* self, SteamNetworkingPOPID * list, int nListSz );
 S_API SteamNetworkingMicroseconds SteamAPI_ISteamNetworkingUtils_GetLocalTimestamp( ISteamNetworkingUtils* self );
 S_API void SteamAPI_ISteamNetworkingUtils_SetDebugOutputFunction( ISteamNetworkingUtils* self, ESteamNetworkingSocketsDebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc );
+S_API bool SteamAPI_ISteamNetworkingUtils_IsFakeIPv4( ISteamNetworkingUtils* self, uint32 nIPv4 );
+S_API ESteamNetworkingFakeIPType SteamAPI_ISteamNetworkingUtils_GetIPv4FakeIPType( ISteamNetworkingUtils* self, uint32 nIPv4 );
+S_API EResult SteamAPI_ISteamNetworkingUtils_GetRealIdentityForFakeIP( ISteamNetworkingUtils* self, const SteamNetworkingIPAddr & fakeIP, SteamNetworkingIdentity * pOutRealIdentity );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueInt32( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, int32 val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueFloat( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, float val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueString( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, const char * val );
@@ -949,6 +1097,7 @@ S_API bool SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueString( ISteam
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetConnectionStatusChanged( ISteamNetworkingUtils* self, FnSteamNetConnectionStatusChanged fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetAuthenticationStatusChanged( ISteamNetworkingUtils* self, FnSteamNetAuthenticationStatusChanged fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamRelayNetworkStatusChanged( ISteamNetworkingUtils* self, FnSteamRelayNetworkStatusChanged fnCallback );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_FakeIPResult( ISteamNetworkingUtils* self, FnSteamNetworkingFakeIPResult fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionRequest( ISteamNetworkingUtils* self, FnSteamNetworkingMessagesSessionRequest fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionFailed( ISteamNetworkingUtils* self, FnSteamNetworkingMessagesSessionFailed fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConfigValue( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj, ESteamNetworkingConfigDataType eDataType, const void * pArg );
@@ -958,11 +1107,16 @@ S_API const char * SteamAPI_ISteamNetworkingUtils_GetConfigValueInfo( ISteamNetw
 S_API ESteamNetworkingConfigValue SteamAPI_ISteamNetworkingUtils_IterateGenericEditableConfigValues( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eCurrent, bool bEnumerateDevVars );
 S_API void SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_ToString( ISteamNetworkingUtils* self, const SteamNetworkingIPAddr & addr, char * buf, uint32 cbBuf, bool bWithPort );
 S_API bool SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_ParseString( ISteamNetworkingUtils* self, SteamNetworkingIPAddr * pAddr, const char * pszStr );
+S_API ESteamNetworkingFakeIPType SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_GetFakeIPType( ISteamNetworkingUtils* self, const SteamNetworkingIPAddr & addr );
 S_API void SteamAPI_ISteamNetworkingUtils_SteamNetworkingIdentity_ToString( ISteamNetworkingUtils* self, const SteamNetworkingIdentity & identity, char * buf, uint32 cbBuf );
 S_API bool SteamAPI_ISteamNetworkingUtils_SteamNetworkingIdentity_ParseString( ISteamNetworkingUtils* self, SteamNetworkingIdentity * pIdentity, const char * pszStr );
 
 // ISteamGameServer
+
+// A versioned accessor is exported by the library
 S_API ISteamGameServer *SteamAPI_SteamGameServer_v014();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServer(), but using this ensures that you are using a matching library.
+inline ISteamGameServer *SteamAPI_SteamGameServer() { return SteamAPI_SteamGameServer_v014(); }
 S_API void SteamAPI_ISteamGameServer_SetProduct( ISteamGameServer* self, const char * pszProduct );
 S_API void SteamAPI_ISteamGameServer_SetGameDescription( ISteamGameServer* self, const char * pszGameDescription );
 S_API void SteamAPI_ISteamGameServer_SetModDir( ISteamGameServer* self, const char * pszModDir );
@@ -1006,7 +1160,11 @@ S_API void SteamAPI_ISteamGameServer_SendUserDisconnect_DEPRECATED( ISteamGameSe
 S_API bool SteamAPI_ISteamGameServer_BUpdateUserData( ISteamGameServer* self, uint64_steamid steamIDUser, const char * pchPlayerName, uint32 uScore );
 
 // ISteamGameServerStats
+
+// A versioned accessor is exported by the library
 S_API ISteamGameServerStats *SteamAPI_SteamGameServerStats_v001();
+// Inline, unversioned accessor to get the current version.  Essentially the same as SteamGameServerStats(), but using this ensures that you are using a matching library.
+inline ISteamGameServerStats *SteamAPI_SteamGameServerStats() { return SteamAPI_SteamGameServerStats_v001(); }
 S_API SteamAPICall_t SteamAPI_ISteamGameServerStats_RequestUserStats( ISteamGameServerStats* self, uint64_steamid steamIDUser );
 S_API bool SteamAPI_ISteamGameServerStats_GetUserStatInt32( ISteamGameServerStats* self, uint64_steamid steamIDUser, const char * pchName, int32 * pData );
 S_API bool SteamAPI_ISteamGameServerStats_GetUserStatFloat( ISteamGameServerStats* self, uint64_steamid steamIDUser, const char * pchName, float * pData );
@@ -1017,6 +1175,12 @@ S_API bool SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat( ISteamGameServe
 S_API bool SteamAPI_ISteamGameServerStats_SetUserAchievement( ISteamGameServerStats* self, uint64_steamid steamIDUser, const char * pchName );
 S_API bool SteamAPI_ISteamGameServerStats_ClearUserAchievement( ISteamGameServerStats* self, uint64_steamid steamIDUser, const char * pchName );
 S_API SteamAPICall_t SteamAPI_ISteamGameServerStats_StoreUserStats( ISteamGameServerStats* self, uint64_steamid steamIDUser );
+
+// ISteamNetworkingFakeUDPPort
+S_API void SteamAPI_ISteamNetworkingFakeUDPPort_DestroyFakeUDPPort( ISteamNetworkingFakeUDPPort* self );
+S_API EResult SteamAPI_ISteamNetworkingFakeUDPPort_SendMessageToFakeIP( ISteamNetworkingFakeUDPPort* self, const SteamNetworkingIPAddr & remoteAddress, const void * pData, uint32 cbData, int nSendFlags );
+S_API int SteamAPI_ISteamNetworkingFakeUDPPort_ReceiveMessages( ISteamNetworkingFakeUDPPort* self, SteamNetworkingMessage_t ** ppOutMessages, int nMaxMessages );
+S_API void SteamAPI_ISteamNetworkingFakeUDPPort_ScheduleCleanup( ISteamNetworkingFakeUDPPort* self, const SteamNetworkingIPAddr & remoteAddress );
 
 // SteamIPAddress_t
 S_API bool SteamAPI_SteamIPAddress_t_IsSet( SteamIPAddress_t* self );
@@ -1055,6 +1219,8 @@ S_API bool SteamAPI_SteamNetworkingIPAddr_IsLocalHost( SteamNetworkingIPAddr* se
 S_API void SteamAPI_SteamNetworkingIPAddr_ToString( SteamNetworkingIPAddr* self, char * buf, uint32 cbBuf, bool bWithPort );
 S_API bool SteamAPI_SteamNetworkingIPAddr_ParseString( SteamNetworkingIPAddr* self, const char * pszStr );
 S_API bool SteamAPI_SteamNetworkingIPAddr_IsEqualTo( SteamNetworkingIPAddr* self, const SteamNetworkingIPAddr & x );
+S_API ESteamNetworkingFakeIPType SteamAPI_SteamNetworkingIPAddr_GetFakeIPType( SteamNetworkingIPAddr* self );
+S_API bool SteamAPI_SteamNetworkingIPAddr_IsFakeIP( SteamNetworkingIPAddr* self );
 
 // SteamNetworkingIdentity
 S_API void SteamAPI_SteamNetworkingIdentity_Clear( SteamNetworkingIdentity* self );
@@ -1071,6 +1237,10 @@ S_API void SteamAPI_SteamNetworkingIdentity_SetStadiaID( SteamNetworkingIdentity
 S_API uint64 SteamAPI_SteamNetworkingIdentity_GetStadiaID( SteamNetworkingIdentity* self );
 S_API void SteamAPI_SteamNetworkingIdentity_SetIPAddr( SteamNetworkingIdentity* self, const SteamNetworkingIPAddr & addr );
 S_API const SteamNetworkingIPAddr * SteamAPI_SteamNetworkingIdentity_GetIPAddr( SteamNetworkingIdentity* self );
+S_API void SteamAPI_SteamNetworkingIdentity_SetIPv4Addr( SteamNetworkingIdentity* self, uint32 nIPv4, uint16 nPort );
+S_API uint32 SteamAPI_SteamNetworkingIdentity_GetIPv4( SteamNetworkingIdentity* self );
+S_API ESteamNetworkingFakeIPType SteamAPI_SteamNetworkingIdentity_GetFakeIPType( SteamNetworkingIdentity* self );
+S_API bool SteamAPI_SteamNetworkingIdentity_IsFakeIP( SteamNetworkingIdentity* self );
 S_API void SteamAPI_SteamNetworkingIdentity_SetLocalHost( SteamNetworkingIdentity* self );
 S_API bool SteamAPI_SteamNetworkingIdentity_IsLocalHost( SteamNetworkingIdentity* self );
 S_API bool SteamAPI_SteamNetworkingIdentity_SetGenericString( SteamNetworkingIdentity* self, const char * pszString );
@@ -1090,15 +1260,6 @@ S_API void SteamAPI_SteamNetworkingConfigValue_t_SetInt64( SteamNetworkingConfig
 S_API void SteamAPI_SteamNetworkingConfigValue_t_SetFloat( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, float data );
 S_API void SteamAPI_SteamNetworkingConfigValue_t_SetPtr( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, void * data );
 S_API void SteamAPI_SteamNetworkingConfigValue_t_SetString( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, const char * data );
-
-// SteamNetworkingPOPIDRender
-S_API const char * SteamAPI_SteamNetworkingPOPIDRender_c_str( SteamNetworkingPOPIDRender* self );
-
-// SteamNetworkingIdentityRender
-S_API const char * SteamAPI_SteamNetworkingIdentityRender_c_str( SteamNetworkingIdentityRender* self );
-
-// SteamNetworkingIPAddrRender
-S_API const char * SteamAPI_SteamNetworkingIPAddrRender_c_str( SteamNetworkingIPAddrRender* self );
 
 // SteamDatagramHostedAddress
 S_API void SteamAPI_SteamDatagramHostedAddress_Clear( SteamDatagramHostedAddress* self );

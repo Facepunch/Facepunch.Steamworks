@@ -92,6 +92,13 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num})] //  {m.Name}" );
                 }
 
+                if ( t.StartsWith( "ushort " ) && t.Contains( "[" ) )
+                {
+                    var num = t.Replace( "ushort", "" ).Trim( '[', ']', ' ' );
+                    t = $"ushort[]";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U2)]" );
+                }
+
                 if ( t.StartsWith( "SteamId" ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "SteamId", "" ).Trim( '[', ']', ' ' );
@@ -137,6 +144,11 @@ namespace Generator
                     var num = t.Replace("AppId", "").Trim('[', ']', ' ');
                     t = $"AppId[]";
                     WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
+                }
+
+                if ( t == "SteamInputActionEvent_t.AnalogAction_t" )
+                {
+                    Write( "// " );
                 }
 
                 WriteLine( $"internal {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );

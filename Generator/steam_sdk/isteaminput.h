@@ -407,6 +407,81 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_PS5_Reserved19,
 	k_EInputActionOrigin_PS5_Reserved20,
 
+	// Added in SDK 1.53
+	k_EInputActionOrigin_SteamDeck_A,
+	k_EInputActionOrigin_SteamDeck_B,
+	k_EInputActionOrigin_SteamDeck_X,
+	k_EInputActionOrigin_SteamDeck_Y,
+	k_EInputActionOrigin_SteamDeck_L1,
+	k_EInputActionOrigin_SteamDeck_R1,
+	k_EInputActionOrigin_SteamDeck_Menu,
+	k_EInputActionOrigin_SteamDeck_View,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Touch,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Swipe,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Click,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadNorth,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadSouth,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadWest,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadEast,
+	k_EInputActionOrigin_SteamDeck_RightPad_Touch,
+	k_EInputActionOrigin_SteamDeck_RightPad_Swipe,
+	k_EInputActionOrigin_SteamDeck_RightPad_Click,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadNorth,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadSouth,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadWest,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadEast,
+	k_EInputActionOrigin_SteamDeck_L2_SoftPull,
+	k_EInputActionOrigin_SteamDeck_L2,
+	k_EInputActionOrigin_SteamDeck_R2_SoftPull,
+	k_EInputActionOrigin_SteamDeck_R2,
+	k_EInputActionOrigin_SteamDeck_LeftStick_Move,
+	k_EInputActionOrigin_SteamDeck_L3,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadNorth,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadSouth,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadWest,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadEast,
+	k_EInputActionOrigin_SteamDeck_LeftStick_Touch,
+	k_EInputActionOrigin_SteamDeck_RightStick_Move,
+	k_EInputActionOrigin_SteamDeck_R3,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadNorth,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadSouth,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadWest,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadEast,
+	k_EInputActionOrigin_SteamDeck_RightStick_Touch,
+	k_EInputActionOrigin_SteamDeck_L4,
+	k_EInputActionOrigin_SteamDeck_R4,
+	k_EInputActionOrigin_SteamDeck_L5,
+	k_EInputActionOrigin_SteamDeck_R5,
+	k_EInputActionOrigin_SteamDeck_DPad_Move,
+	k_EInputActionOrigin_SteamDeck_DPad_North,
+	k_EInputActionOrigin_SteamDeck_DPad_South,
+	k_EInputActionOrigin_SteamDeck_DPad_West,
+	k_EInputActionOrigin_SteamDeck_DPad_East,
+	k_EInputActionOrigin_SteamDeck_Gyro_Move,
+	k_EInputActionOrigin_SteamDeck_Gyro_Pitch,
+	k_EInputActionOrigin_SteamDeck_Gyro_Yaw,
+	k_EInputActionOrigin_SteamDeck_Gyro_Roll,
+	k_EInputActionOrigin_SteamDeck_Reserved1,
+	k_EInputActionOrigin_SteamDeck_Reserved2,
+	k_EInputActionOrigin_SteamDeck_Reserved3,
+	k_EInputActionOrigin_SteamDeck_Reserved4,
+	k_EInputActionOrigin_SteamDeck_Reserved5,
+	k_EInputActionOrigin_SteamDeck_Reserved6,
+	k_EInputActionOrigin_SteamDeck_Reserved7,
+	k_EInputActionOrigin_SteamDeck_Reserved8,
+	k_EInputActionOrigin_SteamDeck_Reserved9,
+	k_EInputActionOrigin_SteamDeck_Reserved10,
+	k_EInputActionOrigin_SteamDeck_Reserved11,
+	k_EInputActionOrigin_SteamDeck_Reserved12,
+	k_EInputActionOrigin_SteamDeck_Reserved13,
+	k_EInputActionOrigin_SteamDeck_Reserved14,
+	k_EInputActionOrigin_SteamDeck_Reserved15,
+	k_EInputActionOrigin_SteamDeck_Reserved16,
+	k_EInputActionOrigin_SteamDeck_Reserved17,
+	k_EInputActionOrigin_SteamDeck_Reserved18,
+	k_EInputActionOrigin_SteamDeck_Reserved19,
+	k_EInputActionOrigin_SteamDeck_Reserved20,
+
 	k_EInputActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EInputActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
 };
@@ -480,6 +555,7 @@ enum ESteamInputType
 	k_ESteamInputType_MobileTouch,			// Steam Link App On-screen Virtual Controller
 	k_ESteamInputType_PS3Controller,		// Currently uses PS4 Origins
 	k_ESteamInputType_PS5Controller,		// Added in SDK 151
+	k_ESteamInputType_SteamDeckController,	// Added in SDK 153
 	k_ESteamInputType_Count,
 	k_ESteamInputType_MaximumPossibleValue = 255,
 };
@@ -506,9 +582,24 @@ enum ESteamInputLEDFlag
 // These values are passed into GetGlyphPNGForActionOrigin
 enum ESteamInputGlyphSize
 {
-	k_ESteamInputGlyphSize_Small,
-	k_ESteamInputGlyphSize_Medium,
-	k_ESteamInputGlyphSize_Large,
+	k_ESteamInputGlyphSize_Small,	// 32x32 pixels
+	k_ESteamInputGlyphSize_Medium,	// 128x128 pixels
+	k_ESteamInputGlyphSize_Large,	// 256x256 pixels
+	k_ESteamInputGlyphSize_Count,
+};
+
+enum ESteamInputGlyphStyle
+{
+	// Base-styles - cannot mix
+	ESteamInputGlyphStyle_Knockout 	= 0x0, // Face buttons will have colored labels/outlines on a knocked out background
+										   // Rest of inputs will have white detail/borders on a knocked out background
+	ESteamInputGlyphStyle_Light		= 0x1, // Black detail/borders on a white background
+	ESteamInputGlyphStyle_Dark 		= 0x2, // White detail/borders on a black background
+
+	// Modifiers
+	// Default ABXY/PS equivalent glyphs have a solid fill w/ color matching the physical buttons on the device
+	ESteamInputGlyphStyle_NeutralColorABXY 	= 0x10, // ABXY Buttons will match the base style color instead of their normal associated color
+	ESteamInputGlyphStyle_SolidABXY 		= 0x20,	// ABXY Buttons will have a solid fill
 };
 
 enum ESteamInputActionEventType
@@ -577,15 +668,17 @@ struct SteamInputActionEvent_t
 {
 	InputHandle_t controllerHandle;
 	ESteamInputActionEventType eEventType;
+	struct AnalogAction_t {
+		InputAnalogActionHandle_t actionHandle;
+		InputAnalogActionData_t analogActionData;
+	};
+	struct DigitalAction_t {
+		InputDigitalActionHandle_t actionHandle;
+		InputDigitalActionData_t digitalActionData;
+	};
 	union {
-		struct {
-			InputAnalogActionHandle_t actionHandle;
-			InputAnalogActionData_t analogActionData;
-		} analogAction;
-		struct {
-			InputDigitalActionHandle_t actionHandle;
-			InputDigitalActionData_t digitalActionData;
-		} digitalAction;
+		AnalogAction_t analogAction;
+		DigitalAction_t digitalAction;
 	};
 };
 
@@ -804,7 +897,7 @@ public:
 	virtual uint16 GetSessionInputConfigurationSettings() = 0;
 };
 
-#define STEAMINPUT_INTERFACE_VERSION "SteamInput005"
+#define STEAMINPUT_INTERFACE_VERSION "SteamInput006"
 
 // Global interface accessor
 inline ISteamInput *SteamInput();

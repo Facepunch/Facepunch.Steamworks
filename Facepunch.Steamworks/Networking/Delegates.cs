@@ -22,4 +22,7 @@ namespace Steamworks
 
     [UnmanagedFunctionPointer( Platform.CC )]
     internal delegate void FnSteamNetworkingMessagesSessionFailed( ref SteamNetworkingMessagesSessionFailed_t arg );
+
+    [UnmanagedFunctionPointer( Platform.CC )]
+    internal delegate void FnSteamNetworkingFakeIPResult( ref SteamNetworkingFakeIPResult_t arg );
 }

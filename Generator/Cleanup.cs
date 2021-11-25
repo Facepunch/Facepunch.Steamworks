@@ -60,7 +60,8 @@ public static class Cleanup
 		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
 		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
 		type = type.Replace( "SteamIPAddress_t", "SteamIPAddress" );
-		type = type.Replace( "SteamNetworkingQuickConnectionStatus", "ConnectionStatus" );
+		type = type.Replace( "SteamNetConnectionRealTimeStatus_t", "ConnectionStatus" );
+		type = type.Replace( "SteamNetConnectionRealTimeLaneStatus_t", "ConnectionLaneStatus" );
 		type = type.Replace( "SteamInputGlyphSize", "GlyphSize" );
 		type = type.Replace( "FloatingGamepadTextInputMode", "TextInputMode" );
 
@@ -105,6 +106,7 @@ public static class Cleanup
 		if ( type == "CCallbackBase" ) return false;
 		if ( type == "CSteamGameServerAPIContext" ) return false;
 		if ( type == "ConnectionStatus") return false;
+		if ( type == "ConnectionLaneStatus" ) return false;
 		if ( type == "SteamInputActionEventCallbackPointer" ) return false;
 		if ( type.StartsWith( "FnSteam" ) ) return false;
 

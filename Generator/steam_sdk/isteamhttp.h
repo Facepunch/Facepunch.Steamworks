@@ -161,7 +161,7 @@ STEAM_DEFINE_GAMESERVER_INTERFACE_ACCESSOR( ISteamHTTP *, SteamGameServerHTTP, S
 
 struct HTTPRequestCompleted_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 1 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 1 };
 
 	// Handle value for the request that has completed.
 	HTTPRequestHandle m_hRequest;
@@ -184,7 +184,7 @@ struct HTTPRequestCompleted_t
 
 struct HTTPRequestHeadersReceived_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 2 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 2 };
 
 	// Handle value for the request that has received headers.
 	HTTPRequestHandle m_hRequest;
@@ -196,7 +196,7 @@ struct HTTPRequestHeadersReceived_t
 
 struct HTTPRequestDataReceived_t
 {
-	enum { k_iCallback = k_iClientHTTPCallbacks + 3 };
+	enum { k_iCallback = k_iSteamHTTPCallbacks + 3 };
 
 	// Handle value for the request that has received data.
 	HTTPRequestHandle m_hRequest;

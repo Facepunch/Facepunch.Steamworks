@@ -18,5 +18,7 @@ namespace Steamworks.Data
 		internal int Channel;
 		internal SendType Flags;
 		internal long UserData;
+		internal ushort IdxLane;
+		internal ushort _pad1__;
 	}
 }

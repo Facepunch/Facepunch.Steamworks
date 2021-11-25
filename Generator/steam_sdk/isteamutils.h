@@ -221,6 +221,9 @@ public:
 
 	// In game launchers that don't have controller support you can call this to have Steam Input translate the controller input into mouse/kb to navigate the launcher
 	virtual void SetGameLauncherMode( bool bLauncherMode ) = 0;
+
+	// Dismisses the floating keyboard.
+	virtual bool DismissFloatingGamepadTextInput() = 0;
 };
 
 #define STEAMUTILS_INTERFACE_VERSION "SteamUtils010"
