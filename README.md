@@ -47,8 +47,8 @@ C# is meant to make things easier. So lets try to wrap it up in a way that makes
 ```csharp
 foreach ( var friend in SteamFriends.GetFriends() )
 {
-    Console.WriteLine( "{friend.Id}: {friend.Name}" );
-    Console.WriteLine( "{friend.IsOnline} / {friend.SteamLevel}" );
+    Console.WriteLine( $"{friend.Id}: {friend.Name}" );
+    Console.WriteLine( $"{friend.IsOnline} / {friend.SteamLevel}" );
     
     friend.SendMessage( "Hello Friend" );
 }
@@ -200,7 +200,7 @@ Query a list of workshop items
 
     foreach ( Ugc.Item entry in result.Value.Entries )
     {
-        Console.WriteLine( $" {entry.Title}" );
+        Console.WriteLine( $"{entry.Title}" );
     }
 ```
 
