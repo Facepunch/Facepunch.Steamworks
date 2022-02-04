@@ -190,6 +190,16 @@ namespace Steamworks
 			get => GetConfigInt( NetConfig.SendBufferSize );
 			set => SetConfigInt( NetConfig.SendBufferSize, value );
 		}
+		public static int SendRateMin
+		{
+			get => GetConfigInt( NetConfig.SendRateMin );
+			set => SetConfigInt( NetConfig.SendRateMin, value );
+		}
+		public static int SendRateMax
+		{
+			get => GetConfigInt( NetConfig.SendRateMax );
+			set => SetConfigInt( NetConfig.SendRateMax, value );
+		}
 
 		/// <summary>
 		/// Don't automatically fail IP connections that don't have
