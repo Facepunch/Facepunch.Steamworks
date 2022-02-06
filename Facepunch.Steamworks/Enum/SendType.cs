@@ -25,18 +25,19 @@ namespace Steamworks.Data
 		/// is enough buffered data to fill a packet, the packets will be pushed out immediately,
 		/// but partially-full packets not be sent until the Nagle timer expires. 
 		/// </summary>
-		NoNagle = 1 << 0,
+		NoNagle = 1,
 
 		/// <summary>
 		/// If the message cannot be sent very soon (because the connection is still doing some initial
 		/// handshaking, route negotiations, etc), then just drop it.  This is only applicable for unreliable
 		/// messages.  Using this flag on reliable messages is invalid.
 		/// </summary>
-		NoDelay = 1 << 2,
+		NoDelay = 4,
 
 		/// Reliable message send. Can send up to 0.5mb in a single message. 
 		/// Does fragmentation/re-assembly of messages under the hood, as well as a sliding window for
 		/// efficient sends of large chunks of data.
-		Reliable = 1 << 3
+		Reliable = 8,
+		ReliableNoNagle = 9,
 	}
 }
