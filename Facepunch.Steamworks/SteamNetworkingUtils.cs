@@ -227,6 +227,60 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Log RTT calculations for inline pings and replies.
+		/// </summary>
+		public static int DebugLevelAckRTT
+		{
+			get => GetConfigInt( NetConfig.LogLevel_AckRTT );
+			set => SetConfigInt( NetConfig.LogLevel_AckRTT, value );
+		}
+
+		/// <summary>
+		/// Log SNP packets send.
+		/// </summary>
+		public static int DebugLevelPacketDecode
+		{
+			get => GetConfigInt( NetConfig.LogLevel_PacketDecode );
+			set => SetConfigInt( NetConfig.LogLevel_PacketDecode, value );
+		}
+
+		/// <summary>
+		/// Log each message send/recv.
+		/// </summary>
+		public static int DebugLevelMessage
+		{
+			get => GetConfigInt( NetConfig.LogLevel_Message );
+			set => SetConfigInt( NetConfig.LogLevel_Message, value );
+		}
+
+		/// <summary>
+		/// Log dropped packets.
+		/// </summary>
+		public static int DebugLevelPacketGaps
+		{
+			get => GetConfigInt( NetConfig.LogLevel_PacketGaps );
+			set => SetConfigInt( NetConfig.LogLevel_PacketGaps, value );
+		}
+
+		/// <summary>
+		/// Log P2P rendezvous messages.
+		/// </summary>
+		public static int DebugLevelP2PRendezvous
+		{
+			get => GetConfigInt( NetConfig.LogLevel_P2PRendezvous );
+			set => SetConfigInt( NetConfig.LogLevel_P2PRendezvous, value );
+		}
+
+		/// <summary>
+		/// Log ping relays.
+		/// </summary>
+		public static int DebugLevelSDRRelayPings
+		{
+			get => GetConfigInt( NetConfig.LogLevel_SDRRelayPings );
+			set => SetConfigInt( NetConfig.LogLevel_SDRRelayPings, value );
+		}
+
+		/// <summary>
 		/// Get Debug Information via <see cref="OnDebugOutput"/> event.
 		/// <para>
 		/// Except when debugging, you should only use <see cref="NetDebugOutput.Msg"/>
