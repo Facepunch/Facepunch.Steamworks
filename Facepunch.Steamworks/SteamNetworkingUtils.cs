@@ -190,6 +190,12 @@ namespace Steamworks
 			get => GetConfigInt( NetConfig.SendBufferSize );
 			set => SetConfigInt( NetConfig.SendBufferSize, value );
 		}
+
+		/// <summary>
+		/// Minimum/maximum send rate clamp, 0 is no limit.
+		/// This value will control the min/max allowed sending rate that 
+		/// bandwidth estimation is allowed to reach.  Default is 0 (no-limit)
+		/// </summary>
 		public static int SendRateMin
 		{
 			get => GetConfigInt( NetConfig.SendRateMin );
@@ -199,6 +205,51 @@ namespace Steamworks
 		{
 			get => GetConfigInt( NetConfig.SendRateMax );
 			set => SetConfigInt( NetConfig.SendRateMax, value );
+		}
+
+		/// <summary>
+		/// Nagle time, in microseconds.  When SendMessage is called, if
+		/// the outgoing message is less than the size of the MTU, it will be
+		/// queued for a delay equal to the Nagle timer value.  This is to ensure
+		/// that if the application sends several small messages rapidly, they are
+		/// coalesced into a single packet.
+		/// See historical RFC 896.  Value is in microseconds. 
+		/// Default is 5000us (5ms).
+		/// </summary>
+		public static int NagleTime
+		{
+			get => GetConfigInt( NetConfig.NagleTime );
+			set => SetConfigInt( NetConfig.NagleTime, value );
+		}
+
+		/// <summary>
+		/// Do not send UDP packets with a payload of
+		/// larger than N bytes.  If you set this, k_ESteamNetworkingConfig_MTU_DataSize
+		/// is automatically adjusted
+		/// </summary>
+		public static int MTU_PacketSize
+		{
+			get => GetConfigInt( NetConfig.MTU_PacketSize );
+			set => SetConfigInt( NetConfig.MTU_PacketSize, value );
+		}
+
+		/// <summary>
+		/// Maximum message size you can send that
+		/// will not fragment, based on k_ESteamNetworkingConfig_MTU_PacketSize
+		/// </summary>
+		public static int MTU_DataSize
+		{
+			get => GetConfigInt( NetConfig.MTU_DataSize );
+		}
+
+		/// <summary>
+		/// Enable Dual wifi band support for this connection
+		/// 0 = no, 1 = yes, 2 = simulate it for debugging, even if dual wifi not available
+		/// </summary>
+		public static int DualWifi_Enable
+		{
+			get => GetConfigInt( NetConfig.DualWifi_Enable );
+			set => SetConfigInt( NetConfig.DualWifi_Enable, value );
 		}
 
 		/// <summary>
@@ -289,9 +340,9 @@ namespace Steamworks
 		}
 
 		internal static void LogDebugMessage( NetDebugOutput type, string message )
-        {
+		{
 			debugMessages.Enqueue( new DebugMessage { Type = type, Msg = message } );
-        }
+		}
 
 		/// <summary>
 		/// Called regularly from the Dispatch loop so we can provide a timely
@@ -308,10 +359,10 @@ namespace Steamworks
 			}
 		}
 
-        internal static unsafe NetMsg* AllocateMessage()
-        {
-            return Internal.AllocateMessage(0);
-        }
+		internal static unsafe NetMsg* AllocateMessage()
+		{
+			return Internal.AllocateMessage( 0 );
+		}
 
 		#region Config Internals
 
@@ -327,7 +378,7 @@ namespace Steamworks
 			NetConfigType dtype = NetConfigType.Int32;
 			int* ptr = &value;
 			UIntPtr size = new UIntPtr( sizeof( int ) );
-			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr) ptr, ref size );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr)ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -406,6 +457,6 @@ namespace Steamworks
 			}
 		}*/
 
-#endregion
+		#endregion
 	}
 }
