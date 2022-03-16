@@ -124,6 +124,8 @@ namespace Steamworks.Ugc
 		public bool IsSubscribed => (State & ItemState.Subscribed) == ItemState.Subscribed;
 		public bool NeedsUpdate => (State & ItemState.NeedsUpdate) == ItemState.NeedsUpdate;
 
+		public bool IsGameManagedItem => details.FileType == WorkshopFileType.GameManagedItem;
+
 		public string Directory 
 		{
 			get

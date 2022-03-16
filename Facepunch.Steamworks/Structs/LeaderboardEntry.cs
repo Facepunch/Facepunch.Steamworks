@@ -8,7 +8,7 @@ namespace Steamworks.Data
 		public int GlobalRank;
 		public int Score;
 		public int[] Details;
-		// UGCHandle_t m_hUGC
+		public PublishedFileId? Ugc;
 
 		internal static LeaderboardEntry From( LeaderboardEntry_t e, int[] detailsBuffer )
 		{
@@ -17,7 +17,8 @@ namespace Steamworks.Data
 				User = new Friend( e.SteamIDUser ),
 				GlobalRank = e.GlobalRank,
 				Score = e.Score,
-				Details = null
+				Details = null,
+				Ugc = e.UGC == 0 ? null : (PublishedFileId?) e.UGC
 			};
 
 			if ( e.CDetails > 0 )

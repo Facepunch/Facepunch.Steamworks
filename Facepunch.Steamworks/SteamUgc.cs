@@ -200,5 +200,13 @@ namespace Steamworks
 			return status?.Accepted;
 		}
 
+		public static PublishedFileId[] GetSubscribedItemIds()
+		{
+			var count = Internal.GetNumSubscribedItems();
+			var ids = new PublishedFileId[count];
+			Internal.GetSubscribedItems(ids, count);
+
+			return ids;
+		}
 	}
 }
