@@ -177,5 +177,10 @@ namespace Steamworks
 			}
 		}
 
+		public static async Task<LegacyDownloadResult?> LegacyDownloadSharedFile( PublishedFileId fileId, uint priority = 1000 )
+		{
+			var result = await Internal.UGCDownload( fileId.Value, priority );
+			return result == null ? null : new LegacyDownloadResult( result.Value );
+		}
 	}
 }
