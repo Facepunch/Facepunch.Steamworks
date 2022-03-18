@@ -4,19 +4,18 @@ namespace Steamworks.Data
 {
 	public struct LeaderboardUpdate
 	{
-		public int Score;
-		public bool Changed;
-		public int NewGlobalRank;
-		public int OldGlobalRank;
+		private readonly LeaderboardScoreUploaded_t _internal;
+
+		public bool Success => _internal.Success != 0;
+		public int Score => _internal.Score;
+		public bool Changed => _internal.ScoreChanged != 0;
+		public int NewGlobalRank => _internal.GlobalRankNew;
+		public int OldGlobalRank => _internal.GlobalRankPrevious;
 		public int RankChange => NewGlobalRank - OldGlobalRank;
 
-		internal static LeaderboardUpdate From( LeaderboardScoreUploaded_t e ) =>
-			new LeaderboardUpdate
-			{
-				Score = e.Score,
-				Changed = e.ScoreChanged == 1,
-				NewGlobalRank = e.GlobalRankNew,
-				OldGlobalRank = e.GlobalRankPrevious
-			};
+		internal LeaderboardUpdate( LeaderboardScoreUploaded_t result )
+		{
+			_internal = result;
+		}
 	}
 }

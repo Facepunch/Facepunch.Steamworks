@@ -32,7 +32,7 @@ namespace Steamworks.Data
 			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.ForceUpdate, score, details, details.Length );
 			if ( !r.HasValue ) return null;
 
-			return LeaderboardUpdate.From( r.Value );
+			return new LeaderboardUpdate( r.Value );
 		}
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace Steamworks.Data
 			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.KeepBest, score, details, details.Length );
 			if ( !r.HasValue ) return null;
 
-			return LeaderboardUpdate.From( r.Value );
+			return new LeaderboardUpdate( r.Value );
 		}
 
 		/// <summary>
