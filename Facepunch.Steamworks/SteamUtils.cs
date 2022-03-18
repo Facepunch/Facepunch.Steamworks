@@ -292,9 +292,9 @@ namespace Steamworks
 		/// </summary>
 		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
 
-		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
-		//{
-		//	Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
-		//}
+		public static void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
+		{
+			Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
+		}
 	}
 }
