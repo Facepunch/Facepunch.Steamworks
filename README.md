@@ -10,7 +10,8 @@
 |----------|------------ |
 | Windows | ✔ |
 | Linux | ✔ |
-| MacOS | ✔ (M1 not supported) |
+| MacOS (Intel) | ✔ |
+| MacOS (Apple Silicon) | ❌ |
 | Unity Support | ✔ |
 | Unity IL2CPP Support | ✔ |
 | Async Callbacks (steam callresults) | ✔ |
