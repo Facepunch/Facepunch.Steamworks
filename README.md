@@ -10,7 +10,7 @@
 |----------|------------ |
 | Windows | ✔ |
 | Linux | ✔ |
-| MacOS | ✔ |
+| MacOS | ✔ (M1 not supported) |
 | Unity Support | ✔ |
 | Unity IL2CPP Support | ✔ |
 | Async Callbacks (steam callresults) | ✔ |
