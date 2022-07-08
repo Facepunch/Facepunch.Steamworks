@@ -48,6 +48,10 @@ namespace Steamworks
 			fixed ( byte* ptr = buffer )
 			{
 				var readsize = Internal.FileRead( filename, (IntPtr)ptr, size );
+				if ( readsize != size )
+				{
+					return null;
+				}
 				return buffer;
 			}
 		}
