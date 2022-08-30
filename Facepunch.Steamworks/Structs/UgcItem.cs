@@ -207,6 +207,22 @@ namespace Steamworks.Ugc
 		}
 
 		/// <summary>
+		/// Time when the last update was downloaded
+		/// </summary>
+		public DateTime Downloaded
+		{
+			get
+			{
+				ulong size = 0;
+				uint ts = 0;
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out _, ref ts ) )
+					return default;
+
+				return Epoch.ToDateTime( ts );
+			}
+		}
+
+		/// <summary>
 		/// If we're downloading our current progress as a delta betwen 0-1
 		/// </summary>
 		public float DownloadAmount

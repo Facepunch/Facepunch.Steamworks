@@ -77,9 +77,6 @@ namespace Steamworks
 
 			progress?.Invoke( 0.0f );
 
-			if ( Download( fileId, true ) == false )
-				return item.IsInstalled;
-
 			// Steam docs about Download:
 			// If the return value is true then register and wait
 			// for the Callback DownloadItemResult_t before calling 
@@ -95,6 +92,9 @@ namespace Steamworks
 					
 					onDownloadStarted = r => downloadStarted = true;
 					OnDownloadItemResult += onDownloadStarted;
+
+					if ( Download( fileId, true ) == false )
+						return item.IsInstalled;
 
 					while ( downloadStarted == false )
 					{
