@@ -18,6 +18,8 @@ namespace Steamworks
 		internal override void InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamApps( server ) );
+
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()
