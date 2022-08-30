@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,34 @@ namespace Steamworks
 		internal override void InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamRemoteStorage( server ) );
+			InstallEvents( server );
 		}
 
+		internal static void InstallEvents( bool server )
+		{
+			Dispatch.Install<RemoteStorageLocalFileChange_t>( x =>
+			{
+				var count = Internal.GetLocalFileChangeCount();
+				var files = new LocalFileChange[count];
+
+				for ( var i = 0; i < count; i++ )
+				{
+					RemoteStorageLocalFileChange changeType = default;
+					RemoteStorageFilePathType filePathType = default;
+
+					var filename = Internal.GetLocalFileChange( i, ref changeType, ref filePathType );
+
+					files[i] = new LocalFileChange( filename, changeType, filePathType );
+				}
+
+				OnLocalFileChange?.Invoke( files );
+			}, server );
+		}
+
+		/// <summary>
+		/// If a Steam app is flagged for supporting dynamic Steam Cloud sync, and a sync occurs, this callback will be posted to the app if any local files changed.
+		/// </summary>
+		public static event Action<LocalFileChange[]> OnLocalFileChange;
 
 		/// <summary>
 		/// Creates a new file, writes the bytes to the file, and then closes the file.
@@ -174,6 +201,27 @@ namespace Steamworks
 					var filename = Internal.GetFileNameAndSize( i, ref _ );
 					yield return filename;
 				}
+			}
+		}
+
+		public static IDisposable FileWriteBatch()
+		{
+			Internal.BeginFileWriteBatch();
+
+			return new FileWriteBatchDisposable();
+		}
+
+		private sealed class FileWriteBatchDisposable : IDisposable
+		{
+			private bool _disposed;
+
+			public void Dispose()
+			{
+				if ( _disposed ) return;
+
+				_disposed = true;
+
+				Internal.EndFileWriteBatch();
 			}
 		}
 

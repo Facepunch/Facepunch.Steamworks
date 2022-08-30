@@ -818,7 +818,7 @@ namespace Steamworks
 	//
 	// ERemoteStorageLocalFileChange
 	//
-	internal enum RemoteStorageLocalFileChange : int
+	public enum RemoteStorageLocalFileChange : int
 	{
 		Invalid = 0,
 		FileUpdated = 1,
@@ -828,10 +828,22 @@ namespace Steamworks
 	//
 	// ERemoteStorageFilePathType
 	//
-	internal enum RemoteStorageFilePathType : int
+	public enum RemoteStorageFilePathType : int
 	{
+		/// <summary>
+		/// Unused.
+		/// </summary>
 		Invalid = 0,
+
+		/// <summary>
+		/// An absolute disk path is provided. This type of path is used for files managed via AutoCloud.
+		/// </summary>
 		Absolute = 1,
+
+		/// <summary>
+		/// An ISteamRemoteStorage API relative path is provided. This type of path is used for files
+		/// managed via the ISteamRemoteStorage API methods (FileWrite, FileRead, etc).
+		/// </summary>
 		APIFilename = 2,
 	}
 	
