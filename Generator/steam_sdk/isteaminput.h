@@ -682,6 +682,11 @@ struct SteamInputActionEvent_t
 	};
 };
 
+//-----------------------------------------------------------------------------
+// Forward declaration for ScePadTriggerEffectParam, defined in isteamdualsense.h
+//-----------------------------------------------------------------------------
+struct ScePadTriggerEffectParam;
+
 #pragma pack( pop )
 
 typedef void ( *SteamInputActionEventCallbackPointer )( SteamInputActionEvent_t * );
@@ -895,6 +900,9 @@ public:
 	// Get a bitmask of the Steam Input Configuration types opted in for the current session. Returns ESteamInputConfigurationEnableType values.?	
 	// Note: user can override the settings from the Steamworks Partner site so the returned values may not exactly match your default configuration
 	virtual uint16 GetSessionInputConfigurationSettings() = 0;
+
+	// Set the trigger effect for a DualSense controller
+	virtual void SetDualSenseTriggerEffect( InputHandle_t inputHandle, const ScePadTriggerEffectParam *pParam ) = 0;
 };
 
 #define STEAMINPUT_INTERFACE_VERSION "SteamInput006"

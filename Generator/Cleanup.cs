@@ -168,6 +168,7 @@ public static class Cleanup
 		if ( name.StartsWith( "ISteamInput." ) )
 		{
 			if ( name.Contains( "EnableActionEventCallbacks" ) ) return true;
+			if ( name.Contains( "DualSense" ) ) return true;
 		}
 
 		if ( name.StartsWith( "ISteamRemoteStorage." ) )

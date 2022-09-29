@@ -862,5 +862,50 @@ namespace Steamworks
 			_ActivateGameOverlayInviteDialogConnectString( Self, pchConnectString );
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_RequestEquippedProfileItems", CallingConvention = Platform.CC)]
+		private static extern SteamAPICall_t _RequestEquippedProfileItems( IntPtr self, SteamId steamID );
+		
+		#endregion
+		internal CallResult<EquippedProfileItems_t> RequestEquippedProfileItems( SteamId steamID )
+		{
+			var returnValue = _RequestEquippedProfileItems( Self, steamID );
+			return new CallResult<EquippedProfileItems_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_BHasEquippedProfileItem", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BHasEquippedProfileItem( IntPtr self, SteamId steamID, CommunityProfileItemType itemType );
+		
+		#endregion
+		internal bool BHasEquippedProfileItem( SteamId steamID, CommunityProfileItemType itemType )
+		{
+			var returnValue = _BHasEquippedProfileItem( Self, steamID, itemType );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_GetProfileItemPropertyString", CallingConvention = Platform.CC)]
+		private static extern Utf8StringPointer _GetProfileItemPropertyString( IntPtr self, SteamId steamID, CommunityProfileItemType itemType, CommunityProfileItemProperty prop );
+		
+		#endregion
+		internal string GetProfileItemPropertyString( SteamId steamID, CommunityProfileItemType itemType, CommunityProfileItemProperty prop )
+		{
+			var returnValue = _GetProfileItemPropertyString( Self, steamID, itemType, prop );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_GetProfileItemPropertyUint", CallingConvention = Platform.CC)]
+		private static extern uint _GetProfileItemPropertyUint( IntPtr self, SteamId steamID, CommunityProfileItemType itemType, CommunityProfileItemProperty prop );
+		
+		#endregion
+		internal uint GetProfileItemPropertyUint( SteamId steamID, CommunityProfileItemType itemType, CommunityProfileItemProperty prop )
+		{
+			var returnValue = _GetProfileItemPropertyUint( Self, steamID, itemType, prop );
+			return returnValue;
+		}
+		
 	}
 }

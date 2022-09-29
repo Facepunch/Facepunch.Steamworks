@@ -357,5 +357,17 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_SetDlcContext", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SetDlcContext( IntPtr self, AppId nAppID );
+		
+		#endregion
+		internal bool SetDlcContext( AppId nAppID )
+		{
+			var returnValue = _SetDlcContext( Self, nAppID );
+			return returnValue;
+		}
+		
 	}
 }
