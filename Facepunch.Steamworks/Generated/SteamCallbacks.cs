@@ -488,6 +488,41 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct EquippedProfileItemsChanged_t : ICallbackData
+	{
+		internal ulong SteamID; // m_steamID CSteamID
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EquippedProfileItemsChanged_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.EquippedProfileItemsChanged;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
+	internal struct EquippedProfileItems_t : ICallbackData
+	{
+		internal Result Result; // m_eResult EResult
+		internal ulong SteamID; // m_steamID CSteamID
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool HasAnimatedAvatar; // m_bHasAnimatedAvatar bool
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool HasAvatarFrame; // m_bHasAvatarFrame bool
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool HasProfileModifier; // m_bHasProfileModifier bool
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool HasProfileBackground; // m_bHasProfileBackground bool
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool HasMiniProfileBackground; // m_bHasMiniProfileBackground bool
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EquippedProfileItems_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.EquippedProfileItems;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct IPCountry_t : ICallbackData
 	{
 		

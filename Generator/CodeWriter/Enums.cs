@@ -92,6 +92,9 @@ namespace Generator
                         ename = p + ename;
                     }
 
+                    if (ename.StartsWith( $"k_E{name}" ))
+	                    ename = ename[(name.Length + 3)..];
+
                     WriteLine( $"{ename.Trim( ' ', '_' )} = {entry.Value}," );
                 }
             }
