@@ -11,9 +11,12 @@ namespace Steamworks
 	{
 		internal static ISteamGameServerStats Internal => Interface as ISteamGameServerStats;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamGameServerStats( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			return true;
 		}
 		
 
