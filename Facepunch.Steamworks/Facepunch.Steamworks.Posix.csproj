@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Posix</AssemblyName>
 		<DefineConstants>$(DefineConstants);PLATFORM_POSIX</DefineConstants>
-		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;net6.0;net46</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>10</LangVersion>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
