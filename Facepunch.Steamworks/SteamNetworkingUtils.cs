@@ -192,6 +192,43 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Minimum send rate clamp, 0 is no limit.
+		/// This value will control the min allowed sending rate that 
+		/// bandwidth estimation is allowed to reach.  Default is 0 (no-limit)
+		/// </summary>
+		public static int SendRateMin
+		{
+			get => GetConfigInt( NetConfig.SendRateMin );
+			set => SetConfigInt( NetConfig.SendRateMin, value );
+		}
+
+		/// <summary>
+		/// Maximum send rate clamp, 0 is no limit.
+		/// This value will control the max allowed sending rate that 
+		/// bandwidth estimation is allowed to reach.  Default is 0 (no-limit)
+		/// </summary>
+		public static int SendRateMax
+		{
+			get => GetConfigInt( NetConfig.SendRateMax );
+			set => SetConfigInt( NetConfig.SendRateMax, value );
+		}
+
+		/// <summary>
+		/// Nagle time, in microseconds.  When SendMessage is called, if
+		/// the outgoing message is less than the size of the MTU, it will be
+		/// queued for a delay equal to the Nagle timer value.  This is to ensure
+		/// that if the application sends several small messages rapidly, they are
+		/// coalesced into a single packet.
+		/// See historical RFC 896.  Value is in microseconds. 
+		/// Default is 5000us (5ms).
+		/// </summary>
+		public static int NagleTime
+		{
+			get => GetConfigInt( NetConfig.NagleTime );
+			set => SetConfigInt( NetConfig.NagleTime, value );
+		}
+
+		/// <summary>
 		/// Don't automatically fail IP connections that don't have
 		/// strong auth.  On clients, this means we will attempt the connection even if
 		/// we don't know our identity or can't get a cert.  On the server, it means that
