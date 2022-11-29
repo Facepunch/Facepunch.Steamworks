@@ -17,10 +17,14 @@ namespace Steamworks
 	{
 		internal static ISteamUGC Internal => Interface as ISteamUGC;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamUGC( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents( server );
+
+			return true;
 		}
 
 		internal static void InstallEvents( bool server )

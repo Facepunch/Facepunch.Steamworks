@@ -156,6 +156,10 @@ namespace Steamworks
 		InvalidSignature = 121,
 		ParseFailure = 122,
 		NoVerifiedPhone = 123,
+		InsufficientBattery = 124,
+		ChargerRequired = 125,
+		CachedCredentialInvalid = 126,
+		K_EResultPhoneNumberIsVOIP = 127,
 	}
 	
 	//
@@ -542,6 +546,37 @@ namespace Steamworks
 	{
 		Default = 0,
 		Modal = 1,
+	}
+	
+	//
+	// ECommunityProfileItemType
+	//
+	internal enum CommunityProfileItemType : int
+	{
+		AnimatedAvatar = 0,
+		AvatarFrame = 1,
+		ProfileModifier = 2,
+		ProfileBackground = 3,
+		MiniProfileBackground = 4,
+	}
+	
+	//
+	// ECommunityProfileItemProperty
+	//
+	internal enum CommunityProfileItemProperty : int
+	{
+		ImageSmall = 0,
+		ImageLarge = 1,
+		InternalName = 2,
+		Title = 3,
+		Description = 4,
+		AppID = 5,
+		TypeID = 6,
+		Class = 7,
+		MovieWebM = 8,
+		MovieMP4 = 9,
+		MovieWebMSmall = 10,
+		MovieMP4Small = 11,
 	}
 	
 	//
@@ -2324,6 +2359,10 @@ namespace Steamworks
 		P2P_Transport_ICE_Enable = 104,
 		P2P_Transport_ICE_Penalty = 105,
 		P2P_Transport_SDR_Penalty = 106,
+		P2P_TURN_ServerList = 107,
+		P2P_TURN_UserList = 108,
+		P2P_TURN_PassList = 109,
+		P2P_Transport_ICE_Implementation = 110,
 		SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
 		SDRClient_ConsecutitivePingTimeoutsFail = 20,
 		SDRClient_MinPingsBeforePingAccurate = 21,

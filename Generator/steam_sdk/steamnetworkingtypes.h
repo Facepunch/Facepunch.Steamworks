@@ -15,13 +15,11 @@
 
 //-----------------------------------------------------------------------------
 // SteamNetworkingSockets config.
-//#define STEAMNETWORKINGSOCKETS_STANDALONELIB // Comment this in to support compiling/linking with the standalone library / gamenetworkingsockets opensource
-#define STEAMNETWORKINGSOCKETS_STEAMAPI // Compiling/link with steam_api.h and Steamworks SDK
+#if !defined(STEAMNETWORKINGSOCKETS_STANDALONELIB) && !defined(STEAMNETWORKINGSOCKETS_STEAMAPI)
+	#define STEAMNETWORKINGSOCKETS_STEAMAPI
+#endif
 //-----------------------------------------------------------------------------
 
-#if !defined( STEAMNETWORKINGSOCKETS_OPENSOURCE ) && !defined( STEAMNETWORKINGSOCKETS_STREAMINGCLIENT )
-	#define STEAMNETWORKINGSOCKETS_STEAM
-#endif
 #ifdef NN_NINTENDO_SDK // We always static link on Nintendo
 	#define STEAMNETWORKINGSOCKETS_STATIC_LINK
 #endif
@@ -143,6 +141,12 @@ enum ESteamNetworkingIdentityType
 	// Basic platform-specific identifiers.
 	//
 	k_ESteamNetworkingIdentityType_SteamID = 16, // 64-bit CSteamID
+	k_ESteamNetworkingIdentityType_XboxPairwiseID = 17, // Publisher-specific user identity, as string
+	k_ESteamNetworkingIdentityType_SonyPSN = 18, // 64-bit ID
+	k_ESteamNetworkingIdentityType_GoogleStadia = 19, // 64-bit ID
+	//k_ESteamNetworkingIdentityType_NintendoNetworkServiceAccount,
+	//k_ESteamNetworkingIdentityType_EpicGameStore
+	//k_ESteamNetworkingIdentityType_WeGame
 
 	//
 	// Special identifiers.
@@ -271,6 +275,15 @@ struct SteamNetworkingIdentity
 	void SetSteamID64( uint64 steamID ); // Takes SteamID as raw 64-bit number
 	uint64 GetSteamID64() const; // Returns 0 if identity is not SteamID
 
+	bool SetXboxPairwiseID( const char *pszString ); // Returns false if invalid length
+	const char *GetXboxPairwiseID() const; // Returns nullptr if not Xbox ID
+
+	void SetPSNID( uint64 id );
+	uint64 GetPSNID() const; // Returns 0 if not PSN
+
+	void SetStadiaID( uint64 id );
+	uint64 GetStadiaID() const; // Returns 0 if not Stadia
+
 	void SetIPAddr( const SteamNetworkingIPAddr &addr ); // Set to specified IP:port
 	const SteamNetworkingIPAddr *GetIPAddr() const; // returns null if we are not an IP address.
 	void SetIPv4Addr( uint32 nIPv4, uint16 nPort ); // Set to specified IPv4:port
@@ -312,6 +325,7 @@ struct SteamNetworkingIdentity
 	enum {
 		k_cchMaxString = 128, // Max length of the buffer needed to hold any identity, formatted in string format by ToString
 		k_cchMaxGenericString = 32, // Max length of the string for generic string identities.  Including terminating '\0'
+		k_cchMaxXboxPairwiseID = 33, // Including terminating '\0'
 		k_cbMaxGenericBytes = 32,
 	};
 
@@ -324,7 +338,10 @@ struct SteamNetworkingIdentity
 	int m_cbSize;
 	union {
 		uint64 m_steamID64;
+		uint64 m_PSNID;
+		uint64 m_stadiaID;
 		char m_szGenericString[ k_cchMaxGenericString ];
+		char m_szXboxPairwiseID[ k_cchMaxXboxPairwiseID ];
 		uint8 m_genericBytes[ k_cbMaxGenericBytes ];
 		char m_szUnknownRawString[ k_cchMaxString ];
 		SteamNetworkingIPAddr m_ip;
@@ -1479,7 +1496,11 @@ enum ESteamNetworkingConfigValue
 	/// route ping time and is then adjusted.)
 	k_ESteamNetworkingConfig_P2P_Transport_ICE_Penalty = 105,
 	k_ESteamNetworkingConfig_P2P_Transport_SDR_Penalty = 106,
+	k_ESteamNetworkingConfig_P2P_TURN_ServerList = 107,
+	k_ESteamNetworkingConfig_P2P_TURN_UserList = 108,
+	k_ESteamNetworkingConfig_P2P_TURN_PassList = 109,
 	//k_ESteamNetworkingConfig_P2P_Transport_LANBeacon_Penalty = 107,
+	k_ESteamNetworkingConfig_P2P_Transport_ICE_Implementation = 110,
 
 //
 // Settings for SDR relayed connections
@@ -1695,7 +1716,9 @@ inline SteamNetworkingPOPID CalculateSteamNetworkingPOPIDFromString( const char 
 template <int N>
 inline void GetSteamNetworkingLocationPOPStringFromID( SteamNetworkingPOPID id, char (&szCode)[N] )
 {
+#if !defined( __GNUC__ ) || __GNUC__ >= 5
 	static_assert( N >= 5, "Fixed-size buffer not big enough to hold SDR POP ID" );
+#endif
 	szCode[0] = char( id >> 16U );
 	szCode[1] = char( id >> 8U );
 	szCode[2] = char( id );
@@ -1744,8 +1767,18 @@ inline void SteamNetworkingIdentity::SetSteamID( CSteamID steamID ) { SetSteamID
 inline CSteamID SteamNetworkingIdentity::GetSteamID() const { return CSteamID( GetSteamID64() ); }
 inline void SteamNetworkingIdentity::SetSteamID64( uint64 steamID ) { m_eType = k_ESteamNetworkingIdentityType_SteamID; m_cbSize = sizeof( m_steamID64 ); m_steamID64 = steamID; }
 inline uint64 SteamNetworkingIdentity::GetSteamID64() const { return m_eType == k_ESteamNetworkingIdentityType_SteamID ? m_steamID64 : 0; }
+inline bool SteamNetworkingIdentity::SetXboxPairwiseID( const char *pszString ) { size_t l = strlen( pszString ); if ( l < 1 || l >= sizeof(m_szXboxPairwiseID) ) return false;
+	m_eType = k_ESteamNetworkingIdentityType_XboxPairwiseID; m_cbSize = int(l+1); memcpy( m_szXboxPairwiseID, pszString, m_cbSize ); return true; }
+inline const char *SteamNetworkingIdentity::GetXboxPairwiseID() const { return m_eType == k_ESteamNetworkingIdentityType_XboxPairwiseID ? m_szXboxPairwiseID : NULL; }
+inline void SteamNetworkingIdentity::SetPSNID( uint64 id ) { m_eType = k_ESteamNetworkingIdentityType_SonyPSN; m_cbSize = sizeof( m_PSNID ); m_PSNID = id; }
+inline uint64 SteamNetworkingIdentity::GetPSNID() const { return m_eType == k_ESteamNetworkingIdentityType_SonyPSN ? m_PSNID : 0; }
+inline void SteamNetworkingIdentity::SetStadiaID( uint64 id ) { m_eType = k_ESteamNetworkingIdentityType_GoogleStadia; m_cbSize = sizeof( m_stadiaID ); m_stadiaID = id; }
+inline uint64 SteamNetworkingIdentity::GetStadiaID() const { return m_eType == k_ESteamNetworkingIdentityType_GoogleStadia ? m_stadiaID : 0; }
 inline void SteamNetworkingIdentity::SetIPAddr( const SteamNetworkingIPAddr &addr ) { m_eType = k_ESteamNetworkingIdentityType_IPAddress; m_cbSize = (int)sizeof(m_ip); m_ip = addr; }
 inline const SteamNetworkingIPAddr *SteamNetworkingIdentity::GetIPAddr() const { return m_eType == k_ESteamNetworkingIdentityType_IPAddress ? &m_ip : NULL; }
+inline void SteamNetworkingIdentity::SetIPv4Addr( uint32 nIPv4, uint16 nPort ) { m_eType = k_ESteamNetworkingIdentityType_IPAddress; m_cbSize = (int)sizeof(m_ip); m_ip.SetIPv4( nIPv4, nPort ); }
+inline uint32 SteamNetworkingIdentity::GetIPv4() const { return m_eType == k_ESteamNetworkingIdentityType_IPAddress ? m_ip.GetIPv4() : 0; }
+inline ESteamNetworkingFakeIPType SteamNetworkingIdentity::GetFakeIPType() const { return m_eType == k_ESteamNetworkingIdentityType_IPAddress ? m_ip.GetFakeIPType() : k_ESteamNetworkingFakeIPType_Invalid; }
 inline void SteamNetworkingIdentity::SetLocalHost() { m_eType = k_ESteamNetworkingIdentityType_IPAddress; m_cbSize = (int)sizeof(m_ip); m_ip.SetIPv6LocalHost(); }
 inline bool SteamNetworkingIdentity::IsLocalHost() const { return m_eType == k_ESteamNetworkingIdentityType_IPAddress && m_ip.IsLocalHost(); }
 inline bool SteamNetworkingIdentity::SetGenericString( const char *pszString ) { size_t l = strlen( pszString ); if ( l >= sizeof(m_szGenericString) ) return false;

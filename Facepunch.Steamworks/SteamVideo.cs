@@ -14,10 +14,14 @@ namespace Steamworks
 	{
 		internal static ISteamVideo Internal => Interface as ISteamVideo;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamVideo( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
 			InstallEvents();
+
+			return true;
 		}
 
 		internal static void InstallEvents()

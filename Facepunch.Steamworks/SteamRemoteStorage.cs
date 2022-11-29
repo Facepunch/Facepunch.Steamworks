@@ -14,9 +14,12 @@ namespace Steamworks
 	{
 		internal static ISteamRemoteStorage Internal => Interface as ISteamRemoteStorage;
 
-		internal override void InitializeInterface( bool server )
+		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamRemoteStorage( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			return true;
 		}
 
 
@@ -48,6 +51,10 @@ namespace Steamworks
 			fixed ( byte* ptr = buffer )
 			{
 				var readsize = Internal.FileRead( filename, (IntPtr)ptr, size );
+				if ( readsize != size )
+				{
+					return null;
+				}
 				return buffer;
 			}
 		}

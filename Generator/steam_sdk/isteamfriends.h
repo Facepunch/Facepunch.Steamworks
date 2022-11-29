@@ -157,6 +157,32 @@ enum EActivateGameOverlayToWebPageMode
 															// will also close. When the user closes the browser window, the overlay will automatically close.
 };
 
+//-----------------------------------------------------------------------------
+// Purpose: See GetProfileItemPropertyString and GetProfileItemPropertyUint
+//-----------------------------------------------------------------------------
+enum ECommunityProfileItemType
+{
+	k_ECommunityProfileItemType_AnimatedAvatar		 = 0,
+	k_ECommunityProfileItemType_AvatarFrame			 = 1,
+	k_ECommunityProfileItemType_ProfileModifier		 = 2,
+	k_ECommunityProfileItemType_ProfileBackground	 = 3,
+	k_ECommunityProfileItemType_MiniProfileBackground = 4,
+};
+enum ECommunityProfileItemProperty
+{
+	k_ECommunityProfileItemProperty_ImageSmall	   = 0, // string
+	k_ECommunityProfileItemProperty_ImageLarge	   = 1, // string
+	k_ECommunityProfileItemProperty_InternalName   = 2, // string
+	k_ECommunityProfileItemProperty_Title		   = 3, // string
+	k_ECommunityProfileItemProperty_Description	   = 4, // string
+	k_ECommunityProfileItemProperty_AppID		   = 5, // uint32
+	k_ECommunityProfileItemProperty_TypeID		   = 6, // uint32
+	k_ECommunityProfileItemProperty_Class		   = 7, // uint32
+	k_ECommunityProfileItemProperty_MovieWebM	   = 8, // string
+	k_ECommunityProfileItemProperty_MovieMP4	   = 9, // string
+	k_ECommunityProfileItemProperty_MovieWebMSmall = 10, // string
+	k_ECommunityProfileItemProperty_MovieMP4Small  = 11, // string
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: interface to accessing information about individual users,
@@ -422,6 +448,14 @@ public:
 
 	// Activates the game overlay to open an invite dialog that will send the provided Rich Presence connect string to selected friends
 	virtual void ActivateGameOverlayInviteDialogConnectString( const char *pchConnectString ) = 0;
+
+	// Steam Community items equipped by a user on their profile
+	// You can register for EquippedProfileItemsChanged_t to know when a friend has changed their equipped profile items
+	STEAM_CALL_RESULT( EquippedProfileItems_t )
+	virtual SteamAPICall_t RequestEquippedProfileItems( CSteamID steamID ) = 0;
+	virtual bool BHasEquippedProfileItem( CSteamID steamID, ECommunityProfileItemType itemType ) = 0;
+	virtual const char *GetProfileItemPropertyString( CSteamID steamID, ECommunityProfileItemType itemType, ECommunityProfileItemProperty prop ) = 0;
+	virtual uint32 GetProfileItemPropertyUint( CSteamID steamID, ECommunityProfileItemType itemType, ECommunityProfileItemProperty prop ) = 0;
 };
 
 #define STEAMFRIENDS_INTERFACE_VERSION "SteamFriends017"
@@ -687,6 +721,29 @@ struct OverlayBrowserProtocolNavigation_t
 	char rgchURI[ 1024 ];
 };
 
+//-----------------------------------------------------------------------------
+// Purpose: A user's equipped profile items have changed
+//-----------------------------------------------------------------------------
+struct EquippedProfileItemsChanged_t
+{
+	enum { k_iCallback = k_iSteamFriendsCallbacks + 50 };
+	CSteamID m_steamID;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+struct EquippedProfileItems_t
+{
+	enum { k_iCallback = k_iSteamFriendsCallbacks + 51 };
+	EResult m_eResult;
+	CSteamID m_steamID;
+	bool m_bHasAnimatedAvatar;
+	bool m_bHasAvatarFrame;
+	bool m_bHasProfileModifier;
+	bool m_bHasProfileBackground;
+	bool m_bHasMiniProfileBackground;
+};
 
 #pragma pack( pop )
 

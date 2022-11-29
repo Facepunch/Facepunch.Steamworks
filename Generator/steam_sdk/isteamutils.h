@@ -43,10 +43,10 @@ enum EGamepadTextInputLineMode
 
 enum EFloatingGamepadTextInputMode
 {
-	k_EFloatingGamepadTextInputModeModeSingleLine = 0, // Enter dismisses the keyboard
-	k_EFloatingGamepadTextInputModeModeMultipleLines = 1, // User needs to explictly close the keyboard
-	k_EFloatingGamepadTextInputModeModeEmail = 2,
-	k_EFloatingGamepadTextInputModeModeNumeric = 3,
+	k_EFloatingGamepadTextInputModeModeSingleLine = 0,		// Enter dismisses the keyboard
+	k_EFloatingGamepadTextInputModeModeMultipleLines = 1,	// User needs to explictly close the keyboard
+	k_EFloatingGamepadTextInputModeModeEmail = 2,			// Keyboard layout is email, enter dismisses the keyboard
+	k_EFloatingGamepadTextInputModeModeNumeric = 3,			// Keyboard layout is numeric, enter dismisses the keyboard
 
 };
 
