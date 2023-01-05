@@ -108,6 +108,17 @@ namespace Steamworks.Ugc
         /// The number of downvotes of this item
         /// </summary>
         public uint VotesDown => details.VotesDown;
+
+		/// <summary>
+		/// The file size of this item
+		/// </summary>
+		public int FileSize => details.FileSize;
+
+		/// <summary>
+		/// The preview file size of this item
+		/// </summary>
+		public int PreviewFileSize => details.PreviewFileSize;
+
 		/// <summary>
 		/// Dependencies/children of this item or collection, available only from WithDependencies(true) queries
 		/// </summary>
