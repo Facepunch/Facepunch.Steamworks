@@ -54,7 +54,6 @@ namespace Generator
 
                 }
                 EndBlock();
-                WriteLine();
             }
         }
 

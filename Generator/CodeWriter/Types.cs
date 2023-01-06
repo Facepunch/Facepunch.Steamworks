@@ -79,7 +79,6 @@ namespace Generator
 						WriteLine( $"public int CompareTo( {typeName} other ) => Value.CompareTo( other.Value );" );
 				}
                 EndBlock();
-                WriteLine();
             }
         }
     }

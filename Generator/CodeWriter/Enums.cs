@@ -12,9 +12,9 @@ namespace Generator
         {
             foreach ( var o in def.enums )
             {
-                WriteLine( $"//" );
-                WriteLine( $"// {o.Name}" );
-                WriteLine( $"//" );
+                WriteLine( $"/// <summary>" );
+                WriteLine( $"/// {o.Name}" );
+                WriteLine( $"/// <summary>" );
                 var name = o.Name;
 
                 // We're not interested in namespacing
@@ -99,7 +99,6 @@ namespace Generator
                 }
             }
             EndBlock();
-            WriteLine();
         }
     }
 }

@@ -71,7 +71,6 @@ namespace Generator
 
                 }
                 EndBlock();
-                WriteLine();
             }
         }
     }

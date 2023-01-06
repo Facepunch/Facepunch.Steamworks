@@ -92,7 +92,6 @@ namespace Generator
 
                 }
                 EndBlock();
-                WriteLine();
             }
         }
     }
