@@ -68,8 +68,8 @@ namespace Steamworks
 		/// </summary>
 		/// <param name="leftSpeed">The intensity value for the left rumble motor.</param>
 		/// <param name="rightSpeed">The intensity value of the right rumble motor.</param>
-		/// <param name="leftTriggerSpeed"></param>
-		/// <param name="rightTriggerSpeed"></param>
+		/// <param name="leftTriggerSpeed">The intensity value of the Xbox One left trigger rumble</param>
+		/// <param name="rightTriggerSpeed">The intensity value of the Xbox One right trigger rumble.</param>
 		public void TriggerVibrationExtended( ushort leftSpeed, ushort rightSpeed, ushort leftTriggerSpeed, ushort rightTriggerSpeed )
 		{
 			SteamInput.Internal.TriggerVibrationExtended( Handle, leftSpeed, rightSpeed, leftTriggerSpeed, rightTriggerSpeed );
