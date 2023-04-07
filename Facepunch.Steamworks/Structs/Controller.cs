@@ -100,6 +100,9 @@ namespace Steamworks
 		public float X; // x float
 		public float Y; // y float
 		internal byte BActive; // bActive byte
+		/// <summary>
+		/// Whether or not this action is currently available to be bound in the active action set. If it is not available, OR does not belong to the active action set, this will be false.
+		/// </summary>
 		public bool Active => BActive != 0;
 	}
 
@@ -126,7 +129,13 @@ namespace Steamworks
 		[MarshalAs( UnmanagedType.I1 )]
 		internal byte BActive; // bActive byte
 
+		/// <summary>
+		/// The current state of this action; true if the action is currently pressed, otherwise false.
+		/// </summary>
 		public bool Pressed => BState != 0;
+		/// <summary>
+		/// Whether or not this action is currently available to be bound in the active action set.
+		/// </summary>
 		public bool Active => BActive != 0;
 	}
 }
