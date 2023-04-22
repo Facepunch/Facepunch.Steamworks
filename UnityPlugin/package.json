@@ -1,0 +1,8 @@
+{
+  "name": "com.facepunch.steamworks",
+  "displayName": "Facepunch Steamworks",
+  "version": "2.3.2",
+  "unity": "2019.4",
+  "description": "Another fucking c# Steamworks implementation",
+  "author": "Facepunch Studios Ltd."
+}
