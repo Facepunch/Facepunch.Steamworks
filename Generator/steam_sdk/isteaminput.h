@@ -17,9 +17,9 @@
 
 #define STEAM_INPUT_MAX_COUNT 16
 
-#define STEAM_INPUT_MAX_ANALOG_ACTIONS 16
+#define STEAM_INPUT_MAX_ANALOG_ACTIONS 24
 
-#define STEAM_INPUT_MAX_DIGITAL_ACTIONS 128
+#define STEAM_INPUT_MAX_DIGITAL_ACTIONS 256
 
 #define STEAM_INPUT_MAX_ORIGINS 8
 
@@ -319,10 +319,10 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_Switch_LeftGrip_Upper, // Left JoyCon SL Button
 	k_EInputActionOrigin_Switch_RightGrip_Lower,  // Right JoyCon SL Button
 	k_EInputActionOrigin_Switch_RightGrip_Upper,  // Right JoyCon SR Button
-	k_EInputActionOrigin_Switch_Reserved11,
-	k_EInputActionOrigin_Switch_Reserved12,
-	k_EInputActionOrigin_Switch_Reserved13,
-	k_EInputActionOrigin_Switch_Reserved14,
+	k_EInputActionOrigin_Switch_JoyConButton_N, // With a Horizontal JoyCon this will be Y or what would be Dpad Right when vertical
+	k_EInputActionOrigin_Switch_JoyConButton_E, // X
+	k_EInputActionOrigin_Switch_JoyConButton_S, // A
+	k_EInputActionOrigin_Switch_JoyConButton_W, // B
 	k_EInputActionOrigin_Switch_Reserved15,
 	k_EInputActionOrigin_Switch_Reserved16,
 	k_EInputActionOrigin_Switch_Reserved17,
@@ -386,10 +386,10 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_PS5_Gyro_Yaw,
 	k_EInputActionOrigin_PS5_Gyro_Roll,
 	k_EInputActionOrigin_PS5_DPad_Move,
-	k_EInputActionOrigin_PS5_Reserved1,
-	k_EInputActionOrigin_PS5_Reserved2,
-	k_EInputActionOrigin_PS5_Reserved3,
-	k_EInputActionOrigin_PS5_Reserved4,
+	k_EInputActionOrigin_PS5_LeftGrip,
+	k_EInputActionOrigin_PS5_RightGrip,
+	k_EInputActionOrigin_PS5_LeftFn,
+	k_EInputActionOrigin_PS5_RightFn,
 	k_EInputActionOrigin_PS5_Reserved5,
 	k_EInputActionOrigin_PS5_Reserved6,
 	k_EInputActionOrigin_PS5_Reserved7,
@@ -643,12 +643,12 @@ struct InputDigitalActionData_t
 
 struct InputMotionData_t
 {
-	// Sensor-fused absolute rotation; will drift in heading
+	// Sensor-fused absolute rotation; will drift in heading toward average
 	float rotQuatX;
 	float rotQuatY;
 	float rotQuatZ;
 	float rotQuatW;
-	
+
 	// Positional acceleration
 	float posAccelX;
 	float posAccelY;
@@ -658,6 +658,58 @@ struct InputMotionData_t
 	float rotVelX;
 	float rotVelY;
 	float rotVelZ;
+};
+
+
+struct InputMotionDataV2_t
+{
+	//
+	// Gyro post processing:
+	//
+
+	// Drift Corrected Quaternion is calculated after steam input controller calibration values have been applied.
+	// Rawest _useful_ version of a quaternion.
+	// Most camera implementations should use this by comparing last rotation against current rotation, and applying the difference to the in game camera (plus your own sensitivity tweaks)
+	// It is worth viewing 
+	float driftCorrectedQuatX;
+	float driftCorrectedQuatY;
+	float driftCorrectedQuatZ;
+	float driftCorrectedQuatW;
+
+	// Sensor fusion corrects using accelerometer, and "average forward over time" for "forward".
+	// This can "ouija" your aim, so it's not so  appropriate for camera controls (sensor fusion was originally made for racing game steering )
+	// Same result as from old InputMotionData_t::rotQuatX/Y/Z/W
+	float sensorFusionQuatX;
+	float sensorFusionQuatY;
+	float sensorFusionQuatZ;
+	float sensorFusionQuatW;
+
+	// Deferred Sensor fusion quaternion with deferred correction
+	// Reduces perception of "ouija" effect by only applying correction when the controller is below "low noise" thresholds,
+	// while the controller rotates fast - never when the user is attempting precision aim.
+	float deferredSensorFusionQuatX;
+	float deferredSensorFusionQuatY;
+	float deferredSensorFusionQuatZ;
+	float deferredSensorFusionQuatW;
+
+	// Same as accel but values are calibrated such that 1 unit = 1G.
+	// X = Right
+	// Y = Forward out through the joystick USB port.
+	// Z = Up through the joystick axis.
+	float gravityX;
+	float gravityY;
+	float gravityZ;
+
+	// 
+	// Same as rotVel values in GetMotionData but values are calibrated to degrees per second.
+	// Local Space (controller relative)
+	// X = Pitch = left to right axis
+	// Y = Roll = axis through charging port
+	// Z = Yaw = axis through sticks
+	float degreesPerSecondX;
+	float degreesPerSecondY;
+	float degreesPerSecondZ;
+
 };
 
 //-----------------------------------------------------------------------------
@@ -752,6 +804,12 @@ public:
 	// Controller Disconnected - provides info about a single disconnected controller
 	// Note: this is called within either SteamInput()->RunFrame or by SteamAPI_RunCallbacks
 	STEAM_CALL_BACK( SteamInputDeviceDisconnected_t )
+
+	// Controllers using Gamepad emulation (XInput, DirectInput, etc) will be seated in the order that
+	// input is sent by the device. This callback will fire on first input for each device and when the
+	// a user has manually changed the order via the Steam overlay. This also has the device type info
+	// so that you can change out glyph sets without making additional API calls
+	STEAM_CALL_BACK( SteamInputGamepadSlotChange_t )
 
 	// Enable SteamInputActionEvent_t callbacks. Directly calls your callback function
 	// for lower latency than standard Steam callbacks. Supports one callback at a time.
@@ -897,7 +955,7 @@ public:
 	// See isteamremoteplay.h for more information on Steam Remote Play sessions
 	virtual uint32 GetRemotePlaySessionID( InputHandle_t inputHandle ) = 0;
 
-	// Get a bitmask of the Steam Input Configuration types opted in for the current session. Returns ESteamInputConfigurationEnableType values.?	
+	// Get a bitmask of the Steam Input Configuration types opted in for the current session. Returns ESteamInputConfigurationEnableType values.
 	// Note: user can override the settings from the Steamworks Partner site so the returned values may not exactly match your default configuration
 	virtual uint16 GetSessionInputConfigurationSettings() = 0;
 
@@ -955,6 +1013,20 @@ struct SteamInputConfigurationLoaded_t
 	uint32			m_unMinorRevision;
 	bool			m_bUsesSteamInputAPI;	// Does the configuration contain any Analog/Digital actions?
 	bool			m_bUsesGamepadAPI;		// Does the configuration contain any Xinput bindings?
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: called when controller gamepad slots change - on Linux/macOS these
+// slots are shared for all running apps.
+//-----------------------------------------------------------------------------
+struct SteamInputGamepadSlotChange_t
+{
+	enum { k_iCallback = k_iSteamControllerCallbacks + 4 };
+	AppId_t			m_unAppID;
+	InputHandle_t	m_ulDeviceHandle;		// Handle for device
+	ESteamInputType m_eDeviceType;			// Type of device
+	int				m_nOldGamepadSlot;		// Previous GamepadSlot - can be -1 controller doesn't uses gamepad bindings
+	int				m_nNewGamepadSlot;		// New Gamepad Slot - can be -1 controller doesn't uses gamepad bindings
 };
 
 #pragma pack( pop )

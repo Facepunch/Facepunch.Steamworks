@@ -51,7 +51,7 @@ public:
 	// This is set to 0x0 if the resolution is not available
 	virtual bool BGetSessionClientResolution( RemotePlaySessionID_t unSessionID, int *pnResolutionX, int *pnResolutionY ) = 0;
 
-	// Invite a friend to Remote Play Together
+	// Invite a friend to Remote Play Together, or create a guest invite if steamIDFriend is empty
 	// This returns false if the invite can't be sent
 	virtual bool BSendRemotePlayTogetherInvite( CSteamID steamIDFriend ) = 0;
 };
@@ -79,6 +79,11 @@ STEAM_CALLBACK_END( 0 )
 
 STEAM_CALLBACK_BEGIN( SteamRemotePlaySessionDisconnected_t, k_iSteamRemotePlayCallbacks + 2 )
 	STEAM_CALLBACK_MEMBER( 0, RemotePlaySessionID_t, m_unSessionID )
+STEAM_CALLBACK_END( 0 )
+
+
+STEAM_CALLBACK_BEGIN( SteamRemotePlayTogetherGuestInvite_t, k_iSteamRemotePlayCallbacks + 3 )
+	STEAM_CALLBACK_MEMBER_ARRAY( 0, char, m_szConnectURL, 1024 )
 STEAM_CALLBACK_END( 0 )
 
 

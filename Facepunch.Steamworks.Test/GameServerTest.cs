@@ -46,7 +46,7 @@ namespace Steamworks
 			//
 			// Clientside calls this function, gets ticket
 			//
-			var clientTicket = SteamUser.GetAuthSessionTicket();
+			var clientTicket = SteamUser.GetAuthSessionTicket( SteamClient.SteamId );
 
 			//
 			// The client sends this data to the server along with their steamid

@@ -306,14 +306,14 @@ namespace Steamworks
 		/// <summary>
 		/// Retrieve an authentication ticket to be sent to the entity who wishes to authenticate you.
 		/// </summary>
-		public static unsafe AuthTicket GetAuthSessionTicket()
+		public static unsafe AuthTicket GetAuthSessionTicket( NetIdentity identity )
 		{
 			var data = Helpers.TakeBuffer( 1024 );
 
 			fixed ( byte* b = data )
 			{
 				uint ticketLength = 0;
-				uint ticket = Internal.GetAuthSessionTicket( (IntPtr)b, data.Length, ref ticketLength );
+				uint ticket = Internal.GetAuthSessionTicket( (IntPtr)b, data.Length, ref ticketLength, ref identity );
 
 				if ( ticket == 0 )
 					return null;
@@ -332,7 +332,7 @@ namespace Steamworks
 		/// the ticket is definitely ready to go as soon as it returns. Will return <see langword="null"/> if the callback
 		/// times out or returns negatively.
 		/// </summary>
-		public static async Task<AuthTicket> GetAuthSessionTicketAsync( double timeoutSeconds = 10.0f )
+		public static async Task<AuthTicket> GetAuthSessionTicketAsync( NetIdentity identity, double timeoutSeconds = 10.0f )
 		{
 			var result = Result.Pending;
 			AuthTicket ticket = null;
@@ -348,7 +348,7 @@ namespace Steamworks
 
 			try
 			{
-				ticket = GetAuthSessionTicket();
+				ticket = GetAuthSessionTicket( identity );
 				if ( ticket == null )
 					return null;
 

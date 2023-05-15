@@ -23,6 +23,7 @@ namespace Steamworks
 		StoreAuthURLResponse = 165,
 		MarketEligibilityResponse = 166,
 		DurationControl = 167,
+		GetTicketForWebApiResponse = 168,
 		GSClientApprove = 201,
 		GSClientDeny = 202,
 		GSClientKick = 203,
@@ -74,8 +75,8 @@ namespace Steamworks
 		GamepadTextInputDismissed = 714,
 		AppResumingFromSuspend = 736,
 		FloatingGamepadTextInputDismissed = 738,
+		FilterTextDictionaryChanged = 739,
 		DlcInstalled = 1005,
-		RegisterActivationCodeResponse = 1008,
 		NewUrlLaunchParameters = 1014,
 		AppProofOfPurchaseKeyResponse = 1021,
 		FileDetailsResult = 1023,
@@ -138,6 +139,7 @@ namespace Steamworks
 		SteamInputDeviceConnected = 2801,
 		SteamInputDeviceDisconnected = 2802,
 		SteamInputConfigurationLoaded = 2803,
+		SteamInputGamepadSlotChange = 2804,
 		SteamUGCQueryCompleted = 3401,
 		SteamUGCRequestUGCDetailsResult = 3402,
 		CreateItemResult = 3403,
@@ -222,6 +224,7 @@ namespace Steamworks
 		ActiveBeaconsUpdated = 5306,
 		SteamRemotePlaySessionConnected = 5701,
 		SteamRemotePlaySessionDisconnected = 5702,
+		SteamRemotePlayTogetherGuestInvite = 5703,
 	}
 	internal static partial class CallbackTypeFactory
 	{
@@ -242,6 +245,7 @@ namespace Steamworks
 			{ CallbackType.StoreAuthURLResponse, typeof( StoreAuthURLResponse_t )},
 			{ CallbackType.MarketEligibilityResponse, typeof( MarketEligibilityResponse_t )},
 			{ CallbackType.DurationControl, typeof( DurationControl_t )},
+			{ CallbackType.GetTicketForWebApiResponse, typeof( GetTicketForWebApiResponse_t )},
 			{ CallbackType.GSClientApprove, typeof( GSClientApprove_t )},
 			{ CallbackType.GSClientDeny, typeof( GSClientDeny_t )},
 			{ CallbackType.GSClientKick, typeof( GSClientKick_t )},
@@ -293,8 +297,8 @@ namespace Steamworks
 			{ CallbackType.GamepadTextInputDismissed, typeof( GamepadTextInputDismissed_t )},
 			{ CallbackType.AppResumingFromSuspend, typeof( AppResumingFromSuspend_t )},
 			{ CallbackType.FloatingGamepadTextInputDismissed, typeof( FloatingGamepadTextInputDismissed_t )},
+			{ CallbackType.FilterTextDictionaryChanged, typeof( FilterTextDictionaryChanged_t )},
 			{ CallbackType.DlcInstalled, typeof( DlcInstalled_t )},
-			{ CallbackType.RegisterActivationCodeResponse, typeof( RegisterActivationCodeResponse_t )},
 			{ CallbackType.NewUrlLaunchParameters, typeof( NewUrlLaunchParameters_t )},
 			{ CallbackType.AppProofOfPurchaseKeyResponse, typeof( AppProofOfPurchaseKeyResponse_t )},
 			{ CallbackType.FileDetailsResult, typeof( FileDetailsResult_t )},
@@ -355,6 +359,7 @@ namespace Steamworks
 			{ CallbackType.SteamInputDeviceConnected, typeof( SteamInputDeviceConnected_t )},
 			{ CallbackType.SteamInputDeviceDisconnected, typeof( SteamInputDeviceDisconnected_t )},
 			{ CallbackType.SteamInputConfigurationLoaded, typeof( SteamInputConfigurationLoaded_t )},
+			{ CallbackType.SteamInputGamepadSlotChange, typeof( SteamInputGamepadSlotChange_t )},
 			{ CallbackType.SteamUGCQueryCompleted, typeof( SteamUGCQueryCompleted_t )},
 			{ CallbackType.SteamUGCRequestUGCDetailsResult, typeof( SteamUGCRequestUGCDetailsResult_t )},
 			{ CallbackType.CreateItemResult, typeof( CreateItemResult_t )},
@@ -439,6 +444,7 @@ namespace Steamworks
 			{ CallbackType.ActiveBeaconsUpdated, typeof( ActiveBeaconsUpdated_t )},
 			{ CallbackType.SteamRemotePlaySessionConnected, typeof( SteamRemotePlaySessionConnected_t )},
 			{ CallbackType.SteamRemotePlaySessionDisconnected, typeof( SteamRemotePlaySessionDisconnected_t )},
+			{ CallbackType.SteamRemotePlayTogetherGuestInvite, typeof( SteamRemotePlayTogetherGuestInvite_t )},
 		};
 	}
 }
