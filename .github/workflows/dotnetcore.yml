@@ -1,0 +1,35 @@
+name: Build All
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup dotnet 6.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+
+    - name: Restore Win64
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
+    - name: Restore Win32
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
+    - name: Restore Posix
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
+      
+    - name: Build Win64
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
+    - name: Build Win32
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
+    - name: Build Posix
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Compiled Files
+        path: Facepunch.Steamworks/bin

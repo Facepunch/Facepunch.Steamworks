@@ -9,14 +9,22 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-    [TestClass]
+	[TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class NetworkingSocketsTest
+    [DeploymentItem( "steam_api.dll" )]
+    public partial class NetworkingSocketsTest
 	{
+		void DebugOutput( NetDebugOutput type, string text )
+		{
+			Console.WriteLine( $"[NET:{type}]\t\t{text}" );
+		}
 
 		[TestMethod]
         public async Task CreateRelayServer()
         {
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
 			var si = SteamNetworkingSockets.CreateRelaySocket<TestSocketInterface>();
 
 			Console.WriteLine( $"Created Socket: {si}" );
@@ -30,7 +38,26 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CreateNormalServer()
 		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
 			var si = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( Data.NetAddress.AnyIp( 21893 ) );
+
+			Console.WriteLine( $"Created Socket: {si}" );
+
+			// Give it a second for something to happen
+			await Task.Delay( 1000 );
+
+			si.Close();
+		}
+
+		[TestMethod]
+		public async Task CreateRelayServerFakeIP()
+		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
+			var si = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
 
 			Console.WriteLine( $"Created Socket: {si}" );
 
@@ -43,12 +70,22 @@ namespace Steamworks
 		[TestMethod]
 		public async Task RelayEndtoEnd()
 		{
-			var socket = SteamNetworkingSockets.CreateRelaySocket<TestSocketInterface>( 7788 );
+			SteamNetworkingUtils.InitRelayNetworkAccess();
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Warning;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
+			// For some reason giving steam a couple of seconds here 
+			// seems to prevent it returning null connections from ConnectNormal
+			await Task.Delay( 2000 );
+
+			Console.WriteLine( $"----- Creating Socket Relay Socket.." );
+			var socket = SteamNetworkingSockets.CreateRelaySocket<TestSocketInterface>( 6 );
 			var server = socket.RunAsync();
 
 			await Task.Delay( 1000 );
 
-			var connection = SteamNetworkingSockets.ConnectRelay<TestConnectionInterface>( SteamClient.SteamId, 7788 );
+			Console.WriteLine( $"----- Connecting To Socket via SteamId ({SteamClient.SteamId})" );
+			var connection = SteamNetworkingSockets.ConnectRelay<TestConnectionInterface>( SteamClient.SteamId, 6 );
 			var client = connection.RunAsync();
 
 			await Task.WhenAll( server, client );
@@ -57,229 +94,68 @@ namespace Steamworks
 		[TestMethod]
 		public async Task NormalEndtoEnd()
 		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
+			// For some reason giving steam a couple of seconds here 
+			// seems to prevent it returning null connections from ConnectNormal
+			await Task.Delay( 2000 );
+
+			//
+			// Start the server
+			//
+			Console.WriteLine( "CreateNormalSocket" );
 			var socket = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( NetAddress.AnyIp( 12445 ) );
 			var server = socket.RunAsync();
 
-			await Task.Delay( 1000 );
-
-			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( System.Net.IPAddress.Parse( "127.0.0.1" ), 12445 ) );
+			//
+			// Start the client
+			//
+			Console.WriteLine( "ConnectNormal" );
+			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( "127.0.0.1", 12445 ) );
 			var client = connection.RunAsync();
 
 			await Task.WhenAll( server, client );
 		}
 
-		private class TestConnectionInterface : ConnectionInterface
+		[TestMethod]
+		public async Task RelayEndtoEndFakeIP()
 		{
-			public override void OnConnectionChanged( ConnectionInfo data )
-			{
-				Console.WriteLine( $"[Connection][{Connection}] [{data.State}]" );
+			SteamNetworkingUtils.InitRelayNetworkAccess();
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Warning;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
 
-				base.OnConnectionChanged( data );
-			}
+			// For some reason giving steam a couple of seconds here 
+			// seems to prevent it returning null connections from ConnectNormal
+			await Task.Delay( 2000 );
 
-			public override void OnConnecting( ConnectionInfo data )
-			{
-				Console.WriteLine( $" - OnConnecting" );
-				base.OnConnecting( data );
-			}
+			Console.WriteLine( $"----- Creating Socket Relay Socket.." );
+			var socket = SteamNetworkingSockets.CreateRelaySocketFakeIP<TestSocketInterface>();
+			var server = socket.RunAsync();
 
-			/// <summary>
-			/// Client is connected. They move from connecting to Connections
-			/// </summary>
-			public override void OnConnected( ConnectionInfo data )
-			{
-				Console.WriteLine( $" - OnConnected" );
-				base.OnConnected( data );
-			}
+			await Task.Delay( 1000 );
 
-			/// <summary>
-			/// The connection has been closed remotely or disconnected locally. Check data.State for details.
-			/// </summary>
-			public override void OnDisconnected( ConnectionInfo data )
-			{
-				Console.WriteLine( $" - OnDisconnected" );
-				base.OnDisconnected( data );
-			}
+			Console.WriteLine( $"----- Retrieving Fake IP.." );
+			SteamNetworkingSockets.GetFakeIP( 0, out NetAddress address );
 
-			internal async Task RunAsync()
-			{
-				Console.WriteLine( "[Connection] RunAsync" );
+			Console.WriteLine( $"----- Connecting To Socket via Fake IP ({address})" );
+			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( address );
+			var client = connection.RunAsync();
 
-				var sw = System.Diagnostics.Stopwatch.StartNew();
-
-				while ( Connecting )
-				{
-					await Task.Delay( 10 );
-
-					if ( sw.Elapsed.TotalSeconds > 30 )
-						break;
-				}
-
-				if ( !Connected )
-				{
-					Console.WriteLine( "[Connection] Couldn't connect!" );
-					Console.WriteLine( Connection.DetailedStatus() );
-					return;
-				}
-
-				Console.WriteLine( "[Connection] Hey We're Connected!" );
-
-
-				sw = System.Diagnostics.Stopwatch.StartNew();
-				while ( Connected )
-				{
-					Receive();
-					await Task.Delay( 100 );
-
-					if ( sw.Elapsed.TotalSeconds > 10 )
-					{
-						Assert.Fail( "Client Took Too Long" );
-						break;
-					}
-				}
-			}
-
-			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
-			{
-				// We're only sending strings, so it's fine to read this like this
-				var str = UTF8Encoding.UTF8.GetString( (byte*) data, size );
-
-				Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
-
-				if ( str.Contains( "Hello" ) )
-				{
-					Connection.SendMessage( "Hello, How are you!?" );
-
-					Connection.SendMessage( "How do you like 20 messages in a row?" );
-
-					for ( int i=0; i<20; i++ )
-					{
-						Connection.SendMessage( $"BLAMMO!" );
-					}
-				}
-
-				if ( str.Contains( "status" ))
-				{
-					Console.WriteLine( Connection.DetailedStatus() );
-				}
-
-				if ( str.Contains( "how about yourself" ) )
-				{
-					Connection.SendMessage( "I'm great, but I have to go now, bye." );
-				}
-
-				if ( str.Contains( "hater" ) )
-				{
-					Close();
-				}
-
-			}
+			await Task.WhenAll( server, client );
 		}
-	
 
-		private class TestSocketInterface : SocketInterface
+		[TestMethod]
+		public void NetAddressTest()
 		{
-			public bool HasFinished = false;
-
-			public override void OnConnectionChanged( Connection connection, ConnectionInfo data )
 			{
-				Console.WriteLine( $"[Socket{Socket}][{connection}] [{data.State}]" );
-
-				base.OnConnectionChanged( connection, data );
+				var n = NetAddress.From( "127.0.0.1", 12445 );
+				Assert.AreEqual( n.ToString(), "127.0.0.1:12445" );
 			}
 
-			public override void OnConnecting( Connection connection, ConnectionInfo data )
 			{
-				Console.WriteLine( $" - OnConnecting" );
-				base.OnConnecting( connection, data );
-			}
-
-			/// <summary>
-			/// Client is connected. They move from connecting to Connections
-			/// </summary>
-			public override void OnConnected( Connection connection, ConnectionInfo data )
-			{
-				Console.WriteLine( $" - OnConnected" );
-				base.OnConnected( connection, data );
-			}
-
-			/// <summary>
-			/// The connection has been closed remotely or disconnected locally. Check data.State for details.
-			/// </summary>
-			public override void OnDisconnected( Connection connection, ConnectionInfo data )
-			{
-				Console.WriteLine( $" - OnDisconnected" );
-				base.OnDisconnected( connection, data );
-			}
-
-			internal async Task RunAsync()
-			{
-				var sw = System.Diagnostics.Stopwatch.StartNew();
-
-				while ( Connected.Count == 0 )
-				{
-					await Task.Delay( 10 );
-
-					if ( sw.Elapsed.TotalSeconds > 2 )
-					{
-						Assert.Fail( "Client Took Too Long To Connect"  );
-						break;
-					}
-				}
-
-				await Task.Delay( 1000 );
-
-				var singleClient = Connected.First();
-
-				singleClient.SendMessage( "Hey?" );
-				await Task.Delay( 100 );
-				singleClient.SendMessage( "Anyone?" );
-				await Task.Delay( 100 );
-				singleClient.SendMessage( "What's this?" );
-				await Task.Delay( 100 );
-				singleClient.SendMessage( "What's your status?" );
-				await Task.Delay( 10 );
-				singleClient.SendMessage( "Greetings!!??" );
-				await Task.Delay( 100 );
-				singleClient.SendMessage( "Hello Client!?" );
-
-				sw = System.Diagnostics.Stopwatch.StartNew();
-
-				while ( Connected.Contains( singleClient ) )
-				{
-					Receive();
-					await Task.Delay( 100 );
-
-					if ( sw.Elapsed.TotalSeconds > 10 )
-					{
-						Assert.Fail( "Socket Took Too Long" );
-						break;
-					}
-				}
-
-				await Task.Delay( 1000 );
-
-				Close();
-			}
-
-			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
-			{
-				// We're only sending strings, so it's fine to read this like this
-				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );
-
-				Console.WriteLine( $"[SOCKET][{connection}[{identity}][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
-
-				if ( str.Contains( "Hello, How are you" ) )
-				{
-					connection.SendMessage( "I'm great thanks, how about yourself?" );
-				}
-
-				if ( str.Contains( "bye" ) )
-				{
-					connection.SendMessage( "See you later, hater." );
-					connection.Flush();
-					connection.Close( true, 10, "Said Bye" );
-				}
+				var n = NetAddress.AnyIp( 5543 );
+				Assert.AreEqual( n.ToString(), "[::]:5543" );
 			}
 		}
 	}

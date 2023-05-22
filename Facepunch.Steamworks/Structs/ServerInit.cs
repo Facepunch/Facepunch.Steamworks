@@ -14,7 +14,6 @@ namespace Steamworks
     public struct SteamServerInit
     {
         public IPAddress IpAddress;
-        public ushort SteamPort;
         public ushort GamePort;
         public ushort QueryPort;
         public bool Secure;
@@ -52,7 +51,6 @@ namespace Steamworks
 			Secure = true;
 			VersionString = "1.0.0.0";
 			IpAddress = null;
-			SteamPort = 0;
 		}
 
         public ServerInit(IPAddress ip, string modDir, string gameDesc)
@@ -77,15 +75,6 @@ namespace Steamworks
         public ServerInit Ip(IPAddress ip)
         {
             IpAddress = ip.IpToInt32();
-            return this;
-        }
-
-        /// <summary>
-        /// Set the Steam quert port 
-        /// </summary>
-        public SteamServerInit WithRandomSteamPort()
-        {
-            SteamPort = (ushort)new Random().Next( 10000, 60000 );
             return this;
         }
 

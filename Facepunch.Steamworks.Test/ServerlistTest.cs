@@ -11,7 +11,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public partial class ServerListTest
+	[DeploymentItem( "steam_api.dll" )]
+	public partial class ServerListTest
     {
         [TestMethod]
         public void IpAddressConversions()

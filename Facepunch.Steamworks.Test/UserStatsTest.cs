@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class UserStatsTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class UserStatsTest
 	{
 		[TestMethod]
         public async Task AchievementList()
@@ -165,6 +166,30 @@ namespace Steamworks
 			Console.WriteLine( $"{deaths.Name} {deaths.GetFloat()} times" );
 
 			Assert.AreNotEqual( 0, deaths.GetInt() );
+		}
+
+		[TestMethod]
+		public async Task GetFriendStats()
+		{
+			var friend = new Friend( 76561197965732579 ); // Hezzy
+
+			// Download stats
+			var status = await friend.RequestUserStatsAsync();
+			Assert.AreNotEqual( false, status );
+
+			var deaths = friend.GetStatInt( "deaths" );
+
+			Console.WriteLine( $"Hezzy has died {deaths} times" );
+
+			Assert.AreNotEqual( 0, deaths );
+
+			var unlocked = friend.GetAchievement( "COLLECT_100_WOOD" );
+			Assert.AreNotEqual( false, unlocked );
+
+			var when = friend.GetAchievementUnlockTime( "COLLECT_100_WOOD" );
+			Assert.AreNotEqual( when, DateTime.MinValue );
+
+			Console.WriteLine( $"Hezzy unlocked COLLECT_100_WOOD {when}" );
 		}
 
 		[TestMethod]

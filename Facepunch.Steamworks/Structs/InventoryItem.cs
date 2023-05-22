@@ -53,7 +53,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> ConsumeAsync( int amount = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.ConsumeItem( ref sresult, Id, (uint)amount ) )
 				return null;
 
@@ -65,7 +65,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> SplitStackAsync( int quantity = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, ulong.MaxValue ) )
 				return null;
 
@@ -77,7 +77,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> AddAsync( InventoryItem add, int quantity = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, add.Id, (uint)quantity, Id ) )
 				return null;
 
@@ -100,7 +100,7 @@ namespace Steamworks
 
 		internal static Dictionary<string, string> GetProperties( SteamInventoryResult_t result, int index )
 		{
-			var strlen = (uint) Helpers.MaxStringSize;
+			var strlen = (uint) Helpers.MemoryBufferSize;
 
 			if ( !SteamInventory.Internal.GetResultItemProperty( result, (uint)index, null, out var propNames, ref strlen ) )
 				return null;
@@ -109,7 +109,7 @@ namespace Steamworks
 
 			foreach ( var propertyName in propNames.Split( ',' ) )
 			{
-				strlen = (uint)Helpers.MaxStringSize;
+				strlen = (uint)Helpers.MemoryBufferSize;
 
 				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, out var strVal, ref strlen ) )
 				{
@@ -130,17 +130,20 @@ namespace Steamworks
 			{
 				if ( Properties == null ) return DateTime.UtcNow;
 
-				var str = Properties["acquired"];
+				if ( Properties.TryGetValue( "acquired", out var str ) )
+				{
+					var y = int.Parse( str.Substring( 0, 4 ) );
+					var m = int.Parse( str.Substring( 4, 2 ) );
+					var d = int.Parse( str.Substring( 6, 2 ) );
 
-				var y = int.Parse( str.Substring( 0, 4 ) );
-				var m = int.Parse( str.Substring( 4, 2 ) );
-				var d = int.Parse( str.Substring( 6, 2 ) );
+					var h = int.Parse( str.Substring( 9, 2 ) );
+					var mn = int.Parse( str.Substring( 11, 2 ) );
+					var s = int.Parse( str.Substring( 13, 2 ) );
 
-				var h = int.Parse( str.Substring( 9, 2 ) );
-				var mn = int.Parse( str.Substring( 11, 2 ) );
-				var s = int.Parse( str.Substring( 13, 2 ) );
+					return new DateTime( y, m, d, h, mn, s, DateTimeKind.Utc );
+				}
 
-				return new DateTime( y, m, d, h, mn, s, DateTimeKind.Utc );
+				return DateTime.UtcNow;
 			}
 		}
 
@@ -153,7 +156,11 @@ namespace Steamworks
 			get
 			{
 				if ( Properties == null ) return null;
-				return Properties["origin"];
+				
+				if ( Properties.TryGetValue( "origin", out var str ) )
+					return str;
+
+				return null;
 			}
 		}
 

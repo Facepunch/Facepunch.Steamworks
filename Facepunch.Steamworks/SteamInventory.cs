@@ -10,34 +10,30 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Class for utilizing the Steam Inventory API.
 	/// </summary>
-	public static class SteamInventory
+	public class SteamInventory : SteamSharedClass<SteamInventory>
 	{
-		static ISteamInventory _internal;
-		internal static ISteamInventory Internal
+		internal static ISteamInventory Internal => Interface as ISteamInventory;
+
+		internal override bool InitializeInterface( bool server )
 		{
-			get
+			SetInterface( server, new ISteamInventory( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			InstallEvents( server );
+
+			return true;
+		}
+	
+		internal static void InstallEvents( bool server )
+		{
+			if ( !server )
 			{
-				if ( _internal == null )
-				{ 
-					_internal = new ISteamInventory();
-					_internal.Init();
-				}
-
-				return _internal;
+				Dispatch.Install<SteamInventoryFullUpdate_t>( x => InventoryUpdated( x ) );
 			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
-		}
 
-		internal static void InstallEvents()
-		{
-			SteamInventoryFullUpdate_t.Install( x => InventoryUpdated( x ) );
-			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions() );
-			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions(), true );
+			Dispatch.Install<SteamInventoryDefinitionUpdate_t>( x => LoadDefinitions(), server );
 		}
 
 		private static void InventoryUpdated( SteamInventoryFullUpdate_t x )
@@ -72,7 +68,7 @@ namespace Steamworks
 		/// <summary>
 		/// Call this if you're going to want to access definition information. You should be able to get 
 		/// away with calling this once at the start if your game, assuming your items don't change all the time.
-		/// This will trigger OnDefinitionsUpdated at which point Definitions should be set.
+		/// This will trigger <see cref="OnDefinitionsUpdated"/> at which point Definitions should be set.
 		/// </summary>
 		public static void LoadItemDefinitions()
 		{
@@ -90,7 +86,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Will call LoadItemDefinitions and wait until Definitions is not null
+		/// Will call <see cref="LoadItemDefinitions"/> and wait until Definitions is not null
 		/// </summary>
 		public static async Task<bool> WaitForDefinitions( float timeoutSeconds = 30 )
 		{
@@ -184,7 +180,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool GetAllItems()
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			return Internal.GetAllItems( ref sresult );
 		}
 
@@ -193,7 +189,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> GetAllItemsAsync()
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			if ( !Internal.GetAllItems( ref sresult ) )
 				return null;
@@ -209,7 +205,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> GenerateItemAsync( InventoryDef target, int amount )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			var defs = new InventoryDefId[] { target.Id };
 			var cnts = new uint[] { (uint)amount };
@@ -227,7 +223,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> CraftItemAsync( InventoryItem[] list, InventoryDef target )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			var give = new InventoryDefId[] { target.Id };
 			var givec = new uint[] { 1 };
@@ -248,7 +244,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> CraftItemAsync( InventoryItem.Amount[] list, InventoryDef target )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			var give = new InventoryDefId[] { target.Id };
 			var givec = new uint[] { 1 };
@@ -290,7 +286,7 @@ namespace Steamworks
 			{
 				Marshal.Copy( data, 0, ptr, dataLength );
 
-				var sresult = default( SteamInventoryResult_t );
+				var sresult = Defines.k_SteamInventoryResultInvalid;
 
 				if ( !Internal.DeserializeResult( ref sresult, (IntPtr)ptr, (uint)dataLength, false ) )
 					return null;
@@ -307,11 +303,11 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Grant all promotional items the user is eligible for
+		/// Grant all promotional items the user is eligible for.
 		/// </summary>
 		public static async Task<InventoryResult?> GrantPromoItemsAsync()
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			if ( !Internal.GrantPromoItems( ref sresult ) )
 				return null;
@@ -325,7 +321,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> TriggerItemDropAsync( InventoryDefId id )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			if ( !Internal.TriggerItemDrop( ref sresult, id ) )
 				return null;
@@ -339,7 +335,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryResult?> AddPromoItemAsync( InventoryDefId id )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 
 			if ( !Internal.AddPromoItem( ref sresult, id ) )
 				return null;
@@ -354,8 +350,9 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryPurchaseResult?> StartPurchaseAsync( InventoryDef[] items )
 		{
-			var item_i = items.Select( x => x._id ).ToArray();
-			var item_q = items.Select( x => (uint)1 ).ToArray();
+			var d = items.GroupBy( x => x._id ).ToDictionary( x => x.Key, x => (uint) x.Count() );
+			var item_i = d.Keys.ToArray();
+			var item_q = d.Values.ToArray();
 
 			var r = await Internal.StartPurchase( item_i, item_q, (uint)item_i.Length );
 			if ( !r.HasValue ) return null;

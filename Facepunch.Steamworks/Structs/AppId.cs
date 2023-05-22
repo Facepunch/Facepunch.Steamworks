@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Represents the ID of a Steam application.
+	/// </summary>
 	public struct AppId
 	{
 		public uint Value;

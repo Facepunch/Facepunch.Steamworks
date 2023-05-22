@@ -8,50 +8,39 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Functions for clients to access matchmaking services, favorites, and to operate on game lobbies
+	/// Methods for clients to access matchmaking services, favorites, and to operate on game lobbies
 	/// </summary>
-	public static class SteamMatchmaking
+	public class SteamMatchmaking : SteamClientClass<SteamMatchmaking>
 	{
+		internal static ISteamMatchmaking Internal => Interface as ISteamMatchmaking;
+
+		internal override bool InitializeInterface( bool server )
+		{
+			SetInterface( server, new ISteamMatchmaking( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			InstallEvents();
+
+			return true;
+		}
+	
 		/// <summary>
 		/// Maximum number of characters a lobby metadata key can be
 		/// </summary>
 		internal static int MaxLobbyKeyLength => 255;
 
 
-		static ISteamMatchmaking _internal;
-
-		internal static ISteamMatchmaking Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
-
-				if ( _internal == null )
-				{
-					_internal = new ISteamMatchmaking();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
-		{
-			_internal = null;
-		}
-
 		internal static void InstallEvents()
 		{
-			LobbyInvite_t.Install( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
+			Dispatch.Install<LobbyInvite_t>( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
-			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
+			Dispatch.Install<LobbyEnter_t>( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
 
-			LobbyCreated_t.Install( x => OnLobbyCreated?.Invoke( x.Result, new Lobby( x.SteamIDLobby ) ) );
+			Dispatch.Install<LobbyCreated_t>( x => OnLobbyCreated?.Invoke( x.Result, new Lobby( x.SteamIDLobby ) ) );
 
-			LobbyGameCreated_t.Install( x => OnLobbyGameCreated?.Invoke( new Lobby( x.SteamIDLobby ), x.IP, x.Port, x.SteamIDGameServer ) );
+			Dispatch.Install<LobbyGameCreated_t>( x => OnLobbyGameCreated?.Invoke( new Lobby( x.SteamIDLobby ), x.IP, x.Port, x.SteamIDGameServer ) );
 
-			LobbyDataUpdate_t.Install( x =>
+			Dispatch.Install<LobbyDataUpdate_t>( x =>
 			{
 				if ( x.Success == 0 ) return;
 
@@ -61,7 +50,7 @@ namespace Steamworks
 					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDMember ) );
 			} );
 
-			LobbyChatUpdate_t.Install( x =>
+			Dispatch.Install<LobbyChatUpdate_t>( x =>
 			{
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Entered) != 0 )
 					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
@@ -79,90 +68,87 @@ namespace Steamworks
 					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ), new Friend( x.SteamIDMakingChange ) );
 			} );
 
-			LobbyChatMsg_t.Install( OnLobbyChatMessageRecievedAPI );
+			Dispatch.Install<LobbyChatMsg_t>( OnLobbyChatMessageRecievedAPI );
 		}
 
 		static private unsafe void OnLobbyChatMessageRecievedAPI( LobbyChatMsg_t callback )
 		{
 			SteamId steamid = default;
 			ChatEntryType chatEntryType = default;
-			var buffer = Helpers.TakeBuffer( 1024 * 4 );
+			using var buffer = Helpers.TakeMemory();
 
-			fixed ( byte* p = buffer )
+			var readData = Internal.GetLobbyChatEntry( callback.SteamIDLobby, (int)callback.ChatID, ref steamid, buffer, Helpers.MemoryBufferSize, ref chatEntryType );
+
+			if ( readData > 0 )
 			{
-				var readData = Internal.GetLobbyChatEntry( callback.SteamIDLobby, (int)callback.ChatID, ref steamid, (IntPtr)p, buffer.Length, ref chatEntryType );
-
-				if ( readData > 0 )
-				{
-					OnChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new Friend( steamid ), Encoding.UTF8.GetString( buffer, 0, readData ) );
-				}
+				OnChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new Friend( steamid ), Helpers.MemoryToString( buffer ) );
 			}
 		}
 
 		/// <summary>
-		/// Someone invited you to a lobby
+		/// Invoked when the current user is invited to a lobby.
 		/// </summary>
 		public static event Action<Friend, Lobby> OnLobbyInvite;
 
 		/// <summary>
-		/// You joined a lobby
+		/// Invoked when the current user joins a lobby.
 		/// </summary>
 		public static event Action<Lobby> OnLobbyEntered;
 
 		/// <summary>
-		/// You created a lobby
+		/// Invoked when the current user creates a lobby.
 		/// </summary>
 		public static event Action<Result, Lobby> OnLobbyCreated;
 
 		/// <summary>
-		/// A game server has been associated with the lobby
+		/// Invoked when a game server has been associated with a lobby.
 		/// </summary>
 		public static event Action<Lobby, uint, ushort, SteamId> OnLobbyGameCreated;
 
 		/// <summary>
-		/// The lobby metadata has changed
+		/// Invoked when a lobby's metadata is modified.
 		/// </summary>
 		public static event Action<Lobby> OnLobbyDataChanged;
 
 		/// <summary>
-		/// The lobby member metadata has changed
+		/// Invoked when a member in a lobby's metadata is modified.
 		/// </summary>
 		public static event Action<Lobby, Friend> OnLobbyMemberDataChanged;
 
 		/// <summary>
-		/// The lobby member joined
+		/// Invoked when a member joins a lobby.
 		/// </summary>
 		public static event Action<Lobby, Friend> OnLobbyMemberJoined;
 
 		/// <summary>
-		/// The lobby member left the room
+		/// Invoked when a lobby member leaves the lobby.
 		/// </summary>
 		public static event Action<Lobby, Friend> OnLobbyMemberLeave;
 
 		/// <summary>
-		/// The lobby member left the room
+		/// Invoked when a lobby member leaves the lobby.
 		/// </summary>
 		public static event Action<Lobby, Friend> OnLobbyMemberDisconnected;
 
 		/// <summary>
-		/// The lobby member was kicked. The 3rd param is the user that kicked them.
+		/// Invoked when a lobby member is kicked from a lobby. The 3rd param is the user that kicked them.
 		/// </summary>
 		public static event Action<Lobby, Friend, Friend> OnLobbyMemberKicked;
 
 		/// <summary>
-		/// The lobby member was banned. The 3rd param is the user that banned them.
+		/// Invoked when a lobby member is kicked from a lobby. The 3rd param is the user that kicked them.
 		/// </summary>
 		public static event Action<Lobby, Friend, Friend> OnLobbyMemberBanned;
 
 		/// <summary>
-		/// A chat message was recieved from a member of a lobby
+		/// Invoked when a chat message is received from a member of the lobby.
 		/// </summary>
 		public static event Action<Lobby, Friend, string> OnChatMessage;
 
 		public static LobbyQuery LobbyList => new LobbyQuery();
 
 		/// <summary>
-		/// Creates a new invisible lobby. Call lobby.SetPublic to take it online.
+		/// Creates a new invisible lobby. Call <see cref="Lobby.SetPublic"/> to take it online.
 		/// </summary>
 		public static async Task<Lobby?> CreateLobbyAsync( int maxMembers = 100 )
 		{
@@ -172,9 +158,9 @@ namespace Steamworks
 			return new Lobby { Id = lobby.Value.SteamIDLobby };
 		}
 
-		/// <summmary>
-		/// Attempts to directly join the specified lobby
-		/// </summmary>
+		/// <summary>
+		/// Attempts to directly join the specified lobby.
+		/// </summary>
 		public static async Task<Lobby?> JoinLobbyAsync( SteamId lobbyId )
 		{
 			var lobby = await Internal.JoinLobby( lobbyId );
@@ -184,7 +170,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Get a list of servers that are on your favorites list
+		/// Get a list of servers that are on the current user's favorites list.
 		/// </summary>
 		public static IEnumerable<ServerInfo> GetFavoriteServers()
 		{
@@ -208,7 +194,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Get a list of servers that you have added to your play history
+		/// Get a list of servers that the current user has added to their history.
 		/// </summary>
 		public static IEnumerable<ServerInfo> GetHistoryServers()
 		{

@@ -44,7 +44,9 @@ namespace Steamworks
 
 	internal struct Utf8StringPointer
 	{
+#pragma warning disable 649
 		internal IntPtr ptr;
+#pragma warning restore 649
 
 		public unsafe static implicit operator string( Utf8StringPointer p )
 		{

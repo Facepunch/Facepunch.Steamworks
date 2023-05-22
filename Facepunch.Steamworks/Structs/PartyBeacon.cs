@@ -10,7 +10,7 @@ namespace Steamworks
 		internal PartyBeaconID_t Id;
 
 		/// <summary>
-		/// Creator of the beacon
+		/// Gets the owner of the beacon.
 		/// </summary>
 		public SteamId Owner
 		{
@@ -18,13 +18,13 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
+				Internal.GetBeaconDetails( Id, ref owner, ref location, out _ );
 				return owner;
 			}
 		}
 
 		/// <summary>
-		/// Creator of the beacon
+		/// Gets metadata related to the beacon.
 		/// </summary>
 		public string MetaData
 		{
@@ -32,14 +32,14 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
+				_ = Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
 				return strVal;
 			}
 		}
 
 		/// <summary>
 		/// Will attempt to join the party. If successful will return a connection string.
-		/// If failed, will return null
+		/// If failed, will return <see langword="null"/>
 		/// </summary>
 		public async Task<string> JoinAsync()
 		{
@@ -52,7 +52,7 @@ namespace Steamworks
 
 		/// <summary>
 		/// When a user follows your beacon, Steam will reserve one of the open party slots for them, and send your game a ReservationNotification callback. 
-		/// When that user joins your party, call OnReservationCompleted to notify Steam that the user has joined successfully
+		/// When that user joins your party, call this method to notify Steam that the user has joined successfully.
 		/// </summary>
 		public void OnReservationCompleted( SteamId steamid )
 		{
@@ -70,7 +70,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Turn off the beacon
+		/// Turn off the beacon.
 		/// </summary>
 		public bool Destroy()
 		{

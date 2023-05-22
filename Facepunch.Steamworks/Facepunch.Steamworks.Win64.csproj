@@ -3,34 +3,53 @@
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win64</AssemblyName>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN64;PLATFORM_WIN;PLATFORM_64</DefineConstants>
-		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>7.1</LangVersion>	
+		<TargetFrameworks>netstandard2.1;net6.0;net46</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<RootNamespace>Steamworks</RootNamespace>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<None Update="steam_api64.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
 
 	<PropertyGroup>
 		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
 		<Authors>Garry Newman</Authors>
 		<PackageId>Facepunch.Steamworks</PackageId>
-		<PackageDescription>Another fucking c# Steamworks implementation</PackageDescription>
+		<PackageDescription>Steamworks implementation with an emphasis on making things easy. For Windows x64.</PackageDescription>
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
-		<PackageIconUrl>https://files.facepunch.com/garry/c5edce1c-0c21-4c5d-95b6-37743be7455d.jpg</PackageIconUrl>
+		<PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<PackageVersion>2.2.0</PackageVersion>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>10</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
+  
+	<ItemGroup>
+		<None Include="Facepunch.Steamworks.jpg">
+			<Pack>true</Pack>
+			<PackagePath>/</PackagePath>
+		</None>
+		<None Include="steam_api64.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<Pack>true</Pack>
+			<PackagePath>content</PackagePath>
+		</None>
+	</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />
+
+	<Target Name="PostBuildHome" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GarryBasementPc'">
+	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
+	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
+	</Target>
+  
+  <Target Name="PostBuildOffice" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GARRYSOFFICEPC'">
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win32.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
+  </Target>  
 
 </Project>

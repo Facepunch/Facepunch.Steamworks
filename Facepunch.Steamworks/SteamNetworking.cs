@@ -8,49 +8,44 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamNetworking
+	/// <summary>
+	/// Class for utilizing the Steam Network API.
+	/// </summary>
+	public class SteamNetworking : SteamSharedClass<SteamNetworking>
 	{
-		static ISteamNetworking _internal;
-		internal static ISteamNetworking Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworking();
-					_internal.Init();
-				}
+		internal static ISteamNetworking Internal => Interface as ISteamNetworking;
 
-				return _internal;
-			}
+		internal override bool InitializeInterface( bool server )
+		{
+			SetInterface( server, new ISteamNetworking( server ) );
+			if ( Interface.Self == IntPtr.Zero ) return false;
+
+			InstallEvents( server );
+
+			return true;
 		}
 
-		internal static void Shutdown()
+		internal static void InstallEvents( bool server )
 		{
-			_internal = null;
-		}
-
-		internal static void InstallEvents()
-		{
-			P2PSessionRequest_t.Install( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ) );
-			P2PSessionConnectFail_t.Install( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote, (P2PSessionError) x.P2PSessionError ) );
+			Dispatch.Install<P2PSessionRequest_t>( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ), server );
+			Dispatch.Install<P2PSessionConnectFail_t>( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote, (P2PSessionError) x.P2PSessionError ), server );
 		}
 
 		/// <summary>
-		/// This SteamId wants to send you a message. You should respond by calling AcceptP2PSessionWithUser
-		/// if you want to recieve their messages
+		/// Invoked when a <see cref="SteamId"/> wants to send the current user a message. You should respond by calling <see cref="AcceptP2PSessionWithUser(SteamId)"/>
+		/// if you want to recieve their messages.
 		/// </summary>
 		public static Action<SteamId> OnP2PSessionRequest;
 
 		/// <summary>
-		/// Called when packets can't get through to the specified user.
+		/// Invoked when packets can't get through to the specified user.
 		/// All queued packets unsent at this point will be dropped, further attempts
 		/// to send will retry making the connection (but will be dropped if we fail again).
 		/// </summary>
 		public static Action<SteamId, P2PSessionError> OnP2PConnectionFailed;
 
 		/// <summary>
-		/// This should be called in response to a OnP2PSessionRequest
+		/// This should be called in response to a <see cref="OnP2PSessionRequest"/>.
 		/// </summary>
 		public static bool AcceptP2PSessionWithUser( SteamId user ) => Internal.AcceptP2PSessionWithUser( user );
 
@@ -64,22 +59,31 @@ namespace Steamworks
 		/// <summary>
 		/// This should be called when you're done communicating with a user, as this will
 		/// free up all of the resources allocated for the connection under-the-hood.
-		/// If the remote user tries to send data to you again, a new OnP2PSessionRequest 
+		/// If the remote user tries to send data to you again, a new <see cref="OnP2PSessionRequest"/> 
 		/// callback will be posted
 		/// </summary>
 		public static bool CloseP2PSessionWithUser( SteamId user ) => Internal.CloseP2PSessionWithUser( user );
 
 		/// <summary>
-		/// Checks if a P2P packet is available to read, and gets the size of the message if there is one.
+		/// Checks if a P2P packet is available to read.
 		/// </summary>
 		public static bool IsP2PPacketAvailable( int channel = 0 )
 		{
 			uint _ = 0;
 			return Internal.IsP2PPacketAvailable( ref _, channel );
 		}
+		
+		/// <summary>
+		/// Checks if a P2P packet is available to read, and gets the size of the message if there is one.
+		/// </summary>
+		public static bool IsP2PPacketAvailable( out uint msgSize, int channel = 0 )
+		{
+			msgSize = 0;
+			return Internal.IsP2PPacketAvailable( ref msgSize, channel );
+		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static P2Packet? ReadP2PPacket( int channel = 0 )
 		{
@@ -108,7 +112,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static bool ReadP2PPacket( byte[] buffer, ref uint size, ref SteamId steamid, int channel = 0 )
 		{
@@ -118,7 +122,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
 		public unsafe static bool ReadP2PPacket( byte* buffer, uint cbuf, ref uint size, ref SteamId steamid, int channel = 0 )
 		{

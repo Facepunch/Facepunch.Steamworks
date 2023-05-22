@@ -17,9 +17,10 @@ namespace Steamworks.Data
 		public string Name => SteamUserStats.Internal.GetLeaderboardName( Id );
 		public LeaderboardSort Sort => SteamUserStats.Internal.GetLeaderboardSortMethod( Id );
 		public LeaderboardDisplay Display => SteamUserStats.Internal.GetLeaderboardDisplayType( Id );
+		public int EntryCount => SteamUserStats.Internal.GetLeaderboardEntryCount(Id);
 
 		static int[] detailsBuffer = new int[64];
-		static int[] noDetails = new int[0];
+		static int[] noDetails = Array.Empty<int>();
 
 		/// <summary>
 		/// Submit your score and replace your old score even if it was better
@@ -59,13 +60,28 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
+		/// Fetches leaderboard entries for an arbitrary set of users on a specified leaderboard.
+		/// </summary>
+		public async Task<LeaderboardEntry[]> GetScoresForUsersAsync( SteamId[] users )
+		{
+			if ( users == null || users.Length == 0 )
+				return null;
+
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntriesForUsers( Id, users, users.Length );
+			if ( !r.HasValue )
+				return null;
+
+			return await LeaderboardResultToEntries( r.Value );
+		}
+
+		/// <summary>
 		/// Used to query for a sequential range of leaderboard entries by leaderboard Sort.
 		/// </summary>
 		public async Task<LeaderboardEntry[]> GetScoresAsync( int count, int offset = 1 )
 		{
 			if ( offset <= 0 ) throw new System.ArgumentException( "Should be 1+", nameof( offset ) );
 
-			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count );
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count - 1 );
 			if ( !r.HasValue )
 				return null;
 
@@ -121,7 +137,7 @@ namespace Steamworks.Data
 			return output;
 		}
 
-		internal async Task WaitForUserNames( LeaderboardEntry[] entries)
+		internal static async Task WaitForUserNames( LeaderboardEntry[] entries)
 		{
 			bool gotAll = false;
 			while ( !gotAll )

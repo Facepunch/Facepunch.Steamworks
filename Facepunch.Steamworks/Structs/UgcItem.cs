@@ -40,6 +40,11 @@ namespace Steamworks.Ugc
 		public string[] Tags { get; internal set; }
 
 		/// <summary>
+		/// A dictionary of key value tags for this item, only available from queries WithKeyValueTags(true)
+		/// </summary>
+		public Dictionary<string,string> KeyValueTags { get; internal set; }
+
+		/// <summary>
 		/// App Id of the app that created this item
 		/// </summary>
 		public AppId CreatorApp => details.CreatorAppID;
@@ -103,6 +108,15 @@ namespace Steamworks.Ugc
         /// The number of downvotes of this item
         /// </summary>
         public uint VotesDown => details.VotesDown;
+		/// <summary>
+		/// Dependencies/children of this item or collection, available only from WithDependencies(true) queries
+		/// </summary>
+		public PublishedFileId[] Children;
+
+		/// <summary>
+		/// Additional previews of this item or collection, available only from WithAdditionalPreviews(true) queries
+		/// </summary>
+		public UgcAdditionalPreview[] AdditionalPreviews { get; internal set; }
 
         public bool IsInstalled => (State & ItemState.Installed) == ItemState.Installed;
 		public bool IsDownloading => (State & ItemState.Downloading) == ItemState.Downloading;
@@ -126,11 +140,11 @@ namespace Steamworks.Ugc
 
 		/// <summary>
 		/// Start downloading this item.
-		/// If this returns false the item isn#t getting downloaded.
+		/// If this returns false the item isn't getting downloaded.
 		/// </summary>
 		public bool Download( bool highPriority = false )
 		{
-			return SteamUGC.Internal.DownloadItem( Id, highPriority );
+			return SteamUGC.Download( Id, highPriority );
 		}
 
 		/// <summary>
@@ -183,8 +197,7 @@ namespace Steamworks.Ugc
 
 				ulong size = 0;
 				uint ts = 0;
-
-				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out var strVal, ref ts ) )
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out _, ref ts ) )
 					return 0;
 
 				return (long) size;
@@ -218,10 +231,18 @@ namespace Steamworks.Ugc
 
 		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
-			var result = await SteamUGC.Internal.RequestUGCDetails( id, (uint) maxageseconds );
-			if ( !result.HasValue ) return null;
+			var file = await Steamworks.Ugc.Query.All
+											.WithFileId( id )
+											.WithLongDescription( true )
+											.GetPageAsync( 1 );
 
-			return From( result.Value.Details );
+			if ( !file.HasValue ) return null;
+			using ( file.Value )
+			{
+				if ( file.Value.ResultCount == 0 ) return null;
+
+				return file.Value.Entries.First();
+			}
 		}
 
 		internal static Item From( SteamUGCDetails_t details )
@@ -258,79 +279,13 @@ namespace Steamworks.Ugc
         }
 
 		/// <summary>
-		/// Allows the user to subscribe to this item and wait for it to be downloaded
+		/// Allows the user to subscribe to download this item asyncronously
 		/// If CancellationToken is default then there is 60 seconds timeout
 		/// Progress will be set to 0-1
 		/// </summary>
-		public async Task<bool> SubscribeDownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		public async Task<bool> DownloadAsync( Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
-			if ( ct == default )
-				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
-
-			progress?.Invoke( 0 );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Subscribe
-			{
-				var subResult = await SteamUGC.Internal.SubscribeItem( _id );
-				if ( subResult?.Result != Result.OK )
-					return false;
-			}
-
-			progress?.Invoke( 0.1f );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Try to start downloading
-			{
-				if ( Download( true ) == false )
-					return State.HasFlag( ItemState.Installed );
-
-				//Steam docs about Download:
-				//If the return value is true then register and wait
-				//for the Callback DownloadItemResult_t before calling 
-				//GetItemInstallInfo or accessing the workshop item on disk.
-
-				//Wait for DownloadItemResult_t
-				{
-					var downloadStarted = false;
-					Action<Result> onDownloadStarted = null;
-					onDownloadStarted = r =>
-					{
-						SteamUGC.OnDownloadItemResult -= onDownloadStarted;
-						downloadStarted = true;
-					};
-					SteamUGC.OnDownloadItemResult += onDownloadStarted;
-
-					while ( downloadStarted == false )
-					{
-						if ( ct.IsCancellationRequested )
-							break;
-
-						await Task.Delay( milisecondsUpdateDelay );
-					}
-				}
-			}
-
-			progress?.Invoke( 0.2f );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Wait for downloading completion
-			{
-				while ( true )
-				{
-					if ( ct.IsCancellationRequested )
-						break;
-
-					progress?.Invoke( 0.2f + DownloadAmount * 0.8f );
-
-					if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
-						break;
-
-					await Task.Delay( milisecondsUpdateDelay );
-				}
-			}
-
-			return State.HasFlag( ItemState.Installed );
+			return await SteamUGC.DownloadAsync( Id, progress, milisecondsUpdateDelay, ct );
 		}
 
 		/// <summary>
@@ -419,10 +374,15 @@ namespace Steamworks.Ugc
 		public ulong NumSecondsPlayedDuringTimePeriod { get; internal set; }
 		public ulong NumPlaytimeSessionsDuringTimePeriod { get; internal set; }
 
-        /// <summary>
-        /// The URL to the preview image for this item
-        /// </summary>
-        public string PreviewImageUrl { get; internal set; }
+		/// <summary>
+		/// The URL to the preview image for this item
+		/// </summary>
+		public string PreviewImageUrl { get; internal set; }
+
+		/// <summary>
+		/// The metadata string for this item, only available from queries WithMetadata(true)
+		/// </summary>
+		public string Metadata { get; internal set; }
 
 		/// <summary>
 		/// Edit this item
@@ -431,7 +391,19 @@ namespace Steamworks.Ugc
 		{
 			return new Ugc.Editor( Id );
 		}
-		
+
+		public async Task<bool> AddDependency( PublishedFileId child )
+		{
+			var r = await SteamUGC.Internal.AddDependency( Id, child );
+			return r?.Result == Result.OK;
+		}
+
+		public async Task<bool> RemoveDependency( PublishedFileId child )
+		{
+			var r = await SteamUGC.Internal.RemoveDependency( Id, child );
+			return r?.Result == Result.OK;
+		}
+
 		public Result Result => details.Result;
 	}
 }

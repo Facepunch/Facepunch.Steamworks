@@ -13,7 +13,7 @@ namespace Steamworks
 	{
 		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
 		//      private static readonly byte A2S_PLAYER = 0x55;
-		private static readonly byte A2S_RULES = 0x56;
+		private const byte A2S_RULES = 0x56;
 
         private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
             new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
@@ -27,7 +27,7 @@ namespace Steamworks
                 if (PendingQueries.TryGetValue(endpoint, out var pending))
                     return pending;
 
-                var task = GetRulesImpl(endpoint, server)
+                var task = GetRulesImpl( endpoint )
                     .ContinueWith(t =>
                     {
                         lock (PendingQueries)
@@ -44,7 +44,7 @@ namespace Steamworks
             }
         }
 
-		private static async Task<Dictionary<string, string>> GetRulesImpl( IPEndPoint endpoint, ServerInfo server )
+		private static async Task<Dictionary<string, string>> GetRulesImpl( IPEndPoint endpoint )
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Steamworks
                     return await GetRules(client);
                 }
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 //Console.Error.WriteLine( e.Message );
                 return null;

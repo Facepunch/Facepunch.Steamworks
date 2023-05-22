@@ -15,37 +15,13 @@ namespace Generator
             public string ManagedType;
         }
 
-        private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
-
-        //
-        // Don't give a fuck about these classes, they just cause us trouble
-        //
-        public readonly static string[] SkipStructs = new string[]
-        {
-            "CSteamID",
-            "CSteamAPIContext",
-            "CCallResult",
-            "CCallback",
-            "ValvePackingSentinel_t",
-            "CCallbackBase",
-			"CSteamGameServerAPIContext"
-		};
-
-        public readonly static string[] ForceLargePackStructs = new string[]
-        {
-            "LeaderboardEntry_t"
-        };
+        private readonly Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
         void Structs()
         {
-            var callbackList = new List<SteamApiDefinition.StructDef>();
-
             foreach ( var c in def.structs )
             {
 				var name = Cleanup.ConvertType( c.Name );
-
-				if ( SkipStructs.Contains( c.Name ) )
-                    continue;
 
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;
@@ -53,15 +29,14 @@ namespace Generator
                 if ( name.Contains( "::" ) )
                     continue;
 
-				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
+                var partial = "";
+                if ( c.Methods != null ) partial = " partial";
 
-				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
-
-				//
-				// Main struct
-				//
-				WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )} struct {name}" );
+                //
+                // Main struct
+                //
+                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
+                StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}" );
                 {
 					//
 					// The fields
@@ -69,80 +44,12 @@ namespace Generator
 					StructFields( c.Fields );
 					WriteLine();
 
-					if ( isCallback )
+                    if ( c.Enums != null )
                     {
-						WriteLine( "#region SteamCallback" );
-						{
-
-							WriteLine( $"internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
-							WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
-							WriteLine();
-							WriteLine( $"static Action<{name}> actionClient;" );
-							WriteLine( $"[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );" );
-
-							WriteLine( $"static Action<{name}> actionServer;" );
-							WriteLine( $"[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );" );
-
-							StartBlock( $"public static void Install( Action<{name}> action, bool server = false )" );
-							{
-								StartBlock( "if ( server )" );
-								{
-									WriteLine( $"Event.Register( OnServer, StructSize, {c.CallbackId}, true );" );
-									WriteLine( $"actionServer = action;" );
-								}
-								Else();
-								{
-									WriteLine( $"Event.Register( OnClient, StructSize, {c.CallbackId}, false );" );
-									WriteLine( $"actionClient = action;" );
-								}
-								EndBlock();
-
-							}
-							EndBlock();
-
-							StartBlock( $"public static async Task<{name}?> GetResultAsync( SteamAPICall_t handle )" );
-							{
-								WriteLine( $"bool failed = false;" );
-								WriteLine();
-								StartBlock( $"while ( !SteamUtils.IsCallComplete( handle, out failed ) )" );
-								{
-									WriteLine( $"await Task.Delay( 1 );" );
-									WriteLine( $"if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;" );
-								}
-								EndBlock();
-
-								WriteLine( $"if ( failed ) return null;" );
-								WriteLine( $"" );
-								WriteLine( $"var ptr = Marshal.AllocHGlobal( StructSize );" );
-								WriteLine( $"" );
-								WriteLine( $"try" );
-								WriteLine( $"{{" );
-								WriteLine( $"	if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, {c.CallbackId}, ref failed ) || failed )" );
-								WriteLine( $"		return null;" );
-								WriteLine( $"" );
-								WriteLine( $"	return Fill( ptr );" );
-								WriteLine( $"}}" );
-								WriteLine( $"finally" );
-								WriteLine( $"{{" );
-								WriteLine( $"	Marshal.FreeHGlobal( ptr );" );
-								WriteLine( $"}}" );
-							}
-							EndBlock();
-						}
-						WriteLine( "#endregion" );
-					}
-					else
-					{
-						WriteLine( "#region Marshalling" );
-						{
-							WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
-						}
-						WriteLine( "#endregion" );
-					}
-
-                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
-                    {
-                        callbackList.Add( c );
+                        foreach ( var e in c.Enums )
+                        {
+                            WriteEnum( e, e.Name );
+                        }
                     }
 
                 }
@@ -185,6 +92,13 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num})] //  {m.Name}" );
                 }
 
+                if ( t.StartsWith( "ushort " ) && t.Contains( "[" ) )
+                {
+                    var num = t.Replace( "ushort", "" ).Trim( '[', ']', ' ' );
+                    t = $"ushort[]";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U2)]" );
+                }
+
                 if ( t.StartsWith( "SteamId" ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "SteamId", "" ).Trim( '[', ']', ' ' );
@@ -206,6 +120,13 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]" );
                 }
 
+                if ( t.StartsWith( "uint " ) && t.Contains( "[" ) )
+                {
+                    var num = t.Replace( "uint", "" ).Trim( '[', ']', ' ' );
+                    t = $"uint[]";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]" );
+                }
+
                 if ( t.StartsWith( "float " ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "float", "" ).Trim( '[', ']', ' ' );
@@ -223,6 +144,11 @@ namespace Generator
                     var num = t.Replace("AppId", "").Trim('[', ']', ' ');
                     t = $"AppId[]";
                     WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
+                }
+
+                if ( t == "SteamInputActionEvent_t.AnalogAction_t" )
+                {
+                    Write( "// " );
                 }
 
                 WriteLine( $"internal {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
