@@ -21,9 +21,9 @@
 
 #define STEAM_CONTROLLER_MAX_COUNT 16
 
-#define STEAM_CONTROLLER_MAX_ANALOG_ACTIONS 16
+#define STEAM_CONTROLLER_MAX_ANALOG_ACTIONS 24
 
-#define STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS 128
+#define STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS 256
 
 #define STEAM_CONTROLLER_MAX_ORIGINS 8
 
@@ -448,6 +448,16 @@ enum EControllerActionOrigin
 	k_EControllerActionOrigin_SteamDeck_Reserved19,
 	k_EControllerActionOrigin_SteamDeck_Reserved20,
 
+	k_EControllerActionOrigin_Switch_JoyConButton_N, // With a Horizontal JoyCon this will be Y or what would be Dpad Right when vertical
+	k_EControllerActionOrigin_Switch_JoyConButton_E, // X
+	k_EControllerActionOrigin_Switch_JoyConButton_S, // A
+	k_EControllerActionOrigin_Switch_JoyConButton_W, // B
+
+	k_EControllerActionOrigin_PS5_LeftGrip,
+	k_EControllerActionOrigin_PS5_RightGrip,
+	k_EControllerActionOrigin_PS5_LeftFn,
+	k_EControllerActionOrigin_PS5_RightFn,
+
 	k_EControllerActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EControllerActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
 };
@@ -529,6 +539,7 @@ typedef uint64 ControllerAnalogActionHandle_t;
 #define ControllerAnalogActionData_t InputAnalogActionData_t
 #define ControllerDigitalActionData_t InputDigitalActionData_t
 #define ControllerMotionData_t  InputMotionData_t
+#define ControllerMotionDataV2_t  InputMotionDataV2_t
 #else
 struct ControllerAnalogActionData_t
 {

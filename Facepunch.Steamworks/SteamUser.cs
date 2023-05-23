@@ -43,6 +43,7 @@ namespace Steamworks
 			Dispatch.Install<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
 			Dispatch.Install<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
 			Dispatch.Install<GetAuthSessionTicketResponse_t>( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<GetTicketForWebApiResponse_t>( x => OnGetTicketForWebApiResponse?.Invoke( x ) );
 			Dispatch.Install<DurationControl_t>( x => OnDurationControl?.Invoke( new DurationControl { _inner = x } ) );
 		}
 
@@ -92,6 +93,11 @@ namespace Steamworks
 		/// Used internally for <see cref="GetAuthSessionTicketAsync(double)"/>.
 		/// </summary>
 		internal static event Action<GetAuthSessionTicketResponse_t> OnGetAuthSessionTicketResponse;
+
+		/// <summary>
+		/// Used internally for <see cref="GetTicketForWebApi"/>.
+		/// </summary>
+		internal static event Action<GetTicketForWebApiResponse_t> OnGetTicketForWebApiResponse;
 
 		/// <summary>
 		/// Invoked when a user has responded to a microtransaction authorization request.
@@ -304,16 +310,79 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Retrieve an authentication ticket to be sent to the entity that wishes to authenticate you using the
+		/// ISteamUserAuth/AuthenticateUserTicket Web API.     
+		/// It is best practice to use an identity string for each service that will consume tickets.
+		/// NOTE: This API can not be used to create a ticket for use by the BeginAuthSession/ISteamGameServer::BeginAuthSession.
+		/// Use the GetAuthSessionTicket API instead
+		/// </summary>
+		public static async Task<AuthTicket> GetTicketForWebApi(string identity, double timeoutSeconds = 10.0f )
+		{
+			var result = Result.Pending;
+			AuthTicket ticket = new AuthTicket();
+			var stopwatch = Stopwatch.StartNew();
+
+			void f( GetTicketForWebApiResponse_t t )
+			{
+				if ( t.AuthTicket == ticket.Handle)
+				{
+					ticket.Data = new byte[t.GubTicket.Length];
+					Array.Copy( t.GubTicket, ticket.Data, t.GubTicket.Length );
+					
+					result = t.Result;
+				}
+			}
+
+			OnGetTicketForWebApiResponse += f;
+
+			try
+			{
+				ticket.Handle = Internal.GetAuthTicketForWebApi( identity );
+				if ( ticket.Handle == Defines.k_HAuthTicketInvalid)
+					return null;
+
+				while ( result == Result.Pending )
+				{
+					await Task.Delay( 10 );
+
+					if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
+					{
+						ticket.Cancel();
+						return null;
+					}
+				}
+
+				if ( result == Result.OK )
+					return ticket;
+
+				ticket.Cancel();
+				return null;
+			}
+			finally
+			{
+				OnGetTicketForWebApiResponse -= f;
+			}
+		}
+
+		/// <summary>
 		/// Retrieve an authentication ticket to be sent to the entity who wishes to authenticate you.
 		/// </summary>
-		public static unsafe AuthTicket GetAuthSessionTicket()
+		/// <param name="remoteSystemToAuthenticateTicket">
+		/// The identity of the remote system that will authenticate the ticket.
+		/// If it is peer-to-peer then the user steam ID. If it is a game server, then the game server steam ID may be used if it was obtained
+		/// from a trusted 3rd party, otherwise use the IP address. If it is a service, a string identifier of that service if one if provided.
+		/// Example uses:
+		/// GetAuthSessionTicket(NetAddress.From("10.23.0.1", 5055))
+		/// GetAuthSessionTicket(new SteamId() { Value = 1234 })
+		/// </param>
+		public static unsafe AuthTicket GetAuthSessionTicket( NetIdentity remoteSystemToAuthenticateTicket )
 		{
 			var data = Helpers.TakeBuffer( 1024 );
 
 			fixed ( byte* b = data )
 			{
 				uint ticketLength = 0;
-				uint ticket = Internal.GetAuthSessionTicket( (IntPtr)b, data.Length, ref ticketLength );
+				uint ticket = Internal.GetAuthSessionTicket( (IntPtr)b, data.Length, ref ticketLength, ref remoteSystemToAuthenticateTicket );
 
 				if ( ticket == 0 )
 					return null;
@@ -332,7 +401,15 @@ namespace Steamworks
 		/// the ticket is definitely ready to go as soon as it returns. Will return <see langword="null"/> if the callback
 		/// times out or returns negatively.
 		/// </summary>
-		public static async Task<AuthTicket> GetAuthSessionTicketAsync( double timeoutSeconds = 10.0f )
+		/// <param name="remoteSystemToAuthenticateTicket">
+		/// The identity of the remote system that will authenticate the ticket.
+		/// If it is peer-to-peer then the user steam ID. If it is a game server, then the game server steam ID may be used if it was obtained
+		/// from a trusted 3rd party, otherwise use the IP address. If it is a service, a string identifier of that service if one if provided.
+		/// Example uses:
+		/// GetAuthSessionTicketAsync(NetAddress.From("10.23.0.1", 5055))
+		/// GetAuthSessionTicketAsync(new SteamId() { Value = 1234 })
+		/// </param>
+		public static async Task<AuthTicket> GetAuthSessionTicketAsync( NetIdentity remoteSystemToAuthenticateTicket, double timeoutSeconds = 10.0f )
 		{
 			var result = Result.Pending;
 			AuthTicket ticket = null;
@@ -348,7 +425,7 @@ namespace Steamworks
 
 			try
 			{
-				ticket = GetAuthSessionTicket();
+				ticket = GetAuthSessionTicket( remoteSystemToAuthenticateTicket );
 				if ( ticket == null )
 					return null;
 

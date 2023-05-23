@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v016", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUGC_v016();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v016();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v016", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v016();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v016();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v017", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUGC_v017();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v017();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v017", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v017();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v017();
 		
 		
 		#region FunctionMeta
@@ -246,6 +246,17 @@ namespace Steamworks
 			using var mempchValue = Helpers.TakeMemory();
 			var returnValue = _GetQueryUGCKeyValueTag( Self, handle, index, pchKey, mempchValue, (1024 * 32) );
 			pchValue = Helpers.MemoryToString( mempchValue );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCContentDescriptors", CallingConvention = Platform.CC)]
+		private static extern uint _GetQueryUGCContentDescriptors( IntPtr self, UGCQueryHandle_t handle, uint index, [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries );
+		
+		#endregion
+		internal uint GetQueryUGCContentDescriptors( UGCQueryHandle_t handle, uint index, [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries )
+		{
+			var returnValue = _GetQueryUGCContentDescriptors( Self, handle, index, pvecDescriptors, cMaxEntries );
 			return returnValue;
 		}
 		
@@ -724,6 +735,30 @@ namespace Steamworks
 		internal bool RemoveItemPreview( UGCUpdateHandle_t handle, uint index )
 		{
 			var returnValue = _RemoveItemPreview( Self, handle, index );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddContentDescriptor", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _AddContentDescriptor( IntPtr self, UGCUpdateHandle_t handle, UGCContentDescriptorID descid );
+		
+		#endregion
+		internal bool AddContentDescriptor( UGCUpdateHandle_t handle, UGCContentDescriptorID descid )
+		{
+			var returnValue = _AddContentDescriptor( Self, handle, descid );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveContentDescriptor", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _RemoveContentDescriptor( IntPtr self, UGCUpdateHandle_t handle, UGCContentDescriptorID descid );
+		
+		#endregion
+		internal bool RemoveContentDescriptor( UGCUpdateHandle_t handle, UGCContentDescriptorID descid )
+		{
+			var returnValue = _RemoveContentDescriptor( Self, handle, descid );
 			return returnValue;
 		}
 		

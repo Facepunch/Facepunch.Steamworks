@@ -296,9 +296,14 @@ namespace Steamworks
 		/// </summary>
 		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
 
-		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
-		//{
-		//	Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
-		//}
+		/// <summary>
+		/// Opens a floating keyboard over the game content and sends OS keyboard keys directly to the game.
+		/// The text field position is specified in pixels relative the origin of the game window and is used to
+		/// position the floating keyboard in a way that doesn't cover the text field.
+		/// </summary>
+		public static void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
+		{
+			Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
+		}
 	}
 }

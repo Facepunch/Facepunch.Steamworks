@@ -54,12 +54,6 @@ S_API void S_CALLTYPE SteamAPI_UnregisterCallback( class CCallbackBase *pCallbac
 S_API void S_CALLTYPE SteamAPI_RegisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
 S_API void S_CALLTYPE SteamAPI_UnregisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
 
-// disable this warning; this pattern need for steam callback registration
-#ifdef _MSVC_VER
-#pragma warning( push )
-#pragma warning( disable: 4355 )	// 'this' : used in base member initializer list
-#endif
-
 #define _STEAM_CALLBACK_AUTO_HOOK( thisclass, func, param )
 #define _STEAM_CALLBACK_HELPER( _1, _2, SELECTED, ... )		_STEAM_CALLBACK_##SELECTED
 #define _STEAM_CALLBACK_SELECT( X, Y )						_STEAM_CALLBACK_HELPER X Y
@@ -244,6 +238,9 @@ class ISteamInput;
 class ISteamParties;
 class ISteamRemotePlay;
 
+// Forward declare types
+struct SteamNetworkingIdentity;
+
 //-----------------------------------------------------------------------------
 // Purpose: Base values for callback identifiers, each callback must
 //			have a unique ID.
@@ -288,10 +285,6 @@ enum { k_iSteamSTARCallbacks = 5500 };
 enum { k_iSteamRemotePlayCallbacks = 5700 };
 enum { k_iSteamChatCallbacks = 5900 };
 // NOTE: Internal "IClientXxx" callback IDs go in clientenums.h
-
-#ifdef _MSVC_VER
-#pragma warning( pop )
-#endif
 
 // Macros used to annotate various Steamworks interfaces to generate the
 // flat API

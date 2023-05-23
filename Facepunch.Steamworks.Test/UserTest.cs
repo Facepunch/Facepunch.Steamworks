@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -61,7 +62,7 @@ namespace Steamworks
 		[TestMethod]
 		public void AuthSession()
 		{
-			var ticket = SteamUser.GetAuthSessionTicket();
+			var ticket = SteamUser.GetAuthSessionTicket( NetIdentity.LocalHost );
 
 			Assert.AreNotEqual( 0, ticket.Handle );
 			Assert.AreNotEqual( 0, ticket.Data.Length );
@@ -78,12 +79,23 @@ namespace Steamworks
 		[TestMethod]
 		public async Task AuthSessionAsync()
 		{
-			var ticket = await SteamUser.GetAuthSessionTicketAsync( 5.0 );
+			var ticket = await SteamUser.GetAuthSessionTicketAsync( NetIdentity.LocalHost, 5.0 );
 
 			Assert.AreNotEqual( 0, ticket.Handle );
 			Assert.AreNotEqual( 0, ticket.Data.Length );
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
+		}
+
+		[TestMethod]
+		public async Task TicketForWebApi()
+		{
+			var ticket = await SteamUser.GetTicketForWebApi( "some random string" );
+
+			Assert.AreNotEqual( 0, ticket.Handle );
+			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
+			Console.WriteLine( $"ticket.Data: {string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) )}" );
 		}
 
 		[TestMethod]
