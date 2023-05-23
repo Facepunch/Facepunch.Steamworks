@@ -514,7 +514,9 @@ enum EPersonaChange
 struct GameOverlayActivated_t
 {
 	enum { k_iCallback = k_iSteamFriendsCallbacks + 31 };
-	uint8 m_bActive;	// true if it's just been activated, false otherwise
+	uint8 m_bActive;		// true if it's just been activated, false otherwise
+	bool m_bUserInitiated;	// true if the user asked for the overlay to be activated/deactivated
+	AppId_t m_nAppID;		// the appID of the game (should always be the current game)
 };
 
 

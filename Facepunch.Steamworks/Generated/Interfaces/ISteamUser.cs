@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUser_v021", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUser_v021();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUser_v021();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUser_v023", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUser_v023();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUser_v023();
 		
 		
 		#region FunctionMeta
@@ -165,12 +165,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_GetAuthSessionTicket", CallingConvention = Platform.CC)]
-		private static extern HAuthTicket _GetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
+		private static extern HAuthTicket _GetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket, ref NetIdentity pSteamNetworkingIdentity );
 		
 		#endregion
-		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
+		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket, ref NetIdentity pSteamNetworkingIdentity )
 		{
-			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket, ref pSteamNetworkingIdentity );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_GetAuthTicketForWebApi", CallingConvention = Platform.CC)]
+		private static extern HAuthTicket _GetAuthTicketForWebApi( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIdentity );
+		
+		#endregion
+		internal HAuthTicket GetAuthTicketForWebApi( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIdentity )
+		{
+			var returnValue = _GetAuthTicketForWebApi( Self, pchIdentity );
 			return returnValue;
 		}
 		

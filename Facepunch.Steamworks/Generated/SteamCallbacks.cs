@@ -207,6 +207,22 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct GetTicketForWebApiResponse_t : ICallbackData
+	{
+		internal uint AuthTicket; // m_hAuthTicket HAuthTicket
+		internal Result Result; // m_eResult EResult
+		internal int Ticket; // m_cubTicket int
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2560)] //  m_rgubTicket
+		internal byte[] GubTicket; // m_rgubTicket uint8 [2560]
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetTicketForWebApiResponse_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.GetTicketForWebApiResponse;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct PersonaStateChange_t : ICallbackData
 	{
 		internal ulong SteamID; // m_ulSteamID uint64
@@ -223,6 +239,9 @@ namespace Steamworks.Data
 	internal struct GameOverlayActivated_t : ICallbackData
 	{
 		internal byte Active; // m_bActive uint8
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool UserInitiated; // m_bUserInitiated bool
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameOverlayActivated_t) );
@@ -588,6 +607,7 @@ namespace Steamworks.Data
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Submitted; // m_bSubmitted bool
 		internal uint SubmittedText; // m_unSubmittedText uint32
+		internal AppId AppID; // m_unAppID AppId_t
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GamepadTextInputDismissed_t) );
@@ -615,6 +635,18 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FloatingGamepadTextInputDismissed_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.FloatingGamepadTextInputDismissed;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct FilterTextDictionaryChanged_t : ICallbackData
+	{
+		internal int Language; // m_eLanguage int
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FilterTextDictionaryChanged_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.FilterTextDictionaryChanged;
 		#endregion
 	}
 	
@@ -1571,19 +1603,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct RegisterActivationCodeResponse_t : ICallbackData
-	{
-		internal RegisterActivationCodeResult Result; // m_eResult ERegisterActivationCodeResult
-		internal uint PackageRegistered; // m_unPackageRegistered uint32
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RegisterActivationCodeResponse_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.RegisterActivationCodeResponse;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct NewUrlLaunchParameters_t : ICallbackData
 	{
 		
@@ -1963,6 +1982,22 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInputConfigurationLoaded_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.SteamInputConfigurationLoaded;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamInputGamepadSlotChange_t : ICallbackData
+	{
+		internal AppId AppID; // m_unAppID AppId_t
+		internal ulong DeviceHandle; // m_ulDeviceHandle InputHandle_t
+		internal InputType DeviceType; // m_eDeviceType ESteamInputType
+		internal int OldGamepadSlot; // m_nOldGamepadSlot int
+		internal int NewGamepadSlot; // m_nNewGamepadSlot int
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInputGamepadSlotChange_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.SteamInputGamepadSlotChange;
 		#endregion
 	}
 	
@@ -2758,6 +2793,20 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamRemotePlaySessionDisconnected_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.SteamRemotePlaySessionDisconnected;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamRemotePlayTogetherGuestInvite_t : ICallbackData
+	{
+		internal string ConnectURLUTF8() => System.Text.Encoding.UTF8.GetString( ConnectURL, 0, System.Array.IndexOf<byte>( ConnectURL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)] // byte[] m_szConnectURL
+		internal byte[] ConnectURL; // m_szConnectURL char [1024]
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamRemotePlayTogetherGuestInvite_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.SteamRemotePlayTogetherGuestInvite;
 		#endregion
 	}
 	

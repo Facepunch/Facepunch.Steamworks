@@ -47,7 +47,7 @@ STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamAppList *, SteamAppList, STEAMAPPLIS
 
 
 //---------------------------------------------------------------------------------
-// Purpose: Sent when a new app is installed
+// Purpose: Sent when a new app is installed (not downloaded yet)
 //---------------------------------------------------------------------------------
 STEAM_CALLBACK_BEGIN( SteamAppInstalled_t, k_iSteamAppListCallbacks + 1 )
 STEAM_CALLBACK_MEMBER( 0, AppId_t, m_nAppID )			// ID of the app that installs

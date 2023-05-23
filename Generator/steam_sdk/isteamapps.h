@@ -137,30 +137,6 @@ struct DlcInstalled_t
 };
 
 
-//-----------------------------------------------------------------------------
-// Purpose: possible results when registering an activation code
-//-----------------------------------------------------------------------------
-enum ERegisterActivationCodeResult
-{
-	k_ERegisterActivationCodeResultOK = 0,
-	k_ERegisterActivationCodeResultFail = 1,
-	k_ERegisterActivationCodeResultAlreadyRegistered = 2,
-	k_ERegisterActivationCodeResultTimeout = 3,
-	k_ERegisterActivationCodeAlreadyOwned = 4,
-};
-
-
-//-----------------------------------------------------------------------------
-// Purpose: response to RegisterActivationCode()
-//-----------------------------------------------------------------------------
-struct RegisterActivationCodeResponse_t
-{
-	enum { k_iCallback = k_iSteamAppsCallbacks + 8 };
-	ERegisterActivationCodeResult m_eResult;
-	uint32 m_unPackageRegistered;						// package that was registered. Only set on success
-};
-
-
 //---------------------------------------------------------------------------------
 // Purpose: posted after the user gains executes a Steam URL with command line or query parameters
 // such as steam://run/<appid>//-commandline/?param1=value1&param2=value2&param3=value3 etc

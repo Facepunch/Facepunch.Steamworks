@@ -157,6 +157,15 @@ enum EItemPreviewType
 	k_EItemPreviewType_ReservedMax						= 255,	// you can specify your own types above this value
 };
 
+enum EUGCContentDescriptorID
+{
+	k_EUGCContentDescriptor_NudityOrSexualContent	= 1,
+	k_EUGCContentDescriptor_FrequentViolenceOrGore	= 2,
+	k_EUGCContentDescriptor_AdultOnlySexualContent	= 3,
+	k_EUGCContentDescriptor_GratuitousSexualContent = 4,
+	k_EUGCContentDescriptor_AnyMatureContent		= 5,
+};
+
 const uint32 kNumUGCResultsPerPage = 50;
 const uint32 k_cchDeveloperMetadataMax = 5000;
 
@@ -237,6 +246,8 @@ public:
 	STEAM_FLAT_NAME( GetQueryFirstUGCKeyValueTag )
 	virtual bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint32 index, const char *pchKey, STEAM_OUT_STRING_COUNT(cchValueSize) char *pchValue, uint32 cchValueSize ) = 0;
 
+	virtual uint32 GetQueryUGCContentDescriptors( UGCQueryHandle_t handle, uint32 index, EUGCContentDescriptorID *pvecDescriptors, uint32 cMaxEntries ) = 0;
+	
 	// Release the request to free up memory, after retrieving results
 	virtual bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
 
@@ -293,6 +304,8 @@ public:
 	virtual bool UpdateItemPreviewFile( UGCUpdateHandle_t handle, uint32 index, const char *pszPreviewFile ) = 0; //  updates an existing preview file for this item. pszPreviewFile points to local file, which must be under 1MB in size
 	virtual bool UpdateItemPreviewVideo( UGCUpdateHandle_t handle, uint32 index, const char *pszVideoID ) = 0; //  updates an existing preview video for this item
 	virtual bool RemoveItemPreview( UGCUpdateHandle_t handle, uint32 index ) = 0; // remove a preview by index starting at 0 (previews are sorted)
+	virtual bool AddContentDescriptor( UGCUpdateHandle_t handle, EUGCContentDescriptorID descid ) = 0;
+	virtual bool RemoveContentDescriptor( UGCUpdateHandle_t handle, EUGCContentDescriptorID descid ) = 0;
 
 	STEAM_CALL_RESULT( SubmitItemUpdateResult_t )
 	virtual SteamAPICall_t SubmitItemUpdate( UGCUpdateHandle_t handle, const char *pchChangeNote ) = 0; // commit update process started with StartItemUpdate()
@@ -371,7 +384,7 @@ public:
 	virtual SteamAPICall_t GetWorkshopEULAStatus() = 0;
 };
 
-#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION016"
+#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION017"
 
 // Global interface accessor
 inline ISteamUGC *SteamUGC();

@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServer_v014", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServer_v014();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServer_v014();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServer_v015", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServer_v015();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServer_v015();
 		
 		
 		#region FunctionMeta
@@ -269,12 +269,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetAuthSessionTicket", CallingConvention = Platform.CC)]
-		private static extern HAuthTicket _GetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
+		private static extern HAuthTicket _GetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket, ref NetIdentity pSnid );
 		
 		#endregion
-		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
+		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket, ref NetIdentity pSnid )
 		{
-			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket, ref pSnid );
 			return returnValue;
 		}
 		
