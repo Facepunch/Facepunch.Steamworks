@@ -166,7 +166,7 @@ namespace Steamworks
 
 					foreach ( var item in exchange.Ingredients )
 					{
-						Console.WriteLine( $"	{item.Count} x {item.Definition.Name}" );
+						Console.WriteLine( $"	{item.Count} x {item.Definition?.Name ?? item.DefinitionId.ToString()}" );
 					}
 
 					Console.WriteLine( $"" );
