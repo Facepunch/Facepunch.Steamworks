@@ -43,6 +43,7 @@ namespace Steamworks
 			Dispatch.Install<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
 			Dispatch.Install<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
 			Dispatch.Install<GetAuthSessionTicketResponse_t>( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<GetTicketForWebApiResponse_t>( x => OnGetTicketForWebApiResponse?.Invoke( x ) );
 			Dispatch.Install<DurationControl_t>( x => OnDurationControl?.Invoke( new DurationControl { _inner = x } ) );
 		}
 
@@ -89,9 +90,14 @@ namespace Steamworks
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
 		/// <summary>
-		/// Used internally for <see cref="GetAuthSessionTicketAsync(double)"/>.
+		/// Used internally for <see cref="GetAuthSessionTicketAsync(NetIdentity, double)"/>.
 		/// </summary>
 		internal static event Action<GetAuthSessionTicketResponse_t> OnGetAuthSessionTicketResponse;
+
+		/// <summary>
+		/// Used internally for <see cref="GetAuthTicketForWebApiAsync(string, double)"/>.
+		/// </summary>
+		internal static event Action<GetTicketForWebApiResponse_t> OnGetTicketForWebApiResponse;
 
 		/// <summary>
 		/// Invoked when a user has responded to a microtransaction authorization request.
@@ -372,6 +378,72 @@ namespace Steamworks
 			finally
 			{
 				OnGetAuthSessionTicketResponse -= f;
+			}
+		}
+
+		/// <summary>
+		/// Retrieve an authentication ticket to be sent to the entity who wishes to authenticate you.
+		/// </summary>
+		private static unsafe AuthTicket GetAuthTicketForWebApi( string identity )
+		{
+			uint ticket = Internal.GetAuthTicketForWebApi( identity );
+
+			if ( ticket == 0 )
+				return null;
+
+			return new AuthTicket()
+			{
+				Handle = ticket
+			};
+		}
+
+		/// <summary>
+		/// Retrieve a authentication ticket to be sent to the entity who wishes to authenticate you.
+		/// This waits for a positive response from the backend before returning the ticket. This means
+		/// the ticket is definitely ready to go as soon as it returns. Will return <see langword="null"/> if the callback
+		/// times out or returns negatively.
+		/// </summary>
+		public static async Task<AuthTicket> GetAuthTicketForWebApiAsync( string identity, double timeoutSeconds = 10.0f )
+		{
+			var result = Result.Pending;
+			AuthTicket ticket = null;
+			var stopwatch = Stopwatch.StartNew();
+
+			void f( GetTicketForWebApiResponse_t t )
+			{
+				if ( t.AuthTicket != ticket.Handle ) return;
+				result = t.Result;
+				ticket.Data = t.GubTicket;
+			}
+
+			OnGetTicketForWebApiResponse += f;
+
+			try
+			{
+				ticket = GetAuthTicketForWebApi( identity );
+				if ( ticket == null )
+					return null;
+
+				while ( result == Result.Pending )
+				{
+					await Task.Delay( 10 );
+
+					if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
+					{
+						ticket.Cancel();
+						return null;
+					}
+				}
+
+				if ( result == Result.OK )
+					return ticket;
+
+				ticket.Cancel();
+				return null;
+			}
+			finally
+			{
+				OnGetTicketForWebApiResponse -= f;
 			}
 		}
 

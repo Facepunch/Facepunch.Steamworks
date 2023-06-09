@@ -87,6 +87,17 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task AuthTicketForWebApiAsync()
+		{
+			var ticket = await SteamUser.GetAuthTicketForWebApiAsync( "Test" );
+
+			Assert.AreNotEqual( 0, ticket.Handle );
+			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
+			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
+		}
+
+		[TestMethod]
 		public void SteamLevel()
 		{
 			Assert.AreNotEqual( 0, SteamUser.SteamLevel );
