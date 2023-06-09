@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -46,7 +47,7 @@ namespace Steamworks
 			//
 			// Clientside calls this function, gets ticket
 			//
-			var clientTicket = SteamUser.GetAuthSessionTicket( SteamClient.SteamId );
+			var clientTicket = SteamUser.GetAuthSessionTicket( NetIdentity.LocalHost );
 
 			//
 			// The client sends this data to the server along with their steamid
