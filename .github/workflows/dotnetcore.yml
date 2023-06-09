@@ -28,6 +28,13 @@ jobs:
       run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
     - name: Build Posix
       run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
+      
+    - name: Build Win64 Release
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj --configuration Release
+    - name: Build Win32 Release
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj --configuration Release
+    - name: Build Posix Release
+      run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj --configuration Release
 
     - uses: actions/upload-artifact@v1
       with:
