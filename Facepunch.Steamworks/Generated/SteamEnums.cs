@@ -584,7 +584,7 @@ namespace Steamworks
 	//
 	// EPersonaChange
 	//
-	internal enum PersonaChange : int
+	public enum PersonaChange : int
 	{
 		Name = 1,
 		Status = 2,

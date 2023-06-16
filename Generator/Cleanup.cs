@@ -115,6 +115,7 @@ public static class Cleanup
 
 	internal static string Expose( string name )
 	{
+		if ( name == "PersonaChange" ) return "public";
 		if ( name == "FriendState" ) return "public";
 		if ( name == "MusicStatus" ) return "public";
 		if ( name == "ParentalFeature" ) return "public";

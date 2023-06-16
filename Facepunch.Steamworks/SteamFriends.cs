@@ -30,7 +30,7 @@ namespace Steamworks
 
 		internal void InstallEvents()
 		{
-			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ), (PersonaChange)x.ChangeFlags ) );
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			Dispatch.Install<GameConnectedClanChatMsg_t>( OnGameConnectedClanChatMessage );
@@ -55,7 +55,7 @@ namespace Steamworks
 		/// <summary>
 		/// Invoked when a friends' status changes.
 		/// </summary>
-		public static event Action<Friend> OnPersonaStateChange;
+		public static event Action<Friend, PersonaChange> OnPersonaStateChange;
 
 
 		/// <summary>
