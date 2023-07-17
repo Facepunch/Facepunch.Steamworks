@@ -105,7 +105,7 @@ public static class Cleanup
 		if ( type == "ValvePackingSentinel_t" ) return false;
 		if ( type == "CCallbackBase" ) return false;
 		if ( type == "CSteamGameServerAPIContext" ) return false;
-		if ( type == "ConnectionStatus") return false;
+		if ( type == "ConnectionStatus" ) return false;
 		if ( type == "ConnectionLaneStatus" ) return false;
 		if ( type == "SteamInputActionEventCallbackPointer" ) return false;
 		if ( type.StartsWith( "FnSteam" ) ) return false;
@@ -164,7 +164,7 @@ public static class Cleanup
 		if ( name == "SNetSocketConnectionType" ) return true;
 		if ( name == "SNetSocketState" ) return true;
 
-		
+
 		if ( name.StartsWith( "ISteamInput." ) )
 		{
 			if ( name.Contains( "EnableActionEventCallbacks" ) ) return true;
@@ -173,10 +173,10 @@ public static class Cleanup
 
 		if ( name.StartsWith( "ISteamRemoteStorage." ) )
 		{
-			if ( name.Contains( "Publish" ) ) return true;
-			if ( name.Contains( "ResetFileRequestState" ) ) return true;
-			if ( name.Contains( "EnumerateUserSubscribedFiles" ) ) return true;
-			if ( name.Contains( "EnumerateUserSharedWorkshopFile" ) ) return true;
+			//if ( name.Contains( "Publish" ) ) return true;
+			//if ( name.Contains( "ResetFileRequestState" ) ) return true;
+			//if ( name.Contains( "EnumerateUserSubscribedFiles" ) ) return true;
+			//if ( name.Contains( "EnumerateUserSharedWorkshopFile" ) ) return true;
 		}
 
 		//
@@ -184,15 +184,15 @@ public static class Cleanup
 		//
 		if ( name.StartsWith( "ISteamNetworking." ) )
 		{
-			if ( !name.Contains( "P2P" ))
+			if ( !name.Contains( "P2P" ) )
 				return true;
 		}
 
 		if ( name == "ISteamUGC.RequestUGCDetails" ) return true;
 
 		return false;
-	}	
-	
+	}
+
 	//
 	// If we start with E[Capital] then strip the E
 	// (makes us more C# like)

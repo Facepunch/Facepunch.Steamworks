@@ -6,38 +6,38 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
-    public partial class CodeWriter
-    {
-        void Callbacks()
-        {
-            var callbackList = new List<SteamApiDefinition.StructDef>();
+	public partial class CodeWriter
+	{
+		void Callbacks()
+		{
+			var callbackList = new List<SteamApiDefinition.StructDef>();
 
-            foreach ( var c in def.callback_structs )
-            {
+			foreach ( var c in def.callback_structs )
+			{
 				var name = Cleanup.ConvertType( c.Name );
 
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;
 
-                if ( name.Contains( "::" ) )
-                    continue;
+				if ( name.Contains( "::" ) )
+					continue;
 
-                var partial = "";
-                if ( c.Methods != null ) partial = " partial";
+				var partial = "";
+				if ( c.Methods != null ) partial = " partial";
 
-                int defaultPack = c.IsPack4OnWindows ? 4 : 8;
+				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
 				var isCallback = true;
-                var iface = "";
-                if ( isCallback )
-                    iface = " : ICallbackData";
+				var iface = "";
+				if ( isCallback )
+					iface = " : ICallbackData";
 
-                //
-                // Main struct
-                //
-                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}{iface}" );
-                {
+				//
+				// Main struct
+				//
+				WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows ? "StructPackSize" : "StructPlatformPackSize")} )]" );
+				StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}{iface}" );
+				{
 					//
 					// The fields
 					//
@@ -45,13 +45,13 @@ namespace Generator
 					WriteLine();
 
 					if ( isCallback )
-                    {
+					{
 						WriteLine( "#region SteamCallback" );
 						{
 
 							WriteLine( $"public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
 							WriteLine( $"public int DataSize => _datasize;" );
-                            WriteLine( $"public CallbackType CallbackType => CallbackType.{name.Replace( "_t", "" )};" );
+							WriteLine( $"public CallbackType CallbackType => CallbackType.{name.Replace( "_t", "" )};" );
 						}
 						WriteLine( "#endregion" );
 					}
@@ -66,13 +66,13 @@ namespace Generator
 
 					// if (  c.CallbackId ) )
 					{
-                        callbackList.Add( c );
-                    }
+						callbackList.Add( c );
+					}
 
-                }
-                EndBlock();
-                WriteLine();
-            }
-        }
-    }
+				}
+				EndBlock();
+				WriteLine();
+			}
+		}
+	}
 }

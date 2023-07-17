@@ -27,7 +27,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header();
                 Enums();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamEnums.cs", sb.ToString() );
             }            
             
@@ -35,7 +35,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header();
                 CustomEnums();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}CustomEnums.cs", sb.ToString() );
             }
 
@@ -43,7 +43,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
                 Types();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamTypes.cs", sb.ToString() );
             }
 
@@ -51,7 +51,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
                 Callbacks();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamCallbacks.cs", sb.ToString() );
             }
 
@@ -59,7 +59,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
                 Structs();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamStructs.cs", sb.ToString() );
             }
 
@@ -67,7 +67,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
                 Constants();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamConstants.cs", sb.ToString() );
             }            
             
@@ -75,7 +75,7 @@ namespace Generator
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
                 StructFunctions();
-                Footer();
+                //Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamStructFunctions.cs", sb.ToString() );
             }
 
@@ -87,7 +87,7 @@ namespace Generator
 
             foreach ( var iface in def.Interfaces )
             {
-                GenerateInterface( iface, $"{folder}../Generated/Interfaces/" );
+                GenerateInterface( iface, $"{folder}Interfaces/" );
             }
 		}
 
@@ -117,14 +117,19 @@ namespace Generator
 
         private void Header( string NamespaceName = "Steamworks" )
         {
-            WriteLine( "using System;" );
-            WriteLine( "using System.Runtime.InteropServices;" );
-            WriteLine( "using System.Linq;" );
-            WriteLine( "using Steamworks.Data;" );
-            WriteLine( "using System.Threading.Tasks;" );
-            WriteLine();
-            StartBlock( "namespace " + NamespaceName );
-        }
+			//WriteLine( "using System;" );
+			//WriteLine( "using System.Runtime.InteropServices;" );
+			//WriteLine( "using System.Linq;" );
+			//WriteLine( "using Steamworks.Data;" );
+			//WriteLine( "using System.Threading.Tasks;" );
+			//WriteLine();
+			//StartBlock( "namespace " + NamespaceName );
+
+			WriteLine( "using Steamworks.Data;" );
+			WriteLine();
+			WriteLine( "namespace " + NamespaceName + ";" );
+			WriteLine();
+		}
 
         private void Footer()
         {

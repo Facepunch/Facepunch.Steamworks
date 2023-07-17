@@ -12,67 +12,64 @@ namespace Generator
 		{
 			sb = new StringBuilder();
 
-			WriteLine( $"using System;" );
-			WriteLine( $"using System.Runtime.InteropServices;" );
-			WriteLine( $"using System.Text;" );
-			WriteLine( $"using System.Threading.Tasks;" );
+			//WriteLine( $"using System;" );
+			//WriteLine( $"using System.Runtime.InteropServices;" );
+			//WriteLine( $"using System.Text;" );
+			//WriteLine( $"using System.Threading.Tasks;" );
+			//WriteLine( $"using Steamworks.Data;" );
+			//WriteLine();
+
 			WriteLine( $"using Steamworks.Data;" );
 			WriteLine();
-
+			WriteLine( $"namespace Steamworks;" );
 			WriteLine();
 
-			StartBlock( $"namespace Steamworks" );
+			StartBlock( $"internal unsafe class {iface.Name} : SteamInterface" );
 			{
-				StartBlock( $"internal unsafe class {iface.Name} : SteamInterface" );
+				StartBlock( $"internal {iface.Name}( bool IsGameServer )" );
 				{
-					WriteLine();
-					StartBlock( $"internal {iface.Name}( bool IsGameServer )" );
-					{
-						WriteLine( $"SetupInterface( IsGameServer );" );
-					}
-					EndBlock();
-					WriteLine();
-
-					if ( iface.Accessors != null )
-					{
-						foreach ( var func in iface.Accessors )
-						{
-							WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.Name_Flat}\", CallingConvention = Platform.CC)]" );
-							WriteLine( $"internal static extern IntPtr {func.Name_Flat}();" );
-
-							if ( func.Kind == "user" )
-							{
-								WriteLine( $"public override IntPtr GetUserInterfacePointer() => {func.Name_Flat}();" );
-							}
-							else  if ( func.Kind == "gameserver" )
-							{
-								WriteLine( $"public override IntPtr GetServerInterfacePointer() => {func.Name_Flat}();" );
-							}
-							else if ( func.Kind == "global" )
-							{
-								WriteLine( $"public override IntPtr GetGlobalInterfacePointer() => {func.Name_Flat}();" );
-							}
-							else
-							{
-								throw new Exception( $"unknown Kind {func.Kind}" );
-							}
-						}
-
-						WriteLine();
-						WriteLine();
-					}
-
-					foreach ( var func in iface.Methods )
-					{
-						if ( Cleanup.IsDeprecated( $"{iface.Name}.{func.Name}" ) )
-							continue;
-
-						WriteFunction( iface, func );
-						WriteLine();
-					}
-
+					WriteLine( $"SetupInterface( IsGameServer );" );
 				}
 				EndBlock();
+				WriteLine();
+
+				if ( iface.Accessors != null )
+				{
+					foreach ( var func in iface.Accessors )
+					{
+						WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.Name_Flat}\", CallingConvention = Platform.CC)]" );
+						WriteLine( $"internal static extern IntPtr {func.Name_Flat}();" );
+
+						if ( func.Kind == "user" )
+						{
+							WriteLine( $"public override IntPtr GetUserInterfacePointer() => {func.Name_Flat}();" );
+						}
+						else if ( func.Kind == "gameserver" )
+						{
+							WriteLine( $"public override IntPtr GetServerInterfacePointer() => {func.Name_Flat}();" );
+						}
+						else if ( func.Kind == "global" )
+						{
+							WriteLine( $"public override IntPtr GetGlobalInterfacePointer() => {func.Name_Flat}();" );
+						}
+						else
+						{
+							throw new Exception( $"unknown Kind {func.Kind}" );
+						}
+					}
+
+					WriteLine();
+				}
+
+				foreach ( var func in iface.Methods )
+				{
+					if ( Cleanup.IsDeprecated( $"{iface.Name}.{func.Name}" ) )
+						continue;
+
+					WriteFunction( iface, func );
+					WriteLine();
+				}
+
 			}
 			EndBlock();
 
@@ -94,20 +91,20 @@ namespace Generator
 				return bt;
 			} ).ToArray();
 
-			for( int i=0; i<args.Length; i++ )
+			for ( int i = 0; i < args.Length; i++ )
 			{
 				if ( args[i] is FetchStringType )
 				{
 					if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
 					{
-						if ( string.IsNullOrEmpty(  args[i + 1].Ref ) )
+						if ( string.IsNullOrEmpty( args[i + 1].Ref ) )
 						{
 							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
 						}
 					}
 					else
 					{
-						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
+						throw new System.Exception( $"String Builder Next Type Is {args[i + 1].GetType()}" );
 					}
 				}
 			}
@@ -118,21 +115,20 @@ namespace Generator
 			if ( returnType is SteamApiCallType sap )
 			{
 				sap.CallResult = func.CallResult;
-				argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
+				argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " ) ) );
 			}
 
 			WriteLine( $"#region FunctionMeta" );
 
 			WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.FlatName}\", CallingConvention = Platform.CC)]" );
-			
+
 			if ( returnType.ReturnAttribute != null )
 				WriteLine( returnType.ReturnAttribute );
 
 			WriteLine( $"private static extern {returnType.TypeNameFrom} _{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 
-			WriteLine();
 			WriteLine( $"#endregion" );
-
+			WriteLine();
 
 			if ( !string.IsNullOrEmpty( func.Desc ) )
 			{
