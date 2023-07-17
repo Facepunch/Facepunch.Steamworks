@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -461,6 +462,26 @@ namespace Steamworks
 		public static UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamid, AppId appid )
 		{
 			return Internal.UserHasLicenseForApp( steamid, appid );
+		}
+		
+		public static unsafe AuthTicket GetAuthSessionTicket( NetIdentity identity )
+		{
+			var data = Helpers.TakeBuffer( 1024 );
+
+			fixed ( byte* b = data )
+			{
+				uint ticketLength = 0;
+				uint ticket = Internal.GetAuthSessionTicket( (IntPtr)b, data.Length, ref ticketLength, ref identity );
+
+				if ( ticket == 0 )
+					return null;
+
+				return new AuthTicket()
+				{
+					Data = data.Take( (int)ticketLength ).ToArray(),
+					Handle = ticket
+				};
+			}
 		}
 	}
 }
