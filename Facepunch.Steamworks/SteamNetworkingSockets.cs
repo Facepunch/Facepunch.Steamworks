@@ -287,6 +287,10 @@ namespace Steamworks
 			return Internal.BeginAsyncRequestFakeIP( numFakePorts );
 		}
 
+		public static IntPtr CreateFakeUDPPort( int index )
+		{
+			return Internal.CreateFakeUDPPort( index );
+		}
 		/// <summary>
 		/// Return info about the FakeIP and port that we have been assigned, if any.
 		/// 

@@ -107,6 +107,7 @@ namespace Steamworks
 
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingMessages>();
 
 			//
 			// Initial settings
@@ -288,6 +289,12 @@ namespace Steamworks
 		public static void LogOnAnonymous()
 		{
 			Internal.LogOnAnonymous();
+			ForceHeartbeat();
+		}
+
+		public static void LogOn(string token)
+		{
+			Internal.LogOn( token );
 			ForceHeartbeat();
 		}
 
