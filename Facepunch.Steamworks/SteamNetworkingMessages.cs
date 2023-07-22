@@ -42,10 +42,10 @@ namespace Steamworks
 
 		public static Action<ConnectionInfo> OnSessionFailed;
 
-		public bool AcceptSessionWithUser( ref NetIdentity identity ) => Internal.AcceptSessionWithUser( ref identity );
-		public bool CloseSessionWithUser( ref NetIdentity identity ) => Internal.CloseSessionWithUser( ref identity );
-		public bool CloseChannelWithUser( ref NetIdentity identity, int channel ) => Internal.CloseChannelWithUser( ref identity, channel );
-		public ConnectionState GetSessionConnectionInfo( ref NetIdentity identity, ref ConnectionInfo info, ref ConnectionStatus status ) => Internal.GetSessionConnectionInfo( ref identity, ref info, ref status );
+		public static bool AcceptSessionWithUser( ref NetIdentity identity ) => Internal.AcceptSessionWithUser( ref identity );
+		public static bool CloseSessionWithUser( ref NetIdentity identity ) => Internal.CloseSessionWithUser( ref identity );
+		public static bool CloseChannelWithUser( ref NetIdentity identity, int channel ) => Internal.CloseChannelWithUser( ref identity, channel );
+		public static ConnectionState GetSessionConnectionInfo( ref NetIdentity identity, ref ConnectionInfo info, ref ConnectionStatus status ) => Internal.GetSessionConnectionInfo( ref identity, ref info, ref status );
 
 		public static unsafe Result SendMessageToUser( ref NetIdentity identity, byte[] data, SteamNetworkingOptions flags, int channel)
 		{
