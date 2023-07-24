@@ -52,9 +52,7 @@ namespace Steamworks
 			uint length = (uint)data.Length;
 			fixed ( byte* p = data )
 			{
-				IntPtr[] pubData = new IntPtr[] { (IntPtr)p };
-				
-				return Internal.SendMessageToUser( ref identity, pubData, length, (int)flags, channel );
+				return Internal.SendMessageToUser( ref identity, (IntPtr)p, length, (int)flags, channel );
 			}
 		}
 
@@ -105,9 +103,9 @@ namespace Steamworks
 		{
 			try
 			{
-				byte[] bytes = new byte[msg->DataSize];
-				Marshal.Copy(msg->DataPtr, bytes, 0, msg->DataSize);
-				callback( bytes, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
+				byte[] data = new byte[msg->DataSize];
+				Marshal.Copy( msg->DataPtr, data, 0, msg->DataSize );
+				callback( data, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
 			}
 			finally
 			{

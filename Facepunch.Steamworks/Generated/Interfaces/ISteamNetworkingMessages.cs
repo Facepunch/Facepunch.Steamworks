@@ -25,10 +25,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingMessages_SendMessageToUser", CallingConvention = Platform.CC)]
-		private static extern Result _SendMessageToUser( IntPtr self, ref NetIdentity identityRemote, [In,Out] IntPtr[]  pubData, uint cubData, int nSendFlags, int nRemoteChannel );
+		//private static extern Result _SendMessageToUser( IntPtr self, ref NetIdentity identityRemote, [In,Out] IntPtr[]  pubData, uint cubData, int nSendFlags, int nRemoteChannel );
+		private static extern Result _SendMessageToUser( IntPtr self, ref NetIdentity identityRemote, IntPtr pubData, uint cubData, int nSendFlags, int nRemoteChannel );
 		
 		#endregion
-		internal Result SendMessageToUser( ref NetIdentity identityRemote, [In,Out] IntPtr[]  pubData, uint cubData, int nSendFlags, int nRemoteChannel )
+		internal Result SendMessageToUser( ref NetIdentity identityRemote, IntPtr pubData, uint cubData, int nSendFlags, int nRemoteChannel )
+		//internal Result SendMessageToUser( ref NetIdentity identityRemote, [In,Out] IntPtr[]  pubData, uint cubData, int nSendFlags, int nRemoteChannel )
 		{
 			var returnValue = _SendMessageToUser( Self, ref identityRemote, pubData, cubData, nSendFlags, nRemoteChannel );
 			return returnValue;
