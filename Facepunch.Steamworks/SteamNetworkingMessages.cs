@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Steamworks
 {
+	[Flags]
 	public enum SteamNetworkingOptions
 	{
 		Unreliable = 0,
@@ -15,7 +16,8 @@ namespace Steamworks
 		NoDelay = 4,
 		UnreliableNoDelay = Unreliable | NoDelay | NoNagle,
 		Reliable = 8,
-		ReliableNoNagle = Reliable | NoNagle
+		ReliableNoNagle = Reliable | NoNagle,
+		AutoRestartBrokenSession = 32
 	}
 
 	public class SteamNetworkingMessages : SteamSharedClass<SteamNetworkingMessages>
@@ -56,7 +58,7 @@ namespace Steamworks
 			}
 		}
 
-		public unsafe static int ReceiveMessagesOnChannel( int channel, Action<byte[], int, long , long , int> callback, int bufferSize = 32, bool receiveToEnd = true )
+		public unsafe static int ReceiveMessagesOnChannel( int channel, Action<SteamId, int, byte[]> callback, int bufferSize = 32, bool receiveToEnd = true )
 		{
 			if ( bufferSize < 1 || bufferSize > 256 ) throw new ArgumentOutOfRangeException( nameof( bufferSize ) );
 
@@ -99,13 +101,13 @@ namespace Steamworks
 			return totalProcessed;
 		}
 
-		internal unsafe static void ReceiveMessage( ref NetMsg* msg, Action<byte[], int, long, long, int> callback )
+		internal unsafe static void ReceiveMessage( ref NetMsg* msg, Action<SteamId, int, byte[]> callback )
 		{
 			try
 			{
 				byte[] data = new byte[msg->DataSize];
 				Marshal.Copy( msg->DataPtr, data, 0, msg->DataSize );
-				callback( data, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
+				callback(msg->Identity.SteamId, msg->Channel, data);
 			}
 			finally
 			{
