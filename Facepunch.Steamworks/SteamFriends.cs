@@ -436,7 +436,7 @@ namespace Steamworks
 			return Internal.SendClanChatMessage( chatId, message );
 		}
 
-		public static string GetFriendPersonaNale(SteamId steamId)
+		public static string GetFriendPersonaName(SteamId steamId)
 		{
 			return Internal.GetFriendPersonaName( steamId );
 		}
