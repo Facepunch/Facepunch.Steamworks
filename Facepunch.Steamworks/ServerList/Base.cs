@@ -41,6 +41,7 @@ namespace Steamworks.ServerList
 		/// </summary>
 		public List<ServerInfo> Unresponsive = new List<ServerInfo>();
 
+		public List<ServerInfo> Unqueried = new List<ServerInfo>();
 
 		public Base()
 		{
@@ -176,8 +177,10 @@ namespace Steamworks.ServerList
 		{
 			watchList.RemoveAll( x =>
 			{
-				var info = Internal.GetServerDetails( request, x );
-				OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
+				var details = Internal.GetServerDetails( request, x );
+				var info = ServerInfo.From( details );
+				info.Ping = int.MaxValue;
+				Unqueried.Add( info );
 				return true;
 			} );
 		}
