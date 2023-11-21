@@ -318,7 +318,7 @@ namespace Steamworks
 			options[0].DataType = NetConfigType.Int32;
 			options[0].Value = NetConfig.SendBufferSize;
 			options[0].Int32Value = sendBufferSize;
-			t.Socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			t.Socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 			t.Initialize();
 			SetSocketManager( t.Socket.Id, t );
 			return t;
@@ -335,7 +335,7 @@ namespace Steamworks
 		public static SocketManager CreateRelaySocketFakeIP( int fakePortIndex, ISocketManager intrface )
 		{
 			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			var socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 
 			var t = new SocketManager
 			{
