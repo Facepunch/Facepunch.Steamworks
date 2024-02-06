@@ -21,6 +21,14 @@ namespace Steamworks
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
 
+		/// <summary>
+		/// Must be called when starting use of the ISteamInput interface.
+		/// </summary>
+		public static void Init( bool explicitlyCallRunFrame = false )
+		{
+			Internal.Init( explicitlyCallRunFrame );
+		}
+
 
 		/// <summary>
 		/// You shouldn't really need to call this because it gets called by <see cref="SteamClient.RunCallbacks"/>
@@ -51,15 +59,38 @@ namespace Steamworks
 		}
 
 
-        /// <summary>
-        /// Return an absolute path to the PNG image glyph for the provided digital action name. The current
-        /// action set in use for the controller will be used for the lookup. You should cache the result and
-        /// maintain your own list of loaded PNG assets.
-        /// </summary>
-        /// <param name="controller"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static string GetDigitalActionGlyph( Controller controller, string action )
+		/// <summary>
+		/// Return an absolute path to the PNG image glyph for the provided analog action name. The current
+		/// action set in use for the controller will be used for the lookup. You should cache the result and
+		/// maintain your own list of loaded PNG assets.
+		/// </summary>
+		/// <param name="controller"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static string GetAnalogActionGlyph( Controller controller, string action )
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
+
+			Internal.GetAnalogActionOrigins(
+				controller.Handle,
+				Internal.GetCurrentActionSet( controller.Handle ),
+				GetAnalogActionHandle( action ),
+				ref origin
+			);
+
+			return Internal.GetGlyphForActionOrigin_Legacy( origin );
+		}
+
+
+		/// <summary>
+		/// Return an absolute path to the PNG image glyph for the provided digital action name. The current
+		/// action set in use for the controller will be used for the lookup. You should cache the result and
+		/// maintain your own list of loaded PNG assets.
+		/// </summary>
+		/// <param name="controller"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static string GetDigitalActionGlyph( Controller controller, string action )
         {
             InputActionOrigin origin = InputActionOrigin.None;
 
@@ -100,6 +131,49 @@ namespace Steamworks
 			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
 
 			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
+		}
+
+		/// <summary>
+		/// Show the binding panel for the specified controller.  
+		/// If the player is using Big Picture Mode the configuration will open in the overlay. 
+		/// In desktop mode a popup window version of Big Picture will be created and open the configuration.
+		/// </summary>
+		/// <returns>true for success; false if overlay is disabled or unavailable.</returns>
+		public static bool ShowBindingPanel(Controller controller)
+		{
+			return Internal.ShowBindingPanel(controller.Handle);
+		}
+
+		/// <summary>
+		/// Get the localized description of the button assigned to the specified digital action
+		/// </summary>
+		public static string GetDigitalActionDescription(Controller controller, string action)
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
+
+			Internal.GetDigitalActionOrigins(
+				controller.Handle,
+				Internal.GetCurrentActionSet( controller.Handle ),
+				GetDigitalActionHandle( action ),
+				ref origin
+			);
+			return Internal.GetStringForActionOrigin( origin );
+		}
+
+		/// <summary>
+		/// Get the localized description of the joystick or gamepad assigned to the specified analog action
+		/// </summary>
+		public static string GetAnalogActionDescription( Controller controller, string action )
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
+
+			Internal.GetAnalogActionOrigins(
+				controller.Handle,
+				Internal.GetCurrentActionSet( controller.Handle ),
+				GetAnalogActionHandle( action ),
+				ref origin
+			);
+			return Internal.GetStringForActionOrigin( origin );
 		}
 
 		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
