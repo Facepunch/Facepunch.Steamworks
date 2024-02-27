@@ -1048,7 +1048,7 @@ namespace Steamworks
 	//
 	// EInputActionOrigin
 	//
-	internal enum InputActionOrigin : int
+	public enum InputActionOrigin : int
 	{
 		None = 0,
 		SteamController_A = 1,
@@ -1996,7 +1996,7 @@ namespace Steamworks
 		Count = 386,
 		MaximumPossibleValue = 32767,
 	}
-	
+
 	//
 	// ESteamControllerLEDFlag
 	//
