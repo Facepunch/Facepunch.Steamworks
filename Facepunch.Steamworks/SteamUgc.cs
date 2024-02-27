@@ -29,7 +29,7 @@ namespace Steamworks
 
 		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.AppID.Value, x.PublishedFileId, x.Result ), server );
 			Dispatch.Install<RemoteStoragePublishedFileSubscribed_t>( x => OnItemSubscribed?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
 			Dispatch.Install<RemoteStoragePublishedFileUnsubscribed_t>( x => OnItemUnsubscribed?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
 			Dispatch.Install<ItemInstalled_t>( x => OnItemInstalled?.Invoke( x.AppID.Value, x.PublishedFileId ), server );
@@ -38,7 +38,7 @@ namespace Steamworks
 		/// <summary>
 		/// Invoked after an item is downloaded.
 		/// </summary>
-		public static event Action<Result> OnDownloadItemResult;
+		public static event Action<AppId, PublishedFileId, Result> OnDownloadItemResult;
 		
 		/// <summary>
 		/// Invoked when a new item is subscribed.
@@ -67,74 +67,63 @@ namespace Steamworks
 		/// <summary>
 		/// Will attempt to download this item asyncronously - allowing you to instantly react to its installation.
 		/// </summary>
+		/// <param name="appId"></param>
 		/// <param name="fileId">The ID of the file you download.</param>
 		/// <param name="progress">An optional callback</param>
 		/// <param name="ct">Allows to send a message to cancel the download anywhere during the process.</param>
 		/// <param name="milisecondsUpdateDelay">How often to call the progress function.</param>
 		/// <returns><see langword="true"/> if downloaded and installed properly.</returns>
-		public static async Task<bool> DownloadAsync( PublishedFileId fileId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
+		public static async Task<bool> DownloadAsync( AppId appId, PublishedFileId fileId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
 			var item = new Steamworks.Ugc.Item( fileId );
 
-			if ( ct == default )
-				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
-
 			progress?.Invoke( 0.0f );
 
-			if ( Download( fileId, true ) == false )
-				return item.IsInstalled;
+			Result result = Result.None;
 
-			// Steam docs about Download:
-			// If the return value is true then register and wait
-			// for the Callback DownloadItemResult_t before calling 
-			// GetItemInstallInfo or accessing the workshop item on disk.
-
-			// Wait for DownloadItemResult_t
+			Action<AppId, PublishedFileId, Result> onDownloadStarted = ( appIdCallback, fileIdInCallback, resultInCallback ) =>
 			{
-				Action<Result> onDownloadStarted = null;
+				if ( appIdCallback == appId && fileIdInCallback == fileId )
+					result = resultInCallback;
+			};
 
-				try
-				{
-					var downloadStarted = false;
-					
-					onDownloadStarted = r => downloadStarted = true;
-					OnDownloadItemResult += onDownloadStarted;
-
-					while ( downloadStarted == false )
-					{
-						if ( ct.IsCancellationRequested )
-							break;
-
-						await Task.Delay( milisecondsUpdateDelay );
-					}
-				}
-				finally
-				{
-					OnDownloadItemResult -= onDownloadStarted;
-				}
+			SteamUGC.OnDownloadItemResult += onDownloadStarted;
+			if ( SteamUGC.Download( fileId, true ) == false )
+			{
+				SteamUGC.OnDownloadItemResult -= onDownloadStarted;
+				return item.IsInstalled;
 			}
 
-			progress?.Invoke( 0.2f );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Wait for downloading completion
+			try
 			{
 				while ( true )
 				{
-					if ( ct.IsCancellationRequested )
+					if ( ct != default && ct.IsCancellationRequested )
 						break;
 
-					progress?.Invoke( 0.2f + item.DownloadAmount * 0.8f );
+					if ( !item.IsDownloading )
+						progress?.Invoke( 0.1f );
+					else
+						progress?.Invoke( 0.1f + item.DownloadAmount * 0.85f );
 
-					if ( !item.IsDownloading && item.IsInstalled )
+					if ( !item.IsDownloading && item.IsInstalled && result != Result.None )
 						break;
 
 					await Task.Delay( milisecondsUpdateDelay );
 				}
+
+				if ( result != Result.OK && result != Result.None )
+					return false;
+
+				if ( ct.IsCancellationRequested )
+					return false;
+			}
+			finally
+			{
+				SteamUGC.OnDownloadItemResult -= onDownloadStarted;
 			}
 
 			progress?.Invoke( 1.0f );
-
 			return item.IsInstalled;
 		}
 
@@ -174,6 +163,18 @@ namespace Steamworks
 		{
 			var result = await Internal.StopPlaytimeTrackingForAllItems();
 			return result.Value.Result == Result.OK;
+		}
+
+		public static uint GetSubscribedItems(List<PublishedFileId> subscribedItems)
+		{
+			if (subscribedItems == null) return 0;
+
+			uint numItems = Internal.GetNumSubscribedItems();
+			PublishedFileId[] items = new PublishedFileId[numItems];
+			numItems = Internal.GetSubscribedItems( items, numItems );
+			for ( int i = 0; i < numItems; i++ )
+				subscribedItems.Add( items[i] );
+			return numItems;
 		}
 
 		/// <summary>
