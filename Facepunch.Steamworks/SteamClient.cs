@@ -59,6 +59,7 @@ namespace Steamworks
 			AddInterface<SteamUtils>();
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
+			AddInterface<SteamNetworkingMessages>();
 
 			initialized = openInterfaces.Count > 0;
 

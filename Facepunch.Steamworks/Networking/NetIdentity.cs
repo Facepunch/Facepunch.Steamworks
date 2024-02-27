@@ -88,6 +88,17 @@ namespace Steamworks.Data
 				return InternalGetSteamID( ref id );
 			}
 		}
+		
+		/// <summary>
+		/// Convert to a SteamId
+		/// </summary>
+		/// <param name="value"></param>
+		public static implicit operator NetIdentity( string value )
+		{
+			NetIdentity id = default;
+			InternalSetGenericString( ref id, value );
+			return id;
+		}
 
 		/// <summary>
 		/// Returns NULL if we're not a NetAddress
@@ -101,6 +112,21 @@ namespace Steamworks.Data
 
 				var addrptr = InternalGetIPAddr( ref id );
 				return addrptr.ToType<NetAddress>();
+			}
+		}
+		
+		/// <summary>
+		/// Returns NULL if we're not a NetAddress
+		/// </summary>
+		public string GenericString
+		{
+			get
+			{
+				if ( type != IdentityType.GenericString ) return default;
+				var id = this;
+
+				var addrptr = InternalGetGenericString( ref id );
+				return addrptr;
 			}
 		}
 

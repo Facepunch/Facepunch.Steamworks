@@ -7,6 +7,14 @@ using Steamworks.Data;
 
 namespace Steamworks.ServerList
 {
+	public enum QueryEndReason
+	{
+		EndOfRefresh,
+		TimeOut,
+		CancelledOrChangedRequest,
+		InvalidClient,
+	}
+
 	public abstract class Base : IDisposable
 	{
 
@@ -51,7 +59,7 @@ namespace Steamworks.ServerList
 		/// Query the server list. Task result will be true when finished
 		/// </summary>
 		/// <returns></returns>
-		public virtual async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
+		public virtual async Task<QueryEndReason> RunQueryAsync( float timeoutSeconds = 10 )
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -59,6 +67,8 @@ namespace Steamworks.ServerList
 			LaunchQuery();
 
 			var thisRequest = request;
+
+			QueryEndReason ret = QueryEndReason.EndOfRefresh;
 
 			while ( IsRefreshing )
 			{
@@ -68,10 +78,10 @@ namespace Steamworks.ServerList
 				// The request has been cancelled or changed in some way
 				//
 				if ( request.Value == IntPtr.Zero || thisRequest.Value != request.Value )
-					return false;
+					return QueryEndReason.CancelledOrChangedRequest;
 
 				if ( !SteamClient.IsValid )
-					return false;
+					return QueryEndReason.InvalidClient;
 
 				var r = Responsive.Count;
 
@@ -84,13 +94,16 @@ namespace Steamworks.ServerList
 				}
 
 				if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
+				{
+					ret = QueryEndReason.TimeOut;
 					break;
+				}
 			}
 
 			MovePendingToUnresponsive();
 			InvokeChanges();
 
-			return true;
+			return ret;
 		}
 
 		public virtual void Cancel() => Internal.CancelQuery( request );

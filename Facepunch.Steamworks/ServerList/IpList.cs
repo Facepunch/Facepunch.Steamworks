@@ -23,12 +23,14 @@ namespace Steamworks.ServerList
 			Ips.AddRange( list );
 		}
 
-		public override async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
+		public override async Task<QueryEndReason> RunQueryAsync( float timeoutSeconds = 10 )
 		{
 			int blockSize = 16;
 			int pointer = 0;
 
 			var ips = Ips.ToArray();
+
+			QueryEndReason ret = QueryEndReason.EndOfRefresh;
 
 			while ( true )
 			{
@@ -45,10 +47,10 @@ namespace Steamworks.ServerList
 						list.AddFilter( "gameaddr", server );
 					}
 
-					await list.RunQueryAsync( timeoutSeconds );
+					ret = await list.RunQueryAsync( timeoutSeconds );
 
 					if ( wantsCancel )
-						return false;
+						return QueryEndReason.CancelledOrChangedRequest;
 
 					Responsive.AddRange( list.Responsive );
 					Responsive = Responsive.Distinct().ToList();
@@ -61,7 +63,7 @@ namespace Steamworks.ServerList
 				InvokeChanges();
 			}
 
-			return true;
+			return ret;
 		}
 
 		public override void Cancel()

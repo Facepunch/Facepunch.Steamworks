@@ -287,6 +287,10 @@ namespace Steamworks
 			return Internal.BeginAsyncRequestFakeIP( numFakePorts );
 		}
 
+		public static IntPtr CreateFakeUDPPort( int index )
+		{
+			return Internal.CreateFakeUDPPort( index );
+		}
 		/// <summary>
 		/// Return info about the FakeIP and port that we have been assigned, if any.
 		/// 
@@ -307,11 +311,14 @@ namespace Steamworks
 		/// To use this derive a class from <see cref="SocketManager"/> and override as much as you want.
 		/// 
 		/// </summary>
-		public static T CreateRelaySocketFakeIP<T>( int fakePortIndex = 0 ) where T : SocketManager, new()
+		public static T CreateRelaySocketFakeIP<T>( int fakePortIndex = 0, int sendBufferSize = 524288 ) where T : SocketManager, new()
 		{
 			var t = new T();
-			var options = Array.Empty<NetKeyValue>();
-			t.Socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			var options = new NetKeyValue[1];
+			options[0].DataType = NetConfigType.Int32;
+			options[0].Value = NetConfig.SendBufferSize;
+			options[0].Int32Value = sendBufferSize;
+			t.Socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 			t.Initialize();
 			SetSocketManager( t.Socket.Id, t );
 			return t;
@@ -328,7 +335,7 @@ namespace Steamworks
 		public static SocketManager CreateRelaySocketFakeIP( int fakePortIndex, ISocketManager intrface )
 		{
 			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			var socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 
 			var t = new SocketManager
 			{
