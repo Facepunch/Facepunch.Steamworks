@@ -30,11 +30,6 @@
 			<Pack>true</Pack>
 			<PackagePath>/</PackagePath>
 		</None>
-		<None Include="steam_api64.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-			<Pack>true</Pack>
-			<PackagePath>content</PackagePath>
-		</None>
 	</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />
