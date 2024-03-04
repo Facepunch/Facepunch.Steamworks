@@ -160,6 +160,8 @@ namespace Steamworks
 		ChargerRequired = 125,
 		CachedCredentialInvalid = 126,
 		K_EResultPhoneNumberIsVOIP = 127,
+		NotSupported = 128,
+		FamilySizeLimitExceeded = 129,
 	}
 	
 	//
@@ -796,7 +798,8 @@ namespace Steamworks
 		SteamworksAccessInvite = 13,
 		SteamVideo = 14,
 		GameManagedItem = 15,
-		Max = 16,
+		Clip = 16,
+		Max = 17,
 	}
 	
 	//
@@ -2109,6 +2112,7 @@ namespace Steamworks
 		NeedsUpdate = 8,
 		Downloading = 16,
 		DownloadPending = 32,
+		DisabledLocally = 64,
 	}
 	
 	//
@@ -2141,6 +2145,7 @@ namespace Steamworks
 		Sketchfab = 2,
 		EnvironmentMap_HorizontalCross = 3,
 		EnvironmentMap_LatLong = 4,
+		Clip = 5,
 		ReservedMax = 255,
 	}
 	
@@ -2167,6 +2172,19 @@ namespace Steamworks
 	}
 	
 	//
+	// ETimelineGameMode
+	//
+	internal enum TimelineGameMode : int
+	{
+		Invalid = 0,
+		Playing = 1,
+		Staging = 2,
+		Menus = 3,
+		LoadingScreen = 4,
+		Max = 5,
+	}
+	
+	//
 	// EParentalFeature
 	//
 	public enum ParentalFeature : int
@@ -2185,7 +2203,7 @@ namespace Steamworks
 		Library = 11,
 		Test = 12,
 		SiteLicense = 13,
-		KioskMode = 14,
+		KioskMode_Deprecated = 14,
 		Max = 15,
 	}
 	
@@ -2199,6 +2217,7 @@ namespace Steamworks
 		Tablet = 2,
 		Computer = 3,
 		TV = 4,
+		VRHeadset = 5,
 	}
 	
 	//
@@ -2333,6 +2352,10 @@ namespace Steamworks
 		TimeoutInitial = 24,
 		TimeoutConnected = 25,
 		SendBufferSize = 9,
+		RecvBufferSize = 47,
+		RecvBufferMessages = 48,
+		RecvMaxMessageSize = 49,
+		RecvMaxSegmentsPerPacket = 50,
 		ConnectionUserData = 40,
 		SendRateMin = 10,
 		SendRateMax = 11,
@@ -2360,6 +2383,7 @@ namespace Steamworks
 		FakeRateLimit_Send_Burst = 43,
 		FakeRateLimit_Recv_Rate = 44,
 		FakeRateLimit_Recv_Burst = 45,
+		OutOfOrderCorrectionWindowMicroseconds = 51,
 		Callback_ConnectionStatusChanged = 201,
 		Callback_AuthStatusChanged = 202,
 		Callback_RelayNetworkStatusChanged = 203,
@@ -2380,15 +2404,17 @@ namespace Steamworks
 		SDRClient_MinPingsBeforePingAccurate = 21,
 		SDRClient_SingleSocket = 22,
 		SDRClient_ForceRelayCluster = 29,
-		SDRClient_DebugTicketAddress = 30,
+		SDRClient_DevTicket = 30,
 		SDRClient_ForceProxyAddr = 31,
 		SDRClient_FakeClusterPing = 36,
+		SDRClient_LimitPingProbesToNearestN = 60,
 		LogLevel_AckRTT = 13,
 		LogLevel_PacketDecode = 14,
 		LogLevel_Message = 15,
 		LogLevel_PacketGaps = 16,
 		LogLevel_P2PRendezvous = 17,
 		LogLevel_SDRRelayPings = 18,
+		ECN = 999,
 		DELETED_EnumerateDevVars = 35,
 	}
 	
@@ -2418,6 +2444,17 @@ namespace Steamworks
 		Verbose = 6,
 		Debug = 7,
 		Everything = 8,
+	}
+	
+	//
+	// ESteamAPIInitResult
+	//
+	internal enum SteamAPIInitResult : int
+	{
+		OK = 0,
+		FailedGeneric = 1,
+		NoSteamClient = 2,
+		VersionMismatch = 3,
 	}
 	
 	//

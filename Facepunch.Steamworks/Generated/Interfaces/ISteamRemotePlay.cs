@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v001", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamRemotePlay_v001();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v001();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v002", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamRemotePlay_v002();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v002();
 		
 		
 		#region FunctionMeta
@@ -84,6 +84,18 @@ namespace Steamworks
 		internal bool BGetSessionClientResolution( RemotePlaySessionID_t unSessionID, ref int pnResolutionX, ref int pnResolutionY )
 		{
 			var returnValue = _BGetSessionClientResolution( Self, unSessionID, ref pnResolutionX, ref pnResolutionY );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_BStartRemotePlayTogether", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BStartRemotePlayTogether( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bShowOverlay );
+		
+		#endregion
+		internal bool BStartRemotePlayTogether( [MarshalAs( UnmanagedType.U1 )] bool bShowOverlay )
+		{
+			var returnValue = _BStartRemotePlayTogether( Self, bShowOverlay );
 			return returnValue;
 		}
 		

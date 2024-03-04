@@ -433,5 +433,17 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_DismissGamepadTextInput", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _DismissGamepadTextInput( IntPtr self );
+		
+		#endregion
+		internal bool DismissGamepadTextInput()
+		{
+			var returnValue = _DismissGamepadTextInput( Self );
+			return returnValue;
+		}
+		
 	}
 }

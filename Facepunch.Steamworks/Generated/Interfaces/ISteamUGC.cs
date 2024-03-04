@@ -15,12 +15,12 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v017", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUGC_v017();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v017();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v017", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v017();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v017();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v018", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUGC_v018();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v018();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v018", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v018();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v018();
 		
 		
 		#region FunctionMeta
@@ -597,12 +597,12 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemTags", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags );
+		private static extern bool _SetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags, [MarshalAs( UnmanagedType.U1 )] bool bAllowAdminTags );
 		
 		#endregion
-		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags )
+		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags, [MarshalAs( UnmanagedType.U1 )] bool bAllowAdminTags )
 		{
-			var returnValue = _SetItemTags( Self, updateHandle, ref pTags );
+			var returnValue = _SetItemTags( Self, updateHandle, ref pTags, bAllowAdminTags );
 			return returnValue;
 		}
 		
@@ -1063,6 +1063,17 @@ namespace Steamworks
 		{
 			var returnValue = _GetWorkshopEULAStatus( Self );
 			return new CallResult<WorkshopEULAStatus_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetUserContentDescriptorPreferences", CallingConvention = Platform.CC)]
+		private static extern uint _GetUserContentDescriptorPreferences( IntPtr self, [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries );
+		
+		#endregion
+		internal uint GetUserContentDescriptorPreferences( [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries )
+		{
+			var returnValue = _GetUserContentDescriptorPreferences( Self, pvecDescriptors, cMaxEntries );
+			return returnValue;
 		}
 		
 	}
