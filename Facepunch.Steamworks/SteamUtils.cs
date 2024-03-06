@@ -63,6 +63,7 @@ namespace Steamworks
 
 		/// <summary>
 		/// Invoked when floating keyboard invoked from ShowFloatingGamepadTextInput has been closed.
+		/// </summary>
 		public static event Action OnFloatingGamepadTextInputDismissed;
 
 		/// <summary>
