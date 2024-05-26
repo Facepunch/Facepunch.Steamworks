@@ -37,7 +37,7 @@ namespace Steamworks
 				SteamNetworkingSockets.Internal.DestroyPollGroup( pollGroup );
 				Socket.Close();
 			}
-
+			
 			pollGroup = 0;
 			Socket = 0;
 			return true;

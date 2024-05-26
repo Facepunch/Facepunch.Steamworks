@@ -48,6 +48,7 @@ namespace Steamworks
 			AddInterface<SteamMusic>();
 			AddInterface<SteamNetworking>();
 			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingMessages>();
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamParental>();
 			AddInterface<SteamParties>();
