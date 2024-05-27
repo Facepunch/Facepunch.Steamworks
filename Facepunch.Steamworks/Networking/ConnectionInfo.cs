@@ -41,5 +41,7 @@ namespace Steamworks.Data
 		/// Basic cause of the connection termination or problem.
 		/// </summary>
 		public NetConnectionEnd EndReason => (NetConnectionEnd)endReason;
+
+		public Socket Socket => listenSocket;
 	}
 }

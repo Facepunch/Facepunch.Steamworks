@@ -6,7 +6,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential )]
 	public struct Socket
 	{
-		internal uint Id;
+		public uint Id;
 		public override string ToString() => Id.ToString();
 		public static implicit operator Socket( uint value ) => new Socket() { Id = value };
 		public static implicit operator uint( Socket value ) => value.Id;

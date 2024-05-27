@@ -614,7 +614,7 @@ namespace Steamworks.Data
 		public int CompareTo( RemotePlaySessionID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HSteamNetPollGroup : IEquatable<HSteamNetPollGroup>, IComparable<HSteamNetPollGroup>
+	public struct HSteamNetPollGroup : IEquatable<HSteamNetPollGroup>, IComparable<HSteamNetPollGroup>
 	{
 		// Name: HSteamNetPollGroup, Type: unsigned int
 		public uint Value;

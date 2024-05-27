@@ -4,21 +4,21 @@ using System.Runtime.InteropServices;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Sequential )]
-	internal partial struct NetMsg
+	public partial struct NetMsg
 	{
-		internal IntPtr DataPtr;
-		internal int DataSize;
-		internal Connection Connection;
-		internal NetIdentity Identity;
-		internal long ConnectionUserData;
-		internal long RecvTime;
-		internal long MessageNumber;
-		internal IntPtr FreeDataPtr;
-		internal IntPtr ReleasePtr;
-		internal int Channel;
-		internal SendType Flags;
-		internal long UserData;
-		internal ushort IdxLane;
-		internal ushort _pad1__;
+		public IntPtr DataPtr;
+		public int DataSize;
+		public Connection Connection;
+		public NetIdentity Identity;
+		public long ConnectionUserData;
+		public long RecvTime;
+		public long MessageNumber;
+		public IntPtr FreeDataPtr;
+		public IntPtr ReleasePtr;
+		public int Channel;
+		public SendType Flags;
+		public long UserData;
+		public ushort IdxLane;
+		public ushort _pad1__;
 	}
 }

@@ -141,7 +141,6 @@ namespace Steamworks
 			{
 				Marshal.FreeHGlobal( messageBuffer );
 			}
-			
 
 			//
 			// Overwhelmed our buffer, keep going

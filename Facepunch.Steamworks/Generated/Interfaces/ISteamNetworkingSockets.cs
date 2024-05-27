@@ -148,6 +148,11 @@ namespace Steamworks
 			pszName = Helpers.MemoryToString( mempszName );
 			return returnValue;
 		}
+
+		internal bool GetConnectionName( Connection hPeer, IntPtr pszName, int nMaxLen )
+		{
+			return _GetConnectionName( Self, hPeer, pszName, nMaxLen );
+		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_SendMessageToConnection", CallingConvention = Platform.CC)]
