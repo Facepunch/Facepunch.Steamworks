@@ -408,6 +408,16 @@ namespace Steamworks
 		{
 			return Internal.GetConnectionName( hPeer, pszName, nMaxLen );
 		}
+
+		public static  int ReceiveMessagesOnConnection_Server( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )
+		{
+			return ServerInternal.ReceiveMessagesOnConnection( hConn, ppOutMessages, nMaxMessages );
+		}
+
+		public static  int ReceiveMessagesOnConnection_Client( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )
+		{
+			return ClientInternal.ReceiveMessagesOnConnection( hConn, ppOutMessages, nMaxMessages );
+		}
 		
 		/// <summary>
 		/// Begin asynchronous process of allocating a fake IPv4 address that other
