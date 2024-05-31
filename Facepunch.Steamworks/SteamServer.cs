@@ -415,17 +415,14 @@ namespace Steamworks
 		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
-		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
+		public static bool BeginAuthSession( IntPtr ticket, int length, SteamId steamid )
 		{
-			fixed ( byte* p = data )
-			{
-				var result = Internal.BeginAuthSession( (IntPtr)p, data.Length, steamid );
+			var result = Internal.BeginAuthSession( ticket, length, steamid );
 
-				if ( result == BeginAuthResult.OK )
-					return true;
+			if ( result == BeginAuthResult.OK )
+				return true;
 
-				return false;
-			}
+			return false;
 		}
 
 		/// <summary>
