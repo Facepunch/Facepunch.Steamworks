@@ -72,7 +72,7 @@ namespace Steamworks
 			GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
 			IntPtr pData = handle.AddrOfPinnedObject();
 
-			var result = Internal.SendMessageToUser( ref netIdentity, pData, (uint)size, (int)sendType, channel );
+			var result = Internal.SendMessageToUser( ref netIdentity, [pData], (uint)size, (int)sendType, channel );
 			
 			handle.Free();
 

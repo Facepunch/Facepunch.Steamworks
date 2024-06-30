@@ -26,7 +26,7 @@
 #if defined( STEAMNETWORKINGSOCKETS_STATIC_LINK )
 	#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C"
 #elif defined( STEAMNETWORKINGSOCKETS_FOREXPORT )
-	#ifdef _WIN32
+	#if defined( _WIN32 ) || defined( __ORBIS__ ) || defined( __PROSPERO__ )
 		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C" __declspec( dllexport )
 	#else
 		#define STEAMNETWORKINGSOCKETS_INTERFACE extern "C" __attribute__((visibility("default")))
@@ -1152,6 +1152,42 @@ enum ESteamNetworkingConfigValue
 	/// Default is 512k (524288 bytes)
 	k_ESteamNetworkingConfig_SendBufferSize = 9,
 
+	/// [connection int32] Upper limit on total size (in bytes) of received messages
+	/// that will be buffered waiting to be processed by the application.  If this limit
+	/// is exceeded, packets will be dropped.  This is to protect us from a malicious
+	/// peer flooding us with messages faster than we can process them.
+	/// 
+	/// This must be bigger than k_ESteamNetworkingConfig_RecvMaxMessageSize
+	k_ESteamNetworkingConfig_RecvBufferSize = 47,
+
+	/// [connection int32] Upper limit on the number of received messages that will
+	/// that will be buffered waiting to be processed by the application.  If this limit
+	/// is exceeded, packets will be dropped.  This is to protect us from a malicious
+	/// peer flooding us with messages faster than we can pull them off the wire.
+	k_ESteamNetworkingConfig_RecvBufferMessages = 48,
+
+	/// [connection int32] Maximum message size that we are willing to receive.
+	/// if a client attempts to send us a message larger than this, the connection
+	/// will be immediately closed.
+	///
+	/// Default is 512k (524288 bytes).  Note that the peer needs to be able to
+	/// send a message this big.  (See k_cbMaxSteamNetworkingSocketsMessageSizeSend.)
+	k_ESteamNetworkingConfig_RecvMaxMessageSize = 49,
+
+	/// [connection int32] Max number of message segments that can be received
+	/// in a single UDP packet.  While decoding a packet, if the number of segments
+	/// exceeds this, we will abort further packet processing.
+	///
+	/// The default is effectively unlimited.  If you know that you very rarely
+	/// send small packets, you can protect yourself from malicious senders by
+	/// lowering this number.
+	/// 
+	/// In particular, if you are NOT using the reliability layer and are only using
+	/// SteamNetworkingSockets for datagram transport, setting this to a very low
+	/// number may be beneficial.  (We recommend a value of 2.)  Make sure your sender
+	/// disables Nagle!
+	k_ESteamNetworkingConfig_RecvMaxSegmentsPerPacket = 50,
+
 	/// [connection int64] Get/set userdata as a configuration option.
 	/// The default value is -1.   You may want to set the user data as
 	/// a config value, instead of using ISteamNetworkingSockets::SetConnectionUserData
@@ -1187,9 +1223,12 @@ enum ESteamNetworkingConfigValue
 	//    ensure you have the current value.
 	k_ESteamNetworkingConfig_ConnectionUserData = 40,
 
-	/// [connection int32] Minimum/maximum send rate clamp, 0 is no limit.
-	/// This value will control the min/max allowed sending rate that 
-	/// bandwidth estimation is allowed to reach.  Default is 0 (no-limit)
+	/// [connection int32] Minimum/maximum send rate clamp, in bytes/sec.
+	/// At the time of this writing these two options should always be set to
+	/// the same value, to manually configure a specific send rate.  The default
+	/// value is 256K.  Eventually we hope to have the library estimate the bandwidth
+	/// of the channel and set the send rate to that estimated bandwidth, and these
+	/// values will only set limits on that send rate.
 	k_ESteamNetworkingConfig_SendRateMin = 10,
 	k_ESteamNetworkingConfig_SendRateMax = 11,
 
@@ -1208,9 +1247,18 @@ enum ESteamNetworkingConfigValue
 	/// we won't automatically reject a connection due to a failure to authenticate.
 	/// (You can examine the incoming connection and decide whether to accept it.)
 	///
+	/// 0: Don't attempt or accept unauthorized connections
+	/// 1: Attempt authorization when connecting, and allow unauthorized peers, but emit warnings
+	/// 2: don't attempt authentication, or complain if peer is unauthenticated
+	///
 	/// This is a dev configuration value, and you should not let users modify it in
 	/// production.
 	k_ESteamNetworkingConfig_IP_AllowWithoutAuth = 23,
+
+	/// [connection int32] The same as IP_AllowWithoutAuth, but will only apply
+	/// for connections to/from localhost addresses.  Whichever value is larger
+	/// (more permissive) will be used.
+	k_ESteamNetworkingConfig_IPLocalHost_AllowWithoutAuth = 52,
 
 	/// [connection int32] Do not send UDP packets with a payload of
 	/// larger than N bytes.  If you set this, k_ESteamNetworkingConfig_MTU_DataSize
@@ -1393,6 +1441,32 @@ enum ESteamNetworkingConfigValue
 	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Rate = 44,
 	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Burst = 45,
 
+	// Timeout used for out-of-order correction.  This is used when we see a small
+	// gap in the sequence number on a packet flow.  For example let's say we are
+	// processing packet 105 when the most recent one was 103.  104 might have dropped,
+	// but there is also a chance that packets are simply being reordered.  It is very
+	// common on certain types of connections for packet 104 to arrive very soon after 105,
+	// especially if 104 was large and 104 was small.  In this case, when we see packet 105
+	// we will shunt it aside and pend it, in the hopes of seeing 104 soon after.  If 104
+	// arrives before the a timeout occurs, then we can deliver the packets in order to the
+	// remainder of packet processing, and we will record this as a "correctable" out-of-order
+	// situation.  If the timer expires, then we will process packet 105, and assume for now
+	// that 104 has dropped.  (If 104 later arrives, we will process it, but that will be
+	// accounted for as uncorrected.)
+	//
+	// The default value is 1000 microseconds.  Note that the Windows scheduler does not
+	// have microsecond precision.
+	//
+	// Set the value to 0 to disable out of order correction at the packet layer.
+	// In many cases we are still effectively able to correct the situation because
+	// reassembly of message fragments is tolerant of fragments packets arriving out of
+	// order.  Also, when messages are decoded and inserted into the queue for the app
+	// to receive them, we will correct out of order messages that have not been
+	// dequeued by the app yet.  However, when out-of-order packets are corrected
+	// at the packet layer, they will not reduce the connection quality measure.
+	// (E.g. SteamNetConnectionRealTimeStatus_t::m_flConnectionQualityLocal)
+	k_ESteamNetworkingConfig_OutOfOrderCorrectionWindowMicroseconds = 51,
+
 //
 // Callbacks
 //
@@ -1506,24 +1580,24 @@ enum ESteamNetworkingConfigValue
 // Settings for SDR relayed connections
 //
 
-	/// [int32 global] If the first N pings to a port all fail, mark that port as unavailable for
+	/// [global int32] If the first N pings to a port all fail, mark that port as unavailable for
 	/// a while, and try a different one.  Some ISPs and routers may drop the first
 	/// packet, so setting this to 1 may greatly disrupt communications.
 	k_ESteamNetworkingConfig_SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
 
-	/// [int32 global] If N consecutive pings to a port fail, after having received successful 
+	/// [global int32] If N consecutive pings to a port fail, after having received successful 
 	/// communication, mark that port as unavailable for a while, and try a 
 	/// different one.
 	k_ESteamNetworkingConfig_SDRClient_ConsecutitivePingTimeoutsFail = 20,
 
-	/// [int32 global] Minimum number of lifetime pings we need to send, before we think our estimate
+	/// [global int32] Minimum number of lifetime pings we need to send, before we think our estimate
 	/// is solid.  The first ping to each cluster is very often delayed because of NAT,
 	/// routers not having the best route, etc.  Until we've sent a sufficient number
 	/// of pings, our estimate is often inaccurate.  Keep pinging until we get this
 	/// many pings.
 	k_ESteamNetworkingConfig_SDRClient_MinPingsBeforePingAccurate = 21,
 
-	/// [int32 global] Set all steam datagram traffic to originate from the same
+	/// [global int32] Set all steam datagram traffic to originate from the same
 	/// local port. By default, we open up a new UDP socket (on a different local
 	/// port) for each relay.  This is slightly less optimal, but it works around
 	/// some routers that don't implement NAT properly.  If you have intermittent
@@ -1535,10 +1609,13 @@ enum ESteamNetworkingConfigValue
 	/// only use relays in that cluster.  E.g. 'iad'
 	k_ESteamNetworkingConfig_SDRClient_ForceRelayCluster = 29,
 
-	/// [connection string] For debugging, generate our own (unsigned) ticket, using
-	/// the specified  gameserver address.  Router must be configured to accept unsigned
-	/// tickets.
-	k_ESteamNetworkingConfig_SDRClient_DebugTicketAddress = 30,
+	/// [connection string] For development, a base-64 encoded ticket generated
+	/// using the cert tool.  This can be used to connect to a gameserver via SDR
+	/// without a ticket generated using the game coordinator.  (You will still
+	/// need a key that is trusted for your app, however.)
+	///
+	/// This can also be passed using the SDR_DEVTICKET environment variable
+	k_ESteamNetworkingConfig_SDRClient_DevTicket = 30,
 
 	/// [global string] For debugging.  Override list of relays from the config with
 	/// this set (maybe just one).  Comma-separated list.
@@ -1550,6 +1627,10 @@ enum ESteamNetworkingConfigValue
 	/// This is a dev configuration value, you probably should not let users modify it
 	/// in production.
 	k_ESteamNetworkingConfig_SDRClient_FakeClusterPing = 36,
+
+	/// [global int32] When probing the SteamDatagram network, we limit exploration
+	/// to the closest N POPs, based on our current best approximated ping to that POP.
+	k_ESteamNetworkingConfig_SDRClient_LimitPingProbesToNearestN = 60,
 
 //
 // Log levels for debugging information of various subsystems.
@@ -1566,6 +1647,10 @@ enum ESteamNetworkingConfigValue
 	k_ESteamNetworkingConfig_LogLevel_P2PRendezvous = 17, // [connection int32] P2P rendezvous messages
 	k_ESteamNetworkingConfig_LogLevel_SDRRelayPings = 18, // [global int32] Ping relays
 
+	// Experimental.  Set the ECN header field on all outbound UDP packets
+	// -1 = the default, and means "don't set anything".
+	// 0..3 = set that value.  (Even though 0 is the default UDP ECN value, a 0 here means "explicitly set a 0".)
+	k_ESteamNetworkingConfig_ECN = 999,
 
 	// Deleted, do not use
 	k_ESteamNetworkingConfig_DELETED_EnumerateDevVars = 35,

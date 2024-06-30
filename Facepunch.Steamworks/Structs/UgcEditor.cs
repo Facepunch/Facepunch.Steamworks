@@ -194,7 +194,7 @@ namespace Steamworks.Ugc
 					using ( var a = SteamParamStringArray.From( Tags.ToArray() ) )
 					{
 						var val = a.Value;
-						SteamUGC.Internal.SetItemTags( handle, ref val );
+						SteamUGC.Internal.SetItemTags( handle, ref val, true );
 					}
 				}
 

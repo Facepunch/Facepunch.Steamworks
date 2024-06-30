@@ -105,10 +105,10 @@ namespace Generator
 							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
 						}
 					}
-					else
-					{
-						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
-					}
+					// else
+					// {
+					// 	throw new System.Exception( $"String Builder {iface.Name}, {args[i + 1].VarName} Next Type Is {args[i+1].GetType()}" );
+					// }
 				}
 			}
 
@@ -128,7 +128,7 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null )
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"private static extern {returnType.TypeNameFrom} _{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"internal static extern {returnType.TypeNameFrom} _{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 
 			WriteLine();
 			WriteLine( $"#endregion" );

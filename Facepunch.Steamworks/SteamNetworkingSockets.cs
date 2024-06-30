@@ -406,7 +406,7 @@ namespace Steamworks
 
 		public static bool GetConnectionName( Connection hPeer, IntPtr pszName, int nMaxLen )
 		{
-			return Internal.GetConnectionName( hPeer, pszName, nMaxLen );
+			return ISteamNetworkingSockets._GetConnectionName( Internal.Self, hPeer, pszName, nMaxLen );
 		}
 
 		public static  int ReceiveMessagesOnConnection_Server( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )

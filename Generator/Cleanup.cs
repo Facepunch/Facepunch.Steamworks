@@ -152,6 +152,12 @@ public static class Cleanup
 		if ( name == "TextFilteringContext" ) return "public";
 		if ( name == "GlyphSize" ) return "public";
 		if ( name == "TextInputMode" ) return "public";
+		if ( name == "NetMsg" ) return "public";
+		if ( name == "SteamNetworkingFakeIPType" ) return "public";
+		if ( name == "HSteamNetPollGroup" ) return "public";
+		if ( name == "TimelineEventClipPriority" ) return "public";
+		if ( name == "TimelineGameMode" ) return "public";
+		if ( name == "SteamAPIInitResult" ) return "public";
 
 		return "internal";
 	}
