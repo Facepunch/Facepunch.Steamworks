@@ -11,7 +11,7 @@ namespace Steamworks
 
 		public MessageAction onMessage;
 
-    	public delegate void MessageAction(ReadOnlySpan<byte> data, Connection connection, NetIdentity identity, long messageNum, long recvTime, int channel);
+    	public delegate void MessageAction(ReadOnlySpan<byte> data, long messageNum, long recvTime, int channel);
 
 
 		/// <summary>
@@ -233,7 +233,7 @@ namespace Steamworks
 		{
 			try
 			{
-				onMessage(new Span<byte>(msg->DataPtr.ToPointer(), msg->DataSize), msg->Connection, msg->Identity, msg->MessageNumber, msg->RecvTime, msg->Channel);
+				onMessage(new Span<byte>(msg->DataPtr.ToPointer(), msg->DataSize), msg->MessageNumber, msg->RecvTime, msg->Channel);
 			}
 			finally
 			{

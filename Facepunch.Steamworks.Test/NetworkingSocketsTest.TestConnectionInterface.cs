@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,6 +12,13 @@ namespace Steamworks
 	{
 		private class TestConnectionInterface : ConnectionManager
 		{
+			public TestConnectionInterface() {
+				onConnecting += OnConnecting;
+				onDisconnected += OnDisconnected;
+				onConnected += OnConnected;
+				onMessage += OnMessage;
+			}
+
 			public override void OnConnectionChanged( ConnectionInfo data )
 			{
 				Console.WriteLine( $"[Connection][{Connection}] [{data.State}]" );
@@ -18,28 +26,25 @@ namespace Steamworks
 				base.OnConnectionChanged( data );
 			}
 
-			public override void OnConnecting( ConnectionInfo data )
+			public void OnConnecting( ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnConnecting" );
-				base.OnConnecting( data );
 			}
 
 			/// <summary>
 			/// Client is connected. They move from connecting to Connections
 			/// </summary>
-			public override void OnConnected( ConnectionInfo data )
+			public void OnConnected( ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnConnected" );
-				base.OnConnected( data );
 			}
 
 			/// <summary>
 			/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 			/// </summary>
-			public override void OnDisconnected( ConnectionInfo data )
+			public void OnDisconnected( ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnDisconnected" );
-				base.OnDisconnected( data );
 			}
 
 			internal async Task RunAsync()
@@ -81,10 +86,10 @@ namespace Steamworks
 				}
 			}
 
-			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
+			public void OnMessage( ReadOnlySpan<byte> data, long messageNum, long recvTime, int channel )
 			{
 				// We're only sending strings, so it's fine to read this like this
-				var str = UTF8Encoding.UTF8.GetString( (byte*) data, size );
+				var str = MemoryMarshal.Cast<byte, char>(data).ToString(); //UTF8Encoding.UTF8.GetString( (byte*) data, size );
 
 				Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
 

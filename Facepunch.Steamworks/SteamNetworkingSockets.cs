@@ -158,24 +158,6 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Connect to a socket created via <c>CreateListenSocketIP</c>.
-		/// </summary>
-		public static ConnectionManager ConnectNormal( NetAddress address, IConnectionManager iface )
-		{
-			var options = Array.Empty<NetKeyValue>();
-			var connection = Internal.ConnectByIPAddress( ref address, options.Length, options );
-
-			var t = new ConnectionManager
-			{
-				Connection = connection,
-				Interface = iface
-			};
-
-			SetConnectionManager( t.Connection.Id, t );
-			return t;
-		}
-
-		/// <summary>
 		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping).
 		/// 
 		/// To use this derive a class from <see cref="SocketManager"/> and override as much as you want.
@@ -200,25 +182,6 @@ namespace Steamworks
 			NetIdentity identity = serverId;
 			var options = Array.Empty<NetKeyValue>();
 			t.Connection = Internal.ConnectP2P( ref identity, virtualport, options.Length, options );
-			SetConnectionManager( t.Connection.Id, t );
-			return t;
-		}
-
-		/// <summary>
-		/// Connect to a relay server.
-		/// </summary>
-		public static ConnectionManager ConnectRelay( SteamId serverId, int virtualport, IConnectionManager iface )
-		{
-			NetIdentity identity = serverId;
-			var options = Array.Empty<NetKeyValue>();
-			var connection = Internal.ConnectP2P( ref identity, virtualport, options.Length, options );
-
-			var t = new ConnectionManager
-			{
-				Connection = connection,
-				Interface = iface
-			};
-
 			SetConnectionManager( t.Connection.Id, t );
 			return t;
 		}
