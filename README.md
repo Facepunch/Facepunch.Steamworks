@@ -1,6 +1,6 @@
 # Faceworks
 
-Derivative of [Facepunch](https://wiki.facepunch.com/steamworks/)
+[Steamworks](https://partner.steamgames.com/doc/api) implementation building on [Facepunch](https://wiki.facepunch.com/steamworks/)
 
 ![Build All](https://github.com/Crytilis/Facepunch.Steamworks/workflows/Build%20All/badge.svg)
 
