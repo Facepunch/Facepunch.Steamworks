@@ -1,6 +1,6 @@
-# Facepunch.Steamworks
+# Faceworks
 
-[Another fucking c# Steamworks implementation](https://wiki.facepunch.com/steamworks/)
+Derivative of [Facepunch](https://wiki.facepunch.com/steamworks/)
 
 ![Build All](https://github.com/Crytilis/Facepunch.Steamworks/workflows/Build%20All/badge.svg)
 
