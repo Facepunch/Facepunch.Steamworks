@@ -32,7 +32,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Dispatch.Install<LobbyInvite_t>( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
+			Dispatch.Install<LobbyInvite_t>( x => OnLobbyInvite?.Invoke( new User( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
 			Dispatch.Install<LobbyEnter_t>( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
 
@@ -40,33 +40,75 @@ namespace Steamworks
 
 			Dispatch.Install<LobbyGameCreated_t>( x => OnLobbyGameCreated?.Invoke( new Lobby( x.SteamIDLobby ), x.IP, x.Port, x.SteamIDGameServer ) );
 
-			Dispatch.Install<LobbyDataUpdate_t>( x =>
+			Dispatch.Install<LobbyDataUpdate_t>( 
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDMember ) );
+After:
+					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDMember ) );
+*/
+(Action<LobbyDataUpdate_t>)(x =>
 			{
 				if ( x.Success == 0 ) return;
 
 				if ( x.SteamIDLobby == x.SteamIDMember )
 					OnLobbyDataChanged?.Invoke( new Lobby( x.SteamIDLobby ) );
 				else
-					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDMember ) );
-			} );
+					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMember ) );
+			}) );
 
-			Dispatch.Install<LobbyChatUpdate_t>( x =>
+			Dispatch.Install<LobbyChatUpdate_t>( 
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+After:
+					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDUserChanged ) );
+*/
+
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+After:
+					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDUserChanged ) );
+*/
+
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+After:
+					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDUserChanged ) );
+*/
+
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ), new Friend( x.SteamIDMakingChange ) );
+After:
+					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDUserChanged ), new User( x.SteamIDMakingChange ) );
+*/
+
+/* Unmerged change from project 'Facepunch.Steamworks.Win32 (netstandard2.1)'
+Before:
+					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ), new Friend( x.SteamIDMakingChange ) );
+After:
+					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), new User( x.SteamIDUserChanged ), new User( x.SteamIDMakingChange ) );
+*/
+(Action<LobbyChatUpdate_t>)(x =>
 			{
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Entered) != 0 )
-					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Left) != 0 )
-					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Disconnected) != 0 )
-					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Kicked) != 0 )
-					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ), new Friend( x.SteamIDMakingChange ) );
+					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMakingChange ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Banned) != 0 )
-					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ), new Friend( x.SteamIDMakingChange ) );
-			} );
+					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMakingChange ) );
+			}) );
 
 			Dispatch.Install<LobbyChatMsg_t>( OnLobbyChatMessageRecievedAPI );
 		}
@@ -81,14 +123,14 @@ namespace Steamworks
 
 			if ( readData > 0 )
 			{
-				OnChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new Friend( steamid ), Helpers.MemoryToString( buffer ) );
+				OnChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new User( steamid ), Helpers.MemoryToString( buffer ) );
 			}
 		}
 
 		/// <summary>
 		/// Invoked when the current user is invited to a lobby.
 		/// </summary>
-		public static event Action<Friend, Lobby> OnLobbyInvite;
+		public static event Action<User, Lobby> OnLobbyInvite;
 
 		/// <summary>
 		/// Invoked when the current user joins a lobby.
@@ -113,37 +155,37 @@ namespace Steamworks
 		/// <summary>
 		/// Invoked when a member in a lobby's metadata is modified.
 		/// </summary>
-		public static event Action<Lobby, Friend> OnLobbyMemberDataChanged;
+		public static event Action<Lobby, User> OnLobbyMemberDataChanged;
 
 		/// <summary>
 		/// Invoked when a member joins a lobby.
 		/// </summary>
-		public static event Action<Lobby, Friend> OnLobbyMemberJoined;
+		public static event Action<Lobby, User> OnLobbyMemberJoined;
 
 		/// <summary>
 		/// Invoked when a lobby member leaves the lobby.
 		/// </summary>
-		public static event Action<Lobby, Friend> OnLobbyMemberLeave;
+		public static event Action<Lobby, User> OnLobbyMemberLeave;
 
 		/// <summary>
 		/// Invoked when a lobby member leaves the lobby.
 		/// </summary>
-		public static event Action<Lobby, Friend> OnLobbyMemberDisconnected;
+		public static event Action<Lobby, User> OnLobbyMemberDisconnected;
 
 		/// <summary>
 		/// Invoked when a lobby member is kicked from a lobby. The 3rd param is the user that kicked them.
 		/// </summary>
-		public static event Action<Lobby, Friend, Friend> OnLobbyMemberKicked;
+		public static event Action<Lobby, User, User> OnLobbyMemberKicked;
 
 		/// <summary>
 		/// Invoked when a lobby member is kicked from a lobby. The 3rd param is the user that kicked them.
 		/// </summary>
-		public static event Action<Lobby, Friend, Friend> OnLobbyMemberBanned;
+		public static event Action<Lobby, User, User> OnLobbyMemberBanned;
 
 		/// <summary>
 		/// Invoked when a chat message is received from a member of the lobby.
 		/// </summary>
-		public static event Action<Lobby, Friend, string> OnChatMessage;
+		public static event Action<Lobby, User, string> OnChatMessage;
 
 		public static LobbyQuery LobbyList => new LobbyQuery();
 

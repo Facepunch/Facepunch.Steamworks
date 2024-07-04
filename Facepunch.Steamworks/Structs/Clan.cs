@@ -20,7 +20,7 @@ namespace Steamworks
 
         public int ChatMemberCount => SteamFriends.Internal.GetClanChatMemberCount(Id);
 
-        public Friend Owner => new Friend(SteamFriends.Internal.GetClanOwner(Id));
+        public User Owner => new User(SteamFriends.Internal.GetClanOwner(Id));
 
         public bool Public => SteamFriends.Internal.IsClanPublic(Id);
 
@@ -39,11 +39,11 @@ namespace Steamworks
             return req.HasValue && req.Value.Success != 0x0;
         }
 
-        public IEnumerable<Friend> GetOfficers()
+        public IEnumerable<User> GetOfficers()
         {
             for (int i = 0; i < SteamFriends.Internal.GetClanOfficerCount(Id); i++)
             {
-                yield return new Friend(SteamFriends.Internal.GetClanOfficerByIndex(Id, i));
+                yield return new User(SteamFriends.Internal.GetClanOfficerByIndex(Id, i));
             }
         }
     }

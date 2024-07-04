@@ -30,14 +30,14 @@ namespace Steamworks
 
 		internal void InstallEvents()
 		{
-			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
-			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
+			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new User( x.SteamID ) ) );
+			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new User( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			Dispatch.Install<GameConnectedClanChatMsg_t>( OnGameConnectedClanChatMessage );
 			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke( x.Active != 0 ) );
 			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
-			Dispatch.Install<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
+			Dispatch.Install<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new User( x.SteamIDFriend ) ) );
 			Dispatch.Install<OverlayBrowserProtocolNavigation_t>( x => OnOverlayBrowserProtocol?.Invoke( x.RgchURIUTF8() ) );
 		}
 
@@ -45,24 +45,24 @@ namespace Steamworks
 		/// Invoked when a chat message has been received from a friend. You'll need to enable
 		/// <see cref="ListenForFriendsMessages"/> to recieve this. (friend, msgtype, message)
 		/// </summary>
-		public static event Action<Friend, string, string> OnChatMessage;
+		public static event Action<User, string, string> OnChatMessage;
 
 		/// <summary>
 		/// Invoked when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
 		/// </summary>
-		public static event Action<Friend, string, string> OnClanChatMessage;
+		public static event Action<User, string, string> OnClanChatMessage;
 
 		/// <summary>
 		/// Invoked when a friends' status changes.
 		/// </summary>
-		public static event Action<Friend> OnPersonaStateChange;
+		public static event Action<User> OnPersonaStateChange;
 
 
 		/// <summary>
 		/// Invoked when the user tries to join a game from their friends list.
 		///	Rich presence will have been set with the "connect" key which is set here.
 		/// </summary>
-		public static event Action<Friend, string> OnGameRichPresenceJoinRequested;
+		public static event Action<User, string> OnGameRichPresenceJoinRequested;
 
 		/// <summary>
 		/// Invoked when game overlay activates or deactivates.
@@ -85,7 +85,7 @@ namespace Steamworks
 		/// <summary>
 		/// Invoked when a friend's rich presence data is updated.
 		/// </summary>
-		public static event Action<Friend> OnFriendRichPresenceUpdate;
+		public static event Action<User> OnFriendRichPresenceUpdate;
 
 		/// <summary>
 		/// Invoked when an overlay browser instance is navigated to a
@@ -98,7 +98,7 @@ namespace Steamworks
 		{
 			if ( OnChatMessage == null ) return;
 
-			var friend = new Friend( data.SteamIDUser );
+			var friend = new User( data.SteamIDUser );
 
 			using var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
@@ -118,7 +118,7 @@ namespace Steamworks
 		{
 			if ( OnClanChatMessage == null ) return;
 
-			var friend = new Friend( data.SteamIDUser );
+			var friend = new User( data.SteamIDUser );
 
 			using var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
@@ -135,11 +135,11 @@ namespace Steamworks
 			OnClanChatMessage( friend, typeName, message );
 		}
 
-		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
+		private static IEnumerable<User> GetFriendsWithFlag(FriendFlags flag)
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int)flag); i++ )
 			{
-				yield return new Friend( Internal.GetFriendByIndex( i, (int)flag ) );
+				yield return new User( Internal.GetFriendByIndex( i, (int)flag ) );
 			}
 		}
 
@@ -147,7 +147,7 @@ namespace Steamworks
 		/// Gets an <see cref="IEnumerable{T}"/> of friends that the current user has.
 		/// </summary>
 		/// <returns>An <see cref="IEnumerable{T}"/> of friends.</returns>
-		public static IEnumerable<Friend> GetFriends()
+		public static IEnumerable<User> GetFriends()
 		{
 			return GetFriendsWithFlag(FriendFlags.Immediate);
 		}
@@ -156,7 +156,7 @@ namespace Steamworks
 		/// Gets an <see cref="IEnumerable{T}"/> of blocked users that the current user has.
 		/// </summary>
 		/// <returns>An <see cref="IEnumerable{T}"/> of blocked users.</returns>
-		public static IEnumerable<Friend> GetBlocked()
+		public static IEnumerable<User> GetBlocked()
 		{
 			return GetFriendsWithFlag(FriendFlags.Blocked);
 		}
@@ -165,39 +165,39 @@ namespace Steamworks
 		/// Gets an <see cref="IEnumerable{T}"/> of friend requests that the current user has.
 		/// </summary>
 		/// <returns>An <see cref="IEnumerable{T}"/> of friend requests.</returns>
-		public static IEnumerable<Friend> GetFriendsRequested()
+		public static IEnumerable<User> GetFriendsRequested()
 		{
 			return GetFriendsWithFlag( FriendFlags.FriendshipRequested );
 		}
 
-		public static IEnumerable<Friend> GetFriendsClanMembers()
+		public static IEnumerable<User> GetFriendsClanMembers()
 		{
 			return GetFriendsWithFlag( FriendFlags.ClanMember );
 		}
 
-		public static IEnumerable<Friend> GetFriendsOnGameServer()
+		public static IEnumerable<User> GetFriendsOnGameServer()
 		{
 			return GetFriendsWithFlag( FriendFlags.OnGameServer );
 		}
 
-		public static IEnumerable<Friend> GetFriendsRequestingFriendship()
+		public static IEnumerable<User> GetFriendsRequestingFriendship()
 		{
 			return GetFriendsWithFlag( FriendFlags.RequestingFriendship );
 		}
 
-		public static IEnumerable<Friend> GetPlayedWith()
+		public static IEnumerable<User> GetPlayedWith()
 		{
 			for ( int i = 0; i < Internal.GetCoplayFriendCount(); i++ )
 			{
-				yield return new Friend( Internal.GetCoplayFriend( i ) );
+				yield return new User( Internal.GetCoplayFriend( i ) );
 			}
 		}
 
-		public static IEnumerable<Friend> GetFromSource( SteamId steamid )
+		public static IEnumerable<User> GetFromSource( SteamId steamid )
 		{
 		    for ( int i = 0; i < Internal.GetFriendCountFromSource( steamid ); i++ )
 		    {
-		        yield return new Friend( Internal.GetFriendFromSourceByIndex( steamid, i ) );
+		        yield return new User( Internal.GetFriendFromSourceByIndex( steamid, i ) );
 		    }
 		}
 

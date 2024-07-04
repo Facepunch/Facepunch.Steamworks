@@ -57,7 +57,7 @@ namespace Steamworks.Ugc
 		/// <summary>
 		/// User who created this content
 		/// </summary>
-		public Friend Owner => new Friend( details.SteamIDOwner );
+		public User Owner => new User( details.SteamIDOwner );
 
 		/// <summary>
 		/// The bayesian average for up votes / total votes, between [0,1]

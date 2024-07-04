@@ -57,13 +57,13 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Returns current members in the lobby. The current user must be in the lobby in order to see the users.
 		/// </summary>
-		public IEnumerable<Friend> Members
+		public IEnumerable<User> Members
 		{
 			get
 			{
 				for( int i = 0; i < MemberCount; i++ )
 				{
-					yield return new Friend( SteamMatchmaking.Internal.GetLobbyMemberByIndex( Id, i ) );
+					yield return new User( SteamMatchmaking.Internal.GetLobbyMemberByIndex( Id, i ) );
 				}
 			}
 		}
@@ -118,7 +118,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Gets per-user metadata for someone in this lobby.
 		/// </summary>
-		public string GetMemberData( Friend member, string key )
+		public string GetMemberData( User member, string key )
 		{
 			return SteamMatchmaking.Internal.GetLobbyMemberData( Id, member.Id, key );
 		}
@@ -265,9 +265,9 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Gets or sets the owner of the lobby. You must be the lobby owner to set the owner
 		/// </summary>
-		public Friend Owner
+		public User Owner
 		{
-			get => new Friend( SteamMatchmaking.Internal.GetLobbyOwner( Id ) );
+			get => new User( SteamMatchmaking.Internal.GetLobbyOwner( Id ) );
 			set => SteamMatchmaking.Internal.SetLobbyOwner( Id, value.Id );
 		}
 

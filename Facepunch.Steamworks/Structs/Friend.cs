@@ -7,11 +7,11 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public struct Friend
+	public struct User
 	{
 		public SteamId Id;
 
-		public Friend( SteamId steamid )
+		public User( SteamId steamid )
 		{
 			Id = steamid;
 		}
