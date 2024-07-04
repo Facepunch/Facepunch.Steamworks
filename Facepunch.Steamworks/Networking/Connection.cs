@@ -96,6 +96,17 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
+		/// Send message from a span, unlike the byte array implementation, this creates no undue overhead
+		/// </summary>
+		public unsafe Result SendMessage(Span<byte> data, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
+		{
+			fixed ( byte* ptr = data )
+			{
+				return SendMessage( (IntPtr)ptr, data.Length, sendType, laneIndex );
+			}
+		}
+
+		/// <summary>
 		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
 		/// you're not creating a new one every frame (like using .ToArray())
 		/// </summary>

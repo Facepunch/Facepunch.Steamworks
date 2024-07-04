@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,6 +14,13 @@ namespace Steamworks
 		{
 			public bool HasFinished = false;
 
+			public TestSocketInterface() {
+				onConnecting += OnConnecting;
+				onDisconnected += OnDisconnected;
+				onConnected += OnConnected;
+				onMessage += OnMessage;
+			}
+
 			public override void OnConnectionChanged( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $"[Socket{Socket}][connection:{connection}][data.Identity:{data.Identity}] [data.State:{data.State}]" );
@@ -20,16 +28,15 @@ namespace Steamworks
 				base.OnConnectionChanged( connection, data );
 			}
 
-			public override void OnConnecting( Connection connection, ConnectionInfo data )
+			public void OnConnecting( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnConnecting" );
-				base.OnConnecting( connection, data );
 			}
 
 			/// <summary>
 			/// Client is connected. They move from connecting to Connections
 			/// </summary>
-			public override void OnConnected( Connection connection, ConnectionInfo data )
+			public void OnConnected( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $"" );
 				Console.WriteLine( $"Socket -> OnConnected:" );
@@ -43,18 +50,14 @@ namespace Steamworks
 				Console.WriteLine( $"	data.Identity.Address.Address:		{data.Identity.Address.Address}" );
 				Console.WriteLine( $"	data.Identity.Address.Port:			{data.Identity.Address.Port}" );
 				Console.WriteLine( $"" );
-
-				base.OnConnected( connection, data );
 			}
 
 			/// <summary>
 			/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 			/// </summary>
-			public override void OnDisconnected( Connection connection, ConnectionInfo data )
+			public void OnDisconnected( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnDisconnected" );
-
-				base.OnDisconnected( connection, data );
 			}
 
 			internal async Task RunAsync()
@@ -109,13 +112,13 @@ namespace Steamworks
 
 				await Task.Delay( 1000 );
 
-				Close();
+				Dispose();
 			}
 
-			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
+			public void OnMessage(ReadOnlySpan<byte> data, Connection connection, NetIdentity identity, long messageNum, long recvTime, int channel )
 			{
-				// We're only sending strings, so it's fine to read this like this
-				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );
+				// Assuming the message data is always a string
+				var str = MemoryMarshal.Cast<byte, char>(data).ToString(); //UTF8Encoding.UTF8.GetString((byte*)data[0], data.Length );
 
 				Console.WriteLine( $"[SOCKET][{connection}[{identity}][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
 

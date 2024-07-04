@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Steamworks.Data;
+using static Steamworks.SpanActions;
 
 namespace Steamworks
 {
@@ -12,25 +14,36 @@ namespace Steamworks
 	/// You can override all the virtual functions to turn it into what you
 	/// want it to do.
 	/// </summary>
-	public partial class SocketManager
+	public partial class SocketManager : IDisposable
 	{
-		public ISocketManager Interface { get; set; }
+		// public ISocketManager Interface { get; set; }
 
-		public HashSet<Connection> Connecting = new HashSet<Connection>();
-		public HashSet<Connection> Connected = new HashSet<Connection>();
-
+		public HashSet<Connection> Connecting = new();
+		public HashSet<Connection> Connected = new();
+		
 		public Socket Socket { get; internal set; }
+
+		internal HSteamNetPollGroup pollGroup;
+
+
+		public Action<Connection, ConnectionInfo> onConnecting;
+		public Action<Connection, ConnectionInfo> onConnected;
+		public Action<Connection, ConnectionInfo> onDisconnected;
+
+		public MessageAction onMessage;
+
+    	public delegate void MessageAction(ReadOnlySpan<byte> data, Connection connection, NetIdentity identity, long messageNum, long recvTime, int channel);
+
 
 		public override string ToString() => Socket.ToString();
 
-		internal HSteamNetPollGroup pollGroup;
 
 		internal void Initialize()
 		{
 			pollGroup = SteamNetworkingSockets.Internal.CreatePollGroup();
 		}
 
-		public bool Close()
+		public void Dispose()
 		{
 			if ( SteamNetworkingSockets.Internal.IsValid )
 			{
@@ -40,7 +53,6 @@ namespace Steamworks
 
 			pollGroup = 0;
 			Socket = 0;
-			return true;
 		}
 
 		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo info )
@@ -57,7 +69,12 @@ namespace Steamworks
 					{
 						Connecting.Add( connection );
 
-						OnConnecting( connection, info );
+						onConnecting( connection, info );
+						
+						//TODO:: test what happens when accepting a closed connection, 
+						//       might need a check to ensure a closed connection isn't accepted here 
+						connection.Accept(); 
+
 					}
 					break;
 				case ConnectionState.Connected:
@@ -66,7 +83,7 @@ namespace Steamworks
 						Connecting.Remove( connection );
 						Connected.Add( connection );
 
-						OnConnected( connection, info );
+						onConnected( connection, info );
 					}
 					break;
 				case ConnectionState.ClosedByPeer:
@@ -77,49 +94,11 @@ namespace Steamworks
 						Connecting.Remove( connection );
 						Connected.Remove( connection );
 
-						OnDisconnected( connection, info );
+						onDisconnected( connection, info );
+
+						connection.Close();
 					}
 					break;
-			}
-		}
-
-		/// <summary>
-		/// Default behaviour is to accept every connection
-		/// </summary>
-		public virtual void OnConnecting( Connection connection, ConnectionInfo info )
-		{
-			if ( Interface != null )
-			{
-				Interface.OnConnecting( connection, info );
-			}
-			else
-			{
-				connection.Accept();
-			}			
-		}
-
-		/// <summary>
-		/// Client is connected. They move from connecting to Connections
-		/// </summary>
-		public virtual void OnConnected( Connection connection, ConnectionInfo info )
-		{
-			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, pollGroup );
-
-			Interface?.OnConnected( connection, info );
-		}
-
-		/// <summary>
-		/// The connection has been closed remotely or disconnected locally. Check data.State for details.
-		/// </summary>
-		public virtual void OnDisconnected( Connection connection, ConnectionInfo info )
-		{
-			if ( Interface != null )
-			{
-				Interface.OnDisconnected( connection, info );
-			}
-			else
-			{
-				connection.Close();
 			}
 		}
 
@@ -157,7 +136,7 @@ namespace Steamworks
 			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
+				onMessage(new Span<byte>(msg.DataPtr.ToPointer(), msg.DataSize), msg.Connection, msg.Identity, msg.MessageNumber, msg.RecvTime, msg.Channel);
 			}
 			finally
 			{
@@ -166,11 +145,6 @@ namespace Steamworks
 				//
 				NetMsg.InternalRelease( (NetMsg*) msgPtr );
 			}
-		}
-
-		public virtual void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
-		{
-			Interface?.OnMessage( connection, identity, data, size, messageNum, recvTime, channel );
 		}
 	}
 }

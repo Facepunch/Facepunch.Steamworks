@@ -146,32 +146,6 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Creates a "server" socket that listens for clients to connect to by calling
-		/// Connect, over ordinary UDP (IPv4 or IPv6).
-		/// 
-		/// To use this you should pass a class that inherits <see cref="ISocketManager"/>. You can use
-		/// SocketManager to get connections and send messages, but the ISocketManager class
-		/// will received all the appropriate callbacks.
-		/// 
-		/// </summary>
-		public static SocketManager CreateNormalSocket( NetAddress address, ISocketManager intrface )
-		{
-			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketIP( ref address, options.Length, options );
-
-			var t = new SocketManager
-			{
-				Socket = socket,
-				Interface = intrface
-			};
-
-			t.Initialize();
-
-			SetSocketManager( t.Socket.Id, t );
-			return t;
-		}
-
-		/// <summary>
 		/// Connect to a socket created via <c>CreateListenSocketIP</c>.
 		/// </summary>
 		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionManager, new()
@@ -213,31 +187,6 @@ namespace Steamworks
 			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
 			t.Initialize();
-			SetSocketManager( t.Socket.Id, t );
-			return t;
-		}
-
-		/// <summary>
-		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping).
-		/// 
-		/// To use this you should pass a class that inherits <see cref="ISocketManager"/>. You can use
-		/// <see cref="SocketManager"/> to get connections and send messages, but the <see cref="ISocketManager"/> class
-		/// will received all the appropriate callbacks.
-		/// 
-		/// </summary>
-		public static SocketManager CreateRelaySocket( int virtualport, ISocketManager intrface )
-		{
-			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
-
-			var t = new SocketManager
-			{
-				Socket = socket,
-				Interface = intrface
-			};
-
-			t.Initialize();
-
 			SetSocketManager( t.Socket.Id, t );
 			return t;
 		}
@@ -313,31 +262,6 @@ namespace Steamworks
 			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
 			t.Initialize();
-			SetSocketManager( t.Socket.Id, t );
-			return t;
-		}
-
-		/// <summary>
-		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping).
-		/// 
-		/// To use this you should pass a class that inherits <see cref="ISocketManager"/>. You can use
-		/// <see cref="SocketManager"/> to get connections and send messages, but the <see cref="ISocketManager"/> class
-		/// will received all the appropriate callbacks.
-		/// 
-		/// </summary>
-		public static SocketManager CreateRelaySocketFakeIP( int fakePortIndex, ISocketManager intrface )
-		{
-			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
-
-			var t = new SocketManager
-			{
-				Socket = socket,
-				Interface = intrface
-			};
-
-			t.Initialize();
-
 			SetSocketManager( t.Socket.Id, t );
 			return t;
 		}

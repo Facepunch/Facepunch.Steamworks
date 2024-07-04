@@ -32,7 +32,7 @@ namespace Steamworks
 			// Give it a second for something to happen
 			await Task.Delay( 1000 );
 
-			si.Close();
+			si.Dispose();
 		}
 
 		[TestMethod]
@@ -48,7 +48,7 @@ namespace Steamworks
 			// Give it a second for something to happen
 			await Task.Delay( 1000 );
 
-			si.Close();
+			si.Dispose();
 		}
 
 		[TestMethod]
@@ -64,7 +64,7 @@ namespace Steamworks
 			// Give it a second for something to happen
 			await Task.Delay( 1000 );
 
-			si.Close();
+			si.Dispose();
 		}
 
 		[TestMethod]
