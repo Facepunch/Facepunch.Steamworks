@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win32</AssemblyName>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN32;PLATFORM_WIN</DefineConstants>
-		<TargetFrameworks>netstandard2.1;net6.0;net46</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -30,7 +30,7 @@
 			<Pack>true</Pack>
 			<PackagePath>/</PackagePath>
 		</None>
-		<None Include="steam_api.dll">
+		<None Include="lib/steam_api.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<Pack>true</Pack>
 			<PackagePath>content</PackagePath>
