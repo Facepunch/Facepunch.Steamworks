@@ -4,11 +4,15 @@ using System;
 namespace Steamworks
 {
 	public class ConnectionManager
-	{
-		/// <summary>
-		/// An optional interface to use instead of deriving
-		/// </summary>
-		public IConnectionManager Interface { get; set; }
+	{	
+		public Action<ConnectionInfo> onConnected;
+		public Action<ConnectionInfo> onConnecting;
+		public Action<ConnectionInfo> onDisconnected;
+
+		public MessageAction onMessage;
+
+    	public delegate void MessageAction(ReadOnlySpan<byte> data, Connection connection, NetIdentity identity, long messageNum, long recvTime, int channel);
+
 
 		/// <summary>
 		/// The actual connection we're managing
@@ -58,7 +62,7 @@ namespace Steamworks
 					{
 						Connecting = true;
 
-						OnConnecting( info );
+						onConnecting( info );
 					}
 					break;
 				case ConnectionState.Connected:
@@ -67,7 +71,7 @@ namespace Steamworks
 						Connecting = false;
 						Connected = true;
 
-						OnConnected( info );
+						onConnected( info );
 					}
 					break;
 				case ConnectionState.ClosedByPeer:
@@ -78,34 +82,10 @@ namespace Steamworks
 						Connecting = false;
 						Connected = false;
 
-						OnDisconnected( info );
+						onDisconnected( info );
 					}
 					break;
 			}
-		}
-
-		/// <summary>
-		/// We're trying to connect!
-		/// </summary>
-		public virtual void OnConnecting( ConnectionInfo info )
-		{
-			Interface?.OnConnecting( info );
-		}
-
-		/// <summary>
-		/// Client is connected. They move from connecting to Connections
-		/// </summary>
-		public virtual void OnConnected( ConnectionInfo info )
-		{
-			Interface?.OnConnected( info );
-		}
-
-		/// <summary>
-		/// The connection has been closed remotely or disconnected locally. Check data.State for details.
-		/// </summary>
-		public virtual void OnDisconnected( ConnectionInfo info )
-		{
-			Interface?.OnDisconnected( info );
 		}
 
 		public unsafe int Receive( int bufferSize = 32, bool receiveToEnd = true )
@@ -253,7 +233,7 @@ namespace Steamworks
 		{
 			try
 			{
-				OnMessage( msg->DataPtr, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
+				onMessage(new Span<byte>(msg->DataPtr.ToPointer(), msg->DataSize), msg->Connection, msg->Identity, msg->MessageNumber, msg->RecvTime, msg->Channel);
 			}
 			finally
 			{
@@ -263,11 +243,6 @@ namespace Steamworks
 				NetMsg.InternalRelease( msg );
 				msg = null;
 			}
-		}
-
-		public virtual void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
-		{
-			Interface?.OnMessage( data, size, messageNum, recvTime, channel );
 		}
 	}
 }
