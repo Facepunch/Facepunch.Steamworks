@@ -171,7 +171,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetFriendStats()
 		{
-			var friend = new Friend( 76561197965732579 ); // Hezzy
+			var friend = new User( 76561197965732579 ); // Hezzy
 
 			// Download stats
 			var status = await friend.RequestUserStatsAsync();

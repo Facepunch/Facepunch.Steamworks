@@ -42,7 +42,7 @@ namespace Steamworks
 	
 #region SocketInterface
 
-		static readonly Dictionary<uint, SocketManager> SocketInterfaces = new Dictionary<uint, SocketManager>();
+		static readonly Dictionary<uint, SocketManager> SocketInterfaces = new();
 
 		internal static SocketManager GetSocketManager( uint id )
 		{

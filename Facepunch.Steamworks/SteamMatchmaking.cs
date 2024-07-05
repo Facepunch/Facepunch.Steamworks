@@ -54,7 +54,7 @@ After:
 				if ( x.SteamIDLobby == x.SteamIDMember )
 					OnLobbyDataChanged?.Invoke( new Lobby( x.SteamIDLobby ) );
 				else
-					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMember ) );
+					OnLobbyMemberDataChanged?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDMember ) );
 			}) );
 
 			Dispatch.Install<LobbyChatUpdate_t>( 
@@ -95,19 +95,19 @@ After:
 (Action<LobbyChatUpdate_t>)(x =>
 			{
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Entered) != 0 )
-					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Left) != 0 )
-					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Disconnected) != 0 )
-					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Kicked) != 0 )
-					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMakingChange ) );
+					OnLobbyMemberKicked?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDUserChanged ), (Steamworks.User)new Steamworks.User( x.SteamIDMakingChange ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Banned) != 0 )
-					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDUserChanged ), (Steamworks.Friend)new Steamworks.Friend( x.SteamIDMakingChange ) );
+					OnLobbyMemberBanned?.Invoke( new Lobby( x.SteamIDLobby ), (Steamworks.User)new Steamworks.User( x.SteamIDUserChanged ), (Steamworks.User)new Steamworks.User( x.SteamIDMakingChange ) );
 			}) );
 
 			Dispatch.Install<LobbyChatMsg_t>( OnLobbyChatMessageRecievedAPI );
