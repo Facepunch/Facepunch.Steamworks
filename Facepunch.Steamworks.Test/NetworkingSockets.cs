@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace Steamworks
     [DeploymentItem( "steam_api.dll" )]
     public partial class NetworkingSocketsTest
 	{
+
 		void DebugOutput( NetDebugOutput type, string text )
 		{
 			Console.WriteLine( $"[NET:{type}]\t\t{text}" );
@@ -158,6 +161,33 @@ namespace Steamworks
 				var n = NetAddress.AnyIp( 5543 );
 				Assert.AreEqual( n.ToString(), "[::]:5543" );
 			}
+		}
+
+		[TestMethod]
+		public void SendMessageSpeedTest() {
+			// Create manager with dummy ip
+        	var manager = SteamNetworkingSockets.ConnectRelay<ConnectionManager>(0, 0);
+
+			// Create data
+			Span<float> data = new float[1000000];
+			Span<byte> byte_data = MemoryMarshal.AsBytes(data);
+
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+
+			for (int i = 0; i < 10000; i++)
+			{
+				unsafe {
+					fixed (byte* ptr = byte_data) {
+						manager.Connection.SendMessage((IntPtr)ptr, byte_data.Length);
+					}
+				}
+			}
+
+			sw.Stop();
+
+			Console.WriteLine($"Time Elapsed: {sw.Elapsed}");
+			Assert.Inconclusive();
 		}
 	}
 
