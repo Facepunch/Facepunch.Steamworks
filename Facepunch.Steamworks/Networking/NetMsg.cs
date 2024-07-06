@@ -17,8 +17,21 @@ namespace Steamworks.Data
 		internal IntPtr ReleasePtr;
 		internal int Channel;
 		internal SendType Flags;
-		internal long UserData;
+		internal GCHandle64 DataHandle;
 		internal ushort IdxLane;
 		internal ushort _pad1__;
+
+		
+	}
+
+	[StructLayout( LayoutKind.Sequential, Size = 4 )]
+	internal struct GCHandle64 {
+		public GCHandle value;
+
+		public GCHandle64( GCHandle handle ) : this() => value = handle;
+
+		public static implicit operator GCHandle(GCHandle64 handle) => handle.value;
+		public static implicit operator GCHandle64(GCHandle handle) => new(handle);
 	}
 }
+

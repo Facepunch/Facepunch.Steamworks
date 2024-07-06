@@ -107,15 +107,13 @@ namespace Steamworks.Data
 			var ptr = dataHandle.AddrOfPinnedObject();
 
 			var message = SteamNetworkingUtils.AllocateMessage();
-
-			messageDataHandles[(IntPtr)message] = dataHandle;
-
 			message->Connection = this;
 			message->Flags = sendType;
 			message->DataPtr = ptr;
 			message->DataSize = size;
 			message->FreeDataPtr = FreeFunctionPointer;
 			message->IdxLane = laneIndex;
+			message->DataHandle = dataHandle;
 
 			long messageNumber = 0;
 			SteamNetworkingSockets.Internal.SendMessages( 1, &message, &messageNumber );
@@ -124,8 +122,6 @@ namespace Steamworks.Data
 				? Result.OK
 				: (Result)(-messageNumber);
 		}
-
-		unsafe private static Dictionary<IntPtr, GCHandle> messageDataHandles = new();
 		
 		[UnmanagedFunctionPointer( CallingConvention.Cdecl )]
 		private unsafe delegate void FreeFn( NetMsg* msg );
@@ -137,12 +133,7 @@ namespace Steamworks.Data
 		[MonoPInvokeCallback]
 		private unsafe static void Free( NetMsg* msg )
 		{
-			IntPtr ptr = (IntPtr)msg;
-
-			if (!messageDataHandles.Remove(ptr, out var dataHandle))
-				throw new Exception();
-
-			dataHandle.Free();
+			msg->DataHandle.value.Free();
 		}
 
 		/// <summary>

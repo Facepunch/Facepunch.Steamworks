@@ -176,12 +176,12 @@ namespace Steamworks
 	        server.onMessage += OnMessage;
 
 			// Create data
-			var raw_data = new float[1000000];
+			var raw_data = new float[100];
 
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			for (int i = 0; i < 10000; i++)
+			for (int i = 0; i < 100; i++)
 			{
 				var dataHandle = GCHandle.Alloc(raw_data, GCHandleType.Pinned);
 
