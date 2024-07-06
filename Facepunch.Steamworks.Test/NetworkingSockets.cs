@@ -163,31 +163,48 @@ namespace Steamworks
 			}
 		}
 
+	    volatile int receivedCount = 0;
+
+
 		[TestMethod]
-		public void SendMessageSpeedTest() {
+		public async Task SendMessageSpeedTest() {
 			// Create manager with dummy ip
-        	var manager = SteamNetworkingSockets.ConnectRelay<ConnectionManager>(0, 0);
+			
+        	using var server = SteamNetworkingSockets.CreateRelaySocket<SocketManager>(10);
+        	var manager = SteamNetworkingSockets.ConnectRelay<ConnectionManager>(SteamClient.SteamId, 10);
+			
+	        server.onMessage += OnMessage;
 
 			// Create data
-			Span<float> data = new float[1000000];
-			Span<byte> byte_data = MemoryMarshal.AsBytes(data);
+			var raw_data = new float[1000000];
 
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
 			for (int i = 0; i < 10000; i++)
 			{
-				unsafe {
-					fixed (byte* ptr = byte_data) {
-						manager.Connection.SendMessage((IntPtr)ptr, byte_data.Length);
-					}
-				}
+				var dataHandle = GCHandle.Alloc(raw_data, GCHandleType.Pinned);
+
+				manager.Connection.SendMessage(dataHandle, raw_data.Length * sizeof(float));
 			}
 
 			sw.Stop();
 
+			await Task.Delay( 2000 );
+
+			server.Receive();
+
 			Console.WriteLine($"Time Elapsed: {sw.Elapsed}");
 			Assert.Inconclusive();
+		}
+
+		
+		void OnMessage(ReadOnlySpan<byte> data, Connection connection, NetIdentity identity, long messageNum, long recvTime, int channel){
+			// float value = MemoryMarshal.Read<float>(data);
+
+			// Debug.Log($"Ping: {(Time.time - value) * 1000}");
+
+			receivedCount += 1;
 		}
 	}
 

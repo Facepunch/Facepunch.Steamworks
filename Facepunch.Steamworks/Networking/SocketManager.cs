@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using Steamworks.Data;
 using static Steamworks.SpanActions;
@@ -69,12 +70,11 @@ namespace Steamworks
 					{
 						Connecting.Add( connection );
 
-						onConnecting( connection, info );
+						onConnecting?.Invoke( connection, info );
 						
 						//TODO:: test what happens when accepting a closed connection, 
 						//       might need a check to ensure a closed connection isn't accepted here 
 						connection.Accept(); 
-
 					}
 					break;
 				case ConnectionState.Connected:
@@ -83,7 +83,9 @@ namespace Steamworks
 						Connecting.Remove( connection );
 						Connected.Add( connection );
 
-						onConnected( connection, info );
+						SteamNetworkingSockets.Internal.SetConnectionPollGroup(connection, pollGroup);
+
+						onConnected?.Invoke( connection, info );
 					}
 					break;
 				case ConnectionState.ClosedByPeer:
@@ -94,7 +96,7 @@ namespace Steamworks
 						Connecting.Remove( connection );
 						Connected.Remove( connection );
 
-						onDisconnected( connection, info );
+						onDisconnected?.Invoke( connection, info );
 
 						connection.Close();
 					}
@@ -136,7 +138,7 @@ namespace Steamworks
 			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				onMessage(new Span<byte>(msg.DataPtr.ToPointer(), msg.DataSize), msg.Connection, msg.Identity, msg.MessageNumber, msg.RecvTime, msg.Channel);
+				onMessage?.Invoke(new Span<byte>(msg.DataPtr.ToPointer(), msg.DataSize), msg.Connection, msg.Identity, msg.MessageNumber, msg.RecvTime, msg.Channel);
 			}
 			finally
 			{

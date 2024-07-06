@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Steamworks.Data
 {
@@ -93,6 +94,55 @@ namespace Steamworks.Data
 			return messageNumber >= 0
 				? Result.OK
 				: (Result)(-messageNumber);
+		}
+
+		/// <summary>
+		/// This is the best version to use.
+		/// </summary>
+		public unsafe Result SendMessage( GCHandle dataHandle, int size, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
+		{
+			if ( size == 0 )
+				throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
+
+			var ptr = dataHandle.AddrOfPinnedObject();
+
+			var message = SteamNetworkingUtils.AllocateMessage();
+
+			messageDataHandles[(IntPtr)message] = dataHandle;
+
+			message->Connection = this;
+			message->Flags = sendType;
+			message->DataPtr = ptr;
+			message->DataSize = size;
+			message->FreeDataPtr = FreeFunctionPointer;
+			message->IdxLane = laneIndex;
+
+			long messageNumber = 0;
+			SteamNetworkingSockets.Internal.SendMessages( 1, &message, &messageNumber );
+
+			return messageNumber >= 0
+				? Result.OK
+				: (Result)(-messageNumber);
+		}
+
+		unsafe private static Dictionary<IntPtr, GCHandle> messageDataHandles = new();
+		
+		[UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+		private unsafe delegate void FreeFn( NetMsg* msg );
+		
+		private unsafe static readonly FreeFn FreeFunctionPin = new FreeFn( Free );
+
+		public static readonly IntPtr FreeFunctionPointer = Marshal.GetFunctionPointerForDelegate( FreeFunctionPin );
+
+		[MonoPInvokeCallback]
+		private unsafe static void Free( NetMsg* msg )
+		{
+			IntPtr ptr = (IntPtr)msg;
+
+			if (!messageDataHandles.Remove(ptr, out var dataHandle))
+				throw new Exception();
+
+			dataHandle.Free();
 		}
 
 		/// <summary>

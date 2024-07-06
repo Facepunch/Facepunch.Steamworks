@@ -62,7 +62,7 @@ namespace Steamworks
 					{
 						Connecting = true;
 
-						onConnecting( info );
+						onConnecting?.Invoke( info );
 					}
 					break;
 				case ConnectionState.Connected:
@@ -71,7 +71,7 @@ namespace Steamworks
 						Connecting = false;
 						Connected = true;
 
-						onConnected( info );
+						onConnected?.Invoke( info );
 					}
 					break;
 				case ConnectionState.ClosedByPeer:
@@ -82,7 +82,7 @@ namespace Steamworks
 						Connecting = false;
 						Connected = false;
 
-						onDisconnected( info );
+						onDisconnected?.Invoke( info );
 					}
 					break;
 			}
@@ -233,7 +233,7 @@ namespace Steamworks
 		{
 			try
 			{
-				onMessage(new Span<byte>(msg->DataPtr.ToPointer(), msg->DataSize), msg->MessageNumber, msg->RecvTime, msg->Channel);
+				onMessage?.Invoke(new Span<byte>(msg->DataPtr.ToPointer(), msg->DataSize), msg->MessageNumber, msg->RecvTime, msg->Channel);
 			}
 			finally
 			{
