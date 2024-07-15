@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -196,6 +197,20 @@ namespace Steamworks
 
 			Console.WriteLine($"Time Elapsed: {sw.Elapsed}");
 			Assert.Inconclusive();
+		}
+
+		[TestMethod]
+		/// Test to ensure NetMsg is consistent size across versions.
+		/// This is nescessary because we get it from an unmanaged library.
+		/// 
+		/// Could be more in depth and check the individual offsets.....
+		public void NetMessageSizeTest() {
+
+			var t_NetMsg = typeof(Connection).Assembly.GetType("Steamworks.Data.NetMsg");
+			
+			var size = Marshal.SizeOf(t_NetMsg);
+
+			Assert.AreEqual(size, 216);
 		}
 
 		
