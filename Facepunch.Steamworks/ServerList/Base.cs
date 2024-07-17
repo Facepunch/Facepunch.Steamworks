@@ -135,7 +135,7 @@ namespace Steamworks.ServerList
 			}
 		}
 
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			ReleaseQuery();
 		}
