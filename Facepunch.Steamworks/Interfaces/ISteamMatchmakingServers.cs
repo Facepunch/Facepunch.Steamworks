@@ -8,6 +8,9 @@ namespace Steamworks
 {
 	internal partial class ISteamMatchmakingServers
 	{
+		// Cached offset of gameserveritem_t.m_bHadSuccessfulResponse
+		private static int hasSuccessfulResponseOffset;
+
 		/// <summary>
 		/// Read gameserveritem_t.m_bHadSuccessfulResponse without allocating the struct on the heap
 		/// </summary>
@@ -21,8 +24,19 @@ namespace Steamworks
 			// Return false if steam returned null
 			if ( returnValue == IntPtr.Zero ) return false;
 
-			// first 8 bytes is IPAddress, next 4 bytes is ping, next 1 byte is m_bHadSuccessfulResponse
-			return Marshal.ReadByte( IntPtr.Add( returnValue, 12 ) ) == 1;
+			// Cache the offset of m_bHadSuccessfulResponse
+			if ( hasSuccessfulResponseOffset == 0 )
+			{
+				hasSuccessfulResponseOffset = Marshal.OffsetOf<gameserveritem_t>( nameof( gameserveritem_t.HadSuccessfulResponse ) ).ToInt32();
+
+				if ( hasSuccessfulResponseOffset == 0 )
+				{
+					throw new Exception( "Failed to get offset of gameserveritem_t.HadSuccessfulResponse" );
+				}
+			}
+
+			// Read byte m_bHadSuccessfulResponse
+			return Marshal.ReadByte( IntPtr.Add( returnValue, hasSuccessfulResponseOffset ) ) == 1;
 		}
 	}
 }
