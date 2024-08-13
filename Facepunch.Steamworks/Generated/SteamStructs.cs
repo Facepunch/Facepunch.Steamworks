@@ -25,17 +25,14 @@ namespace Steamworks.Data
 		internal uint IP; // m_unIP uint32
 		
 	}
-
+	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal partial struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr servernetadr_t
 		internal int Ping; // m_nPing int
-
-		// NOTE: If you add fields above this you must change offset inISteamMatchmakingServers.HasServerResponded()
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse bool
-
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool DoNotRefresh; // m_bDoNotRefresh bool
 		internal string GameDirUTF8() => System.Text.Encoding.UTF8.GetString( GameDir, 0, System.Array.IndexOf<byte>( GameDir, 0 ) );

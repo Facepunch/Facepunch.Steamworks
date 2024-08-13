@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal unsafe class ISteamMatchmakingServers : SteamInterface
+	internal unsafe partial class ISteamMatchmakingServers : SteamInterface
 	{
 		
 		internal ISteamMatchmakingServers( bool IsGameServer )
@@ -106,24 +106,7 @@ namespace Steamworks
 			var returnValue = _GetServerDetails( Self, hRequest, iServer );
 			return returnValue.ToType<gameserveritem_t>();
 		}
-
-		/// <summary>
-		/// Read gameserveritem_t.m_bHadSuccessfulResponse without allocating the struct on the heap
-		/// </summary>
-		/// <param name="hRequest"></param>
-		/// <param name="iServer"></param>
-		/// <returns></returns>
-		internal bool HasServerResponded( HServerListRequest hRequest, int iServer )
-		{
-			IntPtr returnValue = _GetServerDetails( Self, hRequest, iServer );
-
-			// Return false if steam returned null
-			if ( returnValue == IntPtr.Zero ) return false;
-
-			// first 8 bytes is IPAddress, next 4 bytes is ping, next 1 byte is m_bHadSuccessfulResponse
-			return Marshal.ReadByte( IntPtr.Add( returnValue, 12 ) ) == 1;
-		}
-
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelQuery", CallingConvention = Platform.CC)]
 		private static extern void _CancelQuery( IntPtr self, HServerListRequest hRequest );
