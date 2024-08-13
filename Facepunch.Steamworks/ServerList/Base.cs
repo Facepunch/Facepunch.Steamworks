@@ -161,11 +161,17 @@ namespace Steamworks.ServerList
 		{
 			watchList.RemoveAll( x =>
 			{
-				var info = Internal.GetServerDetails( request, x );
-				if ( info.HadSuccessfulResponse )
+				// First check if the server has responded without allocating server info
+				bool hasResponded = Internal.HasServerResponded( request, x );
+				if ( hasResponded )
 				{
-					OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
-					return true;
+					// Now get all server info
+					var info = Internal.GetServerDetails( request, x );
+					if ( info.HadSuccessfulResponse )
+					{
+						OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
+						return true;
+					}
 				}
 
 				return false;
