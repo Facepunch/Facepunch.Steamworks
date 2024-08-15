@@ -84,7 +84,7 @@ namespace Generator
                         }
 
                         WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.FlatName}\", CallingConvention = Platform.CC)]" );
-                        WriteLine( $"internal static{_unsafe} extern {returnType.TypeNameFrom} Internal{func.Name}( {firstArg}, {delegateargstr} );".Replace( $"( {firstArg},  )", $"( {firstArg} )" ) );
+                        WriteLine( $"public static{_unsafe} extern {returnType.TypeNameFrom} Internal{func.Name}( {firstArg}, {delegateargstr} );".Replace( $"( {firstArg},  )", $"( {firstArg} )" ) );
                         WriteLine();
 
                     }

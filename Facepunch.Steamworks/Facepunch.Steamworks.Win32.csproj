@@ -18,7 +18,7 @@
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
 		<PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<LangVersion>10</LangVersion>
+		<LangVersion>default</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>

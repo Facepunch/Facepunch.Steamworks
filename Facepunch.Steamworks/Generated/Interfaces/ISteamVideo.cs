@@ -15,14 +15,14 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamVideo_v002", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamVideo_v002();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamVideo_v002();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamVideo_v007", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamVideo_v007();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamVideo_v007();
 		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL", CallingConvention = Platform.CC)]
-		private static extern void _GetVideoURL( IntPtr self, AppId unVideoAppID );
+		internal static extern void _GetVideoURL( IntPtr self, AppId unVideoAppID );
 		
 		#endregion
 		internal void GetVideoURL( AppId unVideoAppID )
@@ -33,7 +33,7 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _IsBroadcasting( IntPtr self, ref int pnNumViewers );
+		internal static extern bool _IsBroadcasting( IntPtr self, ref int pnNumViewers );
 		
 		#endregion
 		internal bool IsBroadcasting( ref int pnNumViewers )
@@ -44,7 +44,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFSettings", CallingConvention = Platform.CC)]
-		private static extern void _GetOPFSettings( IntPtr self, AppId unVideoAppID );
+		internal static extern void _GetOPFSettings( IntPtr self, AppId unVideoAppID );
 		
 		#endregion
 		internal void GetOPFSettings( AppId unVideoAppID )
@@ -55,7 +55,7 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFStringForApp", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetOPFStringForApp( IntPtr self, AppId unVideoAppID, IntPtr pchBuffer, ref int pnBufferSize );
+		internal static extern bool _GetOPFStringForApp( IntPtr self, AppId unVideoAppID, IntPtr pchBuffer, ref int pnBufferSize );
 		
 		#endregion
 		internal bool GetOPFStringForApp( AppId unVideoAppID, out string pchBuffer, ref int pnBufferSize )

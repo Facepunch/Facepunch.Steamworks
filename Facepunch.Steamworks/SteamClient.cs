@@ -23,9 +23,11 @@ namespace Steamworks
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
-			if ( !SteamAPI.Init() )
+			var initResult = SteamAPI.InitEx( out var errMsg );
+			
+			if ( initResult != SteamAPIInitResult.OK )
 			{
-				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, App ID is ureleased, Don't own App ID." );
+				throw new System.Exception( $"Failed to call SteamAPI_Init, result: {initResult}. Error Msg: {errMsg}" );
 			}
 
 			AppId = appid;
@@ -48,6 +50,7 @@ namespace Steamworks
 			AddInterface<SteamMusic>();
 			AddInterface<SteamNetworking>();
 			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingMessages>();
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamParental>();
 			AddInterface<SteamParties>();

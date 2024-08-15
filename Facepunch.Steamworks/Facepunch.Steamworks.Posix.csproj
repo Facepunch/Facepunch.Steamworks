@@ -5,7 +5,7 @@
 		<DefineConstants>$(DefineConstants);PLATFORM_POSIX</DefineConstants>
 		<TargetFrameworks>netstandard2.1;net6.0;net46</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>10</LangVersion>	
+		<LangVersion>default</LangVersion>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<RootNamespace>Steamworks</RootNamespace>

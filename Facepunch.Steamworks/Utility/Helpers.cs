@@ -99,6 +99,26 @@ namespace Steamworks
 
 			return UTF8Encoding.UTF8.GetString( (byte*)ptr, len );
 		}
+		
+		public static string PtrToStringUTF8(IntPtr nativeUtf8) {
+			if (nativeUtf8 == IntPtr.Zero) {
+				return null;
+			}
+
+			int len = 0;
+
+			while (Marshal.ReadByte(nativeUtf8, len) != 0) {
+				++len;
+			}
+
+			if (len == 0) {
+				return string.Empty;
+			}
+
+			byte[] buffer = new byte[len];
+			Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
+		}
 	}
 
 	internal class MonoPInvokeCallbackAttribute : Attribute

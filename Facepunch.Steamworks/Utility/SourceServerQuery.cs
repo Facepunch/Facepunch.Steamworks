@@ -12,11 +12,12 @@ namespace Steamworks
 	internal static class SourceServerQuery
 	{
 		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
-		//      private static readonly byte A2S_PLAYER = 0x55;
+		private static readonly byte A2S_PLAYER = 0x55;
 		private const byte A2S_RULES = 0x56;
 
-        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
-            new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
+        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries = new();
+
+        private static readonly Dictionary<IPEndPoint, Task<List<PlayerDetail>>> PendingPlayerQueries = new();
 
         internal static Task<Dictionary<string, string>> GetRules( ServerInfo server )
         {
@@ -42,6 +43,30 @@ namespace Steamworks
                 PendingQueries.Add(endpoint, task);
                 return task;
             }
+        }
+
+        internal static Task<List<PlayerDetail>> GetPlayers( ServerInfo server )
+        {
+	        var endpoint = new IPEndPoint(server.Address, server.QueryPort);
+
+	        lock ( PendingPlayerQueries )
+	        {
+		        if ( PendingPlayerQueries.TryGetValue( endpoint, out var pending ) )
+			        return pending;
+
+		        var task = GetPlayersImpl( endpoint ).ContinueWith( t =>
+		        {
+			        lock ( PendingPlayerQueries )
+			        {
+				        PendingPlayerQueries.Remove( endpoint );
+			        }
+
+			        return t;
+		        } ).Unwrap();
+		        
+		        PendingPlayerQueries.Add(endpoint, task);
+		        return task;
+	        }
         }
 
 		private static async Task<Dictionary<string, string>> GetRulesImpl( IPEndPoint endpoint )
@@ -88,7 +113,66 @@ namespace Steamworks
 			return rules;
 		}
 
+		private static async Task<List<PlayerDetail>> GetPlayersImpl( IPEndPoint endPoint )
+		{
+			try
+			{
+				using (var client = new UdpClient())
+				{
+					client.Client.SendTimeout = 3000;
+					client.Client.ReceiveTimeout = 3000;
+					client.Connect(endPoint);
 
+					return await GetPlayers(client);
+				}
+			}
+			catch (System.Exception e)
+			{
+				return null;
+			}
+		}
+
+		private static async Task<List<PlayerDetail>> GetPlayers( UdpClient client )
+		{
+			// Get the response Challenge Data first
+			var challengeBytes = await GetChallengeData( client );
+			challengeBytes[0] = A2S_PLAYER;
+			
+			// Send it to retrieve the actual data
+			await Send( client, challengeBytes );
+
+			var playerData = await Receive( client );
+
+			var playerDetails = new List<PlayerDetail>();
+
+			using ( var br = new BinaryReader( new MemoryStream( playerData ) ) )
+			{
+				if(br.ReadByte() != 0x44)
+					throw new Exception( "Invalid data received in response to A2S_PLAYER request" );
+
+				var numPlayers = br.ReadByte();
+
+				for ( int i = 0; i < numPlayers; i++ )
+				{
+					br.ReadByte();
+
+					var name = br.ReadNullTerminatedUTF8String();
+
+					var score = br.ReadInt32();
+
+					var duration = br.ReadSingle();
+					
+					playerDetails.Add(new PlayerDetail
+					{
+						Name = name,
+						Score = score,
+						Duration = duration
+					});
+				}
+			}
+
+			return playerDetails;
+		}
 
 		static async Task<byte[]> Receive( UdpClient client )
 		{
@@ -146,6 +230,8 @@ namespace Steamworks
 
 			return challengeData;
 		}
+		
+		
 
 		static async Task Send( UdpClient client, byte[] message )
 		{

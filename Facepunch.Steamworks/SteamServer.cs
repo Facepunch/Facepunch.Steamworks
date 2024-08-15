@@ -61,6 +61,10 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<SteamNetworkingAvailability> OnSteamNetAuthenticationStatus;
 
+		public static event Action OnShouldRestart;
+
+		private static bool _restarted = false;
+
 
 		/// <summary>
 		/// Initialize the steam server.
@@ -83,7 +87,7 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !SteamInternal.GameServer_Init( ipaddress, 0, init.GamePort, init.QueryPort, secure, init.VersionString ) )
+			if ( !SteamInternal.GameServer_Init( ipaddress,  init.GamePort, init.QueryPort, (ServerMode) secure, init.VersionString ) )
 			{
 				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{0},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
@@ -106,6 +110,7 @@ namespace Steamworks
 
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingMessages>();
 
 			//
 			// Initial settings
@@ -118,6 +123,8 @@ namespace Steamworks
 			GameDescription = init.GameDescription;
 			Passworded = false;
 			DedicatedServer = init.DedicatedServer;
+
+			_restarted = false;
 
 			if ( asyncCallbacks )
 			{
@@ -164,6 +171,19 @@ namespace Steamworks
 			if ( Dispatch.ServerPipe != 0 )
 			{
 				Dispatch.Frame( Dispatch.ServerPipe );
+			}
+		}
+
+		private static async void RunRestartCheck()
+		{
+			while (IsValid)
+			{
+				if ( Internal.WasRestartRequested() && !_restarted )
+				{
+					_restarted = true;
+					OnShouldRestart?.Invoke();
+				}
+				await Task.Delay( 32 );
 			}
 		}
 
@@ -287,7 +307,11 @@ namespace Steamworks
 		public static void LogOnAnonymous()
 		{
 			Internal.LogOnAnonymous();
-			ForceHeartbeat();
+		}
+
+		public static void LogOn( string token )
+		{
+			Internal.LogOn(token);
 		}
 
 		/// <summary>
@@ -311,6 +335,11 @@ namespace Steamworks
 		/// </summary>
 		public static System.Net.IPAddress PublicIp => Internal.GetPublicIP();
 
+		public static SteamId CreateBot()
+		{
+			return Internal.CreateUnauthenticatedUserConnection();
+		}
+
 		/// <summary>
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
 		/// Enabled by default.
@@ -320,7 +349,6 @@ namespace Steamworks
 		{
 			set { Internal.SetAdvertiseServerActive( value ); }
 		}		
-		
 		
 		/// <summary>
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
@@ -387,17 +415,14 @@ namespace Steamworks
 		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
-		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
+		public static bool BeginAuthSession( IntPtr ticket, int length, SteamId steamid )
 		{
-			fixed ( byte* p = data )
-			{
-				var result = Internal.BeginAuthSession( (IntPtr)p, data.Length, steamid );
+			var result = Internal.BeginAuthSession( ticket, length, steamid );
 
-				if ( result == BeginAuthResult.OK )
-					return true;
+			if ( result == BeginAuthResult.OK )
+				return true;
 
-				return false;
-			}
+			return false;
 		}
 
 		/// <summary>
