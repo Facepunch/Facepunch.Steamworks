@@ -11,9 +11,8 @@ namespace Steamworks
 	{
 		internal static class Native
 		{
-			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
-			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamAPI_Init();
+			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_InitFlat", CallingConvention = CallingConvention.Cdecl )]
+			public static unsafe extern SteamAPIInitResult SteamAPI_Init(char* errMsg);
 
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Shutdown", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamAPI_Shutdown();
@@ -26,9 +25,12 @@ namespace Steamworks
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
 			
 		}
-		static internal bool Init()
+		static internal unsafe SteamAPIInitResult Init(out SteamErrMsg outErrMsg)
 		{
-			return Native.SteamAPI_Init();
+			var errMsg = new SteamErrMsg();
+			var result = Native.SteamAPI_Init(errMsg.Value);
+			outErrMsg = errMsg;
+			return result;
 		}
 		
 		static internal void Shutdown()

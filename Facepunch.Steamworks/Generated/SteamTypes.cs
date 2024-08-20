@@ -134,23 +134,71 @@ namespace Steamworks.Data
 		public int CompareTo( HSteamUser other ) => Value.CompareTo( other.Value );
 	}
 	
-	/*
-	internal struct SteamErrMsg : IEquatable<SteamErrMsg>, IComparable<SteamErrMsg>
+	
+	internal unsafe struct SteamErrMsg : IEquatable<SteamErrMsg>, IComparable<SteamErrMsg>
 	{
 		// Name: SteamErrMsg, Type: char [1024]
-		public fixed char[1024] Value;
+		public fixed char Value[1024];
+
+		public static implicit operator SteamErrMsg( char[] value )
+		{
+			var v = new SteamErrMsg();
+			for ( var i = 0; i < Math.Min( value.Length, 1024 ); ++i )
+				v.Value[i] = value[i];
+			return v;
+		}
+
+		public static implicit operator char[]( SteamErrMsg value )
+		{
+			var a = new char[1024];
+			for ( var i = 0; i < 1024; ++i )
+				a[i] = value.Value[i];
+
+			return a;
+		}
+
+		public override string ToString()
+		{
+			fixed ( char* c = Value )
+				return new string( c );
+		}
+
+		public override int GetHashCode()
+		{
+			fixed ( char* c = Value )
+			{
+				var hc = 1024;
+				for ( var i = 0; i < 1024; ++i )
+					hc = unchecked(hc * 314159 + i);
+				return hc;
+			}
+		}
+		public override bool Equals( object p ) => Equals( (SteamErrMsg) p );
+
+		public bool Equals( SteamErrMsg p )
+		{
+			fixed ( char* c = Value )
+			{
+				var s = new string(c);
+				var other = new string( p.Value );
+				return string.Equals( s, other );
+			}
+		}
 		
-		public static implicit operator SteamErrMsg( char [1024] value ) => new SteamErrMsg(){ Value = value };
-		public static implicit operator char [1024]( SteamErrMsg value ) => value.Value;
-		public override string ToString() => Value.ToString();
-		public override int GetHashCode() => Value.GetHashCode();
-		public override bool Equals( object p ) => this.Equals( (SteamErrMsg) p );
-		public bool Equals( SteamErrMsg p ) => p.Value == Value;
 		public static bool operator ==( SteamErrMsg a, SteamErrMsg b ) => a.Equals( b );
 		public static bool operator !=( SteamErrMsg a, SteamErrMsg b ) => !a.Equals( b );
-		public int CompareTo( SteamErrMsg other ) => Value.CompareTo( other.Value );
+
+		public int CompareTo( SteamErrMsg other )
+		{
+			fixed ( char* c = Value )
+			{
+				var s = new string(c);
+				var otherString = new string( other.Value );
+				return string.Compare( s, otherString, StringComparison.InvariantCulture);
+			}
+		}
 	}
-	*/
+	
 	
 	internal struct FriendsGroupID_t : IEquatable<FriendsGroupID_t>, IComparable<FriendsGroupID_t>
 	{
