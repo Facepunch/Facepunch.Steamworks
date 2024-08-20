@@ -461,6 +461,16 @@ enum EDurationControlOnlineState
 };
 
 
+enum EBetaBranchFlags
+{
+	k_EBetaBranch_None			= 0,
+	k_EBetaBranch_Default		= 1,	// this is the default branch ("public")
+	k_EBetaBranch_Available		= 2,	// this branch can be selected (available)
+	k_EBetaBranch_Private		= 4,	// this is a private branch (password protected)
+	k_EBetaBranch_Selected		= 8,	// this is the currently selected branch (active)
+	k_EBetaBranch_Installed		= 16,	// this is the currently installed branch (mounted)
+};
+
 #pragma pack( push, 1 )
 
 #define CSTEAMID_DEFINED

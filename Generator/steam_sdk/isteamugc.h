@@ -194,7 +194,7 @@ struct SteamUGCDetails_t
 	UGCHandle_t m_hFile;											// The handle of the primary file
 	UGCHandle_t m_hPreviewFile;										// The handle of the preview file
 	char m_pchFileName[k_cchFilenameMax];							// The cloud filename of the primary file
-	int32 m_nFileSize;												// Size of the primary file
+	int32 m_nFileSize;												// Size of the primary file (for legacy items which only support one file). This may not be accurate for non-legacy items which can be greater than 4gb in size.
 	int32 m_nPreviewFileSize;										// Size of the preview file
 	char m_rgchURL[k_cchPublishedFileURLMax];						// URL (for a video or a website)
 	// voting information
@@ -202,7 +202,8 @@ struct SteamUGCDetails_t
 	uint32 m_unVotesDown;											// number of votes down
 	float m_flScore;												// calculated score
 	// collection details
-	uint32 m_unNumChildren;							
+	uint32 m_unNumChildren;
+	uint64 m_ulTotalFilesSize;										// Total size of all files (non-legacy), excluding the preview file
 };
 
 //-----------------------------------------------------------------------------
@@ -248,6 +249,10 @@ public:
 	STEAM_FLAT_NAME( GetQueryFirstUGCKeyValueTag )
 	virtual bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint32 index, const char *pchKey, STEAM_OUT_STRING_COUNT(cchValueSize) char *pchValue, uint32 cchValueSize ) = 0;
 
+	// Some items can specify that they have a version that is valid for a range of game versions (Steam branch)
+	virtual uint32 GetNumSupportedGameVersions( UGCQueryHandle_t handle, uint32 index ) = 0;
+	virtual bool GetSupportedGameVersionData( UGCQueryHandle_t handle, uint32 index, uint32 versionIndex, STEAM_OUT_STRING_COUNT( cchGameBranchSize ) char *pchGameBranchMin, STEAM_OUT_STRING_COUNT( cchGameBranchSize ) char *pchGameBranchMax, uint32 cchGameBranchSize ) = 0;
+
 	virtual uint32 GetQueryUGCContentDescriptors( UGCQueryHandle_t handle, uint32 index, EUGCContentDescriptorID *pvecDescriptors, uint32 cMaxEntries ) = 0;
 	
 	// Release the request to free up memory, after retrieving results
@@ -267,6 +272,7 @@ public:
 	virtual bool SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint32 unDays ) = 0;
 	virtual bool SetLanguage( UGCQueryHandle_t handle, const char *pchLanguage ) = 0;
 	virtual bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint32 unMaxAgeSeconds ) = 0;
+	virtual bool SetAdminQuery( UGCUpdateHandle_t handle, bool bAdminQuery ) = 0; // admin queries return hidden items
 
 	// Options only for querying user UGC
 	virtual bool SetCloudFileNameFilter( UGCQueryHandle_t handle, const char *pMatchCloudFileName ) = 0;
@@ -308,6 +314,7 @@ public:
 	virtual bool RemoveItemPreview( UGCUpdateHandle_t handle, uint32 index ) = 0; // remove a preview by index starting at 0 (previews are sorted)
 	virtual bool AddContentDescriptor( UGCUpdateHandle_t handle, EUGCContentDescriptorID descid ) = 0;
 	virtual bool RemoveContentDescriptor( UGCUpdateHandle_t handle, EUGCContentDescriptorID descid ) = 0;
+	virtual bool SetRequiredGameVersions( UGCUpdateHandle_t handle, const char *pszGameBranchMin, const char *pszGameBranchMax ) = 0; // an empty string for either parameter means that it will match any version on that end of the range. This will only be applied if the actual content has been changed.
 
 	STEAM_CALL_RESULT( SubmitItemUpdateResult_t )
 	virtual SteamAPICall_t SubmitItemUpdate( UGCUpdateHandle_t handle, const char *pchChangeNote ) = 0; // commit update process started with StartItemUpdate()
@@ -389,7 +396,7 @@ public:
 	virtual uint32 GetUserContentDescriptorPreferences( EUGCContentDescriptorID *pvecDescriptors, uint32 cMaxEntries ) = 0;
 };
 
-#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION018"
+#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION020"
 
 // Global interface accessor
 inline ISteamUGC *SteamUGC();
@@ -457,6 +464,8 @@ struct ItemInstalled_t
 	enum { k_iCallback = k_iSteamUGCCallbacks + 5 };
 	AppId_t m_unAppID;
 	PublishedFileId_t m_nPublishedFileId;
+	UGCHandle_t m_hLegacyContent;
+	uint64 m_unManifestID;
 };
 
 
