@@ -107,7 +107,7 @@ namespace Generator
 					}
 					else
 					{
-						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
+						//throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
 					}
 				}
 			}

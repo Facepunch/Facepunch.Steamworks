@@ -420,6 +420,19 @@ namespace Steamworks
 	}
 	
 	//
+	// EBetaBranchFlags
+	//
+	internal enum BetaBranchFlags : int
+	{
+		None = 0,
+		Default = 1,
+		Available = 2,
+		Private = 4,
+		Selected = 8,
+		Installed = 16,
+	}
+	
+	//
 	// EGameSearchErrorCode_t
 	//
 	internal enum GameSearchErrorCode_t : int
@@ -2185,6 +2198,17 @@ namespace Steamworks
 	}
 	
 	//
+	// ETimelineEventClipPriority
+	//
+	internal enum TimelineEventClipPriority : int
+	{
+		Invalid = 0,
+		None = 1,
+		Standard = 2,
+		Featured = 3,
+	}
+	
+	//
 	// EParentalFeature
 	//
 	public enum ParentalFeature : int
@@ -2204,7 +2228,8 @@ namespace Steamworks
 		Test = 12,
 		SiteLicense = 13,
 		KioskMode_Deprecated = 14,
-		Max = 15,
+		BlockAlways = 15,
+		Max = 16,
 	}
 	
 	//
@@ -2361,6 +2386,7 @@ namespace Steamworks
 		SendRateMax = 11,
 		NagleTime = 12,
 		IP_AllowWithoutAuth = 23,
+		IPLocalHost_AllowWithoutAuth = 52,
 		MTU_PacketSize = 32,
 		MTU_DataSize = 33,
 		Unencrypted = 34,

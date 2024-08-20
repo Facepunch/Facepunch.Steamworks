@@ -2071,6 +2071,8 @@ namespace Steamworks.Data
 	{
 		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal ulong LegacyContent; // m_hLegacyContent UGCHandle_t
+		internal ulong ManifestID; // m_unManifestID uint64
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ItemInstalled_t) );

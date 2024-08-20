@@ -369,5 +369,44 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_GetNumBetas", CallingConvention = Platform.CC)]
+		private static extern int _GetNumBetas( IntPtr self, AppId unAppID, ref int pnAvailable, ref int pnPrivate );
+		
+		#endregion
+		internal int GetNumBetas( AppId unAppID, ref int pnAvailable, ref int pnPrivate )
+		{
+			var returnValue = _GetNumBetas( Self, unAppID, ref pnAvailable, ref pnPrivate );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_GetBetaInfo", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetBetaInfo( IntPtr self, AppId unAppID, int iBetaIndex, ref uint punFlags, ref uint punBuildID, IntPtr pchBetaName, int cchBetaName, IntPtr pchDescription, int cchDescription );
+		
+		#endregion
+		internal bool GetBetaInfo( AppId unAppID, int iBetaIndex, ref uint punFlags, ref uint punBuildID, out string pchBetaName, out string pchDescription )
+		{
+			using var mempchBetaName = Helpers.TakeMemory();
+			using var mempchDescription = Helpers.TakeMemory();
+			var returnValue = _GetBetaInfo( Self, unAppID, iBetaIndex, ref punFlags, ref punBuildID, mempchBetaName, (1024 * 32), mempchDescription, (1024 * 32) );
+			pchBetaName = Helpers.MemoryToString( mempchBetaName );
+			pchDescription = Helpers.MemoryToString( mempchDescription );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_SetActiveBeta", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SetActiveBeta( IntPtr self, AppId unAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchBetaName );
+		
+		#endregion
+		internal bool SetActiveBeta( AppId unAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchBetaName )
+		{
+			var returnValue = _SetActiveBeta( Self, unAppID, pchBetaName );
+			return returnValue;
+		}
+		
 	}
 }

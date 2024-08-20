@@ -156,6 +156,7 @@ namespace Steamworks.Data
 		internal uint VotesDown; // m_unVotesDown uint32
 		internal float Score; // m_flScore float
 		internal uint NumChildren; // m_unNumChildren uint32
+		internal ulong TotalFilesSize; // m_ulTotalFilesSize uint64
 		
 	}
 	
