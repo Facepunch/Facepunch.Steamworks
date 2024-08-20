@@ -41,6 +41,7 @@ namespace Steamworks.ServerList
 		/// </summary>
 		public List<ServerInfo> Unresponsive = new List<ServerInfo>();
 
+		public List<ServerInfo> Unqueried = new List<ServerInfo>();
 
 		public Base()
 		{
@@ -134,7 +135,7 @@ namespace Steamworks.ServerList
 			}
 		}
 
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			ReleaseQuery();
 		}
@@ -161,11 +162,17 @@ namespace Steamworks.ServerList
 		{
 			watchList.RemoveAll( x =>
 			{
-				var info = Internal.GetServerDetails( request, x );
-				if ( info.HadSuccessfulResponse )
+				// First check if the server has responded without allocating server info
+				bool hasResponded = Internal.HasServerResponded( request, x );
+				if ( hasResponded )
 				{
-					OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
-					return true;
+					// Now get all server info
+					var info = Internal.GetServerDetails( request, x );
+					if ( info.HadSuccessfulResponse )
+					{
+						OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
+						return true;
+					}
 				}
 
 				return false;
@@ -176,8 +183,10 @@ namespace Steamworks.ServerList
 		{
 			watchList.RemoveAll( x =>
 			{
-				var info = Internal.GetServerDetails( request, x );
-				OnServer( ServerInfo.From( info ), info.HadSuccessfulResponse );
+				var details = Internal.GetServerDetails( request, x );
+				var info = ServerInfo.From( details );
+				info.Ping = int.MaxValue;
+				Unqueried.Add( info );
 				return true;
 			} );
 		}

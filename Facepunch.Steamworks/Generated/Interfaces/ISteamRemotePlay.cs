@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal unsafe class ISteamRemotePlay : SteamInterface
+	internal unsafe partial class ISteamRemotePlay : SteamInterface
 	{
 		
 		internal ISteamRemotePlay( bool IsGameServer )
