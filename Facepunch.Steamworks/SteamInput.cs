@@ -88,7 +88,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Return an array of all origins mapped to the provided analog action
+		/// Return an array of all origins mapped to the provided analog action in the current action set
 		/// </summary>
 		/// <returns></returns>	
 		public static InputActionOrigin[] GetAnalogActionOrigins( Controller controller, string action )
@@ -98,6 +98,24 @@ namespace Steamworks
 			Internal.GetAnalogActionOrigins(
 				controller.Handle,
 				Internal.GetCurrentActionSet( controller.Handle ),
+				GetAnalogActionHandle( action ),
+				ref origins[0]
+			);
+			return origins;
+		}
+
+
+		/// <summary>
+		/// Return an array of all origins mapped to the provided analog action in the specified action set
+		/// </summary>
+		/// <returns></returns>	
+		public static InputActionOrigin[] GetAnalogActionOrigins( Controller controller, string actionSet,  string action )
+		{
+			InputActionOrigin[] origins = new InputActionOrigin[STEAM_INPUT_MAX_ORIGINS];
+
+			Internal.GetAnalogActionOrigins(
+				controller.Handle,
+				Internal.GetActionSetHandle(actionSet),
 				GetAnalogActionHandle( action ),
 				ref origins[0]
 			);
@@ -130,7 +148,7 @@ namespace Steamworks
 
 
 		/// <summary>
-		/// Return an array of all origins mapped to the provided digital action
+		/// Return an array of all origins mapped to the provided digital action in the current action set
 		/// </summary>
 		/// <returns></returns>	
 		public static InputActionOrigin[] GetDigitalActionOrigins( Controller controller, string action )
@@ -140,6 +158,24 @@ namespace Steamworks
 			Internal.GetDigitalActionOrigins(
 				controller.Handle,
 				Internal.GetCurrentActionSet( controller.Handle ),
+				GetDigitalActionHandle( action ),
+				ref origins[0]
+			);
+			return origins;
+		}
+
+
+		/// <summary>
+		/// Return an array of all origins mapped to the provided action set and digital action
+		/// </summary>
+		/// <returns></returns>	
+		public static InputActionOrigin[] GetDigitalActionOrigins( Controller controller, string actionSet, string action )
+		{
+			InputActionOrigin[] origins = new InputActionOrigin[STEAM_INPUT_MAX_ORIGINS];
+
+			Internal.GetDigitalActionOrigins(
+				controller.Handle,
+				Internal.GetActionSetHandle( actionSet ),
 				GetDigitalActionHandle( action ),
 				ref origins[0]
 			);
