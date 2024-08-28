@@ -73,11 +73,11 @@ namespace Steamworks
 		/// <param name="ct">Allows to send a message to cancel the download anywhere during the process.</param>
 		/// <param name="milisecondsUpdateDelay">How often to call the progress function.</param>
 		/// <returns><see langword="true"/> if downloaded and installed properly.</returns>
-		public static async Task<bool> DownloadAsync( AppId appId, PublishedFileId fileId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
+		public static async Task<bool> DownloadAsync( AppId appId, PublishedFileId fileId, Action<float, long, long> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
 			var item = new Steamworks.Ugc.Item( fileId );
 
-			progress?.Invoke( 0.0f );
+			progress?.Invoke( 0.0f , 0, 0);
 
 			Result result = Result.None;
 
@@ -102,9 +102,9 @@ namespace Steamworks
 						break;
 
 					if ( !item.IsDownloading )
-						progress?.Invoke( 0.1f );
+						progress?.Invoke( 0.1f , 0, 0);
 					else
-						progress?.Invoke( 0.1f + item.DownloadAmount * 0.85f );
+						progress?.Invoke( 0.1f + item.DownloadAmount * 0.85f , item.DownloadBytesDownloaded, item.DownloadBytesTotal);
 
 					if ( !item.IsDownloading && item.IsInstalled && result != Result.None )
 						break;
@@ -123,7 +123,7 @@ namespace Steamworks
 				SteamUGC.OnDownloadItemResult -= onDownloadStarted;
 			}
 
-			progress?.Invoke( 1.0f );
+			progress?.Invoke( 1.0f, item.DownloadBytesTotal, item.DownloadBytesTotal);
 			return item.IsInstalled;
 		}
 

@@ -283,7 +283,7 @@ namespace Steamworks.Ugc
 		/// If CancellationToken is default then there is 60 seconds timeout
 		/// Progress will be set to 0-1
 		/// </summary>
-		public async Task<bool> DownloadAsync( AppId appId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
+		public async Task<bool> DownloadAsync( AppId appId, Action<float, long, long> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
 			return await SteamUGC.DownloadAsync( appId, Id, progress, milisecondsUpdateDelay, ct );
 		}
