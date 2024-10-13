@@ -17,7 +17,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerResponded", CallingConvention = Platform.CC)]
-		private static extern void _ServerResponded( IntPtr self, HServerListRequest hRequest, int iServer );
+		internal static extern void _ServerResponded( IntPtr self, HServerListRequest hRequest, int iServer );
 		
 		#endregion
 		internal void ServerResponded( HServerListRequest hRequest, int iServer )
@@ -27,7 +27,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerFailedToRespond", CallingConvention = Platform.CC)]
-		private static extern void _ServerFailedToRespond( IntPtr self, HServerListRequest hRequest, int iServer );
+		internal static extern void _ServerFailedToRespond( IntPtr self, HServerListRequest hRequest, int iServer );
 		
 		#endregion
 		internal void ServerFailedToRespond( HServerListRequest hRequest, int iServer )
@@ -37,7 +37,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_RefreshComplete", CallingConvention = Platform.CC)]
-		private static extern void _RefreshComplete( IntPtr self, HServerListRequest hRequest, MatchMakingServerResponse response );
+		internal static extern void _RefreshComplete( IntPtr self, HServerListRequest hRequest, MatchMakingServerResponse response );
 		
 		#endregion
 		internal void RefreshComplete( HServerListRequest hRequest, MatchMakingServerResponse response )

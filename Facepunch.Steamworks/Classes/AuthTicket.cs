@@ -27,4 +27,33 @@ namespace Steamworks
 			Cancel();
 		}
 	}
+
+	public struct NativeAuthTicket : IDisposable
+	{
+		public IntPtr Data;
+		
+		public uint Handle;
+		
+		public uint Length;
+		
+		/// <summary>
+		/// Cancels a ticket. 
+		/// You should cancel your ticket when you close the game or leave a server.
+		/// </summary>
+		public void Cancel()
+		{
+			if ( Handle != 0 )
+			{
+				SteamUser.Internal.CancelAuthTicket( Handle );
+			}
+
+			Handle = 0;
+			Data = IntPtr.Zero;
+		}
+		
+		public void Dispose()
+		{
+			Cancel();
+		}
+	}
 }

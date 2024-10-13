@@ -8,19 +8,56 @@ namespace Steamworks.Data
 {
 	internal static class Defines
 	{
+		public const string STEAMAPPS_INTERFACE_VERSION = "STEAMAPPS_INTERFACE_VERSION008";
+		public const string STEAMAPPTICKET_INTERFACE_VERSION = "STEAMAPPTICKET_INTERFACE_VERSION001";
+		public const string STEAMCLIENT_INTERFACE_VERSION = "SteamClient021";
+		public const string STEAMFRIENDS_INTERFACE_VERSION = "SteamFriends017";
+		public const string STEAMGAMECOORDINATOR_INTERFACE_VERSION = "SteamGameCoordinator001";
+		public const string STEAMGAMESERVER_INTERFACE_VERSION = "SteamGameServer015";
+		public const string STEAMGAMESERVERSTATS_INTERFACE_VERSION = "SteamGameServerStats001";
+		public const string STEAMHTMLSURFACE_INTERFACE_VERSION = "STEAMHTMLSURFACE_INTERFACE_VERSION_005";
+		public const string STEAMHTTP_INTERFACE_VERSION = "STEAMHTTP_INTERFACE_VERSION003";
+		public const string STEAMINPUT_INTERFACE_VERSION = "SteamInput006";
+		public const string STEAMINVENTORY_INTERFACE_VERSION = "STEAMINVENTORY_INTERFACE_V003";
+		public const string STEAMMATCHMAKING_INTERFACE_VERSION = "SteamMatchMaking009";
+		public const string STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION = "SteamMatchMakingServers002";
+		public const string STEAMGAMESEARCH_INTERFACE_VERSION = "SteamMatchGameSearch001";
+		public const string STEAMPARTIES_INTERFACE_VERSION = "SteamParties002";
+		public const string STEAMMUSIC_INTERFACE_VERSION = "STEAMMUSIC_INTERFACE_VERSION001";
+		public const string STEAMMUSICREMOTE_INTERFACE_VERSION = "STEAMMUSICREMOTE_INTERFACE_VERSION001";
+		public const string STEAMNETWORKING_INTERFACE_VERSION = "SteamNetworking006";
+		public const string STEAMNETWORKINGMESSAGES_INTERFACE_VERSION = "SteamNetworkingMessages002";
+		// Silence some warnings
+		public const string STEAMNETWORKINGSOCKETS_INTERFACE_VERSION = "SteamNetworkingSockets012";
+		// Silence some warnings
+		public const string STEAMNETWORKINGUTILS_INTERFACE_VERSION = "SteamNetworkingUtils004";
+		public const string STEAMPARENTALSETTINGS_INTERFACE_VERSION = "STEAMPARENTALSETTINGS_INTERFACE_VERSION001";
+		public const string STEAMREMOTEPLAY_INTERFACE_VERSION = "STEAMREMOTEPLAY_INTERFACE_VERSION002";
+		public const string STEAMREMOTESTORAGE_INTERFACE_VERSION = "STEAMREMOTESTORAGE_INTERFACE_VERSION016";
+		public const string STEAMSCREENSHOTS_INTERFACE_VERSION = "STEAMSCREENSHOTS_INTERFACE_VERSION003";
+		public const string STEAMTIMELINE_INTERFACE_VERSION = "STEAMTIMELINE_INTERFACE_V001";
+		public const string STEAMUGC_INTERFACE_VERSION = "STEAMUGC_INTERFACE_VERSION020";
+		public const string STEAMUSER_INTERFACE_VERSION = "SteamUser023";
+		public const string STEAMUSERSTATS_INTERFACE_VERSION = "STEAMUSERSTATS_INTERFACE_VERSION012";
+		public const string STEAMUTILS_INTERFACE_VERSION = "SteamUtils010";
+		public const string STEAMVIDEO_INTERFACE_VERSION = "STEAMVIDEO_INTERFACE_V007";
 		internal static readonly AppId k_uAppIdInvalid = 0x0;
 		internal static readonly DepotId_t k_uDepotIdInvalid = 0x0;
 		internal static readonly SteamAPICall_t k_uAPICallInvalid = 0x0;
+		internal static readonly AccountID_t k_uAccountIdInvalid = 0;
 		internal static readonly PartyBeaconID_t k_ulPartyBeaconIdInvalid = 0;
 		internal static readonly HAuthTicket k_HAuthTicketInvalid = 0;
 		internal static readonly uint k_unSteamAccountIDMask = 0xFFFFFFFF;
 		internal static readonly uint k_unSteamAccountInstanceMask = 0x000FFFFF;
 		internal static readonly uint k_unSteamUserDefaultInstance = 1;
 		internal static readonly int k_cchGameExtraInfoMax = 64;
+		internal static readonly int k_cchMaxSteamErrMsg = 1024;
 		internal static readonly int k_cchMaxFriendsGroupName = 64;
 		internal static readonly int k_cFriendsGroupLimit = 100;
 		internal static readonly FriendsGroupID_t k_FriendsGroupID_Invalid = - 1;
 		internal static readonly int k_cEnumerateFollowersMax = 50;
+		internal static readonly ushort k_usFriendGameInfoQueryPort_NotInitialized = 0xFFFF;
+		internal static readonly ushort k_usFriendGameInfoQueryPort_Error = 0xFFFE;
 		internal static readonly uint k_cubChatMetadataMax = 8192;
 		internal static readonly int k_cbMaxGameServerGameDir = 32;
 		internal static readonly int k_cbMaxGameServerMapName = 32;
@@ -58,6 +95,8 @@ namespace Steamworks.Data
 		internal static readonly InventoryItemId k_SteamItemInstanceIDInvalid = ~default(ulong);
 		internal static readonly SteamInventoryResult_t k_SteamInventoryResultInvalid = - 1;
 		internal static readonly SteamInventoryUpdateHandle_t k_SteamInventoryUpdateHandleInvalid = 0xffffffffffffffff;
+		internal static readonly uint k_unMaxTimelinePriority = 1000;
+		internal static readonly float k_flMaxTimelineEventDuration = 600.0f;
 		internal static readonly Connection k_HSteamNetConnection_Invalid = 0;
 		internal static readonly Socket k_HSteamListenSocket_Invalid = 0;
 		internal static readonly HSteamNetPollGroup k_HSteamNetPollGroup_Invalid = 0;

@@ -13,14 +13,14 @@ namespace Generator
 
 		static void Main( string[] args )
         {
-            var content = System.IO.File.ReadAllText( "steam_sdk/steam_api.json" );
+            var content = System.IO.File.ReadAllText( "../../../steam_sdk/steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
 
 			Definitions = def;
 
 			var generator = new CodeWriter( def );
 
-            generator.ToFolder( "../Facepunch.Steamworks/Generated/" );
+            generator.ToFolder( "../../../../Facepunch.Steamworks/Generated/" );
         }
     }
 }

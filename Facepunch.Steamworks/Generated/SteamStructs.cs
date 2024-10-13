@@ -106,30 +106,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct InputMotionDataV2_t
-	{
-		internal float DriftCorrectedQuatX; // driftCorrectedQuatX float
-		internal float DriftCorrectedQuatY; // driftCorrectedQuatY float
-		internal float DriftCorrectedQuatZ; // driftCorrectedQuatZ float
-		internal float DriftCorrectedQuatW; // driftCorrectedQuatW float
-		internal float SensorFusionQuatX; // sensorFusionQuatX float
-		internal float SensorFusionQuatY; // sensorFusionQuatY float
-		internal float SensorFusionQuatZ; // sensorFusionQuatZ float
-		internal float SensorFusionQuatW; // sensorFusionQuatW float
-		internal float DeferredSensorFusionQuatX; // deferredSensorFusionQuatX float
-		internal float DeferredSensorFusionQuatY; // deferredSensorFusionQuatY float
-		internal float DeferredSensorFusionQuatZ; // deferredSensorFusionQuatZ float
-		internal float DeferredSensorFusionQuatW; // deferredSensorFusionQuatW float
-		internal float GravityX; // gravityX float
-		internal float GravityY; // gravityY float
-		internal float GravityZ; // gravityZ float
-		internal float DegreesPerSecondX; // degreesPerSecondX float
-		internal float DegreesPerSecondY; // degreesPerSecondY float
-		internal float DegreesPerSecondZ; // degreesPerSecondZ float
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInputActionEvent_t
 	{
 		internal ulong ControllerHandle; // controllerHandle InputHandle_t
@@ -180,6 +156,7 @@ namespace Steamworks.Data
 		internal uint VotesDown; // m_unVotesDown uint32
 		internal float Score; // m_flScore float
 		internal uint NumChildren; // m_unNumChildren uint32
+		internal ulong TotalFilesSize; // m_ulTotalFilesSize uint64
 		
 	}
 	

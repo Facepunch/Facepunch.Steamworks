@@ -11,6 +11,10 @@ namespace Steamworks
 	public class SteamNetworkingSockets : SteamSharedClass<SteamNetworkingSockets>
 	{
 		internal static ISteamNetworkingSockets Internal => Interface as ISteamNetworkingSockets;
+		
+		internal static ISteamNetworkingSockets ServerInternal => InterfaceServer as ISteamNetworkingSockets;
+		
+		internal static ISteamNetworkingSockets ClientInternal => InterfaceClient as ISteamNetworkingSockets;
 
 		/// <summary>
 		/// Get the identity assigned to this interface.
@@ -37,6 +41,8 @@ namespace Steamworks
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents( server );
+
+			OnConnectionStatusChanged = null;
 			return true;
 		}
 	
@@ -274,6 +280,145 @@ namespace Steamworks
 			return t;
 		}
 
+		public static Socket CreateNormalSocket_Server( NetAddress netAddress )
+		{
+			var options = Array.Empty<NetKeyValue>();
+
+			return ServerInternal.CreateListenSocketIP( ref netAddress, options.Length, options );
+		}
+
+		public static Socket CreateRelaySocket_Server( int virtualPort = 0 )
+		{
+			var options = Array.Empty<NetKeyValue>();
+
+			return ServerInternal.CreateListenSocketP2P( virtualPort, options.Length, options );
+		}
+
+		public static Socket CreateNormalSocket_Client( NetAddress netAddress )
+		{
+			var options = Array.Empty<NetKeyValue>();
+
+			return ClientInternal.CreateListenSocketIP( ref netAddress, options.Length, options );
+		}
+
+		public static Socket CreateRelaySocket_Client( int virtualPort = 0 )
+		{
+			var options = Array.Empty<NetKeyValue>();
+
+			return ClientInternal.CreateListenSocketP2P( virtualPort, options.Length, options );
+		}
+
+		public static bool CloseListenSocket_Server( Socket socket )
+		{
+			return ServerInternal.CloseListenSocket( socket );
+		}
+		
+		public static bool CloseListenSocket_Client( Socket socket )
+		{
+			return ClientInternal.CloseListenSocket( socket );
+		}
+
+		public static Connection ConnectNormal_Client( NetAddress netAddress )
+		{
+			var options = Array.Empty<NetKeyValue>();
+			
+			return ClientInternal.ConnectByIPAddress( ref netAddress, options.Length, options  );
+		}
+
+		public static Connection ConnectRelay_Client( NetIdentity netIdentity, int virtualPort )
+		{
+			var options = Array.Empty<NetKeyValue>();
+			
+			return ClientInternal.ConnectP2P( ref netIdentity, virtualPort, options.Length, options  );
+		}
+
+		public static bool CloseConnection_Server( Connection connection, bool linger = false, int reasonCode = 0, string debugString = "Closing Connection" )
+		{
+			return ServerInternal.CloseConnection( connection, reasonCode, debugString, linger );
+		}
+
+		public static bool CloseConnection_Client( Connection connection, bool linger = false, int reasonCode = 0, string debugString = "Closing Connection" )
+		{
+			return ClientInternal.CloseConnection( connection, reasonCode, debugString, linger );
+		}
+		
+		/// <returns><see cref="Result"/></returns>
+		public static int AcceptConnection_Server( Connection connection )
+		{
+			return (int)ServerInternal.AcceptConnection( connection );
+		}
+
+		/// <returns><see cref="Result"/></returns>
+		public static int AcceptConnection_Client( Connection connection )
+		{
+			return (int)ClientInternal.AcceptConnection( connection );
+		}
+
+		public static bool SetConnectionPollGroup_Server( Connection connection, HSteamNetPollGroup pollGroup )
+		{
+			return ServerInternal.SetConnectionPollGroup( connection, pollGroup );
+		}
+
+		public static bool SetConnectionPollGroup_Client( Connection connection, HSteamNetPollGroup pollGroup )
+		{
+			return ClientInternal.SetConnectionPollGroup( connection, pollGroup );
+		}
+
+		public static int ReceiveMessagesOnPollGroup_Server( HSteamNetPollGroup pollGroup, IntPtr buffer, int maxMessages )
+		{
+			return ServerInternal.ReceiveMessagesOnPollGroup( pollGroup, buffer, maxMessages );
+		}
+
+		public static int ReceiveMessagesOnPollGroup_Client( HSteamNetPollGroup pollGroup, IntPtr buffer, int maxMessages )
+		{
+			return ClientInternal.ReceiveMessagesOnPollGroup( pollGroup, buffer, maxMessages );
+		}
+
+		public static HSteamNetPollGroup CreatePollGroup_Server()
+		{
+			return ServerInternal.CreatePollGroup();
+		}
+
+		public static HSteamNetPollGroup CreatePollGroup_Client()
+		{
+			return ClientInternal.CreatePollGroup();
+		}
+
+		public static bool DestroyPollGroup_Server( HSteamNetPollGroup pollGroup )
+		{
+			return ServerInternal.DestroyPollGroup( pollGroup );
+		}
+
+		public static bool DestroyPollGroup_Client( HSteamNetPollGroup pollGroup )
+		{
+			return ClientInternal.DestroyPollGroup( pollGroup );
+		}
+
+		public static unsafe void SendMessages_Server( int messageCount, NetMsg** netMsg, long* numberMessagesResult )
+		{
+			ServerInternal.SendMessages( messageCount, netMsg, numberMessagesResult );
+		}
+
+		public static unsafe void SendMessages_Client( int messageCount, NetMsg** netMsg, long* numberMessagesResult )
+		{
+			ClientInternal.SendMessages( messageCount, netMsg, numberMessagesResult );
+		}
+
+		public static bool GetConnectionName( Connection hPeer, IntPtr pszName, int nMaxLen )
+		{
+			return ISteamNetworkingSockets._GetConnectionName( Internal.Self, hPeer, pszName, nMaxLen );
+		}
+
+		public static  int ReceiveMessagesOnConnection_Server( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )
+		{
+			return ServerInternal.ReceiveMessagesOnConnection( hConn, ppOutMessages, nMaxMessages );
+		}
+
+		public static  int ReceiveMessagesOnConnection_Client( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )
+		{
+			return ClientInternal.ReceiveMessagesOnConnection( hConn, ppOutMessages, nMaxMessages );
+		}
+		
 		/// <summary>
 		/// Begin asynchronous process of allocating a fake IPv4 address that other
 		/// peers can use to contact us via P2P. IP addresses returned by this

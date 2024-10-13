@@ -327,9 +327,20 @@ namespace Steamworks
 				return new AuthTicket()
 				{
 					Data = data.Take( (int)ticketLength ).ToArray(),
-					Handle = ticket
+					Handle = ticket,
 				};
 			}
+		}
+
+		public static NativeAuthTicket GetNativeAuthSessionTicket( NetIdentity netIdentity, IntPtr ptr, int length )
+		{
+			uint ticketLength = 0 ;
+			uint ticket = Internal.GetAuthSessionTicket( ptr, length, ref ticketLength, ref netIdentity );
+
+			if ( ticket == 0 )
+				return default;
+
+			return new NativeAuthTicket { Data = ptr, Handle = ticket, Length = ticketLength, };
 		}
 
 		/// <summary>
