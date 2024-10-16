@@ -581,5 +581,14 @@ namespace Steamworks
 
 			return new DurationControl { _inner = response.Value };
 		}
+
+		/// <summary>
+		/// Get the local storage folder for current Steam account to write application data, e.g. save games, configs etc.
+		/// </summary>
+		public static string GetUserDataFolder()
+		{
+			Internal.GetUserDataFolder(out var pchBuffer);
+			return pchBuffer;
+		}
 	}
 }
