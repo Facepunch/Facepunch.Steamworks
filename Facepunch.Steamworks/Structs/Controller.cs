@@ -47,6 +47,61 @@ namespace Steamworks
 			return SteamInput.Internal.GetAnalogActionData( Handle, SteamInput.GetAnalogActionHandle( actionName ) );
 		}
 
+		/// <summary>
+		/// Trigger a vibration event on supported controllers.
+		/// </summary>
+		/// <remarks>
+		/// <para>This API call will be ignored for incompatible controller models.</para>
+		/// <para>This generates the traditional "rumble" vibration effect.</para>
+		/// </remarks>
+		/// <param name="leftSpeed">The intensity value for the left rumble motor.</param>
+		/// <param name="rightSpeed">The intensity value of the right rumble motor.</param>
+		public void TriggerVibration( ushort leftSpeed, ushort rightSpeed )
+		{
+			SteamInput.Internal.TriggerVibration( Handle, leftSpeed, rightSpeed );
+		}
+
+		/// <summary>
+		/// Trigger a vibration event on supported controllers, including impulse trigger for Xbox One controllers.
+		/// <para>This API call will be ignored for incompatible controller models.</para>
+		/// <para>This generates the traditional "rumble" vibration effect.</para>
+		/// </summary>
+		/// <param name="leftSpeed">The intensity value for the left rumble motor.</param>
+		/// <param name="rightSpeed">The intensity value of the right rumble motor.</param>
+		/// <param name="leftTriggerSpeed">The intensity value of the Xbox One left trigger rumble</param>
+		/// <param name="rightTriggerSpeed">The intensity value of the Xbox One right trigger rumble.</param>
+		public void TriggerVibrationExtended( ushort leftSpeed, ushort rightSpeed, ushort leftTriggerSpeed, ushort rightTriggerSpeed )
+		{
+			SteamInput.Internal.TriggerVibrationExtended( Handle, leftSpeed, rightSpeed, leftTriggerSpeed, rightTriggerSpeed );
+		}
+
+		/// <summary>
+		/// Set the controller LED color on supported controllers.
+		/// </summary>
+		/// <param name="red">The red component of the color to set (0-255).</param>
+		/// <param name="green">The green component of the color to set (0-255).</param>
+		/// <param name="blue">The blue component of the color to set (0-255).</param>
+		public void SetLEDColor( byte red, byte green, byte blue )
+		{
+			SteamInput.Internal.SetLEDColor( Handle, red, green, blue, (uint)SteamControllerLEDFlag.SetColor );
+		}
+
+		/// <summary>
+		/// Set the controller LED color on supported controllers.
+		/// </summary>
+		/// <param name="color">Color to set the LED</param>
+		public void SetLEDColor( Color color )
+		{
+			SteamInput.Internal.SetLEDColor( Handle, color.r, color.g, color.b, (uint)SteamControllerLEDFlag.SetColor );
+		}
+
+		/// <summary>
+		/// Restore the controller LED color to default (out-of-game) settings
+		/// </summary>
+		public void RestoreUserLEDColor()
+		{
+			SteamInput.Internal.SetLEDColor( Handle, 0, 0, 0, (uint)SteamControllerLEDFlag.RestoreUserDefault );
+		}
 
 		public override string ToString() => $"{InputType}.{Handle.Value}";
 
