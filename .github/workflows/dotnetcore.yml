@@ -8,9 +8,9 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4.2.2
     - name: Setup dotnet 6.0.x
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4.1.0
       with:
           dotnet-version: '6.0.x'
           include-prerelease: true
@@ -36,7 +36,7 @@ jobs:
     - name: Build Posix Release
       run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj --configuration Release
 
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4.4.3
       with:
         name: Compiled Files
         path: Facepunch.Steamworks/bin
