@@ -9,6 +9,7 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamParentalSettings : SteamInterface
 	{
+		public const string Version = "STEAMPARENTALSETTINGS_INTERFACE_VERSION001";
 		
 		internal ISteamParentalSettings( bool IsGameServer )
 		{

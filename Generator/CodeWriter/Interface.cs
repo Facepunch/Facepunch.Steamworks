@@ -25,7 +25,12 @@ namespace Generator
 			{
 				StartBlock( $"internal unsafe partial class {iface.Name} : SteamInterface" );
 				{
-					WriteLine();
+					if ( !string.IsNullOrWhiteSpace( iface.VersionString ) )
+					{
+						WriteLine($"public const string Version = \"{iface.VersionString}\";");
+						WriteLine();
+					}
+					
 					StartBlock( $"internal {iface.Name}( bool IsGameServer )" );
 					{
 						WriteLine( $"SetupInterface( IsGameServer );" );
@@ -87,31 +92,7 @@ namespace Generator
 			if ( func.Params == null )
 				func.Params = new SteamApiDefinition.Interface.Method.Param[0];
 
-			var args = func.Params.Select( x =>
-			{
-				var bt = BaseType.Parse( x.ParamType, x.ParamName );
-				bt.Func = func.Name;
-				return bt;
-			} ).ToArray();
-
-			for( int i=0; i<args.Length; i++ )
-			{
-				if ( args[i] is FetchStringType )
-				{
-					if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
-					{
-						if ( string.IsNullOrEmpty(  args[i + 1].Ref ) )
-						{
-							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
-						}
-					}
-					else
-					{
-						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
-					}
-				}
-			}
-
+			var args = ProcessArgs( func );
 			var argstr = string.Join( ", ", args.Where( x => !x.ShouldSkipAsArgument ).Select( x => x.AsArgument() ) ); ;
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsNativeArgument() ) );
 
@@ -153,6 +134,10 @@ namespace Generator
 					if ( arg is FetchStringType sb )
 					{
 						WriteLine( $"using var mem{sb.VarName} = Helpers.TakeMemory();" );
+					}
+					else if ( arg is LiteralType literal && literal.IsOutValue )
+					{
+						WriteLine( literal.OutVarDeclaration );
 					}
 				}
 

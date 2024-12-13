@@ -9,6 +9,7 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamScreenshots : SteamInterface
 	{
+		public const string Version = "STEAMSCREENSHOTS_INTERFACE_VERSION003";
 		
 		internal ISteamScreenshots( bool IsGameServer )
 		{

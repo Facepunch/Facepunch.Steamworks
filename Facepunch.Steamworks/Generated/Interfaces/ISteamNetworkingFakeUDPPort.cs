@@ -9,7 +9,6 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamNetworkingFakeUDPPort : SteamInterface
 	{
-		
 		internal ISteamNetworkingFakeUDPPort( bool IsGameServer )
 		{
 			SetupInterface( IsGameServer );

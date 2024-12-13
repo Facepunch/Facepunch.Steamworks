@@ -9,6 +9,7 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamRemoteStorage : SteamInterface
 	{
+		public const string Version = "STEAMREMOTESTORAGE_INTERFACE_VERSION016";
 		
 		internal ISteamRemoteStorage( bool IsGameServer )
 		{

@@ -13,7 +13,7 @@ internal class BaseType
 
 	public string Func;
 
-	public static BaseType Parse( string type, string varname = null, string callresult = null )
+	public static BaseType Parse( string type, string varname = null, string callresult = null, string bufferSizeName = null )
 	{
 		type = Cleanup.ConvertType( type );
 
@@ -24,7 +24,7 @@ internal class BaseType
 
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
 		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
-		if ( type == "char *" ) return new FetchStringType { NativeType = type, VarName = varname };
+		if ( type == "char *" ) return new FetchStringType { NativeType = type, VarName = varname, BufferSizeParamName = bufferSizeName };
 
 		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*', '&' );
 

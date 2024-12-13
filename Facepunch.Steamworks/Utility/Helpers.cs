@@ -99,6 +99,18 @@ namespace Steamworks
 
 			return UTF8Encoding.UTF8.GetString( (byte*)ptr, len );
 		}
+		
+		internal static string BuildVersionString( params string[] interfaceVersions )
+		{
+			var sb = new StringBuilder();
+			foreach ( var version in interfaceVersions )
+			{
+				sb.Append( version ).Append( '\0' );
+			}
+
+			sb.Append( '\0' );
+			return sb.ToString();
+		}
 	}
 
 	internal class MonoPInvokeCallbackAttribute : Attribute

@@ -100,7 +100,7 @@ namespace Steamworks
 
 			uint _ = (uint)Helpers.MemoryBufferSize;
 
-			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, out var vl, ref _ ) )
+			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, out var vl ) )
 				return null;
 				
 			if (name == null) //return keys string

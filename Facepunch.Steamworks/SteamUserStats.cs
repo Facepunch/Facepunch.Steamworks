@@ -130,14 +130,13 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Asynchronously request the user's current stats and achievements from the server.
-		/// You must always call this first to get the initial status of stats and achievements.
-		/// Only after the resulting callback comes back can you start calling the rest of the stats 
-		/// and achievement functions for the current user.
+		/// This call is no longer required as it is managed by the Steam client. The game stats and achievements
+		/// will be synchronized with Steam before the game process begins.
 		/// </summary>
+		[Obsolete( "No longer required. Automatically handled by the Steam client.", false )]
 		public static bool RequestCurrentStats()
 		{
-			return Internal.RequestCurrentStats();
+			return true;
 		}
 
 		/// <summary>

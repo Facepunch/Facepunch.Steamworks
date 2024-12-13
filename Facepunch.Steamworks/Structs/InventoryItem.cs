@@ -100,18 +100,14 @@ namespace Steamworks
 
 		internal static Dictionary<string, string> GetProperties( SteamInventoryResult_t result, int index )
 		{
-			var strlen = (uint) Helpers.MemoryBufferSize;
-
-			if ( !SteamInventory.Internal.GetResultItemProperty( result, (uint)index, null, out var propNames, ref strlen ) )
+			if ( !SteamInventory.Internal.GetResultItemProperty( result, (uint)index, null, out var propNames ) )
 				return null;
 
 			var props = new Dictionary<string, string>();
 
 			foreach ( var propertyName in propNames.Split( ',' ) )
 			{
-				strlen = (uint)Helpers.MemoryBufferSize;
-
-				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, out var strVal, ref strlen ) )
+				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, out var strVal ) )
 				{
 					props.Add( propertyName, strVal );
 				}

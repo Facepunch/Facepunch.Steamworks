@@ -23,9 +23,31 @@ namespace Steamworks
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
-			if ( !SteamAPI.Init() )
+			var interfaceVersions = Helpers.BuildVersionString(
+				ISteamApps.Version,
+				ISteamFriends.Version,
+				ISteamInput.Version,
+				ISteamInventory.Version,
+				ISteamMatchmaking.Version,
+				ISteamMatchmakingServers.Version,
+				ISteamMusic.Version,
+				ISteamNetworking.Version,
+				ISteamNetworkingSockets.Version,
+				ISteamNetworkingUtils.Version,
+				ISteamParentalSettings.Version,
+				ISteamParties.Version,
+				ISteamRemoteStorage.Version,
+				ISteamScreenshots.Version,
+				ISteamUGC.Version,
+				ISteamUser.Version,
+				ISteamUserStats.Version,
+				ISteamUtils.Version,
+				ISteamVideo.Version,
+				ISteamRemotePlay.Version );
+			var result = SteamAPI.Init( interfaceVersions, out var error );
+			if ( result != SteamAPIInitResult.OK )
 			{
-				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, App ID is unreleased, Don't own App ID." );
+				throw new System.Exception( $"SteamApi_Init failed with {result} - error: {error}" );
 			}
 
 			AppId = appid;

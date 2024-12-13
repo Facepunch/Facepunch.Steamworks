@@ -27,6 +27,9 @@ namespace Generator
                 {
                     public string ParamType { get; set; }
                     public string ParamName { get; set; }
+                    
+                    [JsonProperty( PropertyName = "out_string_count" )]
+                    public string OutStringCount { get; set; }
                 }
 
                 public Param[] Params { get; set; }

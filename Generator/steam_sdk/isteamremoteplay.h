@@ -19,6 +19,7 @@ enum ESteamDeviceFormFactor
 	k_ESteamDeviceFormFactorTablet		= 2,
 	k_ESteamDeviceFormFactorComputer	= 3,
 	k_ESteamDeviceFormFactorTV			= 4,
+	k_ESteamDeviceFormFactorVRHeadset	= 5,
 };
 
 // Steam Remote Play session ID
@@ -51,12 +52,17 @@ public:
 	// This is set to 0x0 if the resolution is not available
 	virtual bool BGetSessionClientResolution( RemotePlaySessionID_t unSessionID, int *pnResolutionX, int *pnResolutionY ) = 0;
 
+	// Start Remote Play Together and optionally show the UI in the overlay
+	// This returns false if Remote Play Together can't be started or your game is not configured for Remote Play Together
+	virtual bool BStartRemotePlayTogether( bool bShowOverlay = true ) = 0;
+
 	// Invite a friend to Remote Play Together, or create a guest invite if steamIDFriend is empty
-	// This returns false if the invite can't be sent
+	// This will automatically start Remote Play Together if it hasn't already been started
+	// This returns false if the invite can't be sent or your game is not configured for Remote Play Together
 	virtual bool BSendRemotePlayTogetherInvite( CSteamID steamIDFriend ) = 0;
 };
 
-#define STEAMREMOTEPLAY_INTERFACE_VERSION "STEAMREMOTEPLAY_INTERFACE_VERSION001"
+#define STEAMREMOTEPLAY_INTERFACE_VERSION "STEAMREMOTEPLAY_INTERFACE_VERSION002"
 
 // Global interface accessor
 inline ISteamRemotePlay *SteamRemotePlay();

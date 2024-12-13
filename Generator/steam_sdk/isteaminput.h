@@ -482,6 +482,11 @@ enum EInputActionOrigin
 	k_EInputActionOrigin_SteamDeck_Reserved19,
 	k_EInputActionOrigin_SteamDeck_Reserved20,
 
+	k_EInputActionOrigin_Horipad_M1,
+	k_EInputActionOrigin_Horipad_M2,
+	k_EInputActionOrigin_Horipad_L4,
+	k_EInputActionOrigin_Horipad_R4,
+
 	k_EInputActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EInputActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
 };
@@ -643,73 +648,38 @@ struct InputDigitalActionData_t
 
 struct InputMotionData_t
 {
-	// Sensor-fused absolute rotation; will drift in heading toward average
+	// Gyro Quaternion:
+	// Absolute rotation of the controller since wakeup, using the Accelerometer reading at startup to determine the first value.
+	// This means real world "up" is know, but heading is not known.
+	// Every rotation packet is integrated using sensor time delta, and that change is used to update this quaternion.
+	// A Quaternion Identity ( x:0, y:0, z:0, w:1 ) will be sent in the first few packets while the controller's IMU is still waking up;
+	// some controllers have a short "warmup" period before these values should be used.
+
+	// After the first time GetMotionData is called per controller handle, the IMU will be active until your app is closed.
+	// The exception is the Sony Dualshock, which will stay on until the controller has been turned off.
+
+	// Filtering: When rotating the controller at low speeds, low level noise is filtered out without noticeable latency. High speed movement is always unfiltered.
+	// Drift: Gyroscopic "Drift" can be fixed using the Steam Input "Gyro Calibration" button. Users will have to be informed of this feature.
 	float rotQuatX;
 	float rotQuatY;
 	float rotQuatZ;
 	float rotQuatW;
 
 	// Positional acceleration
-	float posAccelX;
-	float posAccelY;
-	float posAccelZ;
+	// This represents only the latest hardware packet's state.
+	// Values range from -SHRT_MAX..SHRT_MAX
+	// This represents -2G..+2G along each axis
+	float posAccelX; // +tive when controller's Right hand side is pointed toward the sky.
+	float posAccelY; // +tive when controller's charging port (forward side of controller) is pointed toward the sky.
+	float posAccelZ; // +tive when controller's sticks point toward the sky.
 
 	// Angular velocity
-	float rotVelX;
-	float rotVelY;
-	float rotVelZ;
-};
-
-
-struct InputMotionDataV2_t
-{
-	//
-	// Gyro post processing:
-	//
-
-	// Drift Corrected Quaternion is calculated after steam input controller calibration values have been applied.
-	// Rawest _useful_ version of a quaternion.
-	// Most camera implementations should use this by comparing last rotation against current rotation, and applying the difference to the in game camera (plus your own sensitivity tweaks)
-	// It is worth viewing 
-	float driftCorrectedQuatX;
-	float driftCorrectedQuatY;
-	float driftCorrectedQuatZ;
-	float driftCorrectedQuatW;
-
-	// Sensor fusion corrects using accelerometer, and "average forward over time" for "forward".
-	// This can "ouija" your aim, so it's not so  appropriate for camera controls (sensor fusion was originally made for racing game steering )
-	// Same result as from old InputMotionData_t::rotQuatX/Y/Z/W
-	float sensorFusionQuatX;
-	float sensorFusionQuatY;
-	float sensorFusionQuatZ;
-	float sensorFusionQuatW;
-
-	// Deferred Sensor fusion quaternion with deferred correction
-	// Reduces perception of "ouija" effect by only applying correction when the controller is below "low noise" thresholds,
-	// while the controller rotates fast - never when the user is attempting precision aim.
-	float deferredSensorFusionQuatX;
-	float deferredSensorFusionQuatY;
-	float deferredSensorFusionQuatZ;
-	float deferredSensorFusionQuatW;
-
-	// Same as accel but values are calibrated such that 1 unit = 1G.
-	// X = Right
-	// Y = Forward out through the joystick USB port.
-	// Z = Up through the joystick axis.
-	float gravityX;
-	float gravityY;
-	float gravityZ;
-
-	// 
-	// Same as rotVel values in GetMotionData but values are calibrated to degrees per second.
-	// Local Space (controller relative)
-	// X = Pitch = left to right axis
-	// Y = Roll = axis through charging port
-	// Z = Yaw = axis through sticks
-	float degreesPerSecondX;
-	float degreesPerSecondY;
-	float degreesPerSecondZ;
-
+	// Values range from -SHRT_MAX..SHRT_MAX
+	// These values map to a real world range of -2000..+2000 degrees per second on each axis (SDL standard)
+	// This represents only the latest hardware packet's state.
+	float rotVelX; // Local Pitch
+	float rotVelY; // Local Roll
+	float rotVelZ; // Local Yaw
 };
 
 //-----------------------------------------------------------------------------

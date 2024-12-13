@@ -88,5 +88,47 @@ namespace Generator
 
             return type;
         }
+
+        private List<BaseType> ProcessArgs( SteamApiDefinition.Interface.Method func )
+        {
+	        var args = func.Params.Select( x =>
+	        {
+		        var bt = BaseType.Parse( x.ParamType, x.ParamName, bufferSizeName: x.OutStringCount );
+		        bt.Func = func.Name;
+		        return bt;
+	        } ).ToList();
+
+	        for ( var i = 0; i < args.Count; i++ )
+	        {
+		        if ( args[i] is not FetchStringType fetchString )
+		        {
+			        continue;
+		        }
+
+		        var bufferSizeIdx = -1;
+		        if ( !string.IsNullOrWhiteSpace( fetchString.BufferSizeParamName ) )
+		        {
+			        bufferSizeIdx = args.FindIndex( x => x.VarName == fetchString.BufferSizeParamName );
+		        }
+		        else if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
+		        {
+			        bufferSizeIdx = i + 1;
+		        }
+				
+		        if ( bufferSizeIdx >= 0 )
+		        {
+			        if ( args[bufferSizeIdx] is not LiteralType )
+			        {
+				        args[bufferSizeIdx] = new LiteralType( args[bufferSizeIdx], "(1024 * 32)" );
+			        }
+		        }
+		        else
+		        {
+			        throw new System.Exception( $"Couldn't determine buffer size for parameter {args[i].VarName} in {func.FlatName}" );
+		        }
+	        }
+
+	        return args;
+        }
     }
 }
