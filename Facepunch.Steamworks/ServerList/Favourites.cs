@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Steamworks.ServerList
 {
@@ -10,8 +6,8 @@ namespace Steamworks.ServerList
 	{
 		internal override void LaunchQuery()
 		{
-			var filters = GetFilters();
-			request = Internal.RequestFavoritesServerList( AppId.Value, ref filters, (uint)filters.Length, IntPtr.Zero );
+			using var filters = new ServerFilterMarshaler( GetFilters() );
+			request = Internal.RequestFavoritesServerList( AppId.Value, filters.Pointer, (uint)filters.Count, IntPtr.Zero );
 		}
 	}
 }

@@ -17,13 +17,16 @@ internal class BaseType
 	{
 		type = Cleanup.ConvertType( type );
 
+		var typeNoSpaces = type.Replace( " ", "" );
+
 		if ( varname == "ppOutMessages" ) return new PointerType { NativeType = "void *", VarName = varname };
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
+		if ( typeNoSpaces == "MatchMakingKeyValuePair**") return new PointerType { NativeType = "MatchMakingKeyValuePair_t", VarName = varname };
 
 		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname, CallResult = callresult };
 
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
-		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
+		if ( typeNoSpaces.StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
 		if ( type == "char *" ) return new FetchStringType { NativeType = type, VarName = varname, BufferSizeParamName = bufferSizeName };
 
 		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*', '&' );
