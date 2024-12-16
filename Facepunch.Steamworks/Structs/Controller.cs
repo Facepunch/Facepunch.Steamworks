@@ -1,5 +1,6 @@
 ﻿using Steamworks.Data;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Steamworks
@@ -30,6 +31,40 @@ namespace Steamworks
 		public void ActivateLayer( string layer ) => SteamInput.Internal.ActivateActionSetLayer( Handle, SteamInput.Internal.GetActionSetHandle( layer ) );
 		public void ClearLayers() => SteamInput.Internal.DeactivateAllActionSetLayers( Handle );
 
+		#region Action Origins
+
+		internal const int STEAM_INPUT_MAX_ORIGINS = 8;
+		internal InputActionSetHandle_t ActionSetHandle => SteamInput.Internal.GetCurrentActionSet( Handle );
+
+		/// <summary>
+		/// Get the origin(s) for an analog action within an action set.
+		/// Use this to display the appropriate on-screen prompt for the action.
+		/// <para>
+		/// This is cheap, and Valve recommends you re-gather the origins each frame to update your ingame prompts in case they have changed.
+		/// </para>
+		/// </summary>
+		public IEnumerable<InputActionOrigin> GetAnalogActionOrigins( string actionName )
+		{
+			InputActionOrigin[] actionOrigins = new InputActionOrigin[STEAM_INPUT_MAX_ORIGINS];
+			int numOrigins = SteamInput.Internal.GetAnalogActionOrigins( Handle, ActionSetHandle, SteamInput.Internal.GetAnalogActionHandle( actionName ), ref actionOrigins[0] );
+			return actionOrigins.Take( numOrigins );
+		}
+
+		/// <summary>
+		/// Get the origin(s) for a digital action within an action set.
+		/// Use this to display the appropriate on-screen prompt for the action.
+		/// <para>
+		/// This is cheap, and Valve recommends you re-gather the origins each frame to update your ingame prompts in case they have changed.
+		/// </para>
+		/// </summary>
+		public IEnumerable<InputActionOrigin> GetDigitalActionOrigins( string actionName )
+		{
+			InputActionOrigin[] actionOrigins = new InputActionOrigin[STEAM_INPUT_MAX_ORIGINS];
+			int numOrigins = SteamInput.Internal.GetDigitalActionOrigins( Handle, ActionSetHandle, SteamInput.Internal.GetDigitalActionHandle( actionName ), ref actionOrigins[0] );
+			return actionOrigins.Take( numOrigins );
+		}
+
+		#endregion Action Origins
 
 		/// <summary>
 		/// Returns the current state of the supplied digital game action
@@ -65,6 +100,9 @@ namespace Steamworks
 		public float X; // x float
 		public float Y; // y float
 		internal byte BActive; // bActive byte
+		/// <summary>
+		/// Whether or not this action is currently available to be bound in the active action set. If it is not available, OR does not belong to the active action set, this will be false.
+		/// </summary>
 		public bool Active => BActive != 0;
 	}
 
@@ -91,7 +129,13 @@ namespace Steamworks
 		[MarshalAs( UnmanagedType.I1 )]
 		internal byte BActive; // bActive byte
 
+		/// <summary>
+		/// The current state of this action; true if the action is currently pressed, otherwise false.
+		/// </summary>
 		public bool Pressed => BState != 0;
+		/// <summary>
+		/// Whether or not this action is currently available to be bound in the active action set.
+		/// </summary>
 		public bool Active => BActive != 0;
 	}
 }
