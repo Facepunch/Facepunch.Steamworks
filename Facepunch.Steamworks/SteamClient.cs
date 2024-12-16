@@ -43,7 +43,8 @@ namespace Steamworks
 				ISteamUserStats.Version,
 				ISteamUtils.Version,
 				ISteamVideo.Version,
-				ISteamRemotePlay.Version );
+				ISteamRemotePlay.Version,
+				ISteamTimeline.Version );
 			var result = SteamAPI.Init( interfaceVersions, out var error );
 			if ( result != SteamAPIInitResult.OK )
 			{
@@ -55,12 +56,12 @@ namespace Steamworks
 			initialized = true;
 
 			//
-			// Dispatch is responsible for pumping the
-			// event loop.
+			// Dispatch is responsible for pumping the event loop.
 			//
 			Dispatch.Init();
 			Dispatch.ClientPipe = SteamAPI.GetHSteamPipe();
 
+			// Note: don't forget to add the interface version to SteamAPI.Init above!!!
 			AddInterface<SteamApps>();
 			AddInterface<SteamFriends>();
 			AddInterface<SteamInput>();
@@ -81,6 +82,8 @@ namespace Steamworks
 			AddInterface<SteamUtils>();
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
+			AddInterface<SteamTimeline>();
+			// Note: don't forget to add the interface version to SteamAPI.Init above!!!
 
 			initialized = openInterfaces.Count > 0;
 

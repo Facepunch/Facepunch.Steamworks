@@ -64,6 +64,7 @@ public static class Cleanup
 		type = type.Replace( "SteamNetConnectionRealTimeLaneStatus_t", "ConnectionLaneStatus" );
 		type = type.Replace( "SteamInputGlyphSize", "GlyphSize" );
 		type = type.Replace( "FloatingGamepadTextInputMode", "TextInputMode" );
+		type = type.Replace( "TimelineEventHandle_t", "TimelineEventHandle" );
 
 		type = type.Replace( "::", "." );
 
@@ -152,6 +153,9 @@ public static class Cleanup
 		if ( name == "TextFilteringContext" ) return "public";
 		if ( name == "GlyphSize" ) return "public";
 		if ( name == "TextInputMode" ) return "public";
+		if ( name == "TimelineGameMode" ) return "public";
+		if ( name == "TimelineEventClipPriority" ) return "public";
+		if ( name == "TimelineEventHandle" ) return "public";
 
 		return "internal";
 	}

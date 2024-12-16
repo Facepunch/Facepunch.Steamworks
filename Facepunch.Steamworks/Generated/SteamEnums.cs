@@ -2196,7 +2196,7 @@ namespace Steamworks
 	//
 	// ETimelineGameMode
 	//
-	internal enum TimelineGameMode : int
+	public enum TimelineGameMode : int
 	{
 		Invalid = 0,
 		Playing = 1,
@@ -2209,7 +2209,7 @@ namespace Steamworks
 	//
 	// ETimelineEventClipPriority
 	//
-	internal enum TimelineEventClipPriority : int
+	public enum TimelineEventClipPriority : int
 	{
 		Invalid = 0,
 		None = 1,
