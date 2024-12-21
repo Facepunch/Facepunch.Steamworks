@@ -40,7 +40,7 @@ namespace Steamworks
 		/// <summary>
 		/// Return true if this user is playing the game we're running
 		/// </summary>
-		public bool IsPlayingThisGame => GameInfo?.GameID == SteamClient.AppId;
+		public bool IsPlayingThisGame => GameInfo?.GameID is { Type: GameIdType.App } && GameInfo.Value.GameID.AppId == SteamClient.AppId;
 
 		/// <summary>
 		/// Returns true if this friend is online
@@ -75,7 +75,26 @@ namespace Steamworks
 
 		public Relationship Relationship => SteamFriends.Internal.GetFriendRelationship( Id );
 		public FriendState State => SteamFriends.Internal.GetFriendPersonaState( Id );
+		
+		/// <summary>
+		/// Returns the player's current Steam name.
+		/// <remarks>
+		///   Steam returns nicknames here if "Append nicknames to friends' names" is disabled in the Steam client.
+		/// </remarks> 
+		/// </summary>
 		public string Name => SteamFriends.Internal.GetFriendPersonaName( Id );
+		
+		/// <summary>
+		/// Returns the nickname that was set for this Steam player, if any.
+		/// <remarks>
+		///   Steam will never return nicknames if "Append nicknames to friends' names" is disabled in the Steam client.
+		/// </remarks>
+		/// </summary>
+		public string Nickname => SteamFriends.Internal.GetPlayerNickname( Id );
+		
+		/// <summary>
+		/// Returns the player's Steam name history.
+		/// </summary>
 		public IEnumerable<string> NameHistory
 		{
 			get
@@ -114,10 +133,10 @@ namespace Steamworks
 
 		public struct FriendGameInfo
 		{
-			internal ulong GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 
+			public GameId GameID;
 			public int ConnectionPort;
 			public int QueryPort;
 
