@@ -17,7 +17,6 @@ namespace Steamworks
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents();
-			RequestCurrentStats();
 
 			return true;
 		}
@@ -127,17 +126,6 @@ namespace Steamworks
 		public static bool StoreStats()
 		{
 			return Internal.StoreStats();
-		}
-
-		/// <summary>
-		/// Asynchronously request the user's current stats and achievements from the server.
-		/// You must always call this first to get the initial status of stats and achievements.
-		/// Only after the resulting callback comes back can you start calling the rest of the stats 
-		/// and achievement functions for the current user.
-		/// </summary>
-		public static bool RequestCurrentStats()
-		{
-			return Internal.RequestCurrentStats();
 		}
 
 		/// <summary>

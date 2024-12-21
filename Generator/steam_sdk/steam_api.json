@@ -319,7 +319,8 @@
         { "fieldname":"m_bHasAvatarFrame", "fieldtype":"bool" },
         { "fieldname":"m_bHasProfileModifier", "fieldtype":"bool" },
         { "fieldname":"m_bHasProfileBackground", "fieldtype":"bool" },
-        { "fieldname":"m_bHasMiniProfileBackground", "fieldtype":"bool" }
+        { "fieldname":"m_bHasMiniProfileBackground", "fieldtype":"bool" },
+        { "fieldname":"m_bFromCache", "fieldtype":"bool" }
       ],
       "struct": "EquippedProfileItems_t"
     },
@@ -1664,6 +1665,25 @@
       "struct": "SteamInventoryRequestPricesResult_t"
     },
     {
+      "callback_id": 6001,
+      "fields": [
+        { "fieldname":"m_rgchPhaseID", "fieldtype":"char [64]" },
+        { "fieldname":"m_ulRecordingMS", "fieldtype":"uint64" },
+        { "fieldname":"m_ulLongestClipMS", "fieldtype":"uint64" },
+        { "fieldname":"m_unClipCount", "fieldtype":"uint32" },
+        { "fieldname":"m_unScreenshotCount", "fieldtype":"uint32" }
+      ],
+      "struct": "SteamTimelineGamePhaseRecordingExists_t"
+    },
+    {
+      "callback_id": 6002,
+      "fields": [
+        { "fieldname":"m_ulEventID", "fieldtype":"uint64" },
+        { "fieldname":"m_bRecordingExists", "fieldtype":"bool" }
+      ],
+      "struct": "SteamTimelineEventRecordingExists_t"
+    },
+    {
       "callback_id": 4611,
       "fields": [
         { "fieldname":"m_eResult", "fieldtype":"EResult" },
@@ -1679,6 +1699,20 @@
         { "fieldname":"m_unVideoAppID", "fieldtype":"AppId_t" }
       ],
       "struct": "GetOPFSettingsResult_t"
+    },
+    {
+      "callback_id": 4604,
+      "fields": [
+        { "fieldname":"m_bIsRTMP", "fieldtype":"bool" }
+      ],
+      "struct": "BroadcastUploadStart_t"
+    },
+    {
+      "callback_id": 4605,
+      "fields": [
+        { "fieldname":"m_eResult", "fieldtype":"EBroadcastUploadResult" }
+      ],
+      "struct": "BroadcastUploadStop_t"
     },
     {
       "callback_id": 5001,
@@ -1933,7 +1967,9 @@
     { "constname":"k_SteamInventoryResultInvalid", "consttype":"SteamInventoryResult_t", "constval":"- 1" },
     { "constname":"k_SteamInventoryUpdateHandleInvalid", "consttype":"SteamInventoryUpdateHandle_t", "constval":"0xffffffffffffffffull" },
     { "constname":"k_unMaxTimelinePriority", "consttype":"uint32", "constval":"1000" },
+    { "constname":"k_unTimelinePriority_KeepCurrentValue", "consttype":"uint32", "constval":"1000000" },
     { "constname":"k_flMaxTimelineEventDuration", "consttype":"float", "constval":"600.f" },
+    { "constname":"k_cchMaxPhaseIDLength", "consttype":"uint32", "constval":"64" },
     { "constname":"k_HSteamNetConnection_Invalid", "consttype":"HSteamNetConnection", "constval":"0" },
     { "constname":"k_HSteamListenSocket_Invalid", "consttype":"HSteamListenSocket", "constval":"0" },
     { "constname":"k_HSteamNetPollGroup_Invalid", "consttype":"HSteamNetPollGroup", "constval":"0" },
@@ -2125,7 +2161,8 @@
         { "name":"k_EResultCachedCredentialInvalid", "value":"126" },
         { "name":"K_EResultPhoneNumberIsVOIP", "value":"127" },
         { "name":"k_EResultNotSupported", "value":"128" },
-        { "name":"k_EResultFamilySizeLimitExceeded", "value":"129" }
+        { "name":"k_EResultFamilySizeLimitExceeded", "value":"129" },
+        { "name":"k_EResultOfflineAppCacheInvalid", "value":"130" }
       ]
     },
     {
@@ -3341,7 +3378,11 @@
         { "name":"k_EInputActionOrigin_SteamDeck_Reserved18", "value":"403" },
         { "name":"k_EInputActionOrigin_SteamDeck_Reserved19", "value":"404" },
         { "name":"k_EInputActionOrigin_SteamDeck_Reserved20", "value":"405" },
-        { "name":"k_EInputActionOrigin_Count", "value":"406" },
+        { "name":"k_EInputActionOrigin_Horipad_M1", "value":"406" },
+        { "name":"k_EInputActionOrigin_Horipad_M2", "value":"407" },
+        { "name":"k_EInputActionOrigin_Horipad_L4", "value":"408" },
+        { "name":"k_EInputActionOrigin_Horipad_R4", "value":"409" },
+        { "name":"k_EInputActionOrigin_Count", "value":"410" },
         { "name":"k_EInputActionOrigin_MaximumPossibleValue", "value":"32767" }
       ]
     },
@@ -3856,7 +3897,11 @@
         { "name":"k_EControllerActionOrigin_PS5_RightGrip", "value":"383" },
         { "name":"k_EControllerActionOrigin_PS5_LeftFn", "value":"384" },
         { "name":"k_EControllerActionOrigin_PS5_RightFn", "value":"385" },
-        { "name":"k_EControllerActionOrigin_Count", "value":"386" },
+        { "name":"k_EControllerActionOrigin_Horipad_M1", "value":"386" },
+        { "name":"k_EControllerActionOrigin_Horipad_M2", "value":"387" },
+        { "name":"k_EControllerActionOrigin_Horipad_L4", "value":"388" },
+        { "name":"k_EControllerActionOrigin_Horipad_R4", "value":"389" },
+        { "name":"k_EControllerActionOrigin_Count", "value":"390" },
         { "name":"k_EControllerActionOrigin_MaximumPossibleValue", "value":"32767" }
       ]
     },
@@ -4084,7 +4129,6 @@
         { "name":"k_ESteamNetworkingIdentityType_SteamID", "value":"16" },
         { "name":"k_ESteamNetworkingIdentityType_XboxPairwiseID", "value":"17" },
         { "name":"k_ESteamNetworkingIdentityType_SonyPSN", "value":"18" },
-        { "name":"k_ESteamNetworkingIdentityType_GoogleStadia", "value":"19" },
         { "name":"k_ESteamNetworkingIdentityType_IPAddress", "value":"1" },
         { "name":"k_ESteamNetworkingIdentityType_GenericString", "value":"2" },
         { "name":"k_ESteamNetworkingIdentityType_GenericBytes", "value":"3" },
@@ -4200,10 +4244,17 @@
         { "name":"k_ESteamNetworkingConfig_LocalVirtualPort", "value":"38" },
         { "name":"k_ESteamNetworkingConfig_DualWifi_Enable", "value":"39" },
         { "name":"k_ESteamNetworkingConfig_EnableDiagnosticsUI", "value":"46" },
+        { "name":"k_ESteamNetworkingConfig_SendTimeSincePreviousPacket", "value":"59" },
         { "name":"k_ESteamNetworkingConfig_FakePacketLoss_Send", "value":"2" },
         { "name":"k_ESteamNetworkingConfig_FakePacketLoss_Recv", "value":"3" },
         { "name":"k_ESteamNetworkingConfig_FakePacketLag_Send", "value":"4" },
         { "name":"k_ESteamNetworkingConfig_FakePacketLag_Recv", "value":"5" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Send_Avg", "value":"53" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Send_Max", "value":"54" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Send_Pct", "value":"55" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Recv_Avg", "value":"56" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Recv_Max", "value":"57" },
+        { "name":"k_ESteamNetworkingConfig_FakePacketJitter_Recv_Pct", "value":"58" },
         { "name":"k_ESteamNetworkingConfig_FakePacketReorder_Send", "value":"6" },
         { "name":"k_ESteamNetworkingConfig_FakePacketReorder_Recv", "value":"7" },
         { "name":"k_ESteamNetworkingConfig_FakePacketReorder_Time", "value":"8" },
@@ -7451,19 +7502,12 @@
         {
           "kind": "user",
           "name": "SteamUserStats",
-          "name_flat": "SteamAPI_SteamUserStats_v012"
+          "name_flat": "SteamAPI_SteamUserStats_v013"
         }
       ],
       "classname": "ISteamUserStats",
       "fields": [],
       "methods": [
-        {
-          "callback": "UserStatsReceived_t",
-          "methodname": "RequestCurrentStats",
-          "methodname_flat": "SteamAPI_ISteamUserStats_RequestCurrentStats",
-          "params": [],
-          "returntype": "bool"
-        },
         {
           "methodname": "GetStat",
           "methodname_flat": "SteamAPI_ISteamUserStats_GetStatInt32",
@@ -7887,7 +7931,7 @@
           "returntype": "bool"
         }
       ],
-      "version_string": "STEAMUSERSTATS_INTERFACE_VERSION012"
+      "version_string": "STEAMUSERSTATS_INTERFACE_VERSION013"
     },
     {
       "accessors": [
@@ -8135,7 +8179,6 @@
           "methodname": "GetNumBetas",
           "methodname_flat": "SteamAPI_ISteamApps_GetNumBetas",
           "params": [
-            { "paramname":"unAppID", "paramtype":"AppId_t" },
             { "paramname":"pnAvailable", "paramtype":"int *" },
             { "paramname":"pnPrivate", "paramtype":"int *" }
           ],
@@ -8145,7 +8188,6 @@
           "methodname": "GetBetaInfo",
           "methodname_flat": "SteamAPI_ISteamApps_GetBetaInfo",
           "params": [
-            { "paramname":"unAppID", "paramtype":"AppId_t" },
             { "paramname":"iBetaIndex", "paramtype":"int" },
             { "paramname":"punFlags", "paramtype":"uint32 *" },
             { "paramname":"punBuildID", "paramtype":"uint32 *" },
@@ -8160,7 +8202,6 @@
           "methodname": "SetActiveBeta",
           "methodname_flat": "SteamAPI_ISteamApps_SetActiveBeta",
           "params": [
-            { "paramname":"unAppID", "paramtype":"AppId_t" },
             { "paramname":"pchBetaName", "paramtype":"const char *" }
           ],
           "returntype": "bool"
@@ -11751,15 +11792,15 @@
         {
           "kind": "user",
           "name": "SteamTimeline",
-          "name_flat": "SteamAPI_SteamTimeline_v001"
+          "name_flat": "SteamAPI_SteamTimeline_v004"
         }
       ],
       "classname": "ISteamTimeline",
       "fields": [],
       "methods": [
         {
-          "methodname": "SetTimelineStateDescription",
-          "methodname_flat": "SteamAPI_ISteamTimeline_SetTimelineStateDescription",
+          "methodname": "SetTimelineTooltip",
+          "methodname_flat": "SteamAPI_ISteamTimeline_SetTimelineTooltip",
           "params": [
             { "paramname":"pchDescription", "paramtype":"const char *" },
             { "paramname":"flTimeDelta", "paramtype":"float" }
@@ -11767,24 +11808,10 @@
           "returntype": "void"
         },
         {
-          "methodname": "ClearTimelineStateDescription",
-          "methodname_flat": "SteamAPI_ISteamTimeline_ClearTimelineStateDescription",
+          "methodname": "ClearTimelineTooltip",
+          "methodname_flat": "SteamAPI_ISteamTimeline_ClearTimelineTooltip",
           "params": [
             { "paramname":"flTimeDelta", "paramtype":"float" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "AddTimelineEvent",
-          "methodname_flat": "SteamAPI_ISteamTimeline_AddTimelineEvent",
-          "params": [
-            { "paramname":"pchIcon", "paramtype":"const char *" },
-            { "paramname":"pchTitle", "paramtype":"const char *" },
-            { "paramname":"pchDescription", "paramtype":"const char *" },
-            { "paramname":"unPriority", "paramtype":"uint32" },
-            { "paramname":"flStartOffsetSeconds", "paramtype":"float" },
-            { "paramname":"flDurationSeconds", "paramtype":"float" },
-            { "paramname":"ePossibleClip", "paramtype":"ETimelineEventClipPriority" }
           ],
           "returntype": "void"
         },
@@ -11795,9 +11822,154 @@
             { "paramname":"eMode", "paramtype":"ETimelineGameMode" }
           ],
           "returntype": "void"
+        },
+        {
+          "methodname": "AddInstantaneousTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_AddInstantaneousTimelineEvent",
+          "params": [
+            { "paramname":"pchTitle", "paramtype":"const char *" },
+            { "paramname":"pchDescription", "paramtype":"const char *" },
+            { "paramname":"pchIcon", "paramtype":"const char *" },
+            { "paramname":"unIconPriority", "paramtype":"uint32" },
+            { "paramname":"flStartOffsetSeconds", "paramtype":"float" },
+            { "paramname":"ePossibleClip", "paramtype":"ETimelineEventClipPriority" }
+          ],
+          "returntype": "TimelineEventHandle_t"
+        },
+        {
+          "methodname": "AddRangeTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_AddRangeTimelineEvent",
+          "params": [
+            { "paramname":"pchTitle", "paramtype":"const char *" },
+            { "paramname":"pchDescription", "paramtype":"const char *" },
+            { "paramname":"pchIcon", "paramtype":"const char *" },
+            { "paramname":"unIconPriority", "paramtype":"uint32" },
+            { "paramname":"flStartOffsetSeconds", "paramtype":"float" },
+            { "paramname":"flDuration", "paramtype":"float" },
+            { "paramname":"ePossibleClip", "paramtype":"ETimelineEventClipPriority" }
+          ],
+          "returntype": "TimelineEventHandle_t"
+        },
+        {
+          "methodname": "StartRangeTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_StartRangeTimelineEvent",
+          "params": [
+            { "paramname":"pchTitle", "paramtype":"const char *" },
+            { "paramname":"pchDescription", "paramtype":"const char *" },
+            { "paramname":"pchIcon", "paramtype":"const char *" },
+            { "paramname":"unPriority", "paramtype":"uint32" },
+            { "paramname":"flStartOffsetSeconds", "paramtype":"float" },
+            { "paramname":"ePossibleClip", "paramtype":"ETimelineEventClipPriority" }
+          ],
+          "returntype": "TimelineEventHandle_t"
+        },
+        {
+          "methodname": "UpdateRangeTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_UpdateRangeTimelineEvent",
+          "params": [
+            { "paramname":"ulEvent", "paramtype":"TimelineEventHandle_t" },
+            { "paramname":"pchTitle", "paramtype":"const char *" },
+            { "paramname":"pchDescription", "paramtype":"const char *" },
+            { "paramname":"pchIcon", "paramtype":"const char *" },
+            { "paramname":"unPriority", "paramtype":"uint32" },
+            { "paramname":"ePossibleClip", "paramtype":"ETimelineEventClipPriority" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "EndRangeTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_EndRangeTimelineEvent",
+          "params": [
+            { "paramname":"ulEvent", "paramtype":"TimelineEventHandle_t" },
+            { "paramname":"flEndOffsetSeconds", "paramtype":"float" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "RemoveTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_RemoveTimelineEvent",
+          "params": [
+            { "paramname":"ulEvent", "paramtype":"TimelineEventHandle_t" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "callresult": "SteamTimelineEventRecordingExists_t",
+          "methodname": "DoesEventRecordingExist",
+          "methodname_flat": "SteamAPI_ISteamTimeline_DoesEventRecordingExist",
+          "params": [
+            { "paramname":"ulEvent", "paramtype":"TimelineEventHandle_t" }
+          ],
+          "returntype": "SteamAPICall_t"
+        },
+        {
+          "methodname": "StartGamePhase",
+          "methodname_flat": "SteamAPI_ISteamTimeline_StartGamePhase",
+          "params": [],
+          "returntype": "void"
+        },
+        {
+          "methodname": "EndGamePhase",
+          "methodname_flat": "SteamAPI_ISteamTimeline_EndGamePhase",
+          "params": [],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetGamePhaseID",
+          "methodname_flat": "SteamAPI_ISteamTimeline_SetGamePhaseID",
+          "params": [
+            { "paramname":"pchPhaseID", "paramtype":"const char *" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "callresult": "SteamTimelineGamePhaseRecordingExists_t",
+          "methodname": "DoesGamePhaseRecordingExist",
+          "methodname_flat": "SteamAPI_ISteamTimeline_DoesGamePhaseRecordingExist",
+          "params": [
+            { "paramname":"pchPhaseID", "paramtype":"const char *" }
+          ],
+          "returntype": "SteamAPICall_t"
+        },
+        {
+          "methodname": "AddGamePhaseTag",
+          "methodname_flat": "SteamAPI_ISteamTimeline_AddGamePhaseTag",
+          "params": [
+            { "paramname":"pchTagName", "paramtype":"const char *" },
+            { "paramname":"pchTagIcon", "paramtype":"const char *" },
+            { "paramname":"pchTagGroup", "paramtype":"const char *" },
+            { "paramname":"unPriority", "paramtype":"uint32" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetGamePhaseAttribute",
+          "methodname_flat": "SteamAPI_ISteamTimeline_SetGamePhaseAttribute",
+          "params": [
+            { "paramname":"pchAttributeGroup", "paramtype":"const char *" },
+            { "paramname":"pchAttributeValue", "paramtype":"const char *" },
+            { "paramname":"unPriority", "paramtype":"uint32" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "OpenOverlayToGamePhase",
+          "methodname_flat": "SteamAPI_ISteamTimeline_OpenOverlayToGamePhase",
+          "params": [
+            { "paramname":"pchPhaseID", "paramtype":"const char *" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "OpenOverlayToTimelineEvent",
+          "methodname_flat": "SteamAPI_ISteamTimeline_OpenOverlayToTimelineEvent",
+          "params": [
+            { "paramname":"ulEvent", "paramtype":"const TimelineEventHandle_t" }
+          ],
+          "returntype": "void"
         }
       ],
-      "version_string": "STEAMTIMELINE_INTERFACE_V001"
+      "version_string": "STEAMTIMELINE_INTERFACE_V004"
     },
     {
       "accessors": [
@@ -13887,20 +14059,6 @@
           "returntype": "uint64"
         },
         {
-          "methodname": "SetStadiaID",
-          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_SetStadiaID",
-          "params": [
-            { "paramname":"id", "paramtype":"uint64" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "GetStadiaID",
-          "methodname_flat": "SteamAPI_SteamNetworkingIdentity_GetStadiaID",
-          "params": [],
-          "returntype": "uint64"
-        },
-        {
           "methodname": "SetIPAddr",
           "methodname_flat": "SteamAPI_SteamNetworkingIdentity_SetIPAddr",
           "params": [
@@ -14245,6 +14403,7 @@
     { "typedef":"SteamItemDef_t", "type":"int" },
     { "typedef":"SteamInventoryResult_t", "type":"int" },
     { "typedef":"SteamInventoryUpdateHandle_t", "type":"unsigned long long" },
+    { "typedef":"TimelineEventHandle_t", "type":"unsigned long long" },
     { "typedef":"RemotePlaySessionID_t", "type":"unsigned int" },
     { "typedef":"FnSteamNetConnectionStatusChanged", "type":"void (*)(SteamNetConnectionStatusChangedCallback_t *)" },
     { "typedef":"FnSteamNetAuthenticationStatusChanged", "type":"void (*)(SteamNetAuthenticationStatus_t *)" },

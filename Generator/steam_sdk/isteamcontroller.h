@@ -458,6 +458,11 @@ enum EControllerActionOrigin
 	k_EControllerActionOrigin_PS5_LeftFn,
 	k_EControllerActionOrigin_PS5_RightFn,
 
+	k_EControllerActionOrigin_Horipad_M1,
+	k_EControllerActionOrigin_Horipad_M2,
+	k_EControllerActionOrigin_Horipad_L4,
+	k_EControllerActionOrigin_Horipad_R4,
+
 	k_EControllerActionOrigin_Count, // If Steam has added support for new controllers origins will go here.
 	k_EControllerActionOrigin_MaximumPossibleValue = 32767, // Origins are currently a maximum of 16 bits.
 };

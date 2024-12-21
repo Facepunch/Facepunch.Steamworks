@@ -8,6 +8,7 @@ using System.Text;
 
 namespace Steamworks
 {
+#if !RADISH_SDK
 	internal static class Platform
     {
 #if PLATFORM_WIN64
@@ -24,4 +25,5 @@ namespace Steamworks
 		public const CallingConvention CC = CallingConvention.Cdecl;
 		public const int StructPackSize = 4;
 	}
+#endif
 }

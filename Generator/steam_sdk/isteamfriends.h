@@ -750,6 +750,7 @@ struct EquippedProfileItems_t
 	bool m_bHasProfileModifier;
 	bool m_bHasProfileBackground;
 	bool m_bHasMiniProfileBackground;
+	bool m_bFromCache;
 };
 
 #pragma pack( pop )

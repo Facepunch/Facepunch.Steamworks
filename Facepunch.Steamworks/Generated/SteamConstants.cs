@@ -63,7 +63,9 @@ namespace Steamworks.Data
 		internal static readonly SteamInventoryResult_t k_SteamInventoryResultInvalid = - 1;
 		internal static readonly SteamInventoryUpdateHandle_t k_SteamInventoryUpdateHandleInvalid = 0xffffffffffffffff;
 		internal static readonly uint k_unMaxTimelinePriority = 1000;
+		internal static readonly uint k_unTimelinePriority_KeepCurrentValue = 1000000;
 		internal static readonly float k_flMaxTimelineEventDuration = 600.0f;
+		internal static readonly uint k_cchMaxPhaseIDLength = 64;
 		internal static readonly Connection k_HSteamNetConnection_Invalid = 0;
 		internal static readonly Socket k_HSteamListenSocket_Invalid = 0;
 		internal static readonly HSteamNetPollGroup k_HSteamNetPollGroup_Invalid = 0;

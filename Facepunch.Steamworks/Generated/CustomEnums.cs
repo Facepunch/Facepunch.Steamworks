@@ -198,6 +198,8 @@ namespace Steamworks
 		HTML_UpdateToolTip = 4525,
 		HTML_HideToolTip = 4526,
 		HTML_BrowserRestarted = 4527,
+		BroadcastUploadStart = 4604,
+		BroadcastUploadStop = 4605,
 		GetVideoURLResult = 4611,
 		GetOPFSettingsResult = 4624,
 		SteamInventoryResultReady = 4700,
@@ -223,6 +225,8 @@ namespace Steamworks
 		SteamRemotePlaySessionConnected = 5701,
 		SteamRemotePlaySessionDisconnected = 5702,
 		SteamRemotePlayTogetherGuestInvite = 5703,
+		SteamTimelineGamePhaseRecordingExists = 6001,
+		SteamTimelineEventRecordingExists = 6002,
 	}
 	internal static partial class CallbackTypeFactory
 	{
@@ -416,6 +420,8 @@ namespace Steamworks
 			{ CallbackType.HTML_UpdateToolTip, typeof( HTML_UpdateToolTip_t )},
 			{ CallbackType.HTML_HideToolTip, typeof( HTML_HideToolTip_t )},
 			{ CallbackType.HTML_BrowserRestarted, typeof( HTML_BrowserRestarted_t )},
+			{ CallbackType.BroadcastUploadStart, typeof( BroadcastUploadStart_t )},
+			{ CallbackType.BroadcastUploadStop, typeof( BroadcastUploadStop_t )},
 			{ CallbackType.GetVideoURLResult, typeof( GetVideoURLResult_t )},
 			{ CallbackType.GetOPFSettingsResult, typeof( GetOPFSettingsResult_t )},
 			{ CallbackType.SteamInventoryResultReady, typeof( SteamInventoryResultReady_t )},
@@ -441,6 +447,8 @@ namespace Steamworks
 			{ CallbackType.SteamRemotePlaySessionConnected, typeof( SteamRemotePlaySessionConnected_t )},
 			{ CallbackType.SteamRemotePlaySessionDisconnected, typeof( SteamRemotePlaySessionDisconnected_t )},
 			{ CallbackType.SteamRemotePlayTogetherGuestInvite, typeof( SteamRemotePlayTogetherGuestInvite_t )},
+			{ CallbackType.SteamTimelineGamePhaseRecordingExists, typeof( SteamTimelineGamePhaseRecordingExists_t )},
+			{ CallbackType.SteamTimelineEventRecordingExists, typeof( SteamTimelineEventRecordingExists_t )},
 		};
 	}
 }
