@@ -28,11 +28,11 @@ namespace Steamworks
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
 		}
 
-		public static SteamAPIInitResult InitEx( out string outSteamErrMsg )
+		static internal SteamAPIInitResult InitEx( out string outSteamErrMsg )
 		{
 			var steamErrorMsgPtr = Marshal.AllocHGlobal( Defines.k_cchMaxSteamErrMsg );
 			
-			var pszInternalCheckInterfaceVersions = new System.Text.StringBuilder();
+			var pszInternalCheckInterfaceVersions = new StringBuilder();
 			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUTILS_INTERFACE_VERSION ).Append( "\0" );
 			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGUTILS_INTERFACE_VERSION ).Append( "\0" );
 			pszInternalCheckInterfaceVersions.Append( Defines.STEAMAPPS_INTERFACE_VERSION ).Append( "\0" );

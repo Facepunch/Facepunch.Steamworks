@@ -42,7 +42,7 @@ namespace Steamworks
 		public static ICustomMarshaler GetInstance(string cookie) => new Utf8StringToNative();
 	}
 
-	public struct Utf8StringPointer
+	internal struct Utf8StringPointer
 	{
 #pragma warning disable 649
 		internal IntPtr ptr;

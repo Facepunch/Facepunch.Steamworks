@@ -332,17 +332,6 @@ namespace Steamworks
 			}
 		}
 
-		public static NativeAuthTicket GetNativeAuthSessionTicket( NetIdentity netIdentity, IntPtr ptr, int length )
-		{
-			uint ticketLength = 0 ;
-			uint ticket = Internal.GetAuthSessionTicket( ptr, length, ref ticketLength, ref netIdentity );
-
-			if ( ticket == 0 )
-				return default;
-
-			return new NativeAuthTicket { Data = ptr, Handle = ticket, Length = ticketLength, };
-		}
-
 		/// <summary>
 		/// Retrieve a authentication ticket to be sent to the entity who wishes to authenticate you.
 		/// This waits for a positive response from the backend before returning the ticket. This means

@@ -17,7 +17,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingFakeUDPPort_DestroyFakeUDPPort", CallingConvention = Platform.CC)]
-		internal static extern void _DestroyFakeUDPPort( IntPtr self );
+		private static extern void _DestroyFakeUDPPort( IntPtr self );
 		
 		#endregion
 		internal void DestroyFakeUDPPort()
@@ -27,7 +27,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingFakeUDPPort_SendMessageToFakeIP", CallingConvention = Platform.CC)]
-		internal static extern Result _SendMessageToFakeIP( IntPtr self, ref NetAddress remoteAddress, IntPtr pData, uint cbData, int nSendFlags );
+		private static extern Result _SendMessageToFakeIP( IntPtr self, ref NetAddress remoteAddress, IntPtr pData, uint cbData, int nSendFlags );
 		
 		#endregion
 		internal Result SendMessageToFakeIP( ref NetAddress remoteAddress, IntPtr pData, uint cbData, int nSendFlags )
@@ -38,7 +38,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingFakeUDPPort_ReceiveMessages", CallingConvention = Platform.CC)]
-		internal static extern int _ReceiveMessages( IntPtr self, IntPtr ppOutMessages, int nMaxMessages );
+		private static extern int _ReceiveMessages( IntPtr self, IntPtr ppOutMessages, int nMaxMessages );
 		
 		#endregion
 		internal int ReceiveMessages( IntPtr ppOutMessages, int nMaxMessages )
@@ -49,7 +49,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingFakeUDPPort_ScheduleCleanup", CallingConvention = Platform.CC)]
-		internal static extern void _ScheduleCleanup( IntPtr self, ref NetAddress remoteAddress );
+		private static extern void _ScheduleCleanup( IntPtr self, ref NetAddress remoteAddress );
 		
 		#endregion
 		internal void ScheduleCleanup( ref NetAddress remoteAddress )

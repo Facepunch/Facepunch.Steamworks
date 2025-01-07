@@ -393,7 +393,7 @@ namespace Steamworks
 			}
 		}
 
-        public static unsafe NetMsg* AllocateMessage()
+        internal static unsafe NetMsg* AllocateMessage()
         {
             return Internal.AllocateMessage(0);
         }

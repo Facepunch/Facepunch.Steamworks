@@ -89,7 +89,7 @@ namespace Steamworks
 			//
 			if ( !SteamInternal.GameServer_Init( ipaddress,  init.GamePort, init.QueryPort, (ServerMode) secure, init.VersionString ) )
 			{
-				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{0},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
+				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.GamePort},{init.QueryPort},{(ServerMode)secure},\"{init.VersionString}\")" );
 			}
 
 			//
@@ -309,6 +309,10 @@ namespace Steamworks
 			Internal.LogOnAnonymous();
 		}
 
+		/// <summary>
+		/// Log onto Steam.
+		/// </summary>
+		/// <param name="token"></param>
 		public static void LogOn( string token )
 		{
 			Internal.LogOn(token);
@@ -334,11 +338,6 @@ namespace Steamworks
 		/// <see langword="null"/> for the first few seconds after initialization.
 		/// </summary>
 		public static System.Net.IPAddress PublicIp => Internal.GetPublicIP();
-
-		public static SteamId CreateBot()
-		{
-			return Internal.CreateUnauthenticatedUserConnection();
-		}
 
 		/// <summary>
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
@@ -415,14 +414,17 @@ namespace Steamworks
 		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
-		public static bool BeginAuthSession( IntPtr ticket, int length, SteamId steamid )
+		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
 		{
-			var result = Internal.BeginAuthSession( ticket, length, steamid );
+			fixed ( byte* p = data )
+			{
+				var result = Internal.BeginAuthSession( (IntPtr)p, data.Length, steamid );
 
-			if ( result == BeginAuthResult.OK )
-				return true;
+				if ( result == BeginAuthResult.OK )
+					return true;
 
-			return false;
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -486,6 +488,15 @@ namespace Steamworks
 		public static UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamid, AppId appid )
 		{
 			return Internal.UserHasLicenseForApp( steamid, appid );
+		}
+
+		/// <summary>
+		/// Create Unauthenticated User Connection
+		/// </summary>
+		/// <returns></returns>
+		public static SteamId CreateBot()
+		{
+			return Internal.CreateUnauthenticatedUserConnection();
 		}
 	}
 }
