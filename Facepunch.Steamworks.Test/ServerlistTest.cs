@@ -69,6 +69,27 @@ namespace Steamworks
 			}
 		}
 
+		// Used to reproduce steam serverlist stopping querying after ~10s around august 2023
+		[TestMethod]
+		public async Task RustServerListTest()
+		{
+			using ( var list = new ServerList.Internet() )
+			{
+				list.AddFilter( "secure", "1" );
+				list.AddFilter( "and", "1" );
+				list.AddFilter( "gametype", "v2405" );
+				list.AddFilter( "appid", "252490" );
+				list.AddFilter( "gamedir", "rust" );
+				list.AddFilter( "empty", "1" );
+
+				var success = await list.RunQueryAsync( 90 );
+
+				Console.WriteLine( $"success {success}" );
+				Console.WriteLine( $"Found {list.Responsive.Count} Responsive Servers" );
+				Console.WriteLine( $"Found {list.Unresponsive.Count} Unresponsive Servers" );
+			}
+		}
+
 		[TestMethod]
 		public async Task SourceQuery()
 		{
