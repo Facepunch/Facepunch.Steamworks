@@ -9,14 +9,6 @@ namespace Steamworks
 	{
 		internal static ISteamNetworkingMessages Internal => Interface as ISteamNetworkingMessages;
 
-		public static event Func<NetIdentity, bool> OnSessionRequested;
-
-		public static event Action<ConnectionInfo> OnSessionFailed;
-
-		public static event Action<NetIdentity, IntPtr, int, int> OnMessage; 
-
-		public static HashSet<SteamId> Sessions;
-
 		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamNetworkingMessages( server ) );
@@ -24,107 +16,87 @@ namespace Steamworks
 
 			InstallEvents( server );
 
-			Sessions = new HashSet<SteamId>();
 			return true;
 		}
-		
-		private void InstallEvents( bool server )
+
+		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<SteamNetworkingMessagesSessionRequest_t>( SessionRequested, server );
-			Dispatch.Install<SteamNetworkingMessagesSessionFailed_t>( SessionFailed, server );
+			Dispatch.Install<SteamNetworkingMessagesSessionRequest_t>( x => OnSessionRequest?.Invoke( x.DentityRemote ), server );
+			Dispatch.Install<SteamNetworkingMessagesSessionFailed_t>( x => OnSessionFailed?.Invoke( x.Nfo ), server );
 		}
 
-		private static void SessionRequested( SteamNetworkingMessagesSessionRequest_t data )
+		/// <summary>
+		/// Invoked when a <see cref="NetIdentity"/> wants to connect to the current user. You should respond by calling <see cref="AcceptSessionWithUser(ref NetIdentity)"/>
+		/// if you want to recieve their messages.
+		/// </summary>
+		public static event Action<NetIdentity> OnSessionRequest;
+
+		/// <summary>
+		/// Invoked when a session fails to connect can't get through to the specified user.
+		/// All queued packets unsent at this point will be dropped, further attempts
+		/// to send will retry making the connection (but will be dropped if we fail again).
+		/// </summary>
+		public static event Action<ConnectionInfo> OnSessionFailed;
+
+		/// <summary>
+		/// Invoked when a <see cref="NetIdentity"/> has sent a message to the current user.
+		/// </summary>
+		public static event Action<NetIdentity, IntPtr, int, int> OnMessage;
+
+		/// <summary>
+		/// This should be called in response to a <see cref="OnSessionRequest"/>.
+		/// </summary>
+		public static bool AcceptSessionWithUser( ref NetIdentity netIdentity ) => Internal.AcceptSessionWithUser( ref netIdentity );
+
+		/// <summary>
+		/// This should be called when you're done communicating with a user, as this will
+		/// free up all of the resources allocated for the connection under-the-hood.
+		/// If the remote user tries to send data to you again, a new <see cref="OnSessionRequest"/> 
+		/// callback will be posted
+		/// </summary>
+		public static bool CloseSessionWithUser( ref NetIdentity netIdentity ) => Internal.CloseSessionWithUser( ref netIdentity );
+
+		/// <summary>
+		/// This should be called when you're done communicating with a user on a specific channel, as this will
+		/// free up all of the resources allocated for the channel connection under-the-hood.
+		/// </summary>
+		public static bool CloseChannelWithUser( ref NetIdentity netIdentity, int channel ) => Internal.CloseChannelWithUser( ref netIdentity, channel );
+
+		public static unsafe Result SendMessageToUser( ref NetIdentity netIdentity, byte[] data, int length = -1, int nRemoteChannel = 0, SendType sendType = SendType.Reliable )
 		{
-			if ( OnSessionRequested == null || OnSessionRequested.Invoke( data.DentityRemote ) )
+			if ( length <= 0 )
+				length = data.Length;
+
+			fixed ( byte* p = data )
 			{
-				Sessions.Add( data.DentityRemote.SteamId );
-				AcceptSessionWithUser( ref data.DentityRemote );
-			}
-		}
+				var result = Internal.SendMessageToUser( ref netIdentity, [(IntPtr)p], (uint)length, (int)sendType, nRemoteChannel );
 
-		private static void SessionFailed( SteamNetworkingMessagesSessionFailed_t data )
-		{
-			OnSessionFailed?.Invoke( data.Nfo );
-		}
-
-		public static void Update()
-		{
-			Receive();
-		}
-
-		public static void Cleanup()
-		{
-			foreach ( var steamId in Sessions )
-			{
-				NetIdentity netIdentity = steamId;
-				Internal.CloseSessionWithUser( ref netIdentity );
-			}
-			
-			Sessions.Clear();
-		}
-
-		public static Result SendMessageToUser( ref NetIdentity netIdentity, byte[] data, int size, SendType sendType = SendType.Reliable, int channel = 0 )
-		{
-			if( size <= 0)
-				throw new ArgumentException( "`size` cannot be zero", nameof( size ) );
-			
-			GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-			IntPtr pData = handle.AddrOfPinnedObject();
-
-			var result = Internal.SendMessageToUser( ref netIdentity, [pData], (uint)size, (int)sendType, channel );
-			
-			handle.Free();
-
-			switch ( result )
-			{
-				case Result.OK:
-					Sessions.Add( netIdentity.SteamId );
-					break;
-				default:
+				if ( result != Result.OK )
+				{
 					var info = new ConnectionInfo();
 
 					var status = new ConnectionStatus();
 
 					var state = Internal.GetSessionConnectionInfo( ref netIdentity, ref info, ref status );
-					
+
 					if ( state != ConnectionState.Connected )
 					{
-						Sessions.Remove( netIdentity.SteamId );
 						CloseSessionWithUser( ref netIdentity );
 					}
-					break;
+				}
+
+				return result;
 			}
-			
-
-			return result;
 		}
 
-		public static bool AcceptSessionWithUser( ref NetIdentity netIdentity )
-		{
-			return Internal.AcceptSessionWithUser( ref netIdentity );
-		}
-
-		public static bool CloseSessionWithUser( ref NetIdentity netIdentity )
-		{
-			Sessions.Remove( netIdentity.SteamId );
-			
-			return Internal.CloseSessionWithUser( ref netIdentity );
-		}
-
-		public static bool CloseChannelWithUser( ref NetIdentity netIdentity, int channel )
-		{
-			return Internal.CloseChannelWithUser( ref netIdentity, channel );
-		}
-
-		internal static int Receive( int bufferSize = 32, bool receiveToEnd = true )
+		public static int Receive( int channel = 0, int bufferSize = 32, bool receiveToEnd = true )
 		{
 			int processed = 0;
 			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
 
 			try
 			{
-				processed += Internal.ReceiveMessagesOnChannel( 0, messageBuffer, bufferSize );
+				processed = Internal.ReceiveMessagesOnChannel( channel, messageBuffer, bufferSize );
 
 				for ( int i = 0; i < processed; i++ )
 				{
