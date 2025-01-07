@@ -2282,7 +2282,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingFakeIPType
 	//
-	public enum SteamNetworkingFakeIPType : int
+	internal enum SteamNetworkingFakeIPType : int
 	{
 		Invalid = 0,
 		NotFake = 1,
