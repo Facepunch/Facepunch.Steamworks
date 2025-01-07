@@ -126,7 +126,7 @@ namespace Steamworks
 					return await GetPlayers(client);
 				}
 			}
-			catch (System.Exception e)
+			catch (System.Exception)
 			{
 				return null;
 			}
