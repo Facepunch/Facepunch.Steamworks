@@ -25,16 +25,16 @@ namespace Steamworks
 			string pchVersionString )
 		{
 			var pszInternalCheckInterfaceVersions = new StringBuilder();
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUTILS_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGUTILS_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMGAMESERVER_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMGAMESERVERSTATS_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMHTTP_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMINVENTORY_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKING_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGMESSAGES_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGSOCKETS_INTERFACE_VERSION ).Append( '\0' );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUGC_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUTILS_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGUTILS_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMGAMESERVER_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMGAMESERVERSTATS_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMHTTP_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMINVENTORY_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKING_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGMESSAGES_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGSOCKETS_INTERFACE_VERSION ).Append( '\0' );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUGC_INTERFACE_VERSION ).Append( '\0' );
 			
 			var steamErrorMsgPtr = Marshal.AllocHGlobal( Defines.k_cchMaxSteamErrMsg );
 			

@@ -33,32 +33,32 @@ namespace Steamworks
 			var steamErrorMsgPtr = Marshal.AllocHGlobal( Defines.k_cchMaxSteamErrMsg );
 			
 			var pszInternalCheckInterfaceVersions = new StringBuilder();
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUTILS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGUTILS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMAPPS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUTILS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGUTILS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMAPPS_INTERFACE_VERSION ).Append( "\0" );
 			// pszInternalCheckInterfaceVersions.Append( "SteamController008" ).Append( "\0" ); // ISteamController is deprecated in favor of ISteamInput.
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMFRIENDS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMGAMESEARCH_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMHTMLSURFACE_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMHTTP_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMINPUT_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMINVENTORY_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMMATCHMAKING_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMMUSICREMOTE_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMMUSIC_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGMESSAGES_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKINGSOCKETS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMNETWORKING_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMPARENTALSETTINGS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMPARTIES_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMREMOTEPLAY_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMREMOTESTORAGE_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMSCREENSHOTS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUGC_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUSERSTATS_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMUSER_INTERFACE_VERSION ).Append( "\0" );
-			pszInternalCheckInterfaceVersions.Append( Defines.STEAMVIDEO_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMFRIENDS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMGAMESEARCH_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMHTMLSURFACE_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMHTTP_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMINPUT_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMINVENTORY_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMMATCHMAKING_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMMUSICREMOTE_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMMUSIC_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGMESSAGES_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKINGSOCKETS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMNETWORKING_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMPARENTALSETTINGS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMPARTIES_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMREMOTEPLAY_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMREMOTESTORAGE_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMSCREENSHOTS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUGC_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUSERSTATS_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMUSER_INTERFACE_VERSION ).Append( "\0" );
+			pszInternalCheckInterfaceVersions.Append( SteamApiVersions.STEAMVIDEO_INTERFACE_VERSION ).Append( "\0" );
 
 			var initResult = Native.SteamAPI_Init( pszInternalCheckInterfaceVersions.ToString(), steamErrorMsgPtr );
 
