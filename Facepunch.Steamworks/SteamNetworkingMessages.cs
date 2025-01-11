@@ -67,9 +67,9 @@ namespace Steamworks
 			if ( length <= 0 )
 				length = data.Length;
 
-			fixed ( byte* p = data )
+			fixed ( byte* ptr = data )
 			{
-				var result = Internal.SendMessageToUser( ref netIdentity, [(IntPtr)p], (uint)length, (int)sendType, nRemoteChannel );
+				var result = Internal.SendMessageToUser( ref netIdentity, [(IntPtr)ptr], (uint)length, (int)sendType, nRemoteChannel );
 
 				if ( result != Result.OK )
 				{
