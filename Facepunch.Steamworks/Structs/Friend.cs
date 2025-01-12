@@ -75,7 +75,7 @@ namespace Steamworks
 
 		public Relationship Relationship => SteamFriends.Internal.GetFriendRelationship( Id );
 		public FriendState State => SteamFriends.Internal.GetFriendPersonaState( Id );
-		
+
 		/// <summary>
 		/// Returns the player's current Steam name.
 		/// <remarks>
@@ -83,7 +83,7 @@ namespace Steamworks
 		/// </remarks> 
 		/// </summary>
 		public string Name => SteamFriends.Internal.GetFriendPersonaName( Id );
-		
+
 		/// <summary>
 		/// Returns the nickname that was set for this Steam player, if any.
 		/// <remarks>
@@ -91,7 +91,7 @@ namespace Steamworks
 		/// </remarks>
 		/// </summary>
 		public string Nickname => SteamFriends.Internal.GetPlayerNickname( Id );
-		
+
 		/// <summary>
 		/// Returns the player's Steam name history.
 		/// </summary>

@@ -37,6 +37,7 @@ namespace Steamworks
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			InstallEvents( server );
+
 			return true;
 		}
 	
@@ -273,7 +274,7 @@ namespace Steamworks
 			SetConnectionManager( t.Connection.Id, t );
 			return t;
 		}
-
+		
 		/// <summary>
 		/// Begin asynchronous process of allocating a fake IPv4 address that other
 		/// peers can use to contact us via P2P. IP addresses returned by this

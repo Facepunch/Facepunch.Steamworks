@@ -48,7 +48,7 @@ namespace Steamworks
 		internal IntPtr ptr;
 #pragma warning restore 649
 
-		public unsafe static implicit operator string( Utf8StringPointer p )
+		public static unsafe implicit operator string( Utf8StringPointer p )
 		{
 			if ( p.ptr == IntPtr.Zero )
 				return null;

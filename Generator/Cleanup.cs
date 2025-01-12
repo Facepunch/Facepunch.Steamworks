@@ -152,6 +152,8 @@ public static class Cleanup
 		if ( name == "TextFilteringContext" ) return "public";
 		if ( name == "GlyphSize" ) return "public";
 		if ( name == "TextInputMode" ) return "public";
+		if ( name == "TimelineEventClipPriority" ) return "public";
+		if ( name == "TimelineGameMode" ) return "public";
 
 		return "internal";
 	}

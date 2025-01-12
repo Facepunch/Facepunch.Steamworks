@@ -92,7 +92,7 @@ namespace Steamworks
 				await Task.Delay( 10 );
 			}
 
-			Assert.AreEqual( response, AuthResponse.OK );
+			Assert.AreEqual( AuthResponse.OK, response );
 
 			if ( failed != null )
 				Assert.Fail( failed );
@@ -104,7 +104,7 @@ namespace Steamworks
 			// The client is leaving, and now wants to cancel the ticket
 			//
 
-			Assert.AreNotEqual( 0, clientTicket.Handle );
+			Assert.AreNotEqual( (uint)0, clientTicket.Handle );
 			clientTicket.Cancel();
 
 			//

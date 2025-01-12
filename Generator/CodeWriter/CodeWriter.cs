@@ -87,7 +87,7 @@ namespace Generator
 
             foreach ( var iface in def.Interfaces )
             {
-                GenerateInterface( iface, $"{folder}../Generated/Interfaces/" );
+                GenerateInterface( iface, $"{folder}/Interfaces/" );
             }
 		}
 

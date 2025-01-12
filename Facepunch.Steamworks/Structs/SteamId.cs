@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Represents the ID of a user or steam lobby.
 	/// </summary>
-	public struct SteamId
+	public struct SteamId : IEquatable<SteamId>
 	{
 		public ulong Value;
 
@@ -21,6 +21,16 @@ namespace Steamworks
 		public static implicit operator ulong( SteamId value )
 		{
 			return value.Value;
+		}
+
+		public bool Equals( SteamId other )
+		{
+			return other.Value == Value;
+		}
+
+		public override int GetHashCode()
+		{
+			return Value.GetHashCode();
 		}
 
 		public override string ToString() => Value.ToString();

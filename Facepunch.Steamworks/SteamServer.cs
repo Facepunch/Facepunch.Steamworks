@@ -61,6 +61,10 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<SteamNetworkingAvailability> OnSteamNetAuthenticationStatus;
 
+		public static event Action OnShouldRestart;
+
+		private static bool _restarted = false;
+
 
 		/// <summary>
 		/// Initialize the steam server.
@@ -83,9 +87,9 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !SteamInternal.GameServer_Init( ipaddress, 0, init.GamePort, init.QueryPort, secure, init.VersionString ) )
+			if ( !SteamInternal.GameServer_Init( ipaddress,  init.GamePort, init.QueryPort, (ServerMode) secure, init.VersionString ) )
 			{
-				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{0},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
+				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.GamePort},{init.QueryPort},{(ServerMode)secure},\"{init.VersionString}\")" );
 			}
 
 			//
@@ -106,6 +110,7 @@ namespace Steamworks
 
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingMessages>();
 
 			//
 			// Initial settings
@@ -118,6 +123,8 @@ namespace Steamworks
 			GameDescription = init.GameDescription;
 			Passworded = false;
 			DedicatedServer = init.DedicatedServer;
+
+			_restarted = false;
 
 			if ( asyncCallbacks )
 			{
@@ -164,6 +171,19 @@ namespace Steamworks
 			if ( Dispatch.ServerPipe != 0 )
 			{
 				Dispatch.Frame( Dispatch.ServerPipe );
+			}
+		}
+
+		private static async void RunRestartCheck()
+		{
+			while (IsValid)
+			{
+				if ( Internal.WasRestartRequested() && !_restarted )
+				{
+					_restarted = true;
+					OnShouldRestart?.Invoke();
+				}
+				await Task.Delay( 32 );
 			}
 		}
 
@@ -287,7 +307,15 @@ namespace Steamworks
 		public static void LogOnAnonymous()
 		{
 			Internal.LogOnAnonymous();
-			ForceHeartbeat();
+		}
+
+		/// <summary>
+		/// Log onto Steam.
+		/// </summary>
+		/// <param name="token"></param>
+		public static void LogOn( string token )
+		{
+			Internal.LogOn(token);
 		}
 
 		/// <summary>
@@ -320,7 +348,6 @@ namespace Steamworks
 		{
 			set { Internal.SetAdvertiseServerActive( value ); }
 		}		
-		
 		
 		/// <summary>
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
@@ -461,6 +488,15 @@ namespace Steamworks
 		public static UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamid, AppId appid )
 		{
 			return Internal.UserHasLicenseForApp( steamid, appid );
+		}
+
+		/// <summary>
+		/// Create Unauthenticated User Connection
+		/// </summary>
+		/// <returns></returns>
+		public static SteamId CreateBot()
+		{
+			return Internal.CreateUnauthenticatedUserConnection();
 		}
 	}
 }

@@ -105,9 +105,13 @@ namespace Generator
 							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
 						}
 					}
+					else if ( args[i + 1] is FetchStringType )
+					{
+						// Nothing to do
+					}
 					else
 					{
-						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
+						throw new System.Exception( $"String Builder {iface.Name}, {args[i + 1].VarName} Next Type Is {args[i + 1].GetType()}" );
 					}
 				}
 			}

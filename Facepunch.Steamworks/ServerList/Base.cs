@@ -149,12 +149,12 @@ namespace Steamworks.ServerList
 		{
 			var count = Count;
 			if ( count == LastCount ) return;
-			
+
 			for ( int i = LastCount; i < count; i++ )
 			{
 				watchList.Add( i );
 			}
-			
+
 			LastCount = count;
 		}
 
@@ -199,7 +199,7 @@ namespace Steamworks.ServerList
 				OnResponsiveServer?.Invoke( serverInfo );
 				return;
 			}
-			
+
 			Unresponsive.Add( serverInfo );
 		}
 	}

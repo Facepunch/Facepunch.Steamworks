@@ -242,6 +242,7 @@ namespace Steamworks.Data
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserInitiated; // m_bUserInitiated bool
 		internal AppId AppID; // m_nAppID AppId_t
+		internal uint DwOverlayPID; // m_dwOverlayPID uint32
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameOverlayActivated_t) );
@@ -2070,6 +2071,8 @@ namespace Steamworks.Data
 	{
 		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal ulong LegacyContent; // m_hLegacyContent UGCHandle_t
+		internal ulong ManifestID; // m_unManifestID uint64
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ItemInstalled_t) );
@@ -2279,32 +2282,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(WorkshopEULAStatus_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.WorkshopEULAStatus;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamAppInstalled_t : ICallbackData
-	{
-		internal AppId AppID; // m_nAppID AppId_t
-		internal int InstallFolderIndex; // m_iInstallFolderIndex int
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppInstalled_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.SteamAppInstalled;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamAppUninstalled_t : ICallbackData
-	{
-		internal AppId AppID; // m_nAppID AppId_t
-		internal int InstallFolderIndex; // m_iInstallFolderIndex int
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppUninstalled_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.SteamAppUninstalled;
 		#endregion
 	}
 	

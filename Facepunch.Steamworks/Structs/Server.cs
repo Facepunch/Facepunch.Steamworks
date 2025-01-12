@@ -108,6 +108,11 @@ namespace Steamworks.Data
 			return await SourceServerQuery.GetRules( this );
 		}
 
+		public async Task<List<PlayerDetail>> QueryPlayersAsync()
+		{
+			return await SourceServerQuery.GetPlayers( this );
+		}
+
 		/// <summary>
 		/// Remove this server from our history list
 		/// </summary>

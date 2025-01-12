@@ -18,7 +18,8 @@ namespace Generator
             "SteamAPIWarningMessageHook_t",
             "Salt_t",
             "SteamAPI_CheckCallbackRegistered_t",
-            "compile_time_assert_type"
+            "compile_time_assert_type",
+            "SteamErrMsg",
         };
 
         //
@@ -30,7 +31,7 @@ namespace Generator
             "int",
             "ulint",
             "lint",
-            "PFN"
+            "PFN",
         };
 
         private void Types()

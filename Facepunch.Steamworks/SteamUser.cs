@@ -327,7 +327,7 @@ namespace Steamworks
 				return new AuthTicket()
 				{
 					Data = data.Take( (int)ticketLength ).ToArray(),
-					Handle = ticket
+					Handle = ticket,
 				};
 			}
 		}
