@@ -141,12 +141,6 @@ namespace Steamworks.Data
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetPSNID", CallingConvention = Platform.CC)]
 		internal static extern ulong InternalGetPSNID( ref NetIdentity self );
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_SetStadiaID", CallingConvention = Platform.CC)]
-		internal static extern void InternalSetStadiaID( ref NetIdentity self, ulong id );
-		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_GetStadiaID", CallingConvention = Platform.CC)]
-		internal static extern ulong InternalGetStadiaID( ref NetIdentity self );
-		
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingIdentity_SetIPAddr", CallingConvention = Platform.CC)]
 		internal static extern void InternalSetIPAddr( ref NetIdentity self, ref NetAddress addr );
 		

@@ -48,7 +48,17 @@ const uint16 MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE = STEAMGAMESERVER_QUERY_
 //		ISteamGameServer::GetNextOutgoingPacket.)
 // - The version string should be in the form x.x.x.x, and is used by the master server to detect when the
 //		server is out of date.  (Only servers with the latest version will be listed.)
-inline bool SteamGameServer_Init( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString );
+//
+// On success k_ESteamAPIInitResult_OK is returned.  Otherwise, if pOutErrMsg is non-NULL,
+// it will receive a non-localized message that explains the reason for the failure
+inline ESteamAPIInitResult SteamGameServer_InitEx( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString, SteamErrMsg *pOutErrMsg );
+
+// This function is included for compatibility with older SDK.
+// You can use it if you don't care about decent error handling
+inline bool SteamGameServer_Init( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString )
+{
+	return SteamGameServer_InitEx( unIP, usGamePort, usQueryPort, eServerMode, pchVersionString, NULL ) == k_ESteamAPIInitResult_OK;
+}
 
 // Shutdown SteamGameSeverXxx interfaces, log out, and free resources.
 S_API void SteamGameServer_Shutdown();
@@ -64,8 +74,8 @@ S_API bool SteamGameServer_BSecure();
 S_API uint64 SteamGameServer_GetSteamID();
 
 // Older SDKs exported this global pointer, but it is no longer supported.
-// You should use SteamGameServerClient() or CSteamGameServerAPIContext to
-// safely access the ISteamClient APIs from your game server application.
+// You should use SteamGameServerClient() to safely access the ISteamClient
+// APIs from your game server application.
 //S_API ISteamClient *g_pSteamClientGameServer;
 
 // SteamGameServer_InitSafe has been replaced with SteamGameServer_Init and
@@ -78,36 +88,23 @@ S_API uint64 SteamGameServer_GetSteamID();
 //
 //=============================================================================
 
-#ifndef STEAM_API_EXPORTS
-// This function must be declared inline in the header so the module using steam_api.dll gets the version names they want.
-inline bool CSteamGameServerAPIContext::Init()
+S_API ESteamAPIInitResult S_CALLTYPE SteamInternal_GameServer_Init_V2( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString, const char *pszInternalCheckInterfaceVersions, SteamErrMsg *pOutErrMsg );
+inline ESteamAPIInitResult SteamGameServer_InitEx( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString, SteamErrMsg *pOutErrMsg )
 {
-	m_pSteamClient = ::SteamGameServerClient();
-	if ( !m_pSteamClient )
-		return false;
+	const char *pszInternalCheckInterfaceVersions = 
+		STEAMUTILS_INTERFACE_VERSION "\0"
+		STEAMNETWORKINGUTILS_INTERFACE_VERSION "\0"
 
-	m_pSteamGameServer = ::SteamGameServer();
-	m_pSteamGameServerUtils = ::SteamGameServerUtils();
-	m_pSteamGameServerNetworking = ::SteamGameServerNetworking();
-	m_pSteamGameServerStats = ::SteamGameServerStats();
-	m_pSteamHTTP = ::SteamGameServerHTTP();
-	m_pSteamInventory = ::SteamGameServerInventory();
-	m_pSteamUGC = ::SteamGameServerUGC();
-	if ( !m_pSteamGameServer || !m_pSteamGameServerUtils || !m_pSteamGameServerNetworking || !m_pSteamGameServerStats
-		|| !m_pSteamHTTP || !m_pSteamInventory || !m_pSteamUGC )
-		return false;
-
-	return true;
-}
-#endif
-
-S_API bool S_CALLTYPE SteamInternal_GameServer_Init( uint32 unIP, uint16 usLegacySteamPort, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString );
-inline bool SteamGameServer_Init( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, EServerMode eServerMode, const char *pchVersionString )
-{
-	if ( !SteamInternal_GameServer_Init( unIP, 0, usGamePort, usQueryPort, eServerMode, pchVersionString ) )
-		return false;
-
-	return true;
+		STEAMGAMESERVER_INTERFACE_VERSION "\0"
+		STEAMGAMESERVERSTATS_INTERFACE_VERSION "\0"
+		STEAMHTTP_INTERFACE_VERSION "\0"
+		STEAMINVENTORY_INTERFACE_VERSION "\0"
+		STEAMNETWORKING_INTERFACE_VERSION "\0"
+		STEAMNETWORKINGMESSAGES_INTERFACE_VERSION "\0"
+		STEAMNETWORKINGSOCKETS_INTERFACE_VERSION "\0"
+		STEAMUGC_INTERFACE_VERSION "\0"
+		"\0";
+	return SteamInternal_GameServer_Init_V2( unIP, usGamePort, usQueryPort, eServerMode, pchVersionString, pszInternalCheckInterfaceVersions, pOutErrMsg );
 }
 inline void SteamGameServer_ReleaseCurrentThreadMemory()
 {

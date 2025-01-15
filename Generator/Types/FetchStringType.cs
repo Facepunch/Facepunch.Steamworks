@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 
 internal class FetchStringType : BaseType
 {
+	public string BufferSizeParamName; // optional, use next parameter if not set
+	
 	public override string TypeName => $"string";
 	public override string AsArgument() => $"out string {VarName}";
 

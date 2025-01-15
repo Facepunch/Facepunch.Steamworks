@@ -160,6 +160,9 @@ namespace Steamworks
 		ChargerRequired = 125,
 		CachedCredentialInvalid = 126,
 		K_EResultPhoneNumberIsVOIP = 127,
+		NotSupported = 128,
+		FamilySizeLimitExceeded = 129,
+		OfflineAppCacheInvalid = 130,
 	}
 	
 	//
@@ -415,6 +418,19 @@ namespace Steamworks
 		Offline = 1,
 		Online = 2,
 		OnlineHighPri = 3,
+	}
+	
+	//
+	// EBetaBranchFlags
+	//
+	internal enum BetaBranchFlags : int
+	{
+		None = 0,
+		Default = 1,
+		Available = 2,
+		Private = 4,
+		Selected = 8,
+		Installed = 16,
 	}
 	
 	//
@@ -796,7 +812,8 @@ namespace Steamworks
 		SteamworksAccessInvite = 13,
 		SteamVideo = 14,
 		GameManagedItem = 15,
-		Max = 16,
+		Clip = 16,
+		Max = 17,
 	}
 	
 	//
@@ -1456,7 +1473,11 @@ namespace Steamworks
 		SteamDeck_Reserved18 = 403,
 		SteamDeck_Reserved19 = 404,
 		SteamDeck_Reserved20 = 405,
-		Count = 406,
+		Horipad_M1 = 406,
+		Horipad_M2 = 407,
+		Horipad_L4 = 408,
+		Horipad_R4 = 409,
+		Count = 410,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -1993,7 +2014,11 @@ namespace Steamworks
 		PS5_RightGrip = 383,
 		PS5_LeftFn = 384,
 		PS5_RightFn = 385,
-		Count = 386,
+		Horipad_M1 = 386,
+		Horipad_M2 = 387,
+		Horipad_L4 = 388,
+		Horipad_R4 = 389,
+		Count = 390,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -2109,6 +2134,7 @@ namespace Steamworks
 		NeedsUpdate = 8,
 		Downloading = 16,
 		DownloadPending = 32,
+		DisabledLocally = 64,
 	}
 	
 	//
@@ -2141,6 +2167,7 @@ namespace Steamworks
 		Sketchfab = 2,
 		EnvironmentMap_HorizontalCross = 3,
 		EnvironmentMap_LatLong = 4,
+		Clip = 5,
 		ReservedMax = 255,
 	}
 	
@@ -2167,6 +2194,30 @@ namespace Steamworks
 	}
 	
 	//
+	// ETimelineGameMode
+	//
+	public enum TimelineGameMode : int
+	{
+		Invalid = 0,
+		Playing = 1,
+		Staging = 2,
+		Menus = 3,
+		LoadingScreen = 4,
+		Max = 5,
+	}
+	
+	//
+	// ETimelineEventClipPriority
+	//
+	public enum TimelineEventClipPriority : int
+	{
+		Invalid = 0,
+		None = 1,
+		Standard = 2,
+		Featured = 3,
+	}
+	
+	//
 	// EParentalFeature
 	//
 	public enum ParentalFeature : int
@@ -2185,8 +2236,9 @@ namespace Steamworks
 		Library = 11,
 		Test = 12,
 		SiteLicense = 13,
-		KioskMode = 14,
-		Max = 15,
+		KioskMode_Deprecated = 14,
+		BlockAlways = 15,
+		Max = 16,
 	}
 	
 	//
@@ -2199,6 +2251,7 @@ namespace Steamworks
 		Tablet = 2,
 		Computer = 3,
 		TV = 4,
+		VRHeadset = 5,
 	}
 	
 	//
@@ -2227,7 +2280,6 @@ namespace Steamworks
 		SteamID = 16,
 		XboxPairwiseID = 17,
 		SonyPSN = 18,
-		GoogleStadia = 19,
 		IPAddress = 1,
 		GenericString = 2,
 		GenericBytes = 3,
@@ -2333,11 +2385,16 @@ namespace Steamworks
 		TimeoutInitial = 24,
 		TimeoutConnected = 25,
 		SendBufferSize = 9,
+		RecvBufferSize = 47,
+		RecvBufferMessages = 48,
+		RecvMaxMessageSize = 49,
+		RecvMaxSegmentsPerPacket = 50,
 		ConnectionUserData = 40,
 		SendRateMin = 10,
 		SendRateMax = 11,
 		NagleTime = 12,
 		IP_AllowWithoutAuth = 23,
+		IPLocalHost_AllowWithoutAuth = 52,
 		MTU_PacketSize = 32,
 		MTU_DataSize = 33,
 		Unencrypted = 34,
@@ -2345,10 +2402,17 @@ namespace Steamworks
 		LocalVirtualPort = 38,
 		DualWifi_Enable = 39,
 		EnableDiagnosticsUI = 46,
+		SendTimeSincePreviousPacket = 59,
 		FakePacketLoss_Send = 2,
 		FakePacketLoss_Recv = 3,
 		FakePacketLag_Send = 4,
 		FakePacketLag_Recv = 5,
+		FakePacketJitter_Send_Avg = 53,
+		FakePacketJitter_Send_Max = 54,
+		FakePacketJitter_Send_Pct = 55,
+		FakePacketJitter_Recv_Avg = 56,
+		FakePacketJitter_Recv_Max = 57,
+		FakePacketJitter_Recv_Pct = 58,
 		FakePacketReorder_Send = 6,
 		FakePacketReorder_Recv = 7,
 		FakePacketReorder_Time = 8,
@@ -2360,6 +2424,7 @@ namespace Steamworks
 		FakeRateLimit_Send_Burst = 43,
 		FakeRateLimit_Recv_Rate = 44,
 		FakeRateLimit_Recv_Burst = 45,
+		OutOfOrderCorrectionWindowMicroseconds = 51,
 		Callback_ConnectionStatusChanged = 201,
 		Callback_AuthStatusChanged = 202,
 		Callback_RelayNetworkStatusChanged = 203,
@@ -2380,15 +2445,17 @@ namespace Steamworks
 		SDRClient_MinPingsBeforePingAccurate = 21,
 		SDRClient_SingleSocket = 22,
 		SDRClient_ForceRelayCluster = 29,
-		SDRClient_DebugTicketAddress = 30,
+		SDRClient_DevTicket = 30,
 		SDRClient_ForceProxyAddr = 31,
 		SDRClient_FakeClusterPing = 36,
+		SDRClient_LimitPingProbesToNearestN = 60,
 		LogLevel_AckRTT = 13,
 		LogLevel_PacketDecode = 14,
 		LogLevel_Message = 15,
 		LogLevel_PacketGaps = 16,
 		LogLevel_P2PRendezvous = 17,
 		LogLevel_SDRRelayPings = 18,
+		ECN = 999,
 		DELETED_EnumerateDevVars = 35,
 	}
 	
@@ -2418,6 +2485,17 @@ namespace Steamworks
 		Verbose = 6,
 		Debug = 7,
 		Everything = 8,
+	}
+	
+	//
+	// ESteamAPIInitResult
+	//
+	internal enum SteamAPIInitResult : int
+	{
+		OK = 0,
+		FailedGeneric = 1,
+		NoSteamClient = 2,
+		VersionMismatch = 3,
 	}
 	
 	//

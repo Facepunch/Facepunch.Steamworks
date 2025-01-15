@@ -33,31 +33,7 @@ namespace Generator
                         var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
                         returnType.Func = func.Name;
 
-                        var args = func.Params.Select( x =>
-                        {
-                            var bt = BaseType.Parse( x.ParamType, x.ParamName );
-                            bt.Func = func.Name;
-                            return bt;
-                        } ).ToArray();
-
-                        for ( int i = 0; i < args.Length; i++ )
-                        {
-                            if ( args[i] is FetchStringType )
-                            {
-                                if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
-                                {
-                                    if ( string.IsNullOrEmpty( args[i + 1].Ref ) )
-                                    {
-                                        args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
-                                    }
-                                }
-                                else
-                                {
-                                    throw new System.Exception( $"String Builder Next Type Is {args[i + 1].GetType()}" );
-                                }
-                            }
-                        }
-
+                        var args = ProcessArgs( func );
                         var delegateargstr = string.Join( ", ", args.Select( x => x.AsNativeArgument() ) );
 
                         if ( !string.IsNullOrEmpty( func.Desc ) )

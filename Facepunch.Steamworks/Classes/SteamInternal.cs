@@ -11,14 +11,16 @@ namespace Steamworks
 	{
 		internal static class Native
 		{
-			[DllImport( Platform.LibraryName, EntryPoint = "SteamInternal_GameServer_Init", CallingConvention = CallingConvention.Cdecl )]
-			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString );	
+			[DllImport( Platform.LibraryName, EntryPoint = "SteamInternal_GameServer_Init_V2", CallingConvention = CallingConvention.Cdecl )]
+			public static extern SteamAPIInitResult SteamInternal_GameServer_Init_V2( uint unIP, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszInternalCheckInterfaceVersions, IntPtr pOutErrMsg );	
 		}
 
-		static internal bool GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString )
+		static internal SteamAPIInitResult GameServer_Init( uint unIP, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString, string pszInternalCheckInterfaceVersions, out string pOutErrMsg )
 		{
-			return Native.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			using var buffer = Helpers.Memory.Take();
+			var result = Native.SteamInternal_GameServer_Init_V2( unIP, usGamePort, usQueryPort, eServerMode, pchVersionString, pszInternalCheckInterfaceVersions, buffer.Ptr );
+			pOutErrMsg = Helpers.MemoryToString( buffer.Ptr );
+			return result;
 		}		
 	}
 }

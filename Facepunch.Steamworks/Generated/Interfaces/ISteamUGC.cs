@@ -9,18 +9,19 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamUGC : SteamInterface
 	{
+		public const string Version = "STEAMUGC_INTERFACE_VERSION020";
 		
 		internal ISteamUGC( bool IsGameServer )
 		{
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v017", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUGC_v017();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v017();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v017", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v017();
-		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v017();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v020", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUGC_v020();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v020();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v020", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v020();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v020();
 		
 		
 		#region FunctionMeta
@@ -250,6 +251,33 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetNumSupportedGameVersions", CallingConvention = Platform.CC)]
+		private static extern uint _GetNumSupportedGameVersions( IntPtr self, UGCQueryHandle_t handle, uint index );
+		
+		#endregion
+		internal uint GetNumSupportedGameVersions( UGCQueryHandle_t handle, uint index )
+		{
+			var returnValue = _GetNumSupportedGameVersions( Self, handle, index );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetSupportedGameVersionData", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetSupportedGameVersionData( IntPtr self, UGCQueryHandle_t handle, uint index, uint versionIndex, IntPtr pchGameBranchMin, IntPtr pchGameBranchMax, uint cchGameBranchSize );
+		
+		#endregion
+		internal bool GetSupportedGameVersionData( UGCQueryHandle_t handle, uint index, uint versionIndex, out string pchGameBranchMin, out string pchGameBranchMax )
+		{
+			using var mempchGameBranchMin = Helpers.TakeMemory();
+			using var mempchGameBranchMax = Helpers.TakeMemory();
+			var returnValue = _GetSupportedGameVersionData( Self, handle, index, versionIndex, mempchGameBranchMin, mempchGameBranchMax, (1024 * 32) );
+			pchGameBranchMin = Helpers.MemoryToString( mempchGameBranchMin );
+			pchGameBranchMax = Helpers.MemoryToString( mempchGameBranchMax );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCContentDescriptors", CallingConvention = Platform.CC)]
 		private static extern uint _GetQueryUGCContentDescriptors( IntPtr self, UGCQueryHandle_t handle, uint index, [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries );
 		
@@ -429,6 +457,18 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetAdminQuery", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SetAdminQuery( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAdminQuery );
+		
+		#endregion
+		internal bool SetAdminQuery( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAdminQuery )
+		{
+			var returnValue = _SetAdminQuery( Self, handle, bAdminQuery );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetCloudFileNameFilter", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _SetCloudFileNameFilter( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pMatchCloudFileName );
@@ -597,12 +637,12 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemTags", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags );
+		private static extern bool _SetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags, [MarshalAs( UnmanagedType.U1 )] bool bAllowAdminTags );
 		
 		#endregion
-		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags )
+		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags, [MarshalAs( UnmanagedType.U1 )] bool bAllowAdminTags )
 		{
-			var returnValue = _SetItemTags( Self, updateHandle, ref pTags );
+			var returnValue = _SetItemTags( Self, updateHandle, ref pTags, bAllowAdminTags );
 			return returnValue;
 		}
 		
@@ -759,6 +799,18 @@ namespace Steamworks
 		internal bool RemoveContentDescriptor( UGCUpdateHandle_t handle, UGCContentDescriptorID descid )
 		{
 			var returnValue = _RemoveContentDescriptor( Self, handle, descid );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetRequiredGameVersions", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _SetRequiredGameVersions( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameBranchMin, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameBranchMax );
+		
+		#endregion
+		internal bool SetRequiredGameVersions( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameBranchMin, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameBranchMax )
+		{
+			var returnValue = _SetRequiredGameVersions( Self, handle, pszGameBranchMin, pszGameBranchMax );
 			return returnValue;
 		}
 		
@@ -1063,6 +1115,17 @@ namespace Steamworks
 		{
 			var returnValue = _GetWorkshopEULAStatus( Self );
 			return new CallResult<WorkshopEULAStatus_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetUserContentDescriptorPreferences", CallingConvention = Platform.CC)]
+		private static extern uint _GetUserContentDescriptorPreferences( IntPtr self, [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries );
+		
+		#endregion
+		internal uint GetUserContentDescriptorPreferences( [In,Out] UGCContentDescriptorID[]  pvecDescriptors, uint cMaxEntries )
+		{
+			var returnValue = _GetUserContentDescriptorPreferences( Self, pvecDescriptors, cMaxEntries );
+			return returnValue;
 		}
 		
 	}

@@ -159,8 +159,6 @@ namespace Steamworks
 		DeleteItemResult = 3417,
 		UserSubscribedItemsListChanged = 3418,
 		WorkshopEULAStatus = 3420,
-		SteamAppInstalled = 3901,
-		SteamAppUninstalled = 3902,
 		PlaybackStatusHasChanged = 4001,
 		VolumeHasChanged = 4002,
 		MusicPlayerWantsVolume = 4011,
@@ -200,6 +198,8 @@ namespace Steamworks
 		HTML_UpdateToolTip = 4525,
 		HTML_HideToolTip = 4526,
 		HTML_BrowserRestarted = 4527,
+		BroadcastUploadStart = 4604,
+		BroadcastUploadStop = 4605,
 		GetVideoURLResult = 4611,
 		GetOPFSettingsResult = 4624,
 		SteamInventoryResultReady = 4700,
@@ -225,6 +225,8 @@ namespace Steamworks
 		SteamRemotePlaySessionConnected = 5701,
 		SteamRemotePlaySessionDisconnected = 5702,
 		SteamRemotePlayTogetherGuestInvite = 5703,
+		SteamTimelineGamePhaseRecordingExists = 6001,
+		SteamTimelineEventRecordingExists = 6002,
 	}
 	internal static partial class CallbackTypeFactory
 	{
@@ -379,8 +381,6 @@ namespace Steamworks
 			{ CallbackType.DeleteItemResult, typeof( DeleteItemResult_t )},
 			{ CallbackType.UserSubscribedItemsListChanged, typeof( UserSubscribedItemsListChanged_t )},
 			{ CallbackType.WorkshopEULAStatus, typeof( WorkshopEULAStatus_t )},
-			{ CallbackType.SteamAppInstalled, typeof( SteamAppInstalled_t )},
-			{ CallbackType.SteamAppUninstalled, typeof( SteamAppUninstalled_t )},
 			{ CallbackType.PlaybackStatusHasChanged, typeof( PlaybackStatusHasChanged_t )},
 			{ CallbackType.VolumeHasChanged, typeof( VolumeHasChanged_t )},
 			{ CallbackType.MusicPlayerWantsVolume, typeof( MusicPlayerWantsVolume_t )},
@@ -420,6 +420,8 @@ namespace Steamworks
 			{ CallbackType.HTML_UpdateToolTip, typeof( HTML_UpdateToolTip_t )},
 			{ CallbackType.HTML_HideToolTip, typeof( HTML_HideToolTip_t )},
 			{ CallbackType.HTML_BrowserRestarted, typeof( HTML_BrowserRestarted_t )},
+			{ CallbackType.BroadcastUploadStart, typeof( BroadcastUploadStart_t )},
+			{ CallbackType.BroadcastUploadStop, typeof( BroadcastUploadStop_t )},
 			{ CallbackType.GetVideoURLResult, typeof( GetVideoURLResult_t )},
 			{ CallbackType.GetOPFSettingsResult, typeof( GetOPFSettingsResult_t )},
 			{ CallbackType.SteamInventoryResultReady, typeof( SteamInventoryResultReady_t )},
@@ -445,6 +447,8 @@ namespace Steamworks
 			{ CallbackType.SteamRemotePlaySessionConnected, typeof( SteamRemotePlaySessionConnected_t )},
 			{ CallbackType.SteamRemotePlaySessionDisconnected, typeof( SteamRemotePlaySessionDisconnected_t )},
 			{ CallbackType.SteamRemotePlayTogetherGuestInvite, typeof( SteamRemotePlayTogetherGuestInvite_t )},
+			{ CallbackType.SteamTimelineGamePhaseRecordingExists, typeof( SteamTimelineGamePhaseRecordingExists_t )},
+			{ CallbackType.SteamTimelineEventRecordingExists, typeof( SteamTimelineEventRecordingExists_t )},
 		};
 	}
 }

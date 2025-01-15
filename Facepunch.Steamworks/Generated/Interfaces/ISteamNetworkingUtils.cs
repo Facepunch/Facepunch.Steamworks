@@ -9,6 +9,7 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamNetworkingUtils : SteamInterface
 	{
+		public const string Version = "SteamNetworkingUtils004";
 		
 		internal ISteamNetworkingUtils( bool IsGameServer )
 		{

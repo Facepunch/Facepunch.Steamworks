@@ -83,14 +83,24 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !SteamInternal.GameServer_Init( ipaddress, 0, init.GamePort, init.QueryPort, secure, init.VersionString ) )
+			var interfaceVersions = Helpers.BuildVersionString(
+				ISteamGameServer.Version,
+				ISteamUtils.Version,
+				ISteamNetworking.Version,
+				ISteamGameServerStats.Version,
+				ISteamInventory.Version,
+				ISteamUGC.Version,
+				ISteamApps.Version,
+				ISteamNetworkingUtils.Version,
+				ISteamNetworkingSockets.Version );
+			var result = SteamInternal.GameServer_Init( ipaddress, init.GamePort, init.QueryPort, secure, init.VersionString, interfaceVersions, out var error );
+			if ( result != SteamAPIInitResult.OK )
 			{
-				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{0},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
+				throw new System.Exception( $"InitGameServer({ipaddress},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\") returned false - error: {error}" );
 			}
 
 			//
-			// Dispatch is responsible for pumping the
-			// event loop.
+			// Dispatch is responsible for pumping the event loop.
 			//
 			Dispatch.Init();
 			Dispatch.ServerPipe = SteamGameServer.GetHSteamPipe();

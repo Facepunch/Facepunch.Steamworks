@@ -11,9 +11,8 @@ namespace Steamworks
 	{
 		internal static class Native
 		{
-			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
-			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamAPI_Init();
+			[DllImport( Platform.LibraryName, EntryPoint = "SteamInternal_SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
+			public static extern SteamAPIInitResult SteamInternal_SteamAPI_Init( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszInternalCheckInterfaceVersions, IntPtr pOutErrMsg );
 
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Shutdown", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamAPI_Shutdown();
@@ -26,9 +25,13 @@ namespace Steamworks
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
 			
 		}
-		static internal bool Init()
+		
+		static internal SteamAPIInitResult Init( string pszInternalCheckInterfaceVersions, out string pOutErrMsg )
 		{
-			return Native.SteamAPI_Init();
+			using var buffer = Helpers.Memory.Take();
+			var result = Native.SteamInternal_SteamAPI_Init( pszInternalCheckInterfaceVersions, buffer.Ptr );
+			pOutErrMsg = Helpers.MemoryToString( buffer.Ptr );
+			return result;
 		}
 		
 		static internal void Shutdown()

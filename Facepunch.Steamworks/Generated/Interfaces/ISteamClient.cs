@@ -9,7 +9,6 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamClient : SteamInterface
 	{
-		
 		internal ISteamClient( bool IsGameServer )
 		{
 			SetupInterface( IsGameServer );
@@ -297,17 +296,6 @@ namespace Steamworks
 		internal IntPtr GetISteamUGC( HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion )
 		{
 			var returnValue = _GetISteamUGC( Self, hSteamUser, hSteamPipe, pchVersion );
-			return returnValue;
-		}
-		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList", CallingConvention = Platform.CC)]
-		private static extern IntPtr _GetISteamAppList( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
-		
-		#endregion
-		internal IntPtr GetISteamAppList( HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion )
-		{
-			var returnValue = _GetISteamAppList( Self, hSteamUser, hSteamPipe, pchVersion );
 			return returnValue;
 		}
 		

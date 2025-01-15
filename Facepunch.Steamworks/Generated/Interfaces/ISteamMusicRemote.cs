@@ -9,6 +9,7 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamMusicRemote : SteamInterface
 	{
+		public const string Version = "STEAMMUSICREMOTE_INTERFACE_VERSION001";
 		
 		internal ISteamMusicRemote( bool IsGameServer )
 		{

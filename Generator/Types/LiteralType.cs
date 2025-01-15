@@ -15,18 +15,23 @@ using System.Threading.Tasks;
 internal class LiteralType : BaseType
 {
 	private string Value;
-	BaseType basetype;
+	private BaseType baseType;
 
-	public LiteralType( BaseType basetype, string value )
+	public LiteralType( BaseType baseType, string value )
 	{
-		this.basetype = basetype;
+		this.baseType = baseType;
 		this.Value = value;
+
+		VarName = baseType.VarName;
 	}
+
+	public bool IsOutValue => !string.IsNullOrEmpty( Ref );
+	public string OutVarDeclaration => IsOutValue ? $"{baseType.TypeName} sz{VarName} = {Value};" : null;
 
 	public override bool ShouldSkipAsArgument => true;
 
-	public override string Ref => "";
+	public override string Ref => baseType.Ref;
 	public override bool IsVector => false;
-	public override string AsArgument() => basetype.AsArgument();
-	public override string AsCallArgument() => Value;
+	public override string AsArgument() => baseType.AsArgument();
+	public override string AsCallArgument() => string.IsNullOrEmpty( Ref ) ? Value : $"{Ref}sz{VarName}";
 }

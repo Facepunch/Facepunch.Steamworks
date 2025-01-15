@@ -25,6 +25,7 @@ namespace Generator
                 val = val.Replace( "uint32", "uint" );
                 val = val.Replace( "16U", "16" );
                 val = val.Replace( "8U", "8" );
+                val = val.Replace( ".f", ".0f" );
 
                 // we're not an actual typedef so can't cast like this
                 val = val.Replace( "( SteamItemInstanceID_t ) ~ 0", "~default(ulong)" );
