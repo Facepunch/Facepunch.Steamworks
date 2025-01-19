@@ -56,6 +56,7 @@ namespace Steamworks.Ugc
 		public Query RankedByLifetimeAveragePlaytime() { queryType = UGCQuery.RankedByLifetimeAveragePlaytime; return this; }
 		public Query RankedByPlaytimeSessionsTrend() { queryType = UGCQuery.RankedByPlaytimeSessionsTrend; return this; }
 		public Query RankedByLifetimePlaytimeSessions() { queryType = UGCQuery.RankedByLifetimePlaytimeSessions; return this; }
+		public Query RankedByLastUpdatedDate() { queryType = UGCQuery.RankedByLastUpdatedDate; return this; }
 
 		#region UserQuery
 
