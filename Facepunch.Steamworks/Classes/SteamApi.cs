@@ -12,7 +12,7 @@ namespace Steamworks
 		internal static class Native
 		{
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamInternal_SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
-			public static extern SteamAPIInitResult SteamInternal_SteamAPI_Init( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszInternalCheckInterfaceVersions, IntPtr pOutErrMsg );
+			public static extern SteamAPIInitResult SteamInternal_SteamAPI_Init( IntPtr pszInternalCheckInterfaceVersions, IntPtr pOutErrMsg );
 
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Shutdown", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamAPI_Shutdown();
@@ -28,9 +28,18 @@ namespace Steamworks
 		
 		static internal SteamAPIInitResult Init( string pszInternalCheckInterfaceVersions, out string pOutErrMsg )
 		{
+			// Marshal the interface versions string in-place rather than relying on a custom marshaller.
+			// Fixes occasional Steam init error in Unity IL2CPP builds caused by use-after-free.
+			byte[] bytes = Encoding.UTF8.GetBytes( pszInternalCheckInterfaceVersions );
+			var versionsPtr = Marshal.AllocHGlobal( bytes.Length + 1 );
+			Marshal.Copy( bytes, 0, versionsPtr, bytes.Length );
+			Marshal.WriteByte( versionsPtr, bytes.Length, 0 );
+
 			using var buffer = Helpers.Memory.Take();
-			var result = Native.SteamInternal_SteamAPI_Init( pszInternalCheckInterfaceVersions, buffer.Ptr );
+			var result = Native.SteamInternal_SteamAPI_Init( versionsPtr, buffer.Ptr );
 			pOutErrMsg = Helpers.MemoryToString( buffer.Ptr );
+
+			Marshal.FreeHGlobal( versionsPtr );
 			return result;
 		}
 		
