@@ -34,12 +34,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamScreenshots_AddScreenshotToLibrary", CallingConvention = Platform.CC)]
-		private static extern ScreenshotHandle _AddScreenshotToLibrary( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchThumbnailFilename, int nWidth, int nHeight );
+		private static extern ScreenshotHandle _AddScreenshotToLibrary( IntPtr self, IntPtr pchFilename, IntPtr pchThumbnailFilename, int nWidth, int nHeight );
 		
 		#endregion
-		internal ScreenshotHandle AddScreenshotToLibrary( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchThumbnailFilename, int nWidth, int nHeight )
+		internal ScreenshotHandle AddScreenshotToLibrary( string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight )
 		{
-			var returnValue = _AddScreenshotToLibrary( Self, pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			using var str__pchFilename = new Utf8StringToNative( pchFilename );
+			using var str__pchThumbnailFilename = new Utf8StringToNative( pchThumbnailFilename );
+			var returnValue = _AddScreenshotToLibrary( Self, str__pchFilename.Pointer, str__pchThumbnailFilename.Pointer, nWidth, nHeight );
 			return returnValue;
 		}
 		
@@ -66,12 +68,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamScreenshots_SetLocation", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetLocation( IntPtr self, ScreenshotHandle hScreenshot, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation );
+		private static extern bool _SetLocation( IntPtr self, ScreenshotHandle hScreenshot, IntPtr pchLocation );
 		
 		#endregion
-		internal bool SetLocation( ScreenshotHandle hScreenshot, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation )
+		internal bool SetLocation( ScreenshotHandle hScreenshot, string pchLocation )
 		{
-			var returnValue = _SetLocation( Self, hScreenshot, pchLocation );
+			using var str__pchLocation = new Utf8StringToNative( pchLocation );
+			var returnValue = _SetLocation( Self, hScreenshot, str__pchLocation.Pointer );
 			return returnValue;
 		}
 		
@@ -113,12 +116,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamScreenshots_AddVRScreenshotToLibrary", CallingConvention = Platform.CC)]
-		private static extern ScreenshotHandle _AddVRScreenshotToLibrary( IntPtr self, VRScreenshotType eType, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVRFilename );
+		private static extern ScreenshotHandle _AddVRScreenshotToLibrary( IntPtr self, VRScreenshotType eType, IntPtr pchFilename, IntPtr pchVRFilename );
 		
 		#endregion
-		internal ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVRFilename )
+		internal ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType, string pchFilename, string pchVRFilename )
 		{
-			var returnValue = _AddVRScreenshotToLibrary( Self, eType, pchFilename, pchVRFilename );
+			using var str__pchFilename = new Utf8StringToNative( pchFilename );
+			using var str__pchVRFilename = new Utf8StringToNative( pchVRFilename );
+			var returnValue = _AddVRScreenshotToLibrary( Self, eType, str__pchFilename.Pointer, str__pchVRFilename.Pointer );
 			return returnValue;
 		}
 		

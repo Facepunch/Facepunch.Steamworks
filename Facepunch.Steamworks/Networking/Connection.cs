@@ -124,7 +124,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public unsafe Result SendMessage( string str, SendType sendType = SendType.Reliable, ushort laneIndex = 0 )
 		{
-			var bytes = System.Text.Encoding.UTF8.GetBytes( str );
+			var bytes = Utility.Utf8NoBom.GetBytes( str );
 			return SendMessage( bytes, sendType, laneIndex );
 		}
 

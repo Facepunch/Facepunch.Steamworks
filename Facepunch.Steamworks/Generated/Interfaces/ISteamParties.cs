@@ -51,9 +51,9 @@ namespace Steamworks
 		#endregion
 		internal bool GetBeaconDetails( PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, out string pchMetadata )
 		{
-			using var mempchMetadata = Helpers.TakeMemory();
-			var returnValue = _GetBeaconDetails( Self, ulBeaconID, ref pSteamIDBeaconOwner, ref pLocation, mempchMetadata, (1024 * 32) );
-			pchMetadata = Helpers.MemoryToString( mempchMetadata );
+			using var mem__pchMetadata = Helpers.TakeMemory();
+			var returnValue = _GetBeaconDetails( Self, ulBeaconID, ref pSteamIDBeaconOwner, ref pLocation, mem__pchMetadata, (1024 * 32) );
+			pchMetadata = Helpers.MemoryToString( mem__pchMetadata );
 			return returnValue;
 		}
 		
@@ -94,12 +94,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_CreateBeacon", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _CreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata );
+		private static extern SteamAPICall_t _CreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, IntPtr pchConnectString, IntPtr pchMetadata );
 		
 		#endregion
-		internal CallResult<CreateBeaconCallback_t> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
+		internal CallResult<CreateBeaconCallback_t> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, string pchConnectString, string pchMetadata )
 		{
-			var returnValue = _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata );
+			using var str__pchConnectString = new Utf8StringToNative( pchConnectString );
+			using var str__pchMetadata = new Utf8StringToNative( pchMetadata );
+			var returnValue = _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, str__pchConnectString.Pointer, str__pchMetadata.Pointer );
 			return new CallResult<CreateBeaconCallback_t>( returnValue, IsServer );
 		}
 		
@@ -154,9 +156,9 @@ namespace Steamworks
 		#endregion
 		internal bool GetBeaconLocationData( SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, out string pchDataStringOut )
 		{
-			using var mempchDataStringOut = Helpers.TakeMemory();
-			var returnValue = _GetBeaconLocationData( Self, BeaconLocation, eData, mempchDataStringOut, (1024 * 32) );
-			pchDataStringOut = Helpers.MemoryToString( mempchDataStringOut );
+			using var mem__pchDataStringOut = Helpers.TakeMemory();
+			var returnValue = _GetBeaconLocationData( Self, BeaconLocation, eData, mem__pchDataStringOut, (1024 * 32) );
+			pchDataStringOut = Helpers.MemoryToString( mem__pchDataStringOut );
 			return returnValue;
 		}
 		

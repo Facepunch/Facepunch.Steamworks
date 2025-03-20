@@ -23,12 +23,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameSearch_AddGameSearchParams", CallingConvention = Platform.CC)]
-		private static extern GameSearchErrorCode_t _AddGameSearchParams( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToFind, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValuesToFind );
+		private static extern GameSearchErrorCode_t _AddGameSearchParams( IntPtr self, IntPtr pchKeyToFind, IntPtr pchValuesToFind );
 		
 		#endregion
-		internal GameSearchErrorCode_t AddGameSearchParams( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToFind, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValuesToFind )
+		internal GameSearchErrorCode_t AddGameSearchParams( string pchKeyToFind, string pchValuesToFind )
 		{
-			var returnValue = _AddGameSearchParams( Self, pchKeyToFind, pchValuesToFind );
+			using var str__pchKeyToFind = new Utf8StringToNative( pchKeyToFind );
+			using var str__pchValuesToFind = new Utf8StringToNative( pchValuesToFind );
+			var returnValue = _AddGameSearchParams( Self, str__pchKeyToFind.Pointer, str__pchValuesToFind.Pointer );
 			return returnValue;
 		}
 		
@@ -83,9 +85,9 @@ namespace Steamworks
 		#endregion
 		internal GameSearchErrorCode_t RetrieveConnectionDetails( SteamId steamIDHost, out string pchConnectionDetails )
 		{
-			using var mempchConnectionDetails = Helpers.TakeMemory();
-			var returnValue = _RetrieveConnectionDetails( Self, steamIDHost, mempchConnectionDetails, (1024 * 32) );
-			pchConnectionDetails = Helpers.MemoryToString( mempchConnectionDetails );
+			using var mem__pchConnectionDetails = Helpers.TakeMemory();
+			var returnValue = _RetrieveConnectionDetails( Self, steamIDHost, mem__pchConnectionDetails, (1024 * 32) );
+			pchConnectionDetails = Helpers.MemoryToString( mem__pchConnectionDetails );
 			return returnValue;
 		}
 		
@@ -102,23 +104,26 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameSearch_SetGameHostParams", CallingConvention = Platform.CC)]
-		private static extern GameSearchErrorCode_t _SetGameHostParams( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
+		private static extern GameSearchErrorCode_t _SetGameHostParams( IntPtr self, IntPtr pchKey, IntPtr pchValue );
 		
 		#endregion
-		internal GameSearchErrorCode_t SetGameHostParams( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
+		internal GameSearchErrorCode_t SetGameHostParams( string pchKey, string pchValue )
 		{
-			var returnValue = _SetGameHostParams( Self, pchKey, pchValue );
+			using var str__pchKey = new Utf8StringToNative( pchKey );
+			using var str__pchValue = new Utf8StringToNative( pchValue );
+			var returnValue = _SetGameHostParams( Self, str__pchKey.Pointer, str__pchValue.Pointer );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameSearch_SetConnectionDetails", CallingConvention = Platform.CC)]
-		private static extern GameSearchErrorCode_t _SetConnectionDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectionDetails, int cubConnectionDetails );
+		private static extern GameSearchErrorCode_t _SetConnectionDetails( IntPtr self, IntPtr pchConnectionDetails, int cubConnectionDetails );
 		
 		#endregion
-		internal GameSearchErrorCode_t SetConnectionDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectionDetails, int cubConnectionDetails )
+		internal GameSearchErrorCode_t SetConnectionDetails( string pchConnectionDetails, int cubConnectionDetails )
 		{
-			var returnValue = _SetConnectionDetails( Self, pchConnectionDetails, cubConnectionDetails );
+			using var str__pchConnectionDetails = new Utf8StringToNative( pchConnectionDetails );
+			var returnValue = _SetConnectionDetails( Self, str__pchConnectionDetails.Pointer, cubConnectionDetails );
 			return returnValue;
 		}
 		

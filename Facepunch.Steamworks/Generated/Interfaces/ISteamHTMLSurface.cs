@@ -47,12 +47,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_CreateBrowser", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _CreateBrowser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS );
+		private static extern SteamAPICall_t _CreateBrowser( IntPtr self, IntPtr pchUserAgent, IntPtr pchUserCSS );
 		
 		#endregion
-		internal CallResult<HTML_BrowserReady_t> CreateBrowser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS )
+		internal CallResult<HTML_BrowserReady_t> CreateBrowser( string pchUserAgent, string pchUserCSS )
 		{
-			var returnValue = _CreateBrowser( Self, pchUserAgent, pchUserCSS );
+			using var str__pchUserAgent = new Utf8StringToNative( pchUserAgent );
+			using var str__pchUserCSS = new Utf8StringToNative( pchUserCSS );
+			var returnValue = _CreateBrowser( Self, str__pchUserAgent.Pointer, str__pchUserCSS.Pointer );
 			return new CallResult<HTML_BrowserReady_t>( returnValue, IsServer );
 		}
 		
@@ -68,12 +70,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_LoadURL", CallingConvention = Platform.CC)]
-		private static extern void _LoadURL( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchURL, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPostData );
+		private static extern void _LoadURL( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr pchURL, IntPtr pchPostData );
 		
 		#endregion
-		internal void LoadURL( HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchURL, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPostData )
+		internal void LoadURL( HHTMLBrowser unBrowserHandle, string pchURL, string pchPostData )
 		{
-			_LoadURL( Self, unBrowserHandle, pchURL, pchPostData );
+			using var str__pchURL = new Utf8StringToNative( pchURL );
+			using var str__pchPostData = new Utf8StringToNative( pchPostData );
+			_LoadURL( Self, unBrowserHandle, str__pchURL.Pointer, str__pchPostData.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -128,22 +132,25 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_AddHeader", CallingConvention = Platform.CC)]
-		private static extern void _AddHeader( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
+		private static extern void _AddHeader( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr pchKey, IntPtr pchValue );
 		
 		#endregion
-		internal void AddHeader( HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
+		internal void AddHeader( HHTMLBrowser unBrowserHandle, string pchKey, string pchValue )
 		{
-			_AddHeader( Self, unBrowserHandle, pchKey, pchValue );
+			using var str__pchKey = new Utf8StringToNative( pchKey );
+			using var str__pchValue = new Utf8StringToNative( pchValue );
+			_AddHeader( Self, unBrowserHandle, str__pchKey.Pointer, str__pchValue.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_ExecuteJavascript", CallingConvention = Platform.CC)]
-		private static extern void _ExecuteJavascript( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchScript );
+		private static extern void _ExecuteJavascript( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr pchScript );
 		
 		#endregion
-		internal void ExecuteJavascript( HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchScript )
+		internal void ExecuteJavascript( HHTMLBrowser unBrowserHandle, string pchScript )
 		{
-			_ExecuteJavascript( Self, unBrowserHandle, pchScript );
+			using var str__pchScript = new Utf8StringToNative( pchScript );
+			_ExecuteJavascript( Self, unBrowserHandle, str__pchScript.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -288,12 +295,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Find", CallingConvention = Platform.CC)]
-		private static extern void _Find( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSearchStr, [MarshalAs( UnmanagedType.U1 )] bool bCurrentlyInFind, [MarshalAs( UnmanagedType.U1 )] bool bReverse );
+		private static extern void _Find( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr pchSearchStr, [MarshalAs( UnmanagedType.U1 )] bool bCurrentlyInFind, [MarshalAs( UnmanagedType.U1 )] bool bReverse );
 		
 		#endregion
-		internal void Find( HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSearchStr, [MarshalAs( UnmanagedType.U1 )] bool bCurrentlyInFind, [MarshalAs( UnmanagedType.U1 )] bool bReverse )
+		internal void Find( HHTMLBrowser unBrowserHandle, string pchSearchStr, [MarshalAs( UnmanagedType.U1 )] bool bCurrentlyInFind, [MarshalAs( UnmanagedType.U1 )] bool bReverse )
 		{
-			_Find( Self, unBrowserHandle, pchSearchStr, bCurrentlyInFind, bReverse );
+			using var str__pchSearchStr = new Utf8StringToNative( pchSearchStr );
+			_Find( Self, unBrowserHandle, str__pchSearchStr.Pointer, bCurrentlyInFind, bReverse );
 		}
 		
 		#region FunctionMeta
@@ -318,12 +326,16 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetCookie", CallingConvention = Platform.CC)]
-		private static extern void _SetCookie( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchHostname, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPath, RTime32 nExpires, [MarshalAs( UnmanagedType.U1 )] bool bSecure, [MarshalAs( UnmanagedType.U1 )] bool bHTTPOnly );
+		private static extern void _SetCookie( IntPtr self, IntPtr pchHostname, IntPtr pchKey, IntPtr pchValue, IntPtr pchPath, RTime32 nExpires, [MarshalAs( UnmanagedType.U1 )] bool bSecure, [MarshalAs( UnmanagedType.U1 )] bool bHTTPOnly );
 		
 		#endregion
-		internal void SetCookie( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchHostname, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPath, RTime32 nExpires, [MarshalAs( UnmanagedType.U1 )] bool bSecure, [MarshalAs( UnmanagedType.U1 )] bool bHTTPOnly )
+		internal void SetCookie( string pchHostname, string pchKey, string pchValue, string pchPath, RTime32 nExpires, [MarshalAs( UnmanagedType.U1 )] bool bSecure, [MarshalAs( UnmanagedType.U1 )] bool bHTTPOnly )
 		{
-			_SetCookie( Self, pchHostname, pchKey, pchValue, pchPath, nExpires, bSecure, bHTTPOnly );
+			using var str__pchHostname = new Utf8StringToNative( pchHostname );
+			using var str__pchKey = new Utf8StringToNative( pchKey );
+			using var str__pchValue = new Utf8StringToNative( pchValue );
+			using var str__pchPath = new Utf8StringToNative( pchPath );
+			_SetCookie( Self, str__pchHostname.Pointer, str__pchKey.Pointer, str__pchValue.Pointer, str__pchPath.Pointer, nExpires, bSecure, bHTTPOnly );
 		}
 		
 		#region FunctionMeta
@@ -388,12 +400,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_FileLoadDialogResponse", CallingConvention = Platform.CC)]
-		private static extern void _FileLoadDialogResponse( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSelectedFiles );
+		private static extern void _FileLoadDialogResponse( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr pchSelectedFiles );
 		
 		#endregion
-		internal void FileLoadDialogResponse( HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSelectedFiles )
+		internal void FileLoadDialogResponse( HHTMLBrowser unBrowserHandle, string pchSelectedFiles )
 		{
-			_FileLoadDialogResponse( Self, unBrowserHandle, pchSelectedFiles );
+			using var str__pchSelectedFiles = new Utf8StringToNative( pchSelectedFiles );
+			_FileLoadDialogResponse( Self, unBrowserHandle, str__pchSelectedFiles.Pointer );
 		}
 		
 	}

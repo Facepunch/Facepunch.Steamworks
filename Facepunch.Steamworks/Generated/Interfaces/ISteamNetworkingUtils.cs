@@ -93,20 +93,21 @@ namespace Steamworks
 		#endregion
 		internal void ConvertPingLocationToString( ref NetPingLocation location, out string pszBuf )
 		{
-			using var mempszBuf = Helpers.TakeMemory();
-			_ConvertPingLocationToString( Self, ref location, mempszBuf, (1024 * 32) );
-			pszBuf = Helpers.MemoryToString( mempszBuf );
+			using var mem__pszBuf = Helpers.TakeMemory();
+			_ConvertPingLocationToString( Self, ref location, mem__pszBuf, (1024 * 32) );
+			pszBuf = Helpers.MemoryToString( mem__pszBuf );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_ParsePingLocationString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _ParsePingLocationString( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref NetPingLocation result );
+		private static extern bool _ParsePingLocationString( IntPtr self, IntPtr pszString, ref NetPingLocation result );
 		
 		#endregion
-		internal bool ParsePingLocationString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref NetPingLocation result )
+		internal bool ParsePingLocationString( string pszString, ref NetPingLocation result )
 		{
-			var returnValue = _ParsePingLocationString( Self, pszString, ref result );
+			using var str__pszString = new Utf8StringToNative( pszString );
+			var returnValue = _ParsePingLocationString( Self, str__pszString.Pointer, ref result );
 			return returnValue;
 		}
 		
@@ -248,12 +249,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetGlobalConfigValueString( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
+		private static extern bool _SetGlobalConfigValueString( IntPtr self, NetConfig eValue, IntPtr val );
 		
 		#endregion
-		internal bool SetGlobalConfigValueString( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
+		internal bool SetGlobalConfigValueString( NetConfig eValue, string val )
 		{
-			var returnValue = _SetGlobalConfigValueString( Self, eValue, val );
+			using var str__val = new Utf8StringToNative( val );
+			var returnValue = _SetGlobalConfigValueString( Self, eValue, str__val.Pointer );
 			return returnValue;
 		}
 		
@@ -296,12 +298,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConnectionConfigValueString( IntPtr self, Connection hConn, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
+		private static extern bool _SetConnectionConfigValueString( IntPtr self, Connection hConn, NetConfig eValue, IntPtr val );
 		
 		#endregion
-		internal bool SetConnectionConfigValueString( Connection hConn, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
+		internal bool SetConnectionConfigValueString( Connection hConn, NetConfig eValue, string val )
 		{
-			var returnValue = _SetConnectionConfigValueString( Self, hConn, eValue, val );
+			using var str__val = new Utf8StringToNative( val );
+			var returnValue = _SetConnectionConfigValueString( Self, hConn, eValue, str__val.Pointer );
 			return returnValue;
 		}
 		
@@ -441,20 +444,21 @@ namespace Steamworks
 		#endregion
 		internal void SteamNetworkingIPAddr_ToString( ref NetAddress addr, out string buf, [MarshalAs( UnmanagedType.U1 )] bool bWithPort )
 		{
-			using var membuf = Helpers.TakeMemory();
-			_SteamNetworkingIPAddr_ToString( Self, ref addr, membuf, (1024 * 32), bWithPort );
-			buf = Helpers.MemoryToString( membuf );
+			using var mem__buf = Helpers.TakeMemory();
+			_SteamNetworkingIPAddr_ToString( Self, ref addr, mem__buf, (1024 * 32), bWithPort );
+			buf = Helpers.MemoryToString( mem__buf );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_ParseString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SteamNetworkingIPAddr_ParseString( IntPtr self, ref NetAddress pAddr, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszStr );
+		private static extern bool _SteamNetworkingIPAddr_ParseString( IntPtr self, ref NetAddress pAddr, IntPtr pszStr );
 		
 		#endregion
-		internal bool SteamNetworkingIPAddr_ParseString( ref NetAddress pAddr, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszStr )
+		internal bool SteamNetworkingIPAddr_ParseString( ref NetAddress pAddr, string pszStr )
 		{
-			var returnValue = _SteamNetworkingIPAddr_ParseString( Self, ref pAddr, pszStr );
+			using var str__pszStr = new Utf8StringToNative( pszStr );
+			var returnValue = _SteamNetworkingIPAddr_ParseString( Self, ref pAddr, str__pszStr.Pointer );
 			return returnValue;
 		}
 		
@@ -476,20 +480,21 @@ namespace Steamworks
 		#endregion
 		internal void SteamNetworkingIdentity_ToString( ref NetIdentity identity, out string buf )
 		{
-			using var membuf = Helpers.TakeMemory();
-			_SteamNetworkingIdentity_ToString( Self, ref identity, membuf, (1024 * 32) );
-			buf = Helpers.MemoryToString( membuf );
+			using var mem__buf = Helpers.TakeMemory();
+			_SteamNetworkingIdentity_ToString( Self, ref identity, mem__buf, (1024 * 32) );
+			buf = Helpers.MemoryToString( mem__buf );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SteamNetworkingIdentity_ParseString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SteamNetworkingIdentity_ParseString( IntPtr self, ref NetIdentity pIdentity, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszStr );
+		private static extern bool _SteamNetworkingIdentity_ParseString( IntPtr self, ref NetIdentity pIdentity, IntPtr pszStr );
 		
 		#endregion
-		internal bool SteamNetworkingIdentity_ParseString( ref NetIdentity pIdentity, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszStr )
+		internal bool SteamNetworkingIdentity_ParseString( ref NetIdentity pIdentity, string pszStr )
 		{
-			var returnValue = _SteamNetworkingIdentity_ParseString( Self, ref pIdentity, pszStr );
+			using var str__pszStr = new Utf8StringToNative( pszStr );
+			var returnValue = _SteamNetworkingIdentity_ParseString( Self, ref pIdentity, str__pszStr.Pointer );
 			return returnValue;
 		}
 		

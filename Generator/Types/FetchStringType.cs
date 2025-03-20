@@ -22,6 +22,6 @@ internal class FetchStringType : BaseType
 
 	public override string AsNativeArgument() => $"IntPtr {VarName}";
 
-	public override string AsCallArgument() => $"mem{VarName}";
+	public override string AsCallArgument() => $"mem__{VarName}";
 	public override string Ref => "";
 }

@@ -115,7 +115,7 @@ namespace Steamworks
 			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
 			{
 				// We're only sending strings, so it's fine to read this like this
-				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );
+				var str = Utility.Utf8NoBom.GetString( (byte*)data, size );
 
 				Console.WriteLine( $"[SOCKET][{connection}[{identity}][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
 

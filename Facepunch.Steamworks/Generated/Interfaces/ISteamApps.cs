@@ -157,9 +157,9 @@ namespace Steamworks
 		#endregion
 		internal bool BGetDLCDataByIndex( int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, out string pchName )
 		{
-			using var mempchName = Helpers.TakeMemory();
-			var returnValue = _BGetDLCDataByIndex( Self, iDLC, ref pAppID, ref pbAvailable, mempchName, (1024 * 32) );
-			pchName = Helpers.MemoryToString( mempchName );
+			using var mem__pchName = Helpers.TakeMemory();
+			var returnValue = _BGetDLCDataByIndex( Self, iDLC, ref pAppID, ref pbAvailable, mem__pchName, (1024 * 32) );
+			pchName = Helpers.MemoryToString( mem__pchName );
 			return returnValue;
 		}
 		
@@ -201,9 +201,9 @@ namespace Steamworks
 		#endregion
 		internal bool GetCurrentBetaName( out string pchName )
 		{
-			using var mempchName = Helpers.TakeMemory();
-			var returnValue = _GetCurrentBetaName( Self, mempchName, (1024 * 32) );
-			pchName = Helpers.MemoryToString( mempchName );
+			using var mem__pchName = Helpers.TakeMemory();
+			var returnValue = _GetCurrentBetaName( Self, mem__pchName, (1024 * 32) );
+			pchName = Helpers.MemoryToString( mem__pchName );
 			return returnValue;
 		}
 		
@@ -237,9 +237,9 @@ namespace Steamworks
 		#endregion
 		internal uint GetAppInstallDir( AppId appID, out string pchFolder )
 		{
-			using var mempchFolder = Helpers.TakeMemory();
-			var returnValue = _GetAppInstallDir( Self, appID, mempchFolder, (1024 * 32) );
-			pchFolder = Helpers.MemoryToString( mempchFolder );
+			using var mem__pchFolder = Helpers.TakeMemory();
+			var returnValue = _GetAppInstallDir( Self, appID, mem__pchFolder, (1024 * 32) );
+			pchFolder = Helpers.MemoryToString( mem__pchFolder );
 			return returnValue;
 		}
 		
@@ -268,12 +268,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_GetLaunchQueryParam", CallingConvention = Platform.CC)]
-		private static extern Utf8StringPointer _GetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
+		private static extern Utf8StringPointer _GetLaunchQueryParam( IntPtr self, IntPtr pchKey );
 		
 		#endregion
-		internal string GetLaunchQueryParam( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
+		internal string GetLaunchQueryParam( string pchKey )
 		{
-			var returnValue = _GetLaunchQueryParam( Self, pchKey );
+			using var str__pchKey = new Utf8StringToNative( pchKey );
+			var returnValue = _GetLaunchQueryParam( Self, str__pchKey.Pointer );
 			return returnValue;
 		}
 		
@@ -312,12 +313,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_GetFileDetails", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _GetFileDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName );
+		private static extern SteamAPICall_t _GetFileDetails( IntPtr self, IntPtr pszFileName );
 		
 		#endregion
-		internal CallResult<FileDetailsResult_t> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName )
+		internal CallResult<FileDetailsResult_t> GetFileDetails( string pszFileName )
 		{
-			var returnValue = _GetFileDetails( Self, pszFileName );
+			using var str__pszFileName = new Utf8StringToNative( pszFileName );
+			var returnValue = _GetFileDetails( Self, str__pszFileName.Pointer );
 			return new CallResult<FileDetailsResult_t>( returnValue, IsServer );
 		}
 		
@@ -328,9 +330,9 @@ namespace Steamworks
 		#endregion
 		internal int GetLaunchCommandLine( out string pszCommandLine )
 		{
-			using var mempszCommandLine = Helpers.TakeMemory();
-			var returnValue = _GetLaunchCommandLine( Self, mempszCommandLine, (1024 * 32) );
-			pszCommandLine = Helpers.MemoryToString( mempszCommandLine );
+			using var mem__pszCommandLine = Helpers.TakeMemory();
+			var returnValue = _GetLaunchCommandLine( Self, mem__pszCommandLine, (1024 * 32) );
+			pszCommandLine = Helpers.MemoryToString( mem__pszCommandLine );
 			return returnValue;
 		}
 		
@@ -389,23 +391,24 @@ namespace Steamworks
 		#endregion
 		internal bool GetBetaInfo( int iBetaIndex, ref uint punFlags, ref uint punBuildID, out string pchBetaName, out string pchDescription )
 		{
-			using var mempchBetaName = Helpers.TakeMemory();
-			using var mempchDescription = Helpers.TakeMemory();
-			var returnValue = _GetBetaInfo( Self, iBetaIndex, ref punFlags, ref punBuildID, mempchBetaName, (1024 * 32), mempchDescription, (1024 * 32) );
-			pchBetaName = Helpers.MemoryToString( mempchBetaName );
-			pchDescription = Helpers.MemoryToString( mempchDescription );
+			using var mem__pchBetaName = Helpers.TakeMemory();
+			using var mem__pchDescription = Helpers.TakeMemory();
+			var returnValue = _GetBetaInfo( Self, iBetaIndex, ref punFlags, ref punBuildID, mem__pchBetaName, (1024 * 32), mem__pchDescription, (1024 * 32) );
+			pchBetaName = Helpers.MemoryToString( mem__pchBetaName );
+			pchDescription = Helpers.MemoryToString( mem__pchDescription );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_SetActiveBeta", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetActiveBeta( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchBetaName );
+		private static extern bool _SetActiveBeta( IntPtr self, IntPtr pchBetaName );
 		
 		#endregion
-		internal bool SetActiveBeta( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchBetaName )
+		internal bool SetActiveBeta( string pchBetaName )
 		{
-			var returnValue = _SetActiveBeta( Self, pchBetaName );
+			using var str__pchBetaName = new Utf8StringToNative( pchBetaName );
+			var returnValue = _SetActiveBeta( Self, str__pchBetaName.Pointer );
 			return returnValue;
 		}
 		

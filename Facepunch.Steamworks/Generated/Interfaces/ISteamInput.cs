@@ -48,12 +48,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_SetInputActionManifestFilePath", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetInputActionManifestFilePath( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputActionManifestAbsolutePath );
+		private static extern bool _SetInputActionManifestFilePath( IntPtr self, IntPtr pchInputActionManifestAbsolutePath );
 		
 		#endregion
-		internal bool SetInputActionManifestFilePath( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputActionManifestAbsolutePath )
+		internal bool SetInputActionManifestFilePath( string pchInputActionManifestAbsolutePath )
 		{
-			var returnValue = _SetInputActionManifestFilePath( Self, pchInputActionManifestAbsolutePath );
+			using var str__pchInputActionManifestAbsolutePath = new Utf8StringToNative( pchInputActionManifestAbsolutePath );
+			var returnValue = _SetInputActionManifestFilePath( Self, str__pchInputActionManifestAbsolutePath.Pointer );
 			return returnValue;
 		}
 		
@@ -114,12 +115,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetActionSetHandle", CallingConvention = Platform.CC)]
-		private static extern InputActionSetHandle_t _GetActionSetHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName );
+		private static extern InputActionSetHandle_t _GetActionSetHandle( IntPtr self, IntPtr pszActionSetName );
 		
 		#endregion
-		internal InputActionSetHandle_t GetActionSetHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName )
+		internal InputActionSetHandle_t GetActionSetHandle( string pszActionSetName )
 		{
-			var returnValue = _GetActionSetHandle( Self, pszActionSetName );
+			using var str__pszActionSetName = new Utf8StringToNative( pszActionSetName );
+			var returnValue = _GetActionSetHandle( Self, str__pszActionSetName.Pointer );
 			return returnValue;
 		}
 		
@@ -187,12 +189,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDigitalActionHandle", CallingConvention = Platform.CC)]
-		private static extern InputDigitalActionHandle_t _GetDigitalActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
+		private static extern InputDigitalActionHandle_t _GetDigitalActionHandle( IntPtr self, IntPtr pszActionName );
 		
 		#endregion
-		internal InputDigitalActionHandle_t GetDigitalActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
+		internal InputDigitalActionHandle_t GetDigitalActionHandle( string pszActionName )
 		{
-			var returnValue = _GetDigitalActionHandle( Self, pszActionName );
+			using var str__pszActionName = new Utf8StringToNative( pszActionName );
+			var returnValue = _GetDigitalActionHandle( Self, str__pszActionName.Pointer );
 			return returnValue;
 		}
 		
@@ -231,12 +234,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionHandle", CallingConvention = Platform.CC)]
-		private static extern InputAnalogActionHandle_t _GetAnalogActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName );
+		private static extern InputAnalogActionHandle_t _GetAnalogActionHandle( IntPtr self, IntPtr pszActionName );
 		
 		#endregion
-		internal InputAnalogActionHandle_t GetAnalogActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
+		internal InputAnalogActionHandle_t GetAnalogActionHandle( string pszActionName )
 		{
-			var returnValue = _GetAnalogActionHandle( Self, pszActionName );
+			using var str__pszActionName = new Utf8StringToNative( pszActionName );
+			var returnValue = _GetAnalogActionHandle( Self, str__pszActionName.Pointer );
 			return returnValue;
 		}
 		

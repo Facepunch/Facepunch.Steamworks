@@ -24,12 +24,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _RegisterSteamMusicRemote( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName );
+		private static extern bool _RegisterSteamMusicRemote( IntPtr self, IntPtr pchName );
 		
 		#endregion
-		internal bool RegisterSteamMusicRemote( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
+		internal bool RegisterSteamMusicRemote( string pchName )
 		{
-			var returnValue = _RegisterSteamMusicRemote( Self, pchName );
+			using var str__pchName = new Utf8StringToNative( pchName );
+			var returnValue = _RegisterSteamMusicRemote( Self, str__pchName.Pointer );
 			return returnValue;
 		}
 		
@@ -72,12 +73,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_SetDisplayName", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetDisplayName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDisplayName );
+		private static extern bool _SetDisplayName( IntPtr self, IntPtr pchDisplayName );
 		
 		#endregion
-		internal bool SetDisplayName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDisplayName )
+		internal bool SetDisplayName( string pchDisplayName )
 		{
-			var returnValue = _SetDisplayName( Self, pchDisplayName );
+			using var str__pchDisplayName = new Utf8StringToNative( pchDisplayName );
+			var returnValue = _SetDisplayName( Self, str__pchDisplayName.Pointer );
 			return returnValue;
 		}
 		
@@ -240,12 +242,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryText", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _UpdateCurrentEntryText( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchText );
+		private static extern bool _UpdateCurrentEntryText( IntPtr self, IntPtr pchText );
 		
 		#endregion
-		internal bool UpdateCurrentEntryText( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchText )
+		internal bool UpdateCurrentEntryText( string pchText )
 		{
-			var returnValue = _UpdateCurrentEntryText( Self, pchText );
+			using var str__pchText = new Utf8StringToNative( pchText );
+			var returnValue = _UpdateCurrentEntryText( Self, str__pchText.Pointer );
 			return returnValue;
 		}
 		
@@ -312,12 +315,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_SetQueueEntry", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetQueueEntry( IntPtr self, int nID, int nPosition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchEntryText );
+		private static extern bool _SetQueueEntry( IntPtr self, int nID, int nPosition, IntPtr pchEntryText );
 		
 		#endregion
-		internal bool SetQueueEntry( int nID, int nPosition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchEntryText )
+		internal bool SetQueueEntry( int nID, int nPosition, string pchEntryText )
 		{
-			var returnValue = _SetQueueEntry( Self, nID, nPosition, pchEntryText );
+			using var str__pchEntryText = new Utf8StringToNative( pchEntryText );
+			var returnValue = _SetQueueEntry( Self, nID, nPosition, str__pchEntryText.Pointer );
 			return returnValue;
 		}
 		
@@ -372,12 +376,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_SetPlaylistEntry", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetPlaylistEntry( IntPtr self, int nID, int nPosition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchEntryText );
+		private static extern bool _SetPlaylistEntry( IntPtr self, int nID, int nPosition, IntPtr pchEntryText );
 		
 		#endregion
-		internal bool SetPlaylistEntry( int nID, int nPosition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchEntryText )
+		internal bool SetPlaylistEntry( int nID, int nPosition, string pchEntryText )
 		{
-			var returnValue = _SetPlaylistEntry( Self, nID, nPosition, pchEntryText );
+			using var str__pchEntryText = new Utf8StringToNative( pchEntryText );
+			var returnValue = _SetPlaylistEntry( Self, nID, nPosition, str__pchEntryText.Pointer );
 			return returnValue;
 		}
 		

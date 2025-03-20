@@ -16,6 +16,9 @@ internal class ConstCharType : BaseType
 {
 	public override string TypeName => $"string";
 	public override string TypeNameFrom => $"Utf8StringPointer";
-	public override string AsArgument() => $"[MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] {Ref}{TypeName} {VarName}";
+	public override string AsArgument() => $"{Ref}string {VarName}";
+	public override string AsNativeArgument() => $"{Ref}IntPtr {VarName}";
+	public override string AsCallArgument() => $"str__{VarName}.Pointer";
+
 	public override string Ref => "";
 }

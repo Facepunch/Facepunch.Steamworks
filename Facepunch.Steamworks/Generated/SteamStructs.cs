@@ -35,13 +35,13 @@ namespace Steamworks.Data
 		internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool DoNotRefresh; // m_bDoNotRefresh bool
-		internal string GameDirUTF8() => System.Text.Encoding.UTF8.GetString( GameDir, 0, System.Array.IndexOf<byte>( GameDir, 0 ) );
+		internal string GameDirUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameDir, 0, System.Array.IndexOf<byte>( GameDir, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szGameDir
 		internal byte[] GameDir; // m_szGameDir char [32]
-		internal string MapUTF8() => System.Text.Encoding.UTF8.GetString( Map, 0, System.Array.IndexOf<byte>( Map, 0 ) );
+		internal string MapUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Map, 0, System.Array.IndexOf<byte>( Map, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szMap
 		internal byte[] Map; // m_szMap char [32]
-		internal string GameDescriptionUTF8() => System.Text.Encoding.UTF8.GetString( GameDescription, 0, System.Array.IndexOf<byte>( GameDescription, 0 ) );
+		internal string GameDescriptionUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameDescription, 0, System.Array.IndexOf<byte>( GameDescription, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szGameDescription
 		internal byte[] GameDescription; // m_szGameDescription char [64]
 		internal uint AppID; // m_nAppID uint32
@@ -54,10 +54,10 @@ namespace Steamworks.Data
 		internal bool Secure; // m_bSecure bool
 		internal uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
 		internal int ServerVersion; // m_nServerVersion int
-		internal string ServerNameUTF8() => System.Text.Encoding.UTF8.GetString( ServerName, 0, System.Array.IndexOf<byte>( ServerName, 0 ) );
+		internal string ServerNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( ServerName, 0, System.Array.IndexOf<byte>( ServerName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szServerName
 		internal byte[] ServerName; // m_szServerName char [64]
-		internal string GameTagsUTF8() => System.Text.Encoding.UTF8.GetString( GameTags, 0, System.Array.IndexOf<byte>( GameTags, 0 ) );
+		internal string GameTagsUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameTags, 0, System.Array.IndexOf<byte>( GameTags, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szGameTags
 		internal byte[] GameTags; // m_szGameTags char [128]
 		internal ulong SteamID; // m_steamID CSteamID
@@ -122,10 +122,10 @@ namespace Steamworks.Data
 		internal WorkshopFileType FileType; // m_eFileType EWorkshopFileType
 		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-		internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+		internal string TitleUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
 		internal byte[] Title; // m_rgchTitle char [129]
-		internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+		internal string DescriptionUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
 		internal byte[] Description; // m_rgchDescription char [8000]
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -139,17 +139,17 @@ namespace Steamworks.Data
 		internal bool AcceptedForUse; // m_bAcceptedForUse bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool TagsTruncated; // m_bTagsTruncated bool
-		internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+		internal string TagsUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
 		internal byte[] Tags; // m_rgchTags char [1025]
 		internal ulong File; // m_hFile UGCHandle_t
 		internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		internal string PchFileNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
 		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal int FileSize; // m_nFileSize int32
 		internal int PreviewFileSize; // m_nPreviewFileSize int32
-		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
 		internal byte[] URL; // m_rgchURL char [256]
 		internal uint VotesUp; // m_unVotesUp uint32
@@ -174,7 +174,7 @@ namespace Steamworks.Data
 	internal partial struct SteamDatagramHostedAddress
 	{
 		internal int CbSize; // m_cbSize int
-		internal string DataUTF8() => System.Text.Encoding.UTF8.GetString( Data, 0, System.Array.IndexOf<byte>( Data, 0 ) );
+		internal string DataUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Data, 0, System.Array.IndexOf<byte>( Data, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_data
 		internal byte[] Data; // m_data char [128]
 		
@@ -188,7 +188,7 @@ namespace Steamworks.Data
 		internal AppId AppID; // m_nAppID AppId_t
 		internal uint Time; // m_rtime RTime32
 		internal int CbAppData; // m_cbAppData int
-		internal string AppDataUTF8() => System.Text.Encoding.UTF8.GetString( AppData, 0, System.Array.IndexOf<byte>( AppData, 0 ) );
+		internal string AppDataUTF8() => Steamworks.Utility.Utf8NoBom.GetString( AppData, 0, System.Array.IndexOf<byte>( AppData, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2048)] // byte[] m_appData
 		internal byte[] AppData; // m_appData char [2048]
 		

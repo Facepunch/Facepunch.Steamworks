@@ -10,6 +10,8 @@ namespace Steamworks
 {
 	public static partial class Utility
     {
+	    public static readonly Encoding Utf8NoBom = new UTF8Encoding( false, false );
+
         static internal T ToType<T>( this IntPtr ptr )
         {
             if ( ptr == IntPtr.Zero )
@@ -111,7 +113,7 @@ namespace Steamworks
 					i++;
 				}
 
-				return Encoding.UTF8.GetString( readBuffer, 0, i );
+				return Utf8NoBom.GetString( readBuffer, 0, i );
 			}
 		}
 	}

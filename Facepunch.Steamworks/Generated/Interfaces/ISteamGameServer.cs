@@ -23,32 +23,35 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetProduct", CallingConvention = Platform.CC)]
-		private static extern void _SetProduct( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszProduct );
+		private static extern void _SetProduct( IntPtr self, IntPtr pszProduct );
 		
 		#endregion
-		internal void SetProduct( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszProduct )
+		internal void SetProduct( string pszProduct )
 		{
-			_SetProduct( Self, pszProduct );
+			using var str__pszProduct = new Utf8StringToNative( pszProduct );
+			_SetProduct( Self, str__pszProduct.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameDescription", CallingConvention = Platform.CC)]
-		private static extern void _SetGameDescription( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameDescription );
+		private static extern void _SetGameDescription( IntPtr self, IntPtr pszGameDescription );
 		
 		#endregion
-		internal void SetGameDescription( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameDescription )
+		internal void SetGameDescription( string pszGameDescription )
 		{
-			_SetGameDescription( Self, pszGameDescription );
+			using var str__pszGameDescription = new Utf8StringToNative( pszGameDescription );
+			_SetGameDescription( Self, str__pszGameDescription.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetModDir", CallingConvention = Platform.CC)]
-		private static extern void _SetModDir( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszModDir );
+		private static extern void _SetModDir( IntPtr self, IntPtr pszModDir );
 		
 		#endregion
-		internal void SetModDir( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszModDir )
+		internal void SetModDir( string pszModDir )
 		{
-			_SetModDir( Self, pszModDir );
+			using var str__pszModDir = new Utf8StringToNative( pszModDir );
+			_SetModDir( Self, str__pszModDir.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -63,12 +66,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_LogOn", CallingConvention = Platform.CC)]
-		private static extern void _LogOn( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszToken );
+		private static extern void _LogOn( IntPtr self, IntPtr pszToken );
 		
 		#endregion
-		internal void LogOn( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszToken )
+		internal void LogOn( string pszToken )
 		{
-			_LogOn( Self, pszToken );
+			using var str__pszToken = new Utf8StringToNative( pszToken );
+			_LogOn( Self, str__pszToken.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -160,22 +164,24 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetServerName", CallingConvention = Platform.CC)]
-		private static extern void _SetServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszServerName );
+		private static extern void _SetServerName( IntPtr self, IntPtr pszServerName );
 		
 		#endregion
-		internal void SetServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszServerName )
+		internal void SetServerName( string pszServerName )
 		{
-			_SetServerName( Self, pszServerName );
+			using var str__pszServerName = new Utf8StringToNative( pszServerName );
+			_SetServerName( Self, str__pszServerName.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetMapName", CallingConvention = Platform.CC)]
-		private static extern void _SetMapName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszMapName );
+		private static extern void _SetMapName( IntPtr self, IntPtr pszMapName );
 		
 		#endregion
-		internal void SetMapName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszMapName )
+		internal void SetMapName( string pszMapName )
 		{
-			_SetMapName( Self, pszMapName );
+			using var str__pszMapName = new Utf8StringToNative( pszMapName );
+			_SetMapName( Self, str__pszMapName.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -200,12 +206,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorServerName", CallingConvention = Platform.CC)]
-		private static extern void _SetSpectatorServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszSpectatorServerName );
+		private static extern void _SetSpectatorServerName( IntPtr self, IntPtr pszSpectatorServerName );
 		
 		#endregion
-		internal void SetSpectatorServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszSpectatorServerName )
+		internal void SetSpectatorServerName( string pszSpectatorServerName )
 		{
-			_SetSpectatorServerName( Self, pszSpectatorServerName );
+			using var str__pszSpectatorServerName = new Utf8StringToNative( pszSpectatorServerName );
+			_SetSpectatorServerName( Self, str__pszSpectatorServerName.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -220,42 +227,47 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetKeyValue", CallingConvention = Platform.CC)]
-		private static extern void _SetKeyValue( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue );
+		private static extern void _SetKeyValue( IntPtr self, IntPtr pKey, IntPtr pValue );
 		
 		#endregion
-		internal void SetKeyValue( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue )
+		internal void SetKeyValue( string pKey, string pValue )
 		{
-			_SetKeyValue( Self, pKey, pValue );
+			using var str__pKey = new Utf8StringToNative( pKey );
+			using var str__pValue = new Utf8StringToNative( pValue );
+			_SetKeyValue( Self, str__pKey.Pointer, str__pValue.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameTags", CallingConvention = Platform.CC)]
-		private static extern void _SetGameTags( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameTags );
+		private static extern void _SetGameTags( IntPtr self, IntPtr pchGameTags );
 		
 		#endregion
-		internal void SetGameTags( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameTags )
+		internal void SetGameTags( string pchGameTags )
 		{
-			_SetGameTags( Self, pchGameTags );
+			using var str__pchGameTags = new Utf8StringToNative( pchGameTags );
+			_SetGameTags( Self, str__pchGameTags.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameData", CallingConvention = Platform.CC)]
-		private static extern void _SetGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameData );
+		private static extern void _SetGameData( IntPtr self, IntPtr pchGameData );
 		
 		#endregion
-		internal void SetGameData( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameData )
+		internal void SetGameData( string pchGameData )
 		{
-			_SetGameData( Self, pchGameData );
+			using var str__pchGameData = new Utf8StringToNative( pchGameData );
+			_SetGameData( Self, str__pchGameData.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetRegion", CallingConvention = Platform.CC)]
-		private static extern void _SetRegion( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszRegion );
+		private static extern void _SetRegion( IntPtr self, IntPtr pszRegion );
 		
 		#endregion
-		internal void SetRegion( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszRegion )
+		internal void SetRegion( string pszRegion )
 		{
-			_SetRegion( Self, pszRegion );
+			using var str__pszRegion = new Utf8StringToNative( pszRegion );
+			_SetRegion( Self, str__pszRegion.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -446,12 +458,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _BUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore );
+		private static extern bool _BUpdateUserData( IntPtr self, SteamId steamIDUser, IntPtr pchPlayerName, uint uScore );
 		
 		#endregion
-		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore )
+		internal bool BUpdateUserData( SteamId steamIDUser, string pchPlayerName, uint uScore )
 		{
-			var returnValue = _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
+			using var str__pchPlayerName = new Utf8StringToNative( pchPlayerName );
+			var returnValue = _BUpdateUserData( Self, steamIDUser, str__pchPlayerName.Pointer, uScore );
 			return returnValue;
 		}
 		

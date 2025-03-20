@@ -245,7 +245,7 @@ namespace Steamworks
 		/// </summary>
 		public void SendMessages( Connection[] connections, int connectionCount, string str, SendType sendType = SendType.Reliable, Result[] results = null )
 		{
-			var bytes = System.Text.Encoding.UTF8.GetBytes( str );
+			var bytes = Utility.Utf8NoBom.GetBytes( str );
 			SendMessages( connections, connectionCount, bytes, sendType, results );
 		}
 

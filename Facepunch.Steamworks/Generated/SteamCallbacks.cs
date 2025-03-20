@@ -144,7 +144,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GameWebCallback_t : ICallbackData
 	{
-		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szURL
 		internal byte[] URL; // m_szURL char [256]
 		
@@ -158,7 +158,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct StoreAuthURLResponse_t : ICallbackData
 	{
-		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] // byte[] m_szURL
 		internal byte[] URL; // m_szURL char [512]
 		
@@ -254,10 +254,10 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GameServerChangeRequested_t : ICallbackData
 	{
-		internal string ServerUTF8() => System.Text.Encoding.UTF8.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
+		internal string ServerUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchServer
 		internal byte[] Server; // m_rgchServer char [64]
-		internal string PasswordUTF8() => System.Text.Encoding.UTF8.GetString( Password, 0, System.Array.IndexOf<byte>( Password, 0 ) );
+		internal string PasswordUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Password, 0, System.Array.IndexOf<byte>( Password, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPassword
 		internal byte[] Password; // m_rgchPassword char [64]
 		
@@ -327,7 +327,7 @@ namespace Steamworks.Data
 	internal struct GameRichPresenceJoinRequested_t : ICallbackData
 	{
 		internal ulong SteamIDFriend; // m_steamIDFriend CSteamID
-		internal string ConnectUTF8() => System.Text.Encoding.UTF8.GetString( Connect, 0, System.Array.IndexOf<byte>( Connect, 0 ) );
+		internal string ConnectUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Connect, 0, System.Array.IndexOf<byte>( Connect, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchConnect
 		internal byte[] Connect; // m_rgchConnect char [256]
 		
@@ -496,7 +496,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct OverlayBrowserProtocolNavigation_t : ICallbackData
 	{
-		internal string RgchURIUTF8() => System.Text.Encoding.UTF8.GetString( RgchURI, 0, System.Array.IndexOf<byte>( RgchURI, 0 ) );
+		internal string RgchURIUTF8() => Steamworks.Utility.Utf8NoBom.GetString( RgchURI, 0, System.Array.IndexOf<byte>( RgchURI, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)] // byte[] rgchURI
 		internal byte[] RgchURI; // rgchURI char [1024]
 		
@@ -949,7 +949,7 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner CSteamID
-		internal string ConnectStringUTF8() => System.Text.Encoding.UTF8.GetString( ConnectString, 0, System.Array.IndexOf<byte>( ConnectString, 0 ) );
+		internal string ConnectStringUTF8() => Steamworks.Utility.Utf8NoBom.GetString( ConnectString, 0, System.Array.IndexOf<byte>( ConnectString, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchConnectString
 		internal byte[] ConnectString; // m_rgchConnectString char [256]
 		
@@ -1025,7 +1025,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult EResult
 		internal ulong File; // m_hFile UGCHandle_t
-		internal string FilenameUTF8() => System.Text.Encoding.UTF8.GetString( Filename, 0, System.Array.IndexOf<byte>( Filename, 0 ) );
+		internal string FilenameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Filename, 0, System.Array.IndexOf<byte>( Filename, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchFilename
 		internal byte[] Filename; // m_rgchFilename char [260]
 		
@@ -1146,7 +1146,7 @@ namespace Steamworks.Data
 		internal ulong File; // m_hFile UGCHandle_t
 		internal AppId AppID; // m_nAppID AppId_t
 		internal int SizeInBytes; // m_nSizeInBytes int32
-		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		internal string PchFileNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
 		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -1165,10 +1165,10 @@ namespace Steamworks.Data
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-		internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+		internal string TitleUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
 		internal byte[] Title; // m_rgchTitle char [129]
-		internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+		internal string DescriptionUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
 		internal byte[] Description; // m_rgchDescription char [8000]
 		internal ulong File; // m_hFile UGCHandle_t
@@ -1179,17 +1179,17 @@ namespace Steamworks.Data
 		internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility ERemoteStoragePublishedFileVisibility
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Banned; // m_bBanned bool
-		internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+		internal string TagsUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
 		internal byte[] Tags; // m_rgchTags char [1025]
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool TagsTruncated; // m_bTagsTruncated bool
-		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		internal string PchFileNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
 		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal int FileSize; // m_nFileSize int32
 		internal int PreviewFileSize; // m_nPreviewFileSize int32
-		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
 		internal byte[] URL; // m_rgchURL char [256]
 		internal WorkshopFileType FileType; // m_eFileType EWorkshopFileType
@@ -1454,7 +1454,7 @@ namespace Steamworks.Data
 		internal ulong GameID; // m_nGameID uint64
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GroupAchievement; // m_bGroupAchievement bool
-		internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+		internal string AchievementNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
 		internal byte[] AchievementName; // m_rgchAchievementName char [128]
 		internal uint CurProgress; // m_nCurProgress uint32
@@ -1540,7 +1540,7 @@ namespace Steamworks.Data
 	internal struct UserAchievementIconFetched_t : ICallbackData
 	{
 		internal GameId GameID; // m_nGameID CGameID
-		internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+		internal string AchievementNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
 		internal byte[] AchievementName; // m_rgchAchievementName char [128]
 		[MarshalAs(UnmanagedType.I1)]
@@ -1622,7 +1622,7 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult EResult
 		internal uint AppID; // m_nAppID uint32
 		internal uint CchKeyLength; // m_cchKeyLength uint32
-		internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
+		internal string KeyUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 240)] // byte[] m_rgchKey
 		internal byte[] Key; // m_rgchKey char [240]
 		
@@ -2013,7 +2013,7 @@ namespace Steamworks.Data
 		internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool CachedData; // m_bCachedData bool
-		internal string NextCursorUTF8() => System.Text.Encoding.UTF8.GetString( NextCursor, 0, System.Array.IndexOf<byte>( NextCursor, 0 ) );
+		internal string NextCursorUTF8() => Steamworks.Utility.Utf8NoBom.GetString( NextCursor, 0, System.Array.IndexOf<byte>( NextCursor, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchNextCursor
 		internal byte[] NextCursor; // m_rgchNextCursor char [256]
 		
@@ -2700,7 +2700,7 @@ namespace Steamworks.Data
 	internal struct SteamInventoryRequestPricesResult_t : ICallbackData
 	{
 		internal Result Result; // m_result EResult
-		internal string CurrencyUTF8() => System.Text.Encoding.UTF8.GetString( Currency, 0, System.Array.IndexOf<byte>( Currency, 0 ) );
+		internal string CurrencyUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Currency, 0, System.Array.IndexOf<byte>( Currency, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)] // byte[] m_rgchCurrency
 		internal byte[] Currency; // m_rgchCurrency char [4]
 		
@@ -2714,7 +2714,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamTimelineGamePhaseRecordingExists_t : ICallbackData
 	{
-		internal string PhaseIDUTF8() => System.Text.Encoding.UTF8.GetString( PhaseID, 0, System.Array.IndexOf<byte>( PhaseID, 0 ) );
+		internal string PhaseIDUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PhaseID, 0, System.Array.IndexOf<byte>( PhaseID, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPhaseID
 		internal byte[] PhaseID; // m_rgchPhaseID char [64]
 		internal ulong RecordingMS; // m_ulRecordingMS uint64
@@ -2748,7 +2748,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult EResult
 		internal AppId VideoAppID; // m_unVideoAppID AppId_t
-		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
 		internal byte[] URL; // m_rgchURL char [256]
 		
@@ -2835,7 +2835,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamRemotePlayTogetherGuestInvite_t : ICallbackData
 	{
-		internal string ConnectURLUTF8() => System.Text.Encoding.UTF8.GetString( ConnectURL, 0, System.Array.IndexOf<byte>( ConnectURL, 0 ) );
+		internal string ConnectURLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( ConnectURL, 0, System.Array.IndexOf<byte>( ConnectURL, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)] // byte[] m_szConnectURL
 		internal byte[] ConnectURL; // m_szConnectURL char [1024]
 		
@@ -2888,7 +2888,7 @@ namespace Steamworks.Data
 	internal struct SteamNetAuthenticationStatus_t : ICallbackData
 	{
 		internal SteamNetworkingAvailability Avail; // m_eAvail ESteamNetworkingAvailability
-		internal string DebugMsgUTF8() => System.Text.Encoding.UTF8.GetString( DebugMsg, 0, System.Array.IndexOf<byte>( DebugMsg, 0 ) );
+		internal string DebugMsgUTF8() => Steamworks.Utility.Utf8NoBom.GetString( DebugMsg, 0, System.Array.IndexOf<byte>( DebugMsg, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_debugMsg
 		internal byte[] DebugMsg; // m_debugMsg char [256]
 		
@@ -2906,7 +2906,7 @@ namespace Steamworks.Data
 		internal int PingMeasurementInProgress; // m_bPingMeasurementInProgress int
 		internal SteamNetworkingAvailability AvailNetworkConfig; // m_eAvailNetworkConfig ESteamNetworkingAvailability
 		internal SteamNetworkingAvailability AvailAnyRelay; // m_eAvailAnyRelay ESteamNetworkingAvailability
-		internal string DebugMsgUTF8() => System.Text.Encoding.UTF8.GetString( DebugMsg, 0, System.Array.IndexOf<byte>( DebugMsg, 0 ) );
+		internal string DebugMsgUTF8() => Steamworks.Utility.Utf8NoBom.GetString( DebugMsg, 0, System.Array.IndexOf<byte>( DebugMsg, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_debugMsg
 		internal byte[] DebugMsg; // m_debugMsg char [256]
 		
@@ -2935,7 +2935,7 @@ namespace Steamworks.Data
 	{
 		internal ulong SteamID; // m_SteamID CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason EDenyReason
-		internal string OptionalTextUTF8() => System.Text.Encoding.UTF8.GetString( OptionalText, 0, System.Array.IndexOf<byte>( OptionalText, 0 ) );
+		internal string OptionalTextUTF8() => Steamworks.Utility.Utf8NoBom.GetString( OptionalText, 0, System.Array.IndexOf<byte>( OptionalText, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchOptionalText
 		internal byte[] OptionalText; // m_rgchOptionalText char [128]
 		
@@ -2963,7 +2963,7 @@ namespace Steamworks.Data
 	internal struct GSClientAchievementStatus_t : ICallbackData
 	{
 		internal ulong SteamID; // m_SteamID uint64
-		internal string PchAchievementUTF8() => System.Text.Encoding.UTF8.GetString( PchAchievement, 0, System.Array.IndexOf<byte>( PchAchievement, 0 ) );
+		internal string PchAchievementUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PchAchievement, 0, System.Array.IndexOf<byte>( PchAchievement, 0 ) );
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_pchAchievement
 		internal byte[] PchAchievement; // m_pchAchievement char [128]
 		[MarshalAs(UnmanagedType.I1)]

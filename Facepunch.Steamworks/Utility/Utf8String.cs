@@ -4,40 +4,39 @@ using System.Text;
 
 namespace Steamworks
 {
-	internal unsafe class Utf8StringToNative : ICustomMarshaler
+	internal struct Utf8StringToNative : IDisposable
 	{
-		internal static readonly Encoding Utf8NoBom = new UTF8Encoding( false, false );
+		public IntPtr Pointer { get; private set; }
 
-		public IntPtr MarshalManagedToNative(object managedObj)
+		public unsafe Utf8StringToNative( string value )
 		{
-			if ( managedObj == null )
-				return IntPtr.Zero;
-
-			if ( managedObj is string str )
+			if ( value == null )
 			{
-				fixed ( char* strPtr = str )
-				{
-					int len = Utf8NoBom.GetByteCount( str );
-					var mem = Marshal.AllocHGlobal( len + 1 );
-
-					var wlen = Utf8NoBom.GetBytes( strPtr, str.Length, (byte*)mem, len + 1 );
-
-					( (byte*)mem )[wlen] = 0;
-
-					return mem;
-				}
+				Pointer = IntPtr.Zero;
+				return;
 			}
 
-			return IntPtr.Zero;
+			fixed ( char* strPtr = value )
+			{
+				var len = Utility.Utf8NoBom.GetByteCount( value );
+				var mem = Marshal.AllocHGlobal( len + 1 );
+
+				var wlen = Utility.Utf8NoBom.GetBytes( strPtr, value.Length, (byte*)mem, len + 1 );
+
+				( (byte*)mem )[wlen] = 0;
+
+				Pointer = mem;
+			}
 		}
 
-		public object MarshalNativeToManaged(IntPtr pNativeData) => throw new System.NotImplementedException();
-		public void CleanUpNativeData(IntPtr pNativeData) => Marshal.FreeHGlobal( pNativeData );
-		public void CleanUpManagedData(object managedObj) => throw new System.NotImplementedException();
-		public int GetNativeDataSize() => -1;
-
-		[Preserve]
-		public static ICustomMarshaler GetInstance(string cookie) => new Utf8StringToNative();
+		public void Dispose()
+		{
+			if ( Pointer != IntPtr.Zero )
+			{
+				Marshal.FreeHGlobal( Pointer );
+				Pointer = IntPtr.Zero;
+			}
+		}
 	}
 
 	internal struct Utf8StringPointer
@@ -62,7 +61,7 @@ namespace Steamworks
 				dataLen++;
 			}
 
-			return Utf8StringToNative.Utf8NoBom.GetString( bytes, dataLen );
+			return Utility.Utf8NoBom.GetString( bytes, dataLen );
 		}
 	}
 }

@@ -131,9 +131,13 @@ namespace Generator
 				//
 				foreach ( var arg in args )
 				{
-					if ( arg is FetchStringType sb )
+					if ( arg is ConstCharType str )
 					{
-						WriteLine( $"using var mem{sb.VarName} = Helpers.TakeMemory();" );
+						WriteLine( $"using var str__{str.VarName} = new Utf8StringToNative( {str.VarName} );" );
+					}
+					else if ( arg is FetchStringType sb )
+					{
+						WriteLine( $"using var mem__{sb.VarName} = Helpers.TakeMemory();" );
 					}
 					else if ( arg is LiteralType literal && literal.IsOutValue )
 					{
@@ -157,7 +161,7 @@ namespace Generator
 				{
 					if ( arg is FetchStringType sb )
 					{
-						WriteLine( $"{sb.VarName} = Helpers.MemoryToString( mem{sb.VarName} );" );
+						WriteLine( $"{sb.VarName} = Helpers.MemoryToString( mem__{sb.VarName} );" );
 					}
 				}
 

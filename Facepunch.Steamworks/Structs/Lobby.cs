@@ -137,7 +137,7 @@ namespace Steamworks.Data
 		public bool SendChatString( string message )
 		{
 			//adding null terminator as it's used in Helpers.MemoryToString
-			var data = System.Text.Encoding.UTF8.GetBytes( message + '\0' );
+			var data = Utility.Utf8NoBom.GetBytes( message + '\0' );
 			return SendChatBytes( data );
 		}
 

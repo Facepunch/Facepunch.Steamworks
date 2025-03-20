@@ -23,12 +23,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_SetTimelineTooltip", CallingConvention = Platform.CC)]
-		private static extern void _SetTimelineTooltip( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, float flTimeDelta );
+		private static extern void _SetTimelineTooltip( IntPtr self, IntPtr pchDescription, float flTimeDelta );
 		
 		#endregion
-		internal void SetTimelineTooltip( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, float flTimeDelta )
+		internal void SetTimelineTooltip( string pchDescription, float flTimeDelta )
 		{
-			_SetTimelineTooltip( Self, pchDescription, flTimeDelta );
+			using var str__pchDescription = new Utf8StringToNative( pchDescription );
+			_SetTimelineTooltip( Self, str__pchDescription.Pointer, flTimeDelta );
 		}
 		
 		#region FunctionMeta
@@ -53,45 +54,57 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_AddInstantaneousTimelineEvent", CallingConvention = Platform.CC)]
-		private static extern TimelineEventHandle _AddInstantaneousTimelineEvent( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unIconPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip );
+		private static extern TimelineEventHandle _AddInstantaneousTimelineEvent( IntPtr self, IntPtr pchTitle, IntPtr pchDescription, IntPtr pchIcon, uint unIconPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip );
 		
 		#endregion
-		internal TimelineEventHandle AddInstantaneousTimelineEvent( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unIconPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip )
+		internal TimelineEventHandle AddInstantaneousTimelineEvent( string pchTitle, string pchDescription, string pchIcon, uint unIconPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip )
 		{
-			var returnValue = _AddInstantaneousTimelineEvent( Self, pchTitle, pchDescription, pchIcon, unIconPriority, flStartOffsetSeconds, ePossibleClip );
+			using var str__pchTitle = new Utf8StringToNative( pchTitle );
+			using var str__pchDescription = new Utf8StringToNative( pchDescription );
+			using var str__pchIcon = new Utf8StringToNative( pchIcon );
+			var returnValue = _AddInstantaneousTimelineEvent( Self, str__pchTitle.Pointer, str__pchDescription.Pointer, str__pchIcon.Pointer, unIconPriority, flStartOffsetSeconds, ePossibleClip );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_AddRangeTimelineEvent", CallingConvention = Platform.CC)]
-		private static extern TimelineEventHandle _AddRangeTimelineEvent( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unIconPriority, float flStartOffsetSeconds, float flDuration, TimelineEventClipPriority ePossibleClip );
+		private static extern TimelineEventHandle _AddRangeTimelineEvent( IntPtr self, IntPtr pchTitle, IntPtr pchDescription, IntPtr pchIcon, uint unIconPriority, float flStartOffsetSeconds, float flDuration, TimelineEventClipPriority ePossibleClip );
 		
 		#endregion
-		internal TimelineEventHandle AddRangeTimelineEvent( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unIconPriority, float flStartOffsetSeconds, float flDuration, TimelineEventClipPriority ePossibleClip )
+		internal TimelineEventHandle AddRangeTimelineEvent( string pchTitle, string pchDescription, string pchIcon, uint unIconPriority, float flStartOffsetSeconds, float flDuration, TimelineEventClipPriority ePossibleClip )
 		{
-			var returnValue = _AddRangeTimelineEvent( Self, pchTitle, pchDescription, pchIcon, unIconPriority, flStartOffsetSeconds, flDuration, ePossibleClip );
+			using var str__pchTitle = new Utf8StringToNative( pchTitle );
+			using var str__pchDescription = new Utf8StringToNative( pchDescription );
+			using var str__pchIcon = new Utf8StringToNative( pchIcon );
+			var returnValue = _AddRangeTimelineEvent( Self, str__pchTitle.Pointer, str__pchDescription.Pointer, str__pchIcon.Pointer, unIconPriority, flStartOffsetSeconds, flDuration, ePossibleClip );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_StartRangeTimelineEvent", CallingConvention = Platform.CC)]
-		private static extern TimelineEventHandle _StartRangeTimelineEvent( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip );
+		private static extern TimelineEventHandle _StartRangeTimelineEvent( IntPtr self, IntPtr pchTitle, IntPtr pchDescription, IntPtr pchIcon, uint unPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip );
 		
 		#endregion
-		internal TimelineEventHandle StartRangeTimelineEvent( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip )
+		internal TimelineEventHandle StartRangeTimelineEvent( string pchTitle, string pchDescription, string pchIcon, uint unPriority, float flStartOffsetSeconds, TimelineEventClipPriority ePossibleClip )
 		{
-			var returnValue = _StartRangeTimelineEvent( Self, pchTitle, pchDescription, pchIcon, unPriority, flStartOffsetSeconds, ePossibleClip );
+			using var str__pchTitle = new Utf8StringToNative( pchTitle );
+			using var str__pchDescription = new Utf8StringToNative( pchDescription );
+			using var str__pchIcon = new Utf8StringToNative( pchIcon );
+			var returnValue = _StartRangeTimelineEvent( Self, str__pchTitle.Pointer, str__pchDescription.Pointer, str__pchIcon.Pointer, unPriority, flStartOffsetSeconds, ePossibleClip );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_UpdateRangeTimelineEvent", CallingConvention = Platform.CC)]
-		private static extern void _UpdateRangeTimelineEvent( IntPtr self, TimelineEventHandle ulEvent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unPriority, TimelineEventClipPriority ePossibleClip );
+		private static extern void _UpdateRangeTimelineEvent( IntPtr self, TimelineEventHandle ulEvent, IntPtr pchTitle, IntPtr pchDescription, IntPtr pchIcon, uint unPriority, TimelineEventClipPriority ePossibleClip );
 		
 		#endregion
-		internal void UpdateRangeTimelineEvent( TimelineEventHandle ulEvent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIcon, uint unPriority, TimelineEventClipPriority ePossibleClip )
+		internal void UpdateRangeTimelineEvent( TimelineEventHandle ulEvent, string pchTitle, string pchDescription, string pchIcon, uint unPriority, TimelineEventClipPriority ePossibleClip )
 		{
-			_UpdateRangeTimelineEvent( Self, ulEvent, pchTitle, pchDescription, pchIcon, unPriority, ePossibleClip );
+			using var str__pchTitle = new Utf8StringToNative( pchTitle );
+			using var str__pchDescription = new Utf8StringToNative( pchDescription );
+			using var str__pchIcon = new Utf8StringToNative( pchIcon );
+			_UpdateRangeTimelineEvent( Self, ulEvent, str__pchTitle.Pointer, str__pchDescription.Pointer, str__pchIcon.Pointer, unPriority, ePossibleClip );
 		}
 		
 		#region FunctionMeta
@@ -147,53 +160,61 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_SetGamePhaseID", CallingConvention = Platform.CC)]
-		private static extern void _SetGamePhaseID( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID );
+		private static extern void _SetGamePhaseID( IntPtr self, IntPtr pchPhaseID );
 		
 		#endregion
-		internal void SetGamePhaseID( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID )
+		internal void SetGamePhaseID( string pchPhaseID )
 		{
-			_SetGamePhaseID( Self, pchPhaseID );
+			using var str__pchPhaseID = new Utf8StringToNative( pchPhaseID );
+			_SetGamePhaseID( Self, str__pchPhaseID.Pointer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_DoesGamePhaseRecordingExist", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _DoesGamePhaseRecordingExist( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID );
+		private static extern SteamAPICall_t _DoesGamePhaseRecordingExist( IntPtr self, IntPtr pchPhaseID );
 		
 		#endregion
-		internal CallResult<SteamTimelineGamePhaseRecordingExists_t> DoesGamePhaseRecordingExist( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID )
+		internal CallResult<SteamTimelineGamePhaseRecordingExists_t> DoesGamePhaseRecordingExist( string pchPhaseID )
 		{
-			var returnValue = _DoesGamePhaseRecordingExist( Self, pchPhaseID );
+			using var str__pchPhaseID = new Utf8StringToNative( pchPhaseID );
+			var returnValue = _DoesGamePhaseRecordingExist( Self, str__pchPhaseID.Pointer );
 			return new CallResult<SteamTimelineGamePhaseRecordingExists_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_AddGamePhaseTag", CallingConvention = Platform.CC)]
-		private static extern void _AddGamePhaseTag( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagName, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagIcon, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagGroup, uint unPriority );
+		private static extern void _AddGamePhaseTag( IntPtr self, IntPtr pchTagName, IntPtr pchTagIcon, IntPtr pchTagGroup, uint unPriority );
 		
 		#endregion
-		internal void AddGamePhaseTag( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagName, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagIcon, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTagGroup, uint unPriority )
+		internal void AddGamePhaseTag( string pchTagName, string pchTagIcon, string pchTagGroup, uint unPriority )
 		{
-			_AddGamePhaseTag( Self, pchTagName, pchTagIcon, pchTagGroup, unPriority );
+			using var str__pchTagName = new Utf8StringToNative( pchTagName );
+			using var str__pchTagIcon = new Utf8StringToNative( pchTagIcon );
+			using var str__pchTagGroup = new Utf8StringToNative( pchTagGroup );
+			_AddGamePhaseTag( Self, str__pchTagName.Pointer, str__pchTagIcon.Pointer, str__pchTagGroup.Pointer, unPriority );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_SetGamePhaseAttribute", CallingConvention = Platform.CC)]
-		private static extern void _SetGamePhaseAttribute( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchAttributeGroup, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchAttributeValue, uint unPriority );
+		private static extern void _SetGamePhaseAttribute( IntPtr self, IntPtr pchAttributeGroup, IntPtr pchAttributeValue, uint unPriority );
 		
 		#endregion
-		internal void SetGamePhaseAttribute( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchAttributeGroup, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchAttributeValue, uint unPriority )
+		internal void SetGamePhaseAttribute( string pchAttributeGroup, string pchAttributeValue, uint unPriority )
 		{
-			_SetGamePhaseAttribute( Self, pchAttributeGroup, pchAttributeValue, unPriority );
+			using var str__pchAttributeGroup = new Utf8StringToNative( pchAttributeGroup );
+			using var str__pchAttributeValue = new Utf8StringToNative( pchAttributeValue );
+			_SetGamePhaseAttribute( Self, str__pchAttributeGroup.Pointer, str__pchAttributeValue.Pointer, unPriority );
 		}
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTimeline_OpenOverlayToGamePhase", CallingConvention = Platform.CC)]
-		private static extern void _OpenOverlayToGamePhase( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID );
+		private static extern void _OpenOverlayToGamePhase( IntPtr self, IntPtr pchPhaseID );
 		
 		#endregion
-		internal void OpenOverlayToGamePhase( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPhaseID )
+		internal void OpenOverlayToGamePhase( string pchPhaseID )
 		{
-			_OpenOverlayToGamePhase( Self, pchPhaseID );
+			using var str__pchPhaseID = new Utf8StringToNative( pchPhaseID );
+			_OpenOverlayToGamePhase( Self, str__pchPhaseID.Pointer );
 		}
 		
 		#region FunctionMeta

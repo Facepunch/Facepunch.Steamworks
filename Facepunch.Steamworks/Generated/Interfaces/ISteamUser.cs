@@ -78,12 +78,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_TrackAppUsageEvent", CallingConvention = Platform.CC)]
-		private static extern void _TrackAppUsageEvent( IntPtr self, GameId gameID, int eAppUsageEvent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchExtraInfo );
+		private static extern void _TrackAppUsageEvent( IntPtr self, GameId gameID, int eAppUsageEvent, IntPtr pchExtraInfo );
 		
 		#endregion
-		internal void TrackAppUsageEvent( GameId gameID, int eAppUsageEvent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchExtraInfo )
+		internal void TrackAppUsageEvent( GameId gameID, int eAppUsageEvent, string pchExtraInfo )
 		{
-			_TrackAppUsageEvent( Self, gameID, eAppUsageEvent, pchExtraInfo );
+			using var str__pchExtraInfo = new Utf8StringToNative( pchExtraInfo );
+			_TrackAppUsageEvent( Self, gameID, eAppUsageEvent, str__pchExtraInfo.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -94,9 +95,9 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserDataFolder( out string pchBuffer )
 		{
-			using var mempchBuffer = Helpers.TakeMemory();
-			var returnValue = _GetUserDataFolder( Self, mempchBuffer, (1024 * 32) );
-			pchBuffer = Helpers.MemoryToString( mempchBuffer );
+			using var mem__pchBuffer = Helpers.TakeMemory();
+			var returnValue = _GetUserDataFolder( Self, mem__pchBuffer, (1024 * 32) );
+			pchBuffer = Helpers.MemoryToString( mem__pchBuffer );
 			return returnValue;
 		}
 		
@@ -177,12 +178,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_GetAuthTicketForWebApi", CallingConvention = Platform.CC)]
-		private static extern HAuthTicket _GetAuthTicketForWebApi( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIdentity );
+		private static extern HAuthTicket _GetAuthTicketForWebApi( IntPtr self, IntPtr pchIdentity );
 		
 		#endregion
-		internal HAuthTicket GetAuthTicketForWebApi( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchIdentity )
+		internal HAuthTicket GetAuthTicketForWebApi( string pchIdentity )
 		{
-			var returnValue = _GetAuthTicketForWebApi( Self, pchIdentity );
+			using var str__pchIdentity = new Utf8StringToNative( pchIdentity );
+			var returnValue = _GetAuthTicketForWebApi( Self, str__pchIdentity.Pointer );
 			return returnValue;
 		}
 		
@@ -297,12 +299,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_RequestStoreAuthURL", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _RequestStoreAuthURL( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL );
+		private static extern SteamAPICall_t _RequestStoreAuthURL( IntPtr self, IntPtr pchRedirectURL );
 		
 		#endregion
-		internal CallResult<StoreAuthURLResponse_t> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
+		internal CallResult<StoreAuthURLResponse_t> RequestStoreAuthURL( string pchRedirectURL )
 		{
-			var returnValue = _RequestStoreAuthURL( Self, pchRedirectURL );
+			using var str__pchRedirectURL = new Utf8StringToNative( pchRedirectURL );
+			var returnValue = _RequestStoreAuthURL( Self, str__pchRedirectURL.Pointer );
 			return new CallResult<StoreAuthURLResponse_t>( returnValue, IsServer );
 		}
 		

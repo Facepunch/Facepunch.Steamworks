@@ -82,12 +82,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_CloseConnection", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _CloseConnection( IntPtr self, Connection hPeer, int nReason, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
+		private static extern bool _CloseConnection( IntPtr self, Connection hPeer, int nReason, IntPtr pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
 		
 		#endregion
-		internal bool CloseConnection( Connection hPeer, int nReason, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
+		internal bool CloseConnection( Connection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
 		{
-			var returnValue = _CloseConnection( Self, hPeer, nReason, pszDebug, bEnableLinger );
+			using var str__pszDebug = new Utf8StringToNative( pszDebug );
+			var returnValue = _CloseConnection( Self, hPeer, nReason, str__pszDebug.Pointer, bEnableLinger );
 			return returnValue;
 		}
 		
@@ -128,12 +129,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_SetConnectionName", CallingConvention = Platform.CC)]
-		private static extern void _SetConnectionName( IntPtr self, Connection hPeer, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszName );
+		private static extern void _SetConnectionName( IntPtr self, Connection hPeer, IntPtr pszName );
 		
 		#endregion
-		internal void SetConnectionName( Connection hPeer, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszName )
+		internal void SetConnectionName( Connection hPeer, string pszName )
 		{
-			_SetConnectionName( Self, hPeer, pszName );
+			using var str__pszName = new Utf8StringToNative( pszName );
+			_SetConnectionName( Self, hPeer, str__pszName.Pointer );
 		}
 		
 		#region FunctionMeta
@@ -144,9 +146,9 @@ namespace Steamworks
 		#endregion
 		internal bool GetConnectionName( Connection hPeer, out string pszName )
 		{
-			using var mempszName = Helpers.TakeMemory();
-			var returnValue = _GetConnectionName( Self, hPeer, mempszName, (1024 * 32) );
-			pszName = Helpers.MemoryToString( mempszName );
+			using var mem__pszName = Helpers.TakeMemory();
+			var returnValue = _GetConnectionName( Self, hPeer, mem__pszName, (1024 * 32) );
+			pszName = Helpers.MemoryToString( mem__pszName );
 			return returnValue;
 		}
 		
@@ -223,9 +225,9 @@ namespace Steamworks
 		#endregion
 		internal int GetDetailedConnectionStatus( Connection hConn, out string pszBuf )
 		{
-			using var mempszBuf = Helpers.TakeMemory();
-			var returnValue = _GetDetailedConnectionStatus( Self, hConn, mempszBuf, (1024 * 32) );
-			pszBuf = Helpers.MemoryToString( mempszBuf );
+			using var mem__pszBuf = Helpers.TakeMemory();
+			var returnValue = _GetDetailedConnectionStatus( Self, hConn, mem__pszBuf, (1024 * 32) );
+			pszBuf = Helpers.MemoryToString( mem__pszBuf );
 			return returnValue;
 		}
 		
