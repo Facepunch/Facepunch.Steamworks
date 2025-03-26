@@ -24,9 +24,19 @@ namespace Steamworks
 		/// <summary>
 		/// Must be called when starting use of the ISteamInput interface.
 		/// </summary>
+		/// <returns>Always true.</return>
 		public static bool Init( bool explicitlyCallRunFrame = false )
 		{
 			return Internal.Init( explicitlyCallRunFrame );
+		}
+
+		/// <summary>
+		/// Must be called when ending use of the ISteamInput interface.
+		/// </summary>
+		/// <returns>Always true.</returns>
+		public static bool Shutdown()
+		{
+			return Internal.Shutdown();
 		}
 
 

@@ -19,6 +19,12 @@ namespace Steamworks
 			Assert.IsTrue( initialized );
 		}
 
+		[ClassCleanup]
+		public static void ClassCleanup()
+		{
+			SteamInput.Shutdown();
+		}
+
 		[TestInitialize]
 		public void Setup()
 		{
