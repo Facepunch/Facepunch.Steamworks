@@ -30,6 +30,7 @@ namespace Steamworks
 			Dispatch.Install<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ), server );
 			Dispatch.Install<SteamShutdown_t>( x => SteamClosed(), server );
 			Dispatch.Install<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ), server );
+			Dispatch.Install<FloatingGamepadTextInputDismissed_t>( x => OnFloatingGamepadTextInputDismissed?.Invoke( ), server );
 		}
 
 		private static void SteamClosed()
@@ -59,6 +60,8 @@ namespace Steamworks
 		/// Invoked when Big Picture gamepad text input has been closed. Parameter is <see langword="true"/> if text was submitted, <see langword="false"/> if cancelled etc.
 		/// </summary>
 		public static event Action<bool> OnGamepadTextInputDismissed;
+
+		public static event Action OnFloatingGamepadTextInputDismissed;
 
 		/// <summary>
 		/// Returns the number of seconds since the application was active.
@@ -296,9 +299,22 @@ namespace Steamworks
 		/// </summary>
 		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
 
-		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
-		//{
-		//	Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
-		//}
+
+		public static void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
+		{
+			Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
+		}
+
+
+		public static void DismissFloatingGamepadTextInput()
+		{
+			Internal.DismissFloatingGamepadTextInput();
+		}
+
+
+		public static void DismissGamepadTextInput()
+		{
+			Internal.DismissGamepadTextInput();
+		}
 	}
 }
