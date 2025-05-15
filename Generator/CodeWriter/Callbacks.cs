@@ -49,7 +49,7 @@ namespace Generator
 						WriteLine( "#region SteamCallback" );
 						{
 
-							WriteLine( $"public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+							WriteLine( $"public static int _datasize = Marshal.SizeOf<{name}>();" );
 							WriteLine( $"public int DataSize => _datasize;" );
                             WriteLine( $"public CallbackType CallbackType => CallbackType.{name.Replace( "_t", "" )};" );
 						}
