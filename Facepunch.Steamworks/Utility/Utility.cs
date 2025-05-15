@@ -17,7 +17,7 @@ namespace Steamworks
             if ( ptr == IntPtr.Zero )
                 return default;
 
-            return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
+            return Marshal.PtrToStructure<T>(ptr);
         }
 
         static internal object ToType( this IntPtr ptr, System.Type t )
