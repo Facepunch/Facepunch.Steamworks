@@ -64,7 +64,7 @@ namespace Steamworks
 
 				Dispatch.OnDebugCallback?.Invoke( t.CallbackType, Dispatch.CallbackToString( t.CallbackType, ptr, size ), server );
 
-				return Marshal.PtrToStructure<T>(ptr);
+				return Marshal.PtrToStructure<T>( ptr );
 			}
 			finally
 			{
