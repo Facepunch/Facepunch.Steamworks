@@ -314,7 +314,7 @@ namespace Steamworks
 		/// </summary>
 		public static unsafe AuthTicket GetAuthSessionTicket( NetIdentity identity )
 		{
-			var data = Helpers.TakeBuffer( 1024 );
+			var data = Helpers.TakeBuffer( 2560 );
 
 			fixed ( byte* b = data )
 			{
