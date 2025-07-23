@@ -184,5 +184,20 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Share a file with the Steam community.
+		/// The file must be in the user's Steam Cloud storage.
+		/// </summary>
+		/// <param name="filename">The name of the file to share</param>
+		/// <returns>A task that returns the shared file UGC handle on success</returns>
+		public static async Task<Data.Ugc?> FileShareAsync( string filename )
+		{
+			var result = await Internal.FileShare( filename );
+			if ( !result.HasValue || result.Value.Result != Result.OK )
+				return null;
+
+			return new Data.Ugc { Handle = result.Value.File };
+		}
+
 	}
 }
