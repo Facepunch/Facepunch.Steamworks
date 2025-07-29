@@ -69,17 +69,15 @@ namespace Steamworks.Ugc
 		string PreviewFile;
 		public Editor WithPreviewFile( string t ) { this.PreviewFile = t; return this; }
 
-		List<(string, ItemPreviewType)> AdditionalPreviewFiles;
-		
-		List<int> RemovePreviewFiles;
-
+		Dictionary<string, ItemPreviewType> AdditionalPreviewFiles;
 		public Editor AddAdditionalPreviewFile( string f, ItemPreviewType t )
 		{
-			AdditionalPreviewFiles ??= new List<(string, ItemPreviewType)>();
-			AdditionalPreviewFiles.Add((f, t));
+			AdditionalPreviewFiles ??= new Dictionary<string, ItemPreviewType>();
+			AdditionalPreviewFiles.Add(f, t);
 			return this;
 		}
 		
+		List<int> RemovePreviewFiles;
 		public Editor RemoveAdditionalPreviewFile( int i )
 		{
 			RemovePreviewFiles ??= new List<int>();
@@ -235,13 +233,13 @@ namespace Steamworks.Ugc
 				if ( AdditionalPreviewFiles != null )
 				{
 					foreach ( var file in AdditionalPreviewFiles )
-						SteamUGC.Internal.AddItemPreviewFile( handle, file.Item1, file.Item2 );
+						SteamUGC.Internal.AddItemPreviewFile( handle, file.Key, file.Value );
 				}
 
 				if ( RemovePreviewFiles != null )
 				{
-					foreach ( var i in RemovePreviewFiles )
-						SteamUGC.Internal.RemoveItemPreview( handle, (uint) i );
+					foreach ( var fileIndex in RemovePreviewFiles )
+						SteamUGC.Internal.RemoveItemPreview( handle, (uint) fileIndex );
 				}
 				
 				result.Result = Steamworks.Result.Fail;
@@ -249,7 +247,7 @@ namespace Steamworks.Ugc
 				if ( ChangeLog == null )
 					ChangeLog = "";
 
-			   var updating = SteamUGC.Internal.SubmitItemUpdate( handle, ChangeLog );
+			    var updating = SteamUGC.Internal.SubmitItemUpdate( handle, ChangeLog );
 
 				while ( !updating.IsCompleted )
 				{
