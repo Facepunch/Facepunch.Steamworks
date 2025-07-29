@@ -69,6 +69,22 @@ namespace Steamworks.Ugc
 		string PreviewFile;
 		public Editor WithPreviewFile( string t ) { this.PreviewFile = t; return this; }
 
+		Dictionary<string, ItemPreviewType> AdditionalPreviewFiles;
+		public Editor AddAdditionalPreviewFile( string f, ItemPreviewType t )
+		{
+			AdditionalPreviewFiles ??= new Dictionary<string, ItemPreviewType>();
+			AdditionalPreviewFiles.Add(f, t);
+			return this;
+		}
+		
+		List<int> RemovePreviewFiles;
+		public Editor RemoveAdditionalPreviewFile( int i )
+		{
+			RemovePreviewFiles ??= new List<int>();
+			RemovePreviewFiles.Add(i);
+			return this;
+		}
+
 		System.IO.DirectoryInfo ContentFolder;
 		public Editor WithContent( System.IO.DirectoryInfo t ) { this.ContentFolder = t; return this; }
 		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
@@ -214,12 +230,24 @@ namespace Steamworks.Ugc
 					}
 				}
 
+				if ( AdditionalPreviewFiles != null )
+				{
+					foreach ( var file in AdditionalPreviewFiles )
+						SteamUGC.Internal.AddItemPreviewFile( handle, file.Key, file.Value );
+				}
+
+				if ( RemovePreviewFiles != null )
+				{
+					foreach ( var fileIndex in RemovePreviewFiles )
+						SteamUGC.Internal.RemoveItemPreview( handle, (uint) fileIndex );
+				}
+				
 				result.Result = Steamworks.Result.Fail;
 
 				if ( ChangeLog == null )
 					ChangeLog = "";
 
-			   var updating = SteamUGC.Internal.SubmitItemUpdate( handle, ChangeLog );
+			    var updating = SteamUGC.Internal.SubmitItemUpdate( handle, ChangeLog );
 
 				while ( !updating.IsCompleted )
 				{
