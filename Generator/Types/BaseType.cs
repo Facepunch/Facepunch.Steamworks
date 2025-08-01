@@ -136,7 +136,7 @@ internal class BaseType
 			if ( NativeType.EndsWith( "*" ) )
 			{
 				if ( VarName.StartsWith( "pvec" ) ) return true;
-				if ( VarName.StartsWith( "pub" ) ) return true;
+				if ( VarName.StartsWith( "pub" ) && !Func.StartsWith( "SendMessageToUser" ) ) return true;
 				if ( VarName.StartsWith( "pOut" ) ) return true;
 			}
 
