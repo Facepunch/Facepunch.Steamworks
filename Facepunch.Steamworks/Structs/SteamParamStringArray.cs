@@ -21,7 +21,7 @@ namespace Steamworks.Ugc
 				a.NativeStrings[i] = Marshal.StringToHGlobalAnsi( array[i] );
 			}
 
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * a.NativeStrings.Length;
+			var size = Marshal.SizeOf<IntPtr>() * a.NativeStrings.Length;
 			a.NativeArray = Marshal.AllocHGlobal( size );
 			Marshal.Copy( a.NativeStrings, 0, a.NativeArray, a.NativeStrings.Length );
 
