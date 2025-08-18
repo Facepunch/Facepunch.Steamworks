@@ -88,6 +88,11 @@ namespace Steamworks.Ugc
 		/// True if this is only visible to the creator
 		/// </summary>
 		public bool IsPrivate => details.Visibility == RemoteStoragePublishedFileVisibility.Private;
+
+		/// <summary>
+		/// True if this is only visible to people with the URL
+		/// </summary>
+		public bool IsUnlisted => details.Visibility == RemoteStoragePublishedFileVisibility.Unlisted;
 		
 		/// <summary>
 		/// True if this item has been banned
