@@ -41,6 +41,7 @@ namespace Steamworks
 				ISteamUGC.Version,
 				ISteamUser.Version,
 				ISteamUserStats.Version,
+				ISteamHTMLSurface.Version,
 				ISteamUtils.Version,
 				ISteamVideo.Version,
 				ISteamRemotePlay.Version,
@@ -83,6 +84,7 @@ namespace Steamworks
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
 			AddInterface<SteamTimeline>();
+			AddInterface<SteamHTMLSurface>();
 			// Note: don't forget to add the interface version to SteamAPI.Init above!!!
 
 			initialized = openInterfaces.Count > 0;

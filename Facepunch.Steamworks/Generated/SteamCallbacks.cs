@@ -2303,7 +2303,7 @@ namespace Steamworks.Data
 	internal struct HTML_NeedsPaint_t : ICallbackData
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-		internal string PBGRA; // pBGRA const char *
+		internal IntPtr PBGRA; // pBGRA const char *
 		internal uint UnWide; // unWide uint32
 		internal uint UnTall; // unTall uint32
 		internal uint UnUpdateX; // unUpdateX uint32

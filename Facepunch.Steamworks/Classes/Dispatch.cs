@@ -99,6 +99,7 @@ namespace Steamworks
 				{
 					try
 					{
+						
 						ProcessCallback( msg, pipe == ServerPipe );
 					}
 					finally
