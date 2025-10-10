@@ -77,6 +77,8 @@ namespace Steamworks
         internal void InstallEvents()
         {
             Dispatch.Install<HTML_BrowserReady_t>(x => OnBrowserReady?.Invoke(new Browser(x.UnBrowserHandle)));
+            Dispatch.Install<HTML_URLChanged_t>( x => OnUrlChanged?.Invoke( x.PchURL ) );
+            Dispatch.Install<HTML_ChangedTitle_t>(x => OnTitleChanged?.Invoke( x.PchTitle ) );
             Dispatch.Install<HTML_StartRequest_t>(x => OnStartRequest?.Invoke(new Browser(x.UnBrowserHandle), x.PchURL, x.PchTarget, x.PchPostData, x.BIsRedirect));
             Dispatch.Install<HTML_JSAlert_t>(x => OnJSAlert?.Invoke(new Browser(x.UnBrowserHandle), x.PchMessage));
             Dispatch.Install<HTML_JSConfirm_t>(x => OnJSConfirm?.Invoke(new Browser(x.UnBrowserHandle), x.PchMessage));
@@ -150,6 +152,18 @@ namespace Steamworks
         /// </summary>
         public static event Action<Browser, string, string, string, bool> OnStartRequest;
 
+        /// <summary>
+        /// Called when the browser changes the URL
+        /// Parameters: New URL
+        /// </summary>
+        public static event Action<string> OnUrlChanged;
+        
+        /// <summary>
+        /// Called when the browser changes title
+        /// Parameters: New Title
+        /// </summary>
+        public static event Action<string> OnTitleChanged;
+        
         /// <summary>
         /// Initializes the HTML Surface API.
         /// This must be called prior to using any other functions in this interface.

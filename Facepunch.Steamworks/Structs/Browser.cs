@@ -68,6 +68,11 @@ namespace Steamworks.Data
             SteamHTMLSurface.Internal.MouseMove(Handle, x, y);
         }
 
+        public void GoBack()
+        {
+	        SteamHTMLSurface.Internal.GoBack(Handle);
+        }
+        
         public void KeyDown(int nativeKeyCode, bool alt, bool ctrl, bool shift, bool isSystemKey = false)
         {
             int keyModifiers = 0;
