@@ -1,0 +1,19 @@
+{
+    "name": "Steam",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine",
+        "NinjaKiwi.LiNK"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "USE_STEAM"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

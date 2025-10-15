@@ -1,0 +1,21 @@
+{
+  "name": "com.ninjakiwi.steam",
+  "displayName": "Steamworks.Facepunch NK",
+  "version": "2.4.1-NK",
+  "unity": "2021.3",
+  "dependencies": { },
+  "description": "Steamworks.Facepunch & Steam SDK",
+  "keywords": [
+    "unity",
+    "steam",
+	"Steamworks",
+	"Facepunch"	,
+	"SDK"
+  ],
+  "category": "Unity",
+  "type": "library",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ninja-Kiwi/Facepunch.Steamworks.git"
+  }
+}

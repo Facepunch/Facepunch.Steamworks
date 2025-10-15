@@ -1,0 +1,3 @@
+﻿<linker>
+	<assembly fullname="Steamworks" preserve="all"/>
+</linker>
