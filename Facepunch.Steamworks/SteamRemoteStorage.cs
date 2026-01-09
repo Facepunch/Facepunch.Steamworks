@@ -19,8 +19,20 @@ namespace Steamworks
 			SetInterface( server, new ISteamRemoteStorage( server ) );
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
+			InstallEvents();
+
 			return true;
 		}
+
+		internal static void InstallEvents()
+		{
+			Dispatch.Install<RemoteStorageLocalFileChange_t>( x => OnLocalFileChange?.Invoke() );
+		}
+
+		/// <summary>
+		/// If a Steam app is flagged for supporting dynamic Steam Cloud sync, and a sync occurs, this callback will be posted to the app if any local files changed.
+		/// </summary>
+		public static event Action OnLocalFileChange;
 
 
 		/// <summary>
