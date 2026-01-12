@@ -570,6 +570,18 @@
             Reset this achievement to be locked.
             </summary>
         </member>
+        <member name="M:Steamworks.Data.Browser.MouseDown(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="button">0 = left, 1 = right, 2 = middle</param>
+        </member>
+        <member name="M:Steamworks.Data.Browser.MouseUp(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="button">0 = left, 1 = right, 2 = middle</param>
+        </member>
         <member name="T:Steamworks.Data.DlcInformation">
             <summary>
             Provides information about a DLC.
@@ -1636,6 +1648,107 @@
             Call this before calling ActivateGameOverlayToWebPage() to have the Steam Overlay Browser block navigations
              to your specified protocol (scheme) uris and instead dispatch a OverlayBrowserProtocolNavigation callback to your game.
             </summary>
+        </member>
+        <member name="F:Steamworks.BrowserPaint.ImageData">
+            <summary>
+             B8G8R8A8 
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnStatusText">
+            <summary>
+            Called when a browser wants you to display an informational message. This is most commonly used when you hover over links.
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnNewTab">
+            <summary>
+            The browser has requested to load a url in a new tab.
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnNewWindow">
+            <summary>
+            A browser has created a new HTML window.
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnBrowserReady">
+            <summary>
+            A new browser was created and is ready for use.
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnNeedsPaint">
+            <summary>
+            Called when a browser surface has a pending paint. This is where you get the actual image data to render to the screen.
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnFinishedLoading">
+            <summary>
+            Called when a browser has finished loading a page.
+            Parameters: Browser, URL, Page Title
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnFileOpenDialog">
+            <summary>
+            Called when a browser surface has received a file open dialog from a `input type="file"` click or similar, you must call FileLoadDialogResponse with the file(s) the user selected.
+            Parameters: Browser, Title, Initial File
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnJSConfirm">
+            <summary>
+            Called when the browser wants to display a Javascript confirmation dialog, call JSDialogResponse when the user dismisses this dialog; or right away to ignore it.
+            Parameters: Browser, Message
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnJSAlert">
+            <summary>
+            Called when the browser wants to display a Javascript alert dialog, call JSDialogResponse when the user dismisses this dialog; or right away to ignore it.
+            Parameters: Browser, Message
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnStartRequest">
+            <summary>
+            Called when a browser wants to navigate to a new page.
+            Parameters: Browser, URL, Target, Post Data, Is Redirect
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnUrlChanged">
+            <summary>
+            Called when the browser changes the URL
+            Parameters: New URL
+            </summary>
+        </member>
+        <member name="E:Steamworks.SteamHTMLSurface.OnTitleChanged">
+            <summary>
+            Called when the browser changes title
+            Parameters: New Title
+            </summary>
+        </member>
+        <member name="M:Steamworks.SteamHTMLSurface.Init">
+            <summary>
+            Initializes the HTML Surface API.
+            This must be called prior to using any other functions in this interface.
+            You MUST call Shutdown when you are done using the interface to free up the resources associated with it. Failing to do so will result in a memory leak!
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Steamworks.SteamHTMLSurface.Shutdown">
+            <summary>
+            Shutdown the ISteamHTMLSurface interface, releasing the memory and handles.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Steamworks.SteamHTMLSurface.CreateBrowser(System.String,System.String)">
+            <summary>
+            Create a browser object for displaying of an HTML page.
+            NOTE: You MUST call RemoveBrowser when you are done using this browser to free up the resources associated with it. Failing to do so will result in a memory leak.
+            </summary>
+            <param name="userAgent"></param>
+            <param name="userCss"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Steamworks.SteamHTMLSurface.RemoveBrowser(Steamworks.Data.Browser)">
+            <summary>
+            
+            </summary>
+            <param name="browser"></param>
         </member>
         <member name="T:Steamworks.SteamInput">
             <summary>
