@@ -61,6 +61,9 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<bool> OnGamepadTextInputDismissed;
 
+		/// <summary>
+		/// Invoked when the floating on-screen keyboard has been closed.
+		/// </summary>
 		public static event Action OnFloatingGamepadTextInputDismissed;
 
 		/// <summary>
