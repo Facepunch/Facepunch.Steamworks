@@ -3658,6 +3658,31 @@
             Steam Input translate the controller input into mouse/kb to navigate the launcher
             </summary>
         </member>
+        <member name="M:Steamworks.SteamUtils.ShowFloatingGamepadTextInput(Steamworks.TextInputMode,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Opens a floating keyboard over the game content and sends OS keyboard keys directly to the game.
+            The text field position is specified in pixels relative to the origin of the game window and is used
+            to position the floating keyboard in a way that doesn't cover the text field.
+            </summary>
+            <param name="mode">Specifies the text input mode and keyboard layout (single line, multiple lines, email, or numeric).</param>
+            <param name="left">X coordinate of the text field which shouldn't be obscured by the floating keyboard.</param>
+            <param name="top">Y coordinate of the text field which shouldn't be obscured by the floating keyboard.</param>
+            <param name="width">Width of the text field which shouldn't be obscured by the floating keyboard.</param>
+            <param name="height">Height of the text field which shouldn't be obscured by the floating keyboard.</param>
+            <returns><see langword="true"/> if the floating keyboard was shown successfully; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Steamworks.SteamUtils.DismissFloatingGamepadTextInput">
+            <summary>
+            Dismisses the floating keyboard that was invoked by <see cref="M:Steamworks.SteamUtils.ShowFloatingGamepadTextInput(Steamworks.TextInputMode,System.Int32,System.Int32,System.Int32,System.Int32)"/>.
+            </summary>
+            <returns><see langword="true"/> if the floating keyboard was dismissed successfully; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Steamworks.SteamUtils.DismissGamepadTextInput">
+            <summary>
+            Dismisses the Big Picture gamepad text input dialog that was invoked by <see cref="M:Steamworks.SteamUtils.ShowGamepadTextInput(Steamworks.GamepadTextInputMode,Steamworks.GamepadTextInputLineMode,System.String,System.Int32,System.String)"/>.
+            </summary>
+            <returns><see langword="true"/> if the gamepad text input was dismissed successfully; otherwise, <see langword="false"/>.</returns>
+        </member>
         <member name="T:Steamworks.SteamVideo">
             <summary>
             Class for utilizing the Steam Video API.
