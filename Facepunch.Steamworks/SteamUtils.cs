@@ -320,18 +320,20 @@ namespace Steamworks
 		/// <summary>
 		/// Dismisses the floating keyboard that was invoked by <see cref="ShowFloatingGamepadTextInput"/>.
 		/// </summary>
-		public static void DismissFloatingGamepadTextInput()
+		/// <returns><see langword="true"/> if the floating keyboard was dismissed successfully; otherwise, <see langword="false"/>.</returns>
+		public static bool DismissFloatingGamepadTextInput()
 		{
-			Internal.DismissFloatingGamepadTextInput();
+			return Internal.DismissFloatingGamepadTextInput();
 		}
 
 
 		/// <summary>
 		/// Dismisses the Big Picture gamepad text input dialog that was invoked by <see cref="ShowGamepadTextInput"/>.
 		/// </summary>
-		public static void DismissGamepadTextInput()
+		/// <returns><see langword="true"/> if the gamepad text input was dismissed successfully; otherwise, <see langword="false"/>.</returns>
+		public static bool DismissGamepadTextInput()
 		{
-			Internal.DismissGamepadTextInput();
+			return Internal.DismissGamepadTextInput();
 		}
 	}
 }
