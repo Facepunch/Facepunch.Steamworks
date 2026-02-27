@@ -1,6 +1,9 @@
 name: Build All
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
 
 jobs:
   build:
