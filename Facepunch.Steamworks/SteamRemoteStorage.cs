@@ -184,5 +184,125 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Share a file with the Steam community.
+		/// The file must be in the user's Steam Cloud storage.
+		/// </summary>
+		/// <param name="filename">The name of the file to share</param>
+		/// <returns>A task that returns the shared file UGC handle on success</returns>
+		public static async Task<Data.Ugc?> FileShareAsync( string filename )
+		{
+			var result = await Internal.FileShare( filename );
+			if ( !result.HasValue || result.Value.Result != Result.OK )
+				return null;
+
+			return new Data.Ugc { Handle = result.Value.File };
+		}
+
+		/// <summary>
+		/// Downloads UGC content to Steam's local cache.
+		/// </summary>
+		/// <param name="ugc">The UGC handle to download</param>
+		/// <param name="priority">Download priority (higher values get downloaded first)</param>
+		/// <returns>A task that returns the download result on completion</returns>
+		public static async Task<UgcDownloadResult?> UgcDownloadAsync( Data.Ugc ugc, uint priority = 0 )
+		{
+			var result = await Internal.UGCDownload( ugc.Handle, priority );
+			if ( !result.HasValue || result.Value.Result != Result.OK )
+				return null;
+
+			return new UgcDownloadResult
+			{
+				Result = result.Value.Result,
+				Handle = new Data.Ugc { Handle = result.Value.File },
+				AppId = result.Value.AppID,
+				SizeInBytes = result.Value.SizeInBytes,
+				Filename = result.Value.PchFileNameUTF8(),
+				Owner = result.Value.SteamIDOwner
+			};
+		}
+
+		/// <summary>
+		/// Downloads UGC content to a specific location on disk.
+		/// </summary>
+		/// <param name="ugc">The UGC handle to download</param>
+		/// <param name="location">The local file path to download to</param>
+		/// <param name="priority">Download priority (higher values get downloaded first)</param>
+		/// <returns>A task that returns the download result on completion</returns>
+		public static async Task<UgcDownloadResult?> UgcDownloadToLocationAsync( Data.Ugc ugc, string location, uint priority = 0 )
+		{
+			var result = await Internal.UGCDownloadToLocation( ugc.Handle, location, priority );
+			if ( !result.HasValue || result.Value.Result != Result.OK )
+				return null;
+
+			return new UgcDownloadResult
+			{
+				Result = result.Value.Result,
+				Handle = new Data.Ugc { Handle = result.Value.File },
+				AppId = result.Value.AppID,
+				SizeInBytes = result.Value.SizeInBytes,
+				Filename = result.Value.PchFileNameUTF8(),
+				Owner = result.Value.SteamIDOwner
+			};
+		}
+
+		/// <summary>
+		/// Reads the contents of a UGC file into a byte array.
+		/// </summary>
+		/// <param name="ugc">The UGC handle to read from</param>
+		/// <param name="maxSize">Maximum size to read (default 10MB for safety)</param>
+		/// <returns>The data read from the UGC file, or null if failed</returns>
+		public static unsafe byte[] UgcRead( Data.Ugc ugc, int maxSize = 10 * 1024 * 1024 )
+		{
+			// Try to get size from download progress first
+			var progress = GetUgcDownloadProgress( ugc );
+			var size = progress?.BytesExpected ?? maxSize;
+			
+			if ( size <= 0 || size > maxSize )
+				size = maxSize;
+
+			var buffer = new byte[size];
+
+			fixed ( byte* ptr = buffer )
+			{
+				// Use Close action (2) to close the file handle after reading
+				var bytesRead = Internal.UGCRead( ugc.Handle, (IntPtr)ptr, size, 0, (UGCReadAction)2 );
+				if ( bytesRead <= 0 )
+					return null;
+
+				// Trim buffer to actual bytes read
+				if ( bytesRead != size )
+				{
+					var trimmedBuffer = new byte[bytesRead];
+					Array.Copy( buffer, trimmedBuffer, bytesRead );
+					return trimmedBuffer;
+				}
+
+				return buffer;
+			}
+		}
+
+		/// <summary>
+		/// Gets the download progress for a UGC file.
+		/// </summary>
+		/// <param name="ugc">The UGC handle to check progress for</param>
+		/// <returns>Download progress information, or null if not downloading</returns>
+		public static UgcDownloadProgress? GetUgcDownloadProgress( Data.Ugc ugc )
+		{
+			var bytesDownloaded = 0;
+			var bytesExpected = 0;
+
+			if ( !Internal.GetUGCDownloadProgress( ugc.Handle, ref bytesDownloaded, ref bytesExpected ) )
+				return null;
+
+			return new UgcDownloadProgress
+			{
+				Handle = ugc,
+				BytesDownloaded = bytesDownloaded,
+				BytesExpected = bytesExpected,
+				Progress = bytesExpected > 0 ? (float)bytesDownloaded / bytesExpected : 0f
+			};
+		}
+
 	}
 }
