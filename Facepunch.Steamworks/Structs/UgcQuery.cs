@@ -191,6 +191,11 @@ namespace Steamworks.Ugc
 
 		public QueryType AddRequiredKeyValueTag(string key, string value)
 		{
+			// While KeyValueTags are typically a 1:many relationship, calling AddRequiredKeyValueTag more than once in a 
+			// query with the same key results in erasing the previous required value for the same key.  For this reason, 
+			// someone who calls this method twice in a row with the same key is probably not getting the behavior they
+			// expect.  Therefore, leaving this a dictionary to cause a key conflict if someone adds multiple required values
+			// for the same key in the same query.
 			if (requiredKv == null) requiredKv = new Dictionary<string, string>();
 			requiredKv.Add(key, value);
 			return this;
