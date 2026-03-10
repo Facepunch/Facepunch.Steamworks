@@ -154,15 +154,7 @@ namespace Steamworks.Ugc
 			//
 			// Checks
 			//
-			if ( ContentFolder != null )
-			{
-				if ( !System.IO.Directory.Exists( ContentFolder.FullName ) )
-					throw new System.Exception( $"UgcEditor - Content Folder doesn't exist ({ContentFolder.FullName})" );
-
-				if ( !ContentFolder.EnumerateFiles( "*", System.IO.SearchOption.AllDirectories ).Any() )
-					throw new System.Exception( $"UgcEditor - Content Folder is empty" );
-			}
-
+			PerformValidityChecks();
 
 			//
 			// Item Create
@@ -310,6 +302,29 @@ namespace Steamworks.Ugc
 			}
 
 			return result;
+		}
+
+		private void PerformValidityChecks()
+		{
+			if ( ContentFolder == null )
+				return;
+
+			var fileAttributes = System.IO.File.GetAttributes( ContentFolder.FullName );
+			var isFolder = fileAttributes.HasFlag( System.IO.FileAttributes.Directory );
+
+			if ( isFolder )
+			{
+				if ( !ContentFolder.Exists )
+					throw new System.Exception( $"UgcEditor - Content Folder doesn't exist ({ContentFolder.FullName})" );
+
+				if ( !ContentFolder.EnumerateFiles( "*", System.IO.SearchOption.AllDirectories ).Any() )
+					throw new System.Exception( $"UgcEditor - Content Folder is empty" );
+			}
+			else
+			{
+				if ( !ContentFolder.Exists )
+					throw new System.Exception( $"UgcEditor - Content Path for file doesn't exist ({ContentFolder.FullName})" );
+			}
 		}
 	}
 
