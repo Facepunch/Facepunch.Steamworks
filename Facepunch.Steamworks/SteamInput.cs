@@ -21,6 +21,24 @@ namespace Steamworks
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
 
+		/// <summary>
+		/// Must be called when starting use of the ISteamInput interface.
+		/// </summary>
+		/// <returns>Always true.</return>
+		public static bool Init( bool explicitlyCallRunFrame = false )
+		{
+			return Internal.Init( explicitlyCallRunFrame );
+		}
+
+		/// <summary>
+		/// Must be called when ending use of the ISteamInput interface.
+		/// </summary>
+		/// <returns>Always true.</returns>
+		public static bool Shutdown()
+		{
+			return Internal.Shutdown();
+		}
+
 
 		/// <summary>
 		/// You shouldn't really need to call this because it gets called by <see cref="SteamClient.RunCallbacks"/>
@@ -50,6 +68,21 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Gets a list of connected controllers, storing them in the provided list. The list will be cleared.
+		/// The controllers returned will be identical to the `Controllers` enumeration, except that no garbage
+		/// is generated.
+		/// </summary>
+		public static void GetControllerNoAlloc(List<Controller> controllers)
+		{
+			controllers.Clear();
+			var num = Internal.GetConnectedControllers( queryArray );
+
+			for ( int i = 0; i < num; i++ )
+			{
+				controllers.Add( new Controller( queryArray[i])  );
+			}
+		}
 
         /// <summary>
         /// Return an absolute path to the PNG image glyph for the provided digital action name. The current
