@@ -377,6 +377,15 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Let Steam know that the user is currently using voice chat in game.
+		/// This will suppress the microphone for all voice communication in the Steam UI.
+		/// </summary>
+		public static void SetInGameVoiceSpeaking(SteamId steamID, bool speaking)
+		{
+			Internal.SetInGameVoiceSpeaking( steamID, speaking );
+		}
+
+		/// <summary>
 		/// Gets whether or not the current user is following the user with the given <paramref name="steamID"/>.
 		/// </summary>
 		/// <param name="steamID">The <see cref="SteamId"/> to check.</param>
