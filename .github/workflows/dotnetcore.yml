@@ -3,7 +3,7 @@ name: Build All
 on:
   workflow_dispatch:
   push:
-    branches: [ "master", "bugfix/unity_dir" ]
+    branches: [ "master" ]
 
 jobs:
   build:
