@@ -2,8 +2,11 @@
 
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win64</AssemblyName>
+		<TargetFrameworks>net46;netstandard2.1;net6.0</TargetFrameworks>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN64;PLATFORM_WIN;PLATFORM_64</DefineConstants>
-		<TargetFrameworks>netstandard2.1;net6.0;net46</TargetFrameworks>
+
+
+
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>	
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -39,17 +42,25 @@
 
 	<Import Project="Facepunch.Steamworks.targets" />
 
-	<Target Name="PostBuildHome" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GarryBasementPc'">
-	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
-	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
-	</Target>
-  
-  <Target Name="PostBuildOffice" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GARRYSOFFICEPC'">
-    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
-    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
-    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
-    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win32.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
-    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
-  </Target>  
+  <Target Name="BuildUnityOutput" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net46'">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Facepunch.Steamworks.Win32.csproj"
+             Properties="Configuration=$(Configuration);TargetFramework=net46"
+             Targets="Build" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Facepunch.Steamworks.Posix.csproj"
+             Properties="Configuration=$(Configuration);TargetFramework=net46"
+             Targets="Build" />
+
+    <ItemGroup>
+      <UnityPluginFiles Include="$(MSBuildProjectDirectory)\..\UnityPlugin\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(UnityPluginFiles)"
+          DestinationFiles="@(UnityPluginFiles->'$(BaseOutputPath)$(Configuration)\Unity\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <ItemGroup>
+      <Net46Assemblies Include="$(BaseOutputPath)$(Configuration)\net46\Facepunch.Steamworks.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Net46Assemblies)"
+          DestinationFolder="$(BaseOutputPath)$(Configuration)\Unity\" />
+  </Target>
 
 </Project>
