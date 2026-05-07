@@ -42,7 +42,7 @@ namespace Steamworks.Ugc
 		/// <summary>
 		/// A dictionary of key value tags for this item, only available from queries WithKeyValueTags(true)
 		/// </summary>
-		public Dictionary<string,string> KeyValueTags { get; internal set; }
+		public Dictionary<string,List<string>> KeyValueTags { get; internal set; }
 
 		/// <summary>
 		/// App Id of the app that created this item
