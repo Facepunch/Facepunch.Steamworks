@@ -11,9 +11,8 @@ namespace Steamworks
 {
 	internal static class SourceServerQuery
 	{
-		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
-		//      private static readonly byte A2S_PLAYER = 0x55;
 		private const byte A2S_RULES = 0x56;
+		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { A2S_RULES, 0xFF, 0xFF, 0xFF, 0xFF };
 
         private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
             new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
