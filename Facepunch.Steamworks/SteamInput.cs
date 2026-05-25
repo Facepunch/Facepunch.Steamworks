@@ -21,6 +21,27 @@ namespace Steamworks
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
 
+		/// <summary>
+		/// Initialize Steam Input.
+		/// Must be called when starting use of the ISteamInput interface.
+		/// You will not receive any input data or information about controllers until this is called.
+		/// </summary>
+		/// <param name="explicitlyCallRunFrame">If true, you must call <see cref="RunFrame"/> yourself.</param>
+		/// <returns>bool - Always returns true.</returns>
+		public static bool Init( bool explicitlyCallRunFrame = false )
+		{
+			return Internal.Init( explicitlyCallRunFrame );
+		}
+
+		/// <summary>
+		/// Shutdown Steam Input.
+		/// Must be called when ending use of the ISteamInput interface.
+		/// </summary>
+		/// <returns>bool - Always returns true.</returns>
+		public static bool Shutdown()
+		{
+			return Internal.Shutdown();
+		}
 
 		/// <summary>
 		/// You shouldn't really need to call this because it gets called by <see cref="SteamClient.RunCallbacks"/>
@@ -51,27 +72,27 @@ namespace Steamworks
 		}
 
 
-        /// <summary>
-        /// Return an absolute path to the PNG image glyph for the provided digital action name. The current
-        /// action set in use for the controller will be used for the lookup. You should cache the result and
-        /// maintain your own list of loaded PNG assets.
-        /// </summary>
-        /// <param name="controller"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static string GetDigitalActionGlyph( Controller controller, string action )
-        {
-            InputActionOrigin origin = InputActionOrigin.None;
+		/// <summary>
+		/// Return an absolute path to the PNG image glyph for the provided digital action name. The current
+		/// action set in use for the controller will be used for the lookup. You should cache the result and
+		/// maintain your own list of loaded PNG assets.
+		/// </summary>
+		/// <param name="controller"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static string GetDigitalActionGlyph( Controller controller, string action )
+		{
+			InputActionOrigin origin = InputActionOrigin.None;
 
-            Internal.GetDigitalActionOrigins(
-                controller.Handle,
-                Internal.GetCurrentActionSet(controller.Handle),
-                GetDigitalActionHandle(action),
-                ref origin
-            );
+			Internal.GetDigitalActionOrigins(
+				controller.Handle,
+				Internal.GetCurrentActionSet( controller.Handle ),
+				GetDigitalActionHandle( action ),
+				ref origin
+			);
 
-            return Internal.GetGlyphForActionOrigin_Legacy(origin);
-        }
+			return Internal.GetGlyphForActionOrigin_Legacy( origin );
+		}
 
 
 		/// <summary>
