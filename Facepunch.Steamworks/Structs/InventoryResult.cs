@@ -62,7 +62,36 @@ namespace Steamworks
 			}
 
 
-			return items;			
+			return items;
+		}
+
+		/// <summary>
+		/// Like <see cref="GetItems(bool)"/>, but only reads the named item properties instead of every property.
+		/// Is much cheaper for large result sets. Note this is still O(items x properties) native calls.
+		/// </summary>
+		public InventoryItem[] GetItems( string[] withProperties )
+		{
+			uint cnt = (uint) ItemCount;
+			if ( cnt <= 0 ) return null;
+
+			var pOutItemsArray = new SteamItemDetails_t[cnt];
+
+			if ( !SteamInventory.Internal.GetResultItems( _id, pOutItemsArray, ref cnt ) )
+				return null;
+
+			var items = new InventoryItem[cnt];
+
+			for( int i=0; i< cnt; i++ )
+			{
+				var item = InventoryItem.From( pOutItemsArray[i] );
+
+				if ( withProperties != null && withProperties.Length > 0 )
+					item._properties = InventoryItem.GetProperties( _id, i, withProperties );
+
+				items[i] = item;
+			}
+
+			return items;
 		}
 
 		public void Dispose()

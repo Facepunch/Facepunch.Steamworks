@@ -116,6 +116,23 @@ namespace Steamworks
 			return props;
 		}
 
+		internal static Dictionary<string, string> GetProperties( SteamInventoryResult_t result, int index, string[] propertyNames )
+		{
+			// Only fetch the requested properties. This skips the "list all property names" call and avoids reading properties we don't care about
+			// Each property is a separate native call, so for large result sets it can't be super slow
+			var props = new Dictionary<string, string>( propertyNames.Length );
+
+			foreach ( var propertyName in propertyNames )
+			{
+				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, out var strVal ) )
+				{
+					props.Add( propertyName, strVal );
+				}
+			}
+
+			return props;
+		}
+
 		/// <summary>
 		/// Will try to return the date that this item was aquired. You need to have for the items
 		/// with their properties for this to work.
