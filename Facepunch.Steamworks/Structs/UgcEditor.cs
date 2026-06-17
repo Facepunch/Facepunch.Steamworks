@@ -94,6 +94,7 @@ namespace Steamworks.Ugc
 		public Editor WithPublicVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Public; return this; }
 		public Editor WithFriendsOnlyVisibility() { Visibility = RemoteStoragePublishedFileVisibility.FriendsOnly; return this; }
 		public Editor WithPrivateVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Private; return this; }
+		public Editor WithUnlistedVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Unlisted; return this; }
 
 		List<string> Tags;
 		Dictionary<string, List<string>> KeyValueTags;
