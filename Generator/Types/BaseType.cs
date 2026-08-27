@@ -127,6 +127,27 @@ internal class BaseType
 			if ( VarName == "pCurrentPrices" ) return true;
 			if ( VarName == "pItemDefIDs" ) return true;
 			if ( VarName == "handlesOut" ) return true;
+
+			// GetDigitalActionOrigins / GetAnalogActionOrigins. isteaminput.h:823-825 says the
+			// buffer "should point to a STEAM_INPUT_MAX_ORIGINS sized array" and annotates the
+			// parameter STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_ORIGINS, ... ) - 8 origins, since
+			// one action can be bound to several inputs at once.
+			//
+			// Without this the parameter fell through to `ref EInputActionOrigin`, a single
+			// 4-byte enum, and Steam could write 32 bytes into it. That was a live stack
+			// buffer overflow reachable from three public methods.
+			//
+			// NOTE: this list is a name allowlist, which is why the bug existed - `handlesOut`
+			// above is here but `originsOut` was not, even though steam_api.json carries
+			// out_array_count for BOTH. Deciding array-ness from that metadata instead of from
+			// parameter names would make this class of bug impossible; see
+			// docs/audit/07-subsystems.md S1.
+			//
+			// The checked-in binding is hand-tuned to take a pointer + length rather than an
+			// array, so it can be fed a stackalloc and allocates nothing. Regenerating will
+			// replace it with the array form, which is safe but allocates - and will fail to
+			// compile against the current call sites rather than silently regressing.
+			if ( VarName == "originsOut" ) return true;
 			if ( VarName == "pDetails" && Func == "GetDownloadedLeaderboardEntry" ) return true;
 			if ( VarName == "pData" && NativeType.EndsWith( "*" ) && Func.StartsWith( "GetGlobalStatHistory" ) ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;

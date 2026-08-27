@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -212,12 +212,40 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDigitalActionOrigins", CallingConvention = Platform.CC)]
-		private static extern int _GetDigitalActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut );
-		
+		private static extern int _GetDigitalActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, InputActionOrigin* originsOut );
+
 		#endregion
-		internal int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut )
+		/// <summary>
+		/// Fills <paramref name="originsOut"/> with the origins bound to a digital action and
+		/// returns how many were written.
+		/// </summary>
+		/// <param name="inputHandle">The controller to query.</param>
+		/// <param name="actionSetHandle">The action set the action belongs to.</param>
+		/// <param name="digitalActionHandle">The digital action whose bindings you want.</param>
+		/// <param name="originsOut">
+		/// Buffer of at least <see cref="STEAM_INPUT_MAX_ORIGINS"/> elements. Steam
+		/// writes up to that many, so anything smaller is a buffer overflow.
+		/// </param>
+		/// <param name="originsLength">Number of elements <paramref name="originsOut"/> can hold.</param>
+		/// <returns>How many origins Steam wrote.</returns>
+		/// <remarks>
+		/// This takes a buffer rather than a single <c>ref</c> because
+		/// <c>isteaminput.h:825</c> annotates the parameter
+		/// <c>STEAM_OUT_ARRAY_COUNT( STEAM_INPUT_MAX_ORIGINS, ... )</c> and the comment at
+		/// <c>:823</c> says outright that it "should point to a STEAM_INPUT_MAX_ORIGINS sized
+		/// array". It was previously bound as <c>ref InputActionOrigin</c> — a single 4-byte
+		/// enum — so Steam could write 32 bytes into 4 and corrupt whatever followed the
+		/// caller's local.
+		/// </remarks>
+		internal unsafe int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, InputActionOrigin* originsOut, int originsLength )
 		{
-			var returnValue = _GetDigitalActionOrigins( Self, inputHandle, actionSetHandle, digitalActionHandle, ref originsOut );
+			if ( originsOut == null )
+				throw new ArgumentNullException( nameof( originsOut ) );
+
+			if ( originsLength < STEAM_INPUT_MAX_ORIGINS )
+				throw new ArgumentException( $"Steam writes up to {STEAM_INPUT_MAX_ORIGINS} origins; buffer of {originsLength} is too small.", nameof( originsLength ) );
+
+			var returnValue = _GetDigitalActionOrigins( Self, inputHandle, actionSetHandle, digitalActionHandle, originsOut );
 			return returnValue;
 		}
 		
@@ -257,12 +285,35 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetAnalogActionOrigins", CallingConvention = Platform.CC)]
-		private static extern int _GetAnalogActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut );
+		private static extern int _GetAnalogActionOrigins( IntPtr self, InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, InputActionOrigin* originsOut );
 		
 		#endregion
-		internal int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut )
+		/// <summary>
+		/// Fills <paramref name="originsOut"/> with the origins bound to an analog action and
+		/// returns how many were written.
+		/// </summary>
+		/// <param name="inputHandle">The controller to query.</param>
+		/// <param name="actionSetHandle">The action set the action belongs to.</param>
+		/// <param name="analogActionHandle">The analog action whose bindings you want.</param>
+		/// <param name="originsOut">
+		/// Buffer of at least <see cref="STEAM_INPUT_MAX_ORIGINS"/> elements. Steam writes up
+		/// to that many, so anything smaller is a buffer overflow.
+		/// </param>
+		/// <param name="originsLength">Number of elements <paramref name="originsOut"/> can hold.</param>
+		/// <returns>How many origins Steam wrote.</returns>
+		/// <remarks>
+		/// Takes a buffer rather than a single <c>ref</c> for the same reason as
+		/// <c>GetDigitalActionOrigins</c> - see the remarks there.
+		/// </remarks>
+		internal unsafe int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, InputActionOrigin* originsOut, int originsLength )
 		{
-			var returnValue = _GetAnalogActionOrigins( Self, inputHandle, actionSetHandle, analogActionHandle, ref originsOut );
+			if ( originsOut == null )
+				throw new ArgumentNullException( nameof( originsOut ) );
+
+			if ( originsLength < STEAM_INPUT_MAX_ORIGINS )
+				throw new ArgumentException( $"Steam writes up to {STEAM_INPUT_MAX_ORIGINS} origins; buffer of {originsLength} is too small.", nameof( originsLength ) );
+
+			var returnValue = _GetAnalogActionOrigins( Self, inputHandle, actionSetHandle, analogActionHandle, originsOut );
 			return returnValue;
 		}
 		

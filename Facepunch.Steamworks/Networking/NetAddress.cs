@@ -26,7 +26,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// The Port. This is redundant documentation.
 		/// </summary>
-		public ushort Port => port;
+		public readonly ushort Port => port;
 
 		/// <summary>
 		/// Any IP, specific port

@@ -92,18 +92,24 @@ namespace Steamworks
         /// <param name="controller"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static string GetDigitalActionGlyph( Controller controller, string action )
+        public static unsafe string GetDigitalActionGlyph( Controller controller, string action )
         {
-            InputActionOrigin origin = InputActionOrigin.None;
+            // Steam writes up to STEAM_INPUT_MAX_ORIGINS entries here - an action can be bound
+            // to several inputs at once. stackalloc so the correct-sized buffer costs nothing.
+            InputActionOrigin* origins = stackalloc InputActionOrigin[ISteamInput.STEAM_INPUT_MAX_ORIGINS];
 
-            Internal.GetDigitalActionOrigins(
+            var count = Internal.GetDigitalActionOrigins(
                 controller.Handle,
                 Internal.GetCurrentActionSet(controller.Handle),
                 GetDigitalActionHandle(action),
-                ref origin
+                origins,
+                ISteamInput.STEAM_INPUT_MAX_ORIGINS
             );
 
-            return Internal.GetGlyphForActionOrigin_Legacy(origin);
+            if ( count <= 0 )
+                return null;
+
+            return Internal.GetGlyphForActionOrigin_Legacy(origins[0]);
         }
 
 
@@ -112,13 +118,16 @@ namespace Steamworks
 		/// action set in use for the controller will be used for the lookup. You should cache the result and
 		/// maintain your own list of loaded PNG assets.
 		/// </summary>
-		public static string GetPngActionGlyph( Controller controller, string action, GlyphSize size )
+		public static unsafe string GetPngActionGlyph( Controller controller, string action, GlyphSize size )
 		{
-			InputActionOrigin origin = InputActionOrigin.None;
+			InputActionOrigin* origins = stackalloc InputActionOrigin[ISteamInput.STEAM_INPUT_MAX_ORIGINS];
 
-			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
+			var count = Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), origins, ISteamInput.STEAM_INPUT_MAX_ORIGINS );
 
-			return Internal.GetGlyphPNGForActionOrigin( origin, size, 0 );
+			if ( count <= 0 )
+				return null;
+
+			return Internal.GetGlyphPNGForActionOrigin( origins[0], size, 0 );
 		}
 
 		/// <summary>
@@ -126,13 +135,16 @@ namespace Steamworks
 		/// action set in use for the controller will be used for the lookup. You should cache the result and
 		/// maintain your own list of loaded PNG assets.
 		/// </summary>
-		public static string GetSvgActionGlyph( Controller controller, string action )
+		public static unsafe string GetSvgActionGlyph( Controller controller, string action )
 		{
-			InputActionOrigin origin = InputActionOrigin.None;
+			InputActionOrigin* origins = stackalloc InputActionOrigin[ISteamInput.STEAM_INPUT_MAX_ORIGINS];
 
-			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
+			var count = Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), origins, ISteamInput.STEAM_INPUT_MAX_ORIGINS );
 
-			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
+			if ( count <= 0 )
+				return null;
+
+			return Internal.GetGlyphSVGForActionOrigin( origins[0], 0 );
 		}
 
 		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
@@ -166,6 +178,91 @@ namespace Steamworks
 			val = Internal.GetActionSetHandle( name );
 			ActionSets.Add( name, val );
 			return val;
+		}
+
+		/// <summary>
+		/// Applies a haptic effect to a PlayStation 5 DualSense controller's adaptive
+		/// triggers — the motorised resistance that makes a trigger feel like a gun, a
+		/// bowstring, or a stiff brake pedal.
+		/// </summary>
+		/// <param name="controller">The controller to affect.</param>
+		/// <param name="effect">
+		/// The effect, built with one of the factory methods on
+		/// <see cref="DualSenseTriggerEffect"/> — for example
+		/// <see cref="DualSenseTriggerEffect.Weapon"/> or
+		/// <see cref="DualSenseTriggerEffect.Off"/>.
+		/// </param>
+		/// <param name="triggers">Which trigger(s) to apply it to. Defaults to both.</param>
+		/// <remarks>
+		/// <para>
+		/// <b>This is a state, not a one-shot.</b> The effect stays applied until you
+		/// replace it or send <see cref="DualSenseTriggerEffect.Off"/>. Set it when game
+		/// state changes — not every frame — and always clear it when the player holsters
+		/// a weapon or returns to a menu, or the trigger stays stiff.
+		/// </para>
+		/// <para>
+		/// <b>It fails silently by design.</b> On anything that is not a DualSense the
+		/// call does nothing, and the underlying API returns no status, so there is no way
+		/// to detect that it was ignored. If you need to branch on hardware, check the
+		/// controller's input type first. Steam Input must be enabled for your app.
+		/// </para>
+		/// <para>
+		/// Passing <see cref="DualSenseTrigger.None"/> is a no-op.
+		/// </para>
+		/// <example>
+		/// <code>
+		/// foreach ( var controller in SteamInput.Controllers )
+		/// {
+		///     SteamInput.SetDualSenseTriggerEffect(
+		///         controller,
+		///         DualSenseTriggerEffect.Weapon( startPosition: 2, endPosition: 7, strength: 8 ),
+		///         DualSenseTrigger.Right );
+		/// }
+		/// </code>
+		/// </example>
+		/// </remarks>
+		public static void SetDualSenseTriggerEffect( Controller controller, DualSenseTriggerEffect effect, DualSenseTrigger triggers = DualSenseTrigger.Both )
+		{
+			if ( triggers == DualSenseTrigger.None )
+				return;
+
+			var param = new ScePadTriggerEffectParam { TriggerMask = (byte)triggers };
+
+			// The native struct always carries a command slot per trigger; the mask decides
+			// which are honoured. Fill only the selected ones so an unselected trigger is
+			// left as a zeroed (Off) command rather than an uninitialised one.
+			if ( (triggers & DualSenseTrigger.Left) != 0 )
+				param.Left = effect.Command;
+
+			if ( (triggers & DualSenseTrigger.Right) != 0 )
+				param.Right = effect.Command;
+
+			Internal.SetDualSenseTriggerEffect( controller.Handle, ref param );
+		}
+
+		/// <summary>
+		/// Applies separate adaptive-trigger effects to the left and right triggers of a
+		/// DualSense controller in a single call.
+		/// </summary>
+		/// <param name="controller">The controller to affect.</param>
+		/// <param name="left">The effect for the left trigger (L2).</param>
+		/// <param name="right">The effect for the right trigger (R2).</param>
+		/// <remarks>
+		/// Use this instead of two calls when the triggers do different things — for
+		/// example a weapon break on the right and a vehicle brake on the left. See
+		/// <see cref="SetDualSenseTriggerEffect(Controller, DualSenseTriggerEffect, DualSenseTrigger)"/>
+		/// for the caveats, which apply equally here.
+		/// </remarks>
+		public static void SetDualSenseTriggerEffects( Controller controller, DualSenseTriggerEffect left, DualSenseTriggerEffect right )
+		{
+			var param = new ScePadTriggerEffectParam
+			{
+				TriggerMask = (byte)DualSenseTrigger.Both,
+				Left = left.Command,
+				Right = right.Command
+			};
+
+			Internal.SetDualSenseTriggerEffect( controller.Handle, ref param );
 		}
 	}
 }

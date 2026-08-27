@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>Steamworks.Conformance</AssemblyName>
+		<RootNamespace>Steamworks.Conformance</RootNamespace>
+		<LangVersion>10</LangVersion>
+		<Nullable>disable</Nullable>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--
+			System.Reflection.Metadata lets us read the managed assembly's ImplMap table
+			(where DllImport entry points actually live) WITHOUT loading the assembly.
+			Loading it would try to resolve the native steam_api DLL and, on some hosts,
+			execute module initialisers - neither of which we want in a static check.
+		-->
+		<PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
+	</ItemGroup>
+
+</Project>

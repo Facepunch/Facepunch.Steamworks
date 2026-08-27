@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>Steamworks.LayoutBaseline</AssemblyName>
+		<RootNamespace>Steamworks.LayoutBaseline</RootNamespace>
+		<LangVersion>10</LangVersion>
+		<Nullable>disable</Nullable>
+		<IsPackable>false</IsPackable>
+		<!-- Marshal.SizeOf / OffsetOf on arbitrary loaded types needs this off. -->
+		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
+	</PropertyGroup>
+
+</Project>

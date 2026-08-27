@@ -25,8 +25,6 @@ namespace Generator
                 var partial = "";
                 if ( c.Methods != null ) partial = " partial";
 
-                int defaultPack = c.IsPack4OnWindows ? 4 : 8;
-
 				var isCallback = true;
                 var iface = "";
                 if ( isCallback )
@@ -35,13 +33,21 @@ namespace Generator
                 //
                 // Main struct
                 //
-                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}{iface}" );
+                // Every callback struct carries the pack value the header itself declares:
+                // 8 on Windows, 4 on Linux/macOS (VALVE_CALLBACK_PACK_LARGE / _SMALL,
+                // steamclientpublic.h:1161-1178). Fields whose native alignment differs from
+                // their managed one - the pack(1) id classes - are modelled by their type
+                // instead, see FieldType/PackedId. There used to be a per-struct heuristic
+                // here; it could not express a mixed-alignment struct and mis-laid-out 16 of
+                // them.
+                //
+                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]" );
+                StartBlock( $"{Cleanup.Expose( name )}{UnsafeModifier( c )}{partial} struct {name}{iface}" );
                 {
 					//
 					// The fields
 					//
-					StructFields( c.Fields );
+					StructFields( c.Name, c.Fields );
 					WriteLine();
 
 					if ( isCallback )

@@ -31,8 +31,8 @@ namespace Steamworks.Data
 		}
 
 
-		public bool IsSteamId => type == IdentityType.SteamID;
-		public bool IsIpAddress => type == IdentityType.IPAddress;
+		public readonly bool IsSteamId => type == IdentityType.SteamID;
+		public readonly bool IsIpAddress => type == IdentityType.IPAddress;
 
 		/// <summary>
 		/// Return true if this identity is localhost
@@ -41,7 +41,12 @@ namespace Steamworks.Data
 		{
 			get
 			{
-				NetIdentity id = default;
+				// This used to test "NetIdentity id = default", i.e. an Invalid identity that
+				// is never localhost, so the property could only ever return false whatever
+				// the receiver held. It has to be a local because the native call takes it by
+				// ref; the mistake was initialising that local to default instead of to this.
+				// Compare NetAddress.IsLocalHost, which has always been right.
+				NetIdentity id = this;
 				return InternalIsLocalHost( ref id );
 			}
 		}
@@ -79,14 +84,42 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Returns NULL if we're not a SteamId
 		/// </summary>
-		public SteamId SteamId
+		/// <remarks>
+		/// Reads the field directly rather than calling
+		/// <c>SteamAPI_SteamNetworkingIdentity_GetSteamID64</c>, because that function is a
+		/// pure field read behind the very check this property already performs.
+		/// steamnetworkingtypes.h:1893 is the whole of it:
+		/// <code>
+		///   inline uint64 SteamNetworkingIdentity::GetSteamID64() const
+		///   { return m_eType == k_ESteamNetworkingIdentityType_SteamID ? m_steamID64 : 0; }
+		/// </code>
+		/// <c>m_steamID64</c> is the union member this struct maps at <c>FieldOffset( 8 )</c>,
+		/// so the managed read returns the identical value with no interop transition and no
+		/// copy. That matters because this is on the per-message receive path -
+		/// <c>SteamNetworkingMessages.ReceiveMessagesOnChannel</c> reads
+		/// <c>msg-&gt;Identity.SteamId</c> once for every message delivered - where it
+		/// previously cost one native call plus a 136-byte struct copy, since the native
+		/// signature takes the identity by ref and so needed a local to point at.
+		/// </remarks>
+		public readonly SteamId SteamId
 		{
 			get
 			{
 				if ( type != IdentityType.SteamID ) return default;
-				var id = this;
-				return InternalGetSteamID( ref id );
+				return steamid;
 			}
+		}
+		
+		/// <summary>
+		/// Convert to a SteamId
+		/// </summary>
+		/// <param name="value"></param>
+		public static implicit operator NetIdentity( string value )
+		{
+			NetIdentity id = default;
+			using var str = new Utf8StringToNative( value );
+			InternalSetGenericString( ref id, str.Pointer );
+			return id;
 		}
 
 		/// <summary>
@@ -100,7 +133,22 @@ namespace Steamworks.Data
 				var id = this;
 
 				var addrptr = InternalGetIPAddr( ref id );
-				return addrptr.ToType<NetAddress>();
+				return addrptr.ToTypeUnmanaged<NetAddress>();
+			}
+		}
+		
+		/// <summary>
+		/// Returns NULL if we're not a NetAddress
+		/// </summary>
+		public string GenericString
+		{
+			get
+			{
+				if ( type != IdentityType.GenericString ) return default;
+				var id = this;
+
+				var addrptr = InternalGetGenericString( ref id );
+				return addrptr;
 			}
 		}
 

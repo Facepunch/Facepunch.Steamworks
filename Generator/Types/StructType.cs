@@ -31,7 +31,14 @@ internal class StructType : BaseType
 	{
 		if ( IsPointer && !TreatAsPointer )
 		{
-            return $"return {varname}.ToType<{TypeName}>();";
+			// ToTypeUnmanaged, not ToType: a raw pointer read rather than
+			// Marshal.PtrToStructure, which boxes sizeof(T)+16 bytes on every call. The
+			// "unmanaged" constraint on the helper is the compiler checking the struct
+			// really is blittable, so if the SDK ever returns a pointer to a struct holding
+			// a managed reference, the generated code stops compiling instead of silently
+			// misreading it - at which point that call needs a marshalling helper, not a
+			// relaxed constraint.
+            return $"return {varname}.ToTypeUnmanaged<{TypeName}>();";
 		}
 
 		return base.Return( varname );

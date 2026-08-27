@@ -7,14 +7,94 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Starts and stops the Steam API for a game client, and is the gateway everything else in this
+	/// library depends on. Nothing in <c>SteamFriends</c>, <c>SteamUserStats</c>, <c>SteamUGC</c> or
+	/// anywhere else works until <see cref="Init"/> has succeeded.
+	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// For a <b>dedicated game server</b> use <see cref="SteamServer"/> instead. The two are separate
+	/// APIs with separate lifetimes; a server does not init the client.
+	/// </para>
+	/// <para>
+	/// <b>Steam must be running and the user signed in.</b> There is no offline mode &#8212;
+	/// <see cref="Init"/> throws rather than degrading, so treat "Steam is not available" as a real
+	/// startup path in your game and not an edge case.
+	/// </para>
+	/// <para>
+	/// During development, a build launched outside Steam needs a <c>steam_appid.txt</c> file
+	/// containing just your app id next to the executable, or Steam cannot tell which app you are.
+	/// Ship without that file.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// The whole lifecycle. This is the shape almost every game wants:
+	/// <code>
+	/// try
+	/// {
+	///     // asyncCallbacks: true means a background thread pumps callbacks for you
+	///     SteamClient.Init( 480 );
+	/// }
+	/// catch ( System.Exception e )
+	/// {
+	///     // Steam is not running, the user is not signed in, or the app id is wrong.
+	///     Console.WriteLine( $"Steam is unavailable: {e.Message}" );
+	///     return;
+	/// }
+	///
+	/// Console.WriteLine( $"Hello {SteamClient.Name} ({SteamClient.SteamId})" );
+	///
+	/// // ... game runs ...
+	///
+	/// SteamClient.Shutdown();
+	/// </code>
+	/// If you would rather pump callbacks yourself &#8212; usually to guarantee they arrive on your
+	/// main thread &#8212; pass <c>asyncCallbacks: false</c> and call
+	/// <see cref="RunCallbacks"/> once a frame:
+	/// <code>
+	/// SteamClient.Init( 480, asyncCallbacks: false );
+	///
+	/// while ( running )
+	/// {
+	///     SteamClient.RunCallbacks();   // omit this and no event or await ever completes
+	///     Update();
+	/// }
+	///
+	/// SteamClient.Shutdown();
+	/// </code>
+	/// </example>
 	public static class SteamClient
 	{
 		static bool initialized;
 
 		/// <summary>
-		/// Initialize the steam client.
+		/// Initialize the steam client. Call this once, before touching any other part of this
+		/// library, and pair it with <see cref="Shutdown"/>.
 		/// If <paramref name="asyncCallbacks"/> is false you need to call <see cref="RunCallbacks"/> manually every frame.
 		/// </summary>
+		/// <param name="appid">
+		/// Your Steam application id. During development this must match the <c>steam_appid.txt</c>
+		/// beside your executable if the game is launched outside Steam. Passing an id the signed-in
+		/// user does not own causes this to throw.
+		/// </param>
+		/// <param name="asyncCallbacks">
+		/// When <see langword="true"/> (the default) a background thread pumps Steam callbacks, so
+		/// events fire and awaited tasks complete without you doing anything &#8212; but they arrive
+		/// on <b>that</b> thread, which matters for engines that require main-thread access.
+		/// When <see langword="false"/> nothing is delivered until you call
+		/// <see cref="RunCallbacks"/> yourself; forgetting to do so makes every event silently never
+		/// fire and every awaited Steam call hang for ever.
+		/// </param>
+		/// <exception cref="System.Exception">
+		/// Thrown if Steam is not running, no user is signed in, the app id is wrong or not owned, or
+		/// <see cref="Init"/> has already been called without an intervening <see cref="Shutdown"/>.
+		/// The message carries Steam's own failure reason.
+		/// </exception>
+		/// <remarks>
+		/// This sets the <c>SteamAppId</c> and <c>SteamGameId</c> environment variables for the
+		/// process as a side effect.
+		/// </remarks>
 		public static void Init( uint appid, bool asyncCallbacks = true )
 		{
 			if ( initialized )
@@ -44,7 +124,8 @@ namespace Steamworks
 				ISteamUtils.Version,
 				ISteamVideo.Version,
 				ISteamRemotePlay.Version,
-				ISteamTimeline.Version );
+				ISteamTimeline.Version,
+				ISteamNetworkingMessages.Version );
 			var result = SteamAPI.Init( interfaceVersions, out var error );
 			if ( result != SteamAPIInitResult.OK )
 			{
@@ -82,6 +163,7 @@ namespace Steamworks
 			AddInterface<SteamUtils>();
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
+			AddInterface<SteamNetworkingMessages>();
 			AddInterface<SteamTimeline>();
 			// Note: don't forget to add the interface version to SteamAPI.Init above!!!
 

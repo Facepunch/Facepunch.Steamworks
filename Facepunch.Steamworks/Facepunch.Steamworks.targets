@@ -10,14 +10,27 @@
 		<FileVersion>2.5.2</FileVersion>
 	</PropertyGroup>
 
+	<!--
+		NU5100: "the assembly 'content\steam_api64.dll' is not inside the 'lib' folder and
+		hence it won't be added as a reference". That is a false positive here and the
+		placement is deliberate - steam_api.dll / steam_api64.dll are Valve's NATIVE
+		libraries, which must sit beside the consumer's executable and must never be
+		referenced as managed assemblies. NuGet cannot tell a native DLL from a managed one
+		by extension, so it warns regardless. Suppressed so the packaging output is clean and
+		a genuine packaging problem is visible when one appears.
+	-->
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);NU5100</NoWarn>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>$(DefineConstants);TRACE;DEBUG</DefineConstants>
-		<NoWarn>1701;1702;1705;618;1591</NoWarn>
+		<NoWarn>$(NoWarn);1701;1702;1705;618;1591</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DefineConstants>$(DefineConstants);TRACE;RELEASE</DefineConstants>
-		<NoWarn>1701;1702;1705;618;1591</NoWarn>
+		<NoWarn>$(NoWarn);1701;1702;1705;618;1591</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
@@ -32,6 +45,24 @@
 	<ItemGroup>
 		<Compile Remove="*AssemblyInfo.cs" />
 		<Folder Include="Generated\Interfaces\" />
+	</ItemGroup>
+
+	<!--
+		Supplies the .NET Framework reference assemblies from NuGet so the net46 target
+		builds on any machine (CI, Linux, a clean Windows box) without the Visual Studio
+		".NET Framework 4.6 Targeting Pack" / Developer Pack installed.
+
+		This MUST stay unconditional. NuGet restore evaluates a multi-targeting project
+		once with an EMPTY $(TargetFramework) (it only sees $(TargetFrameworks)), so a
+		PackageReference guarded by "'$(TargetFramework)' == 'net46'" is invisible to
+		restore and the package is never downloaded — the net46 leg then fails with
+		MSB3644. The un-suffixed meta-package selects the correct reference assemblies
+		per TFM on its own and is inert for netstandard2.1 / net6.0.
+
+		PrivateAssets="all" keeps it out of the produced NuGet package.
+	-->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
 	</ItemGroup>
   
 </Project>

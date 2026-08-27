@@ -75,3 +75,8 @@ Generator/bin
 *.XML
 .vs
 Facepunch.Steamworks.Test/bin/**
+
+# Build output for the repo tooling under Tools/ (the existing rules above are
+# per-project paths and did not cover new projects).
+Tools/**/bin/
+Tools/**/obj/

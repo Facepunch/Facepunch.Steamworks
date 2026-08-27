@@ -19,13 +19,14 @@ namespace Steamworks.ServerList
 			Ips.AddRange( list );
 		}
 
-		public override async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
+		public override async Task<QueryEndReason> RunQueryAsync( float timeoutSeconds = 10 )
 		{
 			int blockSize = 16;
 			int pointer = 0;
 
 			var ips = Ips.ToArray();
 
+			QueryEndReason ret = QueryEndReason.EndOfRefresh;
 			wantsCancel = false;
 
 			while ( !wantsCancel )
@@ -43,7 +44,10 @@ namespace Steamworks.ServerList
 						list.AddFilter( "gameaddr", server );
 					}
 
-					await list.RunQueryAsync( timeoutSeconds );
+					ret = await list.RunQueryAsync( timeoutSeconds );
+
+					if ( wantsCancel )
+						return QueryEndReason.CancelledOrChangedRequest;
 
 					Responsive.AddRange( list.Responsive );
 					Responsive = Responsive.Distinct().ToList();
@@ -56,7 +60,7 @@ namespace Steamworks.ServerList
 				InvokeChanges();
 			}
 
-			return true;
+			return ret;
 		}
 
 		// note: Cancel doesn't get called in Dispose because request is always null for this class

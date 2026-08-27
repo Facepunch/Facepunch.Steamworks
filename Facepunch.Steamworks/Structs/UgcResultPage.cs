@@ -3,13 +3,64 @@ using Steamworks.Data;
 
 namespace Steamworks.Ugc
 {
+	/// <summary>
+	/// One page of results from a <see cref="Query"/>, and the native query handle that owns them.
+	/// A page holds at most 50 items &#8212; Valve fixes that at <c>kNumUGCResultsPerPage</c>.
+	/// </summary>
+	/// <remarks>
+	/// <b>You must dispose this.</b> The underlying native query is only released by
+	/// <see cref="Dispose"/>; there is no finalizer, so a page you drop on the floor leaks its handle
+	/// and its results for the lifetime of the process. Prefer a <c>using</c> block.
+	/// <para>
+	/// The item data is read out of the native query lazily, while you enumerate
+	/// <see cref="Entries"/>. That means enumerating after disposal yields nothing rather than
+	/// throwing, and it means you should materialise anything you want to keep (with <c>ToList()</c>,
+	/// or by copying the fields you need) <i>before</i> the <c>using</c> block ends.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var page = await Ugc.Query.Items.RankedByVote().GetPageAsync( 1 );
+	/// if ( page.HasValue )
+	/// {
+	///     using ( var results = page.Value )
+	///     {
+	///         // materialise inside the using block - Entries is lazy
+	///         var titles = results.Entries.Select( x =&gt; x.Title ).ToList();
+	///     }
+	/// }
+	/// </code>
+	/// </example>
 	public struct ResultPage : System.IDisposable
 	{
 		internal UGCQueryHandle_t Handle;
 
+		/// <summary>
+		/// How many items are actually in <b>this page</b>, which is at most 50 and is lower on the
+		/// last page. This is not the size of the whole result set &#8212; that is
+		/// <see cref="TotalCount"/>. Zero here means the query succeeded and matched nothing on this
+		/// page, which is not an error.
+		/// </summary>
 		public int ResultCount;
+
+		/// <summary>
+		/// How many items matched the query in total, across every page. Divide by 50 (rounding up) to
+		/// work out how many pages exist. This is the number to show a player as "1,284 results".
+		/// </summary>
+		/// <remarks>
+		/// Valve does not document whether this is exact or an estimate for very large result sets.
+		/// </remarks>
 		public int TotalCount;
 
+		/// <summary>
+		/// Whether Steam answered this page from its cache instead of querying the Workshop backend.
+		/// Only ever <see langword="true"/> if you asked for caching with
+		/// <see cref="Query.AllowCachedResponse"/>.
+		/// </summary>
+		/// <remarks>
+		/// Cached pages carry stale vote and subscription counts, so do not use one to confirm that a
+		/// write you just made has landed.
+		/// </remarks>
 		public bool CachedData;
 
 		internal bool ReturnsKeyValueTags;
@@ -18,6 +69,28 @@ namespace Steamworks.Ugc
 		internal bool ReturnsChildren;
 		internal bool ReturnsAdditionalPreviews;
 
+		/// <summary>
+		/// The items in this page, read out of the native query one at a time as you enumerate.
+		/// This is where a <see cref="Query"/> finally turns into something you can show a player.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// <b>Lazy and re-entrant.</b> Nothing is read until you enumerate, and enumerating twice does
+		/// the work twice. Enumerating after <see cref="Dispose"/> silently yields nothing rather than
+		/// throwing, so materialise what you need before disposing.
+		/// </para>
+		/// <para>
+		/// Which fields are populated depends on the switches set on the query that produced this
+		/// page: <see cref="Query.WithKeyValueTags"/>, <see cref="Query.WithMetadata"/>,
+		/// <see cref="Query.WithChildren"/>, <see cref="Query.WithAdditionalPreviews"/> and
+		/// <see cref="Query.WithDefaultStats"/>. Fields you did not ask for are left null or zero,
+		/// which is indistinguishable from the item genuinely having none.
+		/// </para>
+		/// <para>
+		/// Items that Steam fails to read are skipped silently, so the number of values you get back
+		/// can be lower than <see cref="ResultCount"/>.
+		/// </para>
+		/// </remarks>
 		public IEnumerable<Item> Entries
 		{
 			get
@@ -122,6 +195,14 @@ namespace Steamworks.Ugc
 			return val;
 		}
 
+		/// <summary>
+		/// Release the native query and the results it holds. Mandatory &#8212; there is no finalizer
+		/// backing this up, so a page that is never disposed leaks until the process exits.
+		/// </summary>
+		/// <remarks>
+		/// Safe to call more than once; the handle is zeroed on the first call. After disposal
+		/// <see cref="Entries"/> yields nothing instead of throwing.
+		/// </remarks>
 		public void Dispose()
 		{
 			if ( Handle > 0 )

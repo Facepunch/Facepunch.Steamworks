@@ -1,0 +1,50 @@
+<Project>
+
+	<!--
+		Facepunch.Steamworks.Win64 / .Win32 / .Posix all live in THIS single directory.
+		By default every SDK-style project puts its intermediate output in ".\obj\", so
+		all three were writing to the same files:
+
+			obj\project.assets.json          (the restore graph — one file, three projects)
+			obj\project.nuget.cache
+			obj\<Project>.csproj.nuget.g.props / .g.targets
+
+		project.assets.json is not project-qualified, so the last project to restore won
+		and the other two silently built against a graph that was not theirs. In practice
+		only Win64 kept its .nuget.g.props; Win32 and Posix lost theirs entirely, which is
+		why adding a PackageReference (e.g. Microsoft.NETFramework.ReferenceAssemblies)
+		fixed the net46 leg for Win64 but left Win32 and Posix failing with MSB3644.
+
+		Giving each project its own intermediate directory removes the collision.
+
+		Directory.Build.props is the right home for this: MSBuild imports it BEFORE the
+		SDK props, which is the only point early enough for NuGet restore to honour the
+		value. Setting it inside the .csproj or the shared .targets (both imported later)
+		would be ignored by restore.
+
+		NOTE: BaseOutputPath (bin\) is deliberately left SHARED. The BuildUnityOutput
+		target in Facepunch.Steamworks.Win64.csproj globs
+		bin\$(Configuration)\net46\Facepunch.Steamworks.* to collect all three platform
+		assemblies into the Unity plugin folder, and that depends on one common bin\.
+	-->
+	<PropertyGroup>
+		<BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+	</PropertyGroup>
+
+	<!--
+		The SDK auto-excludes a project's OWN $(BaseIntermediateOutputPath) and
+		$(BaseOutputPath) from the default **\*.cs glob. Now that each project has its
+		own obj\<Project>\ subfolder, that per-project exclusion no longer covers its
+		siblings, so every project would glob the OTHER two projects' generated
+		AssemblyInfo.cs / .AssemblyAttributes.cs and fail with CS0579 (duplicate
+		assembly attributes).
+
+		Excluding the whole obj\ and bin\ trees restores the intended behaviour.
+		The SDK appends its own entries to $(DefaultItemExcludes) later, so seeding
+		the property here is additive, not destructive.
+	-->
+	<PropertyGroup>
+		<DefaultItemExcludes>$(DefaultItemExcludes);obj\**;bin\**</DefaultItemExcludes>
+	</PropertyGroup>
+
+</Project>

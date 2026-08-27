@@ -11,12 +11,22 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v4.2.2
-    - name: Setup dotnet 6.0.x
-      uses: actions/setup-dotnet@v4.1.0
+    # v5 of these actions runs on Node 24. The v4 pins were being force-migrated off the
+    # deprecated Node 20 runtime and warning on every run.
+    - uses: actions/checkout@v5
+    # 6.0.x builds the library's net6.0 target framework.
+    # 8.0.x is needed by Tools/Steamworks.Conformance and Tools/Steamworks.LayoutBaseline,
+    # both of which target net8.0.
+    #
+    # No 'include-prerelease' here: setup-dotnet dropped that input, and passing it made
+    # every run warn "Unexpected input(s) 'include-prerelease'". Use 'dotnet-quality' if a
+    # prerelease is ever genuinely needed.
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v5
       with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+          dotnet-version: |
+            6.0.x
+            8.0.x
 
     - name: Restore Win32
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
@@ -39,7 +49,23 @@ jobs:
     - name: Build Win64 Release
       run: dotnet build Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj --configuration Release
 
-    - uses: actions/upload-artifact@v4.4.3
+    # Asserts that every DllImport entry point in the built assemblies actually exists in
+    # every committed Steamworks binary (Windows, Linux and macOS). Entry points are plain
+    # strings the compiler never checks, so without this a symbol Valve removed - or a
+    # stale committed binary - ships silently and throws EntryPointNotFoundException on a
+    # player's machine. Needs no Steam client, account or network.
+    - name: Verify native export conformance
+      run: powershell -ExecutionPolicy Bypass -File verify-native-conformance.ps1
+
+    # Pins the marshalled layout (size, pack, field offsets) of all 339 structs. Steam
+    # writes these directly into memory we read back, so a layout mismatch silently
+    # returns wrong data or reads past the buffer instead of throwing. The layouts come
+    # from the code generator, where one small change can re-lay-out dozens of structs at
+    # once - this makes that surface as a reviewable diff. Needs no Steam client.
+    - name: Verify struct layout baseline
+      run: powershell -ExecutionPolicy Bypass -File verify-struct-layout.ps1
+
+    - uses: actions/upload-artifact@v7
       with:
         name: Compiled Files
         path: Facepunch.Steamworks/bin

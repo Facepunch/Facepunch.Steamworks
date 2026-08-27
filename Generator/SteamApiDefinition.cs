@@ -102,22 +102,21 @@ namespace Generator
             public StructFields[] Fields { get; set; }
             public Interface.Method[] Methods { get; set; }
 
-            public bool IsPack4OnWindows
-            {
-                get
-                {
-                    // 4/8 packing is irrevant to these classes
-                    if ( Name.Contains( "MatchMakingKeyValuePair_t" ) ) return true;
-
-                    if ( Fields.Skip( 1 ).Any( x => x.Type.Contains( "CSteamID" ) ) )
-                        return true;
-
-                    if ( Fields.Skip( 1 ).Any( x => x.Type.Contains( "CGameID" ) ) )
-                        return true;
-
-                    return false;
-                }
-            }
+            //
+            // There was an IsPack4OnWindows property here. It forced a struct's whole
+            // StructLayout.Pack to 4 when any field after the first mentioned CSteamID/CGameID,
+            // as a way of expressing that Valve declares those two classes inside
+            // "#pragma pack( push, 1 )" and they are therefore 1-aligned.
+            //
+            // The intent was right, the mechanism could not work: Pack is a struct-wide switch,
+            // so it also dragged genuine uint64 members off their natural 8-byte boundary, and
+            // Skip(1) missed the case where the id IS the first field. It was wrong in both
+            // directions and mis-laid-out 16 structs.
+            //
+            // The alignment now lives on the field's type (PackedId, see
+            // CodeWriter/Struct.cs::FieldType), which is where it belongs, so every struct just
+            // carries the pack the header declares - Platform.StructPlatformPackSize.
+            //
 
             public EnumDef[] Enums { get; set; }
 

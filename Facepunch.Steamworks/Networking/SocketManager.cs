@@ -25,6 +25,21 @@ namespace Steamworks
 
 		internal HSteamNetPollGroup pollGroup;
 
+		/// <summary>
+		/// The poll group this manager drains in <see cref="Receive"/>. Every connection it
+		/// accepts is added to this group, which is why one <see cref="Receive"/> call services
+		/// every client instead of one call per client.
+		///
+		/// <para>
+		/// Exposed so you can add connections this manager did not create — a connection you
+		/// opened yourself with <see cref="SteamNetworkingSockets.ConnectRelay{T}(SteamId, int)"/>,
+		/// for instance — and have their messages arrive through the same
+		/// <see cref="OnMessage"/> pump. Do not <see cref="Data.PollGroup.Destroy"/> it; this
+		/// manager owns it and destroys it in <see cref="Close"/>.
+		/// </para>
+		/// </summary>
+		public PollGroup PollGroup => new PollGroup { Id = pollGroup.Value };
+
 		internal void Initialize()
 		{
 			pollGroup = SteamNetworkingSockets.Internal.CreatePollGroup();
@@ -123,48 +138,91 @@ namespace Steamworks
 			}
 		}
 
-		public int Receive( int bufferSize = 32, bool receiveToEnd = true )
+		/// <summary>
+		/// Drains queued messages from every connection on this socket and dispatches them to
+		/// <see cref="OnMessage"/>. Call this once per tick.
+		/// </summary>
+		/// <param name="bufferSize">
+		/// How many messages to fetch per native call, 1..<see cref="PollGroup.MaxReceiveBufferSize"/>.
+		/// The buffer is <c>stackalloc</c>'d, so this bounds stack usage to
+		/// <c>bufferSize * sizeof(void*)</c> bytes.
+		/// </param>
+		/// <param name="receiveToEnd">Keep fetching until Steam's queue is empty.</param>
+		/// <returns>How many messages were dispatched.</returns>
+		/// <remarks>
+		/// <para>
+		/// Allocation-free. This is the dedicated-server receive path, so it runs at tick rate
+		/// with every connected player's traffic flowing through it, and anything it allocates
+		/// becomes continuous GC pressure. It previously cost an <c>AllocHGlobal</c>/
+		/// <c>FreeHGlobal</c> pair per call plus a <c>Marshal.PtrToStructure&lt;NetMsg&gt;</c> per
+		/// message - the latter boxes, at roughly 232 bytes each. A 100-player server at
+		/// 2,000 msg/s was producing on the order of 460 KB/s of garbage.
+		/// </para>
+		/// <para>
+		/// Message fields are now read straight through <c>NetMsg*</c>, and the drain loop is a
+		/// <c>while</c> rather than recursion so a sustained flood cannot grow the stack.
+		/// </para>
+		/// </remarks>
+		public unsafe int Receive( int bufferSize = 32, bool receiveToEnd = true )
 		{
-			int processed = 0;
-			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
+			if ( bufferSize < 1 || bufferSize > PollGroup.MaxReceiveBufferSize ) throw new ArgumentOutOfRangeException( nameof( bufferSize ) );
 
-			try
+			int totalProcessed = 0;
+			NetMsg** messageBuffer = stackalloc NetMsg*[bufferSize];
+
+			while ( true )
 			{
-				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnPollGroup( pollGroup, messageBuffer, bufferSize );
+				int processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnPollGroup( pollGroup, new IntPtr( &messageBuffer[0] ), bufferSize );
+				totalProcessed += processed;
 
-				for ( int i = 0; i < processed; i++ )
+				try
 				{
-					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * IntPtr.Size ) );
+					for ( int i = 0; i < processed; i++ )
+					{
+						ReceiveMessage( ref messageBuffer[i] );
+					}
 				}
-			}
-			finally
-			{
-				Marshal.FreeHGlobal( messageBuffer );
-			}
-			
+				catch
+				{
+					// A throwing handler must not leak the messages Steam handed us. Release
+					// whatever is still outstanding, then let the exception continue.
+					for ( int i = 0; i < processed; i++ )
+					{
+						if ( messageBuffer[i] != null )
+						{
+							NetMsg.InternalRelease( messageBuffer[i] );
+						}
+					}
 
-			//
-			// Overwhelmed our buffer, keep going
-			//
-			if ( receiveToEnd && processed == bufferSize )
-				processed += Receive( bufferSize );
+					throw;
+				}
 
-			return processed;
+				//
+				// Overwhelmed our buffer, keep going
+				//
+				if ( !receiveToEnd || processed < bufferSize )
+					break;
+			}
+
+			return totalProcessed;
 		}
 
-		internal unsafe void ReceiveMessage( IntPtr msgPtr )
+		internal unsafe void ReceiveMessage( ref NetMsg* msg )
 		{
-			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
+				// Argument order matters here: OnMessage takes ( ..., messageNum, recvTime, ... ).
+				// These two were previously passed the other way round, so every consumer
+				// received the microsecond timestamp as the message number and vice versa.
+				OnMessage( msg->Connection, msg->Identity, msg->DataPtr, msg->DataSize, msg->MessageNumber, msg->RecvTime, msg->Channel );
 			}
 			finally
 			{
 				//
 				// Releases the message
 				//
-				NetMsg.InternalRelease( (NetMsg*) msgPtr );
+				NetMsg.InternalRelease( msg );
+				msg = null;
 			}
 		}
 

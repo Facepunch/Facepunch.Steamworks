@@ -15,6 +15,16 @@ namespace Generator
             if ( m == "m_itemId" ) return "ItemId";
             if ( m == "m_handle" ) return "Handle";
             if (m == "m_result") return "Result";
+            // The greedy prefix strips below eat the first letter of real
+            // words whose name starts with a Hungarian-looking letter:
+            // m_identityRemote -> "DentityRemote", m_info -> "Nfo",
+            // m_identity -> "Dentity", m_routing -> "Outing". These members
+            // are not Hungarian-prefixed (the char after m_ is lowercase, i.e.
+            // part of the word), so special-case them before the strips run.
+            if ( m == "m_identityRemote" ) return "IdentityRemote";
+            if ( m == "m_info" ) return "Info";
+            if ( m == "m_identity" ) return "Identity";
+            if ( m == "m_routing" ) return "Routing";
 
             var cleanName = m.Replace( "m_un", "" )
                     .Replace( "m_us", "" )

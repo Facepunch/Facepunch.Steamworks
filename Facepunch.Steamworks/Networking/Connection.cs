@@ -167,5 +167,50 @@ namespace Steamworks.Data
 		{
 			return SteamNetworkingSockets.Internal.ConfigureConnectionLanes( this, lanePriorities.Length, lanePriorities, laneWeights );
 		}
+
+		/// <summary>
+		/// Put this connection into <paramref name="group"/> so that its messages are drained
+		/// by <see cref="PollGroup.Receive(PollGroupMessage, int, bool)"/> along with every
+		/// other connection in that group, instead of needing a receive call of its own.
+		///
+		/// <para>
+		/// A connection belongs to at most one group; this silently removes it from any group
+		/// it was already in. Pass <see cref="PollGroup.Invalid"/> to remove it from its group
+		/// without joining another. This is the same operation as
+		/// <see cref="PollGroup.Add(Connection)"/>, spelled from the connection's side.
+		/// </para>
+		/// </summary>
+		/// <returns><see langword="false"/> if this connection handle is invalid, or if <paramref name="group"/> is a non-zero handle that Steam does not recognise.</returns>
+		/// <exception cref="ArgumentException">This connection is the invalid connection handle.</exception>
+		public bool SetPollGroup( PollGroup group )
+		{
+			//
+			// Routed through PollGroup so that all three spellings of "SetConnectionPollGroup"
+			// - PollGroup.Add, PollGroup.Remove and this - validate identically. Add requires a
+			// live group; Remove deliberately does not, because clearing a connection's group is
+			// meaningful whichever group it happens to be in.
+			//
+			return group.IsValid ? group.Add( this ) : group.Remove( this );
+		}
+
+		/// <summary>
+		/// The FakeIP address of the peer at the other end of this connection — a real-looking
+		/// IPv4 address that Valve issues purely as an identifier, so that code which expects
+		/// to identify peers by IP keeps working over SDR.
+		///
+		/// <para>
+		/// See <see cref="SteamNetworkingSockets.GetRemoteFakeIPForConnection"/> for the
+		/// caveats, in particular that a locally allocated FakeIP is only meaningful inside
+		/// this process and is not guaranteed to be stable across connections.
+		/// </para>
+		/// </summary>
+		/// <returns>
+		/// <see cref="Result.OK"/> on success, <see cref="Result.IPNotFound"/> if this
+		/// connection was not made using the FakeIP system.
+		/// </returns>
+		public Result GetRemoteFakeIP( out NetAddress address )
+		{
+			return SteamNetworkingSockets.GetRemoteFakeIPForConnection( this, out address );
+		}
 	}
 }

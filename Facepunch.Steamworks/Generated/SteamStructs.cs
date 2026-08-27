@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FriendGameInfo_t
 	{
-		internal GameId GameID; // m_gameID CGameID
+		internal PackedId GameID; // m_gameID CGameID
 		internal uint GameIP; // m_unGameIP uint32
 		internal ushort GamePort; // m_usGamePort uint16
 		internal ushort QueryPort; // m_usQueryPort uint16
-		internal ulong SteamIDLobby; // m_steamIDLobby CSteamID
+		internal PackedId SteamIDLobby; // m_steamIDLobby CSteamID
 		
 	}
 	
@@ -26,8 +26,8 @@ namespace Steamworks.Data
 		
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
-	internal partial struct gameserveritem_t
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal unsafe partial struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr servernetadr_t
 		internal int Ping; // m_nPing int
@@ -35,15 +35,12 @@ namespace Steamworks.Data
 		internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool DoNotRefresh; // m_bDoNotRefresh bool
-		internal string GameDirUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameDir, 0, System.Array.IndexOf<byte>( GameDir, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szGameDir
-		internal byte[] GameDir; // m_szGameDir char [32]
-		internal string MapUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Map, 0, System.Array.IndexOf<byte>( Map, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szMap
-		internal byte[] Map; // m_szMap char [32]
-		internal string GameDescriptionUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameDescription, 0, System.Array.IndexOf<byte>( GameDescription, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szGameDescription
-		internal byte[] GameDescription; // m_szGameDescription char [64]
+		internal string GameDirUTF8() { fixed ( byte* b = GameDir ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 32 ); }
+		internal fixed byte GameDir[32]; // m_szGameDir char [32]
+		internal string MapUTF8() { fixed ( byte* b = Map ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 32 ); }
+		internal fixed byte Map[32]; // m_szMap char [32]
+		internal string GameDescriptionUTF8() { fixed ( byte* b = GameDescription ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 64 ); }
+		internal fixed byte GameDescription[64]; // m_szGameDescription char [64]
 		internal uint AppID; // m_nAppID uint32
 		internal int Players; // m_nPlayers int
 		internal int MaxPlayers; // m_nMaxPlayers int
@@ -54,13 +51,11 @@ namespace Steamworks.Data
 		internal bool Secure; // m_bSecure bool
 		internal uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
 		internal int ServerVersion; // m_nServerVersion int
-		internal string ServerNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( ServerName, 0, System.Array.IndexOf<byte>( ServerName, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szServerName
-		internal byte[] ServerName; // m_szServerName char [64]
-		internal string GameTagsUTF8() => Steamworks.Utility.Utf8NoBom.GetString( GameTags, 0, System.Array.IndexOf<byte>( GameTags, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szGameTags
-		internal byte[] GameTags; // m_szGameTags char [128]
-		internal ulong SteamID; // m_steamID CSteamID
+		internal string ServerNameUTF8() { fixed ( byte* b = ServerName ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 64 ); }
+		internal fixed byte ServerName[64]; // m_szServerName char [64]
+		internal string GameTagsUTF8() { fixed ( byte* b = GameTags ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 128 ); }
+		internal fixed byte GameTags[128]; // m_szGameTags char [128]
+		internal PackedId SteamID; // m_steamID CSteamID
 		
 	}
 	
@@ -83,7 +78,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardEntry_t
 	{
-		internal ulong SteamIDUser; // m_steamIDUser CSteamID
+		internal PackedId SteamIDUser; // m_steamIDUser CSteamID
 		internal int GlobalRank; // m_nGlobalRank int32
 		internal int Score; // m_nScore int32
 		internal int CDetails; // m_cDetails int32
@@ -115,19 +110,17 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamUGCDetails_t
+	internal unsafe struct SteamUGCDetails_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult EResult
 		internal WorkshopFileType FileType; // m_eFileType EWorkshopFileType
 		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-		internal string TitleUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
-		internal byte[] Title; // m_rgchTitle char [129]
-		internal string DescriptionUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
-		internal byte[] Description; // m_rgchDescription char [8000]
+		internal string TitleUTF8() { fixed ( byte* b = Title ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 129 ); }
+		internal fixed byte Title[129]; // m_rgchTitle char [129]
+		internal string DescriptionUTF8() { fixed ( byte* b = Description ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 8000 ); }
+		internal fixed byte Description[8000]; // m_rgchDescription char [8000]
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 		internal uint TimeCreated; // m_rtimeCreated uint32
 		internal uint TimeUpdated; // m_rtimeUpdated uint32
@@ -139,19 +132,16 @@ namespace Steamworks.Data
 		internal bool AcceptedForUse; // m_bAcceptedForUse bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool TagsTruncated; // m_bTagsTruncated bool
-		internal string TagsUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
-		internal byte[] Tags; // m_rgchTags char [1025]
+		internal string TagsUTF8() { fixed ( byte* b = Tags ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 1025 ); }
+		internal fixed byte Tags[1025]; // m_rgchTags char [1025]
 		internal ulong File; // m_hFile UGCHandle_t
 		internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-		internal string PchFileNameUTF8() => Steamworks.Utility.Utf8NoBom.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
-		internal byte[] PchFileName; // m_pchFileName char [260]
+		internal string PchFileNameUTF8() { fixed ( byte* b = PchFileName ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 260 ); }
+		internal fixed byte PchFileName[260]; // m_pchFileName char [260]
 		internal int FileSize; // m_nFileSize int32
 		internal int PreviewFileSize; // m_nPreviewFileSize int32
-		internal string URLUTF8() => Steamworks.Utility.Utf8NoBom.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
-		internal byte[] URL; // m_rgchURL char [256]
+		internal string URLUTF8() { fixed ( byte* b = URL ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 256 ); }
+		internal fixed byte URL[256]; // m_rgchURL char [256]
 		internal uint VotesUp; // m_unVotesUp uint32
 		internal uint VotesDown; // m_unVotesDown uint32
 		internal float Score; // m_flScore float
@@ -175,22 +165,21 @@ namespace Steamworks.Data
 	{
 		internal int CbSize; // m_cbSize int
 		internal string DataUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Data, 0, System.Array.IndexOf<byte>( Data, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_data
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
 		internal byte[] Data; // m_data char [128]
 		
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamDatagramGameCoordinatorServerLogin
+	internal unsafe struct SteamDatagramGameCoordinatorServerLogin
 	{
-		internal NetIdentity Dentity; // m_identity SteamNetworkingIdentity
-		internal SteamDatagramHostedAddress Outing; // m_routing SteamDatagramHostedAddress
+		internal NetIdentity Identity; // m_identity SteamNetworkingIdentity
+		internal SteamDatagramHostedAddress Routing; // m_routing SteamDatagramHostedAddress
 		internal AppId AppID; // m_nAppID AppId_t
 		internal uint Time; // m_rtime RTime32
 		internal int CbAppData; // m_cbAppData int
-		internal string AppDataUTF8() => Steamworks.Utility.Utf8NoBom.GetString( AppData, 0, System.Array.IndexOf<byte>( AppData, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2048)] // byte[] m_appData
-		internal byte[] AppData; // m_appData char [2048]
+		internal string AppDataUTF8() { fixed ( byte* b = AppData ) return Steamworks.Utility.ReadNullTerminatedUTF8String( b, 2048 ); }
+		internal fixed byte AppData[2048]; // m_appData char [2048]
 		
 	}
 	
