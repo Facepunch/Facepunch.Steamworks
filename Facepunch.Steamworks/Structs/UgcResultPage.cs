@@ -57,12 +57,20 @@ namespace Steamworks.Ugc
 						{
 							var keyValueTagsCount = SteamUGC.Internal.GetQueryUGCNumKeyValueTags( Handle, i );
 
-							item.KeyValueTags = new Dictionary<string, string>( (int)keyValueTagsCount );
+							item.KeyValueTags = new Dictionary<string, List<string>>( (int)keyValueTagsCount );
 							for ( uint j = 0; j < keyValueTagsCount; j++ )
 							{
 								string key, value;
 								if ( SteamUGC.Internal.GetQueryUGCKeyValueTag( Handle, i, j, out key, out value ) )
-									item.KeyValueTags[key] = value;
+								{
+									if ( !item.KeyValueTags.TryGetValue( key, out List<string> list ) )
+									{
+										list = new List<string>();
+										item.KeyValueTags[key] = list;
+									}
+
+									list.Add(value);
+								}
 							}
 						}
 
