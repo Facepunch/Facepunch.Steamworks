@@ -48,6 +48,68 @@ namespace Steamworks
 		}
 
 
+		/// <summary>
+		/// Rumble the body motors. Speeds are 0-65535 and persist until changed, so call StopVibration when done.
+		/// Works on Xbox, PlayStation and Steam Deck controllers; a no-op on devices without rumble.
+		/// </summary>
+		public void TriggerVibration( ushort leftSpeed, ushort rightSpeed )
+		{
+			SteamInput.Internal.TriggerVibration( Handle, leftSpeed, rightSpeed );
+		}
+
+		/// <summary>
+		/// Rumble the body motors and the trigger impulse motors. Trigger motors only exist on Xbox One and Series
+		/// controllers and are ignored elsewhere. Same 0-65535 range and persistence as TriggerVibration.
+		/// </summary>
+		public void TriggerVibrationExtended( ushort leftSpeed, ushort rightSpeed, ushort leftTriggerSpeed, ushort rightTriggerSpeed )
+		{
+			SteamInput.Internal.TriggerVibrationExtended( Handle, leftSpeed, rightSpeed, leftTriggerSpeed, rightTriggerSpeed );
+		}
+
+		/// <summary>
+		/// Stops every rumble motor, including the trigger motors.
+		/// </summary>
+		public void StopVibration()
+		{
+			SteamInput.Internal.TriggerVibrationExtended( Handle, 0, 0, 0, 0 );
+		}
+
+		/// <summary>
+		/// One-shot haptic tick on voice-coil actuators (Steam Deck, Steam Controller, DualSense). Intensity is 0-255 and
+		/// gain is in decibels where 0 is nominal and negative is quieter. When location is Both, the "other" pair drives
+		/// the second side. A no-op on Xbox controllers, which only have rumble motors.
+		/// </summary>
+		public void TriggerSimpleHapticEvent( ControllerHapticLocation location, byte intensity, sbyte gainDb, byte otherIntensity = 0, sbyte otherGainDb = 0 )
+		{
+			SteamInput.Internal.TriggerSimpleHapticEvent( Handle, location, intensity, (char)gainDb, otherIntensity, (char)otherGainDb );
+		}
+
+		/// <summary>
+		/// Sets the light bar colour on DualShock 4 and DualSense, and the LED on Steam Controller.
+		/// </summary>
+		public void SetLEDColor( byte r, byte g, byte b )
+		{
+			SteamInput.Internal.SetLEDColor( Handle, r, g, b, (uint)SteamControllerLEDFlag.SetColor );
+		}
+
+		/// <summary>
+		/// Hands the light bar / LED colour back to the user's own setting.
+		/// </summary>
+		public void RestoreLEDColor()
+		{
+			SteamInput.Internal.SetLEDColor( Handle, 0, 0, 0, (uint)SteamControllerLEDFlag.RestoreUserDefault );
+		}
+
+		/// <summary>
+		/// Accelerometer and gyro readings for the current frame, for gyro aiming on Steam Deck and PlayStation controllers.
+		/// All zero when the controller has no motion sensors.
+		/// </summary>
+		public MotionState GetMotionData()
+		{
+			return SteamInput.Internal.GetMotionData( Handle );
+		}
+
+
 		public override string ToString() => $"{InputType}.{Handle.Value}";
 
 
@@ -69,7 +131,7 @@ namespace Steamworks
 	}
 
 	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
-	internal struct MotionState
+	public struct MotionState
 	{
 		public float RotQuatX; // rotQuatX float
 		public float RotQuatY; // rotQuatY float
