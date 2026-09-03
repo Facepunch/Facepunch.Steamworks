@@ -26,32 +26,6 @@ namespace Steamworks
 				var astate = controller.GetAnalogState( "Move" );
 			}
 		}
-
-		[TestMethod]
-		public void Haptics()
-		{
-			foreach ( var controller in SteamInput.Controllers )
-			{
-				Console.WriteLine( $"Controller: {controller}" );
-
-				// Body motors, then the Xbox trigger motors, with a stop in between so the two are distinguishable by hand
-				controller.TriggerVibration( 30000, 30000 );
-				Thread.Sleep( 300 );
-				controller.StopVibration();
-				Thread.Sleep( 200 );
-
-				controller.TriggerVibrationExtended( 0, 0, 40000, 40000 );
-				Thread.Sleep( 300 );
-				controller.StopVibration();
-				Thread.Sleep( 200 );
-
-				// Voice-coil tick, a no-op on Xbox pads
-				controller.TriggerSimpleHapticEvent( ControllerHapticLocation.Both, 200, 0, 200, 0 );
-
-				var motion = controller.GetMotionData();
-				Console.WriteLine( $"Motion accel: {motion.PosAccelX}, {motion.PosAccelY}, {motion.PosAccelZ}" );
-			}
-		}
 	}
 
 }
