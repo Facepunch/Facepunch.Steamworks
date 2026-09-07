@@ -220,7 +220,7 @@ namespace Steamworks
 			var returnValue = _GetDigitalActionOrigins( Self, inputHandle, actionSetHandle, digitalActionHandle, ref originsOut );
 			return returnValue;
 		}
-		
+
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetStringForDigitalActionName", CallingConvention = Platform.CC)]
 		private static extern Utf8StringPointer _GetStringForDigitalActionName( IntPtr self, InputDigitalActionHandle_t eActionHandle );

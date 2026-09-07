@@ -30,6 +30,7 @@ namespace Steamworks
 			Dispatch.Install<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ), server );
 			Dispatch.Install<SteamShutdown_t>( x => SteamClosed(), server );
 			Dispatch.Install<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ), server );
+			Dispatch.Install<FloatingGamepadTextInputDismissed_t>( x => OnFloatingGamepadTextInputDismissed?.Invoke(), server );
 		}
 
 		private static void SteamClosed()
@@ -59,6 +60,11 @@ namespace Steamworks
 		/// Invoked when Big Picture gamepad text input has been closed. Parameter is <see langword="true"/> if text was submitted, <see langword="false"/> if cancelled etc.
 		/// </summary>
 		public static event Action<bool> OnGamepadTextInputDismissed;
+
+		/// <summary>
+		/// Invoked when floating keyboard invoked from ShowFloatingGamepadTextInput has been closed.
+		/// </summary>
+		public static event Action OnFloatingGamepadTextInputDismissed;
 
 		/// <summary>
 		/// Returns the number of seconds since the application was active.
@@ -192,6 +198,14 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Opens a floating keyboard over the game content and sends OS keyboard keys directly to the game
+		/// </summary>
+		public static bool ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
+		{
+			return Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
+		}
+
+		/// <summary>
 		/// Returns previously entered text.
 		/// </summary>
 		public static string GetEnteredGamepadText()
@@ -295,10 +309,5 @@ namespace Steamworks
 		/// Steam Input translate the controller input into mouse/kb to navigate the launcher
 		/// </summary>
 		public static void SetGameLauncherMode( bool mode ) => Internal.SetGameLauncherMode( mode );
-
-		//public void ShowFloatingGamepadTextInput( TextInputMode mode, int left, int top, int width, int height )
-		//{
-		//	Internal.ShowFloatingGamepadTextInput( mode, left, top, width, height );
-		//}
 	}
 }
