@@ -1,0 +1,22 @@
+{
+  "name": "com.facepunch.steamworks",
+  "version": "2.5.2",
+  "displayName": "Facepunch Steamworks",
+  "description": "Unity Package Manager wrapper for Facepunch.Steamworks, including managed assemblies and Steam native redistributables.",
+  "unity": "2021.2",
+  "keywords": [
+    "steam",
+    "steamworks",
+    "facepunch"
+  ],
+  "author": {
+    "name": "Facepunch Studios",
+    "url": "https://github.com/Facepunch/Facepunch.Steamworks"
+  },
+  "license": "MIT",
+  "documentationUrl": "https://wiki.facepunch.com/steamworks/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git"
+  }
+}
