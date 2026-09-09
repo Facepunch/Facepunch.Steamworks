@@ -4,6 +4,33 @@
 
 ![Build All](https://github.com/Facepunch/Facepunch.Steamworks/workflows/Build%20All/badge.svg)
 
+## Unity
+
+This repository includes a Unity Package Manager (UPM) package containing the
+Facepunch.Steamworks managed assemblies and Steam API redistributables. It requires
+Unity 2021.2 or newer.
+
+In Unity's Package Manager, select **Add package from git URL** and enter:
+
+```
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.facepunch.steamworks
+```
+
+For a local checkout, add the package to your Unity project's
+`Packages/manifest.json`:
+
+```json
+{
+  "dependencies": {
+    "com.facepunch.steamworks": "file:../Facepunch.Steamworks.Unity/Packages/com.facepunch.steamworks"
+  }
+}
+```
+
+The package selects the correct plugin binaries for Windows x86/x64, Linux, and
+macOS. Before running your game, use your Steam App ID and ensure
+`steam_appid.txt` is available beside the executable during development.
+
 ## Features
 
 | Feature | Supported |
