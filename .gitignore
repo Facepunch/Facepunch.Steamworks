@@ -78,5 +78,5 @@ Facepunch.Steamworks.Test/bin/**
 
 # Keep all files in the versioned UPM package, including XML API documentation.
 !Packages/
-!Packages/com.facepunch.steamworks/
-!Packages/com.facepunch.steamworks/**
+!Packages/com.michaeltoladenis.facepunch-steamworks/
+!Packages/com.michaeltoladenis.facepunch-steamworks/**

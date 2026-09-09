@@ -13,7 +13,7 @@ Unity 2021.2 or newer.
 In Unity's Package Manager, select **Add package from git URL** and enter:
 
 ```
-https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.facepunch.steamworks
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks
 ```
 
 For a local checkout, add the package to your Unity project's
@@ -22,14 +22,14 @@ For a local checkout, add the package to your Unity project's
 ```json
 {
   "dependencies": {
-    "com.facepunch.steamworks": "file:../Facepunch.Steamworks.Unity/Packages/com.facepunch.steamworks"
+    "com.michaeltoladenis.facepunch-steamworks": "file:../Facepunch.Steamworks.Unity/Packages/com.michaeltoladenis.facepunch-steamworks"
   }
 }
 ```
 
 The package selects the correct plugin binaries for Windows x86/x64, Linux, and
 macOS. Before running your game, use your Steam App ID and ensure
-`steam_appid.txt` is available beside the executable during development.
+`steam_appid.txt` is available beside the executable during development. 
 
 ## Features
 

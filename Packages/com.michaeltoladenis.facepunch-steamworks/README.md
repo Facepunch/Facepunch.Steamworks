@@ -11,7 +11,7 @@ Standard 2.1.
 In Unity's Package Manager, choose **Add package from git URL** and enter:
 
 ```
-https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.facepunch.steamworks
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks
 ```
 
 For a local checkout, add this to your project's `Packages/manifest.json`:
@@ -19,7 +19,7 @@ For a local checkout, add this to your project's `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.facepunch.steamworks": "file:../Facepunch.Steamworks.Unity/Packages/com.facepunch.steamworks"
+    "com.michaeltoladenis.facepunch-steamworks": "file:../Facepunch.Steamworks.Unity/Packages/com.michaeltoladenis.facepunch-steamworks"
   }
 }
 ```
