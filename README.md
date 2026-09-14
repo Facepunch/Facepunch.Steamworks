@@ -13,10 +13,10 @@ Unity 2021.2 or newer.
 In Unity's Package Manager, select **Add package from git URL** and enter:
 
 ```
-https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks#v2.5.3
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks#v2.5.2
 ```
 
-Keep the `#v2.5.3` tag so later changes here can't break your project. Don't install
+Keep the `#v2.5.2` tag so later changes here can't break your project. Don't install
 this package alongside `com.community.netcode.transport.facepunch` or any other copy of
 the Facepunch.Steamworks DLLs; that transport already bundles them.
 

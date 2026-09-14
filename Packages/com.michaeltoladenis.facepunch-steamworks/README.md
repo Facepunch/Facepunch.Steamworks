@@ -11,10 +11,10 @@ Standard 2.1.
 In Unity's Package Manager, choose **Add package from git URL** and enter:
 
 ```
-https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks#v2.5.3
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks#v2.5.2
 ```
 
-Keep the `#v2.5.3` suffix. Without a tag, Unity follows `master`, so a later
+Keep the `#v2.5.2` suffix. Without a tag, Unity follows `master`, so a later
 change to this repository can break your project the next time packages resolve.
 
 ## Do not combine with other Facepunch.Steamworks copies

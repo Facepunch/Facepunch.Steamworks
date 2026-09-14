@@ -1,9 +1,8 @@
 # Changelog
 
-## 2.5.3
+## 2.5.2
 
-Packaging fixes only; the Facepunch.Steamworks assemblies are unchanged from 2.5.2.
-
+- Added the initial UPM wrapper around the bundled Facepunch.Steamworks Unity plugins.
 - Regenerated every asset GUID. The `.meta` files had been copied from upstream
   Facepunch.Steamworks, so their GUIDs matched other packages that bundle the same
   plugins (for example `com.community.netcode.transport.facepunch`). Unity dropped the
@@ -12,7 +11,3 @@ Packaging fixes only; the Facepunch.Steamworks assemblies are unchanged from 2.5
   `package.json`, `README.md`, `CHANGELOG.md` and `LICENSE.md`. Unity ignores assets
   without a `.meta` inside an immutable package folder.
 - Removed an empty `Runtime/Plugins/` folder.
-
-## 2.5.2
-
-- Added the initial UPM wrapper around the bundled Facepunch.Steamworks Unity plugins.
