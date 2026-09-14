@@ -1,6 +1,6 @@
 {
   "name": "com.michaeltoladenis.facepunch-steamworks",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "displayName": "Facepunch Steamworks",
   "description": "Unity Package Manager wrapper for Facepunch.Steamworks, including managed assemblies and Steam native redistributables.",
   "unity": "2021.2",

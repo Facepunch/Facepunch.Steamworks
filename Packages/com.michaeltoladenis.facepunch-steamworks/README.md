@@ -11,8 +11,23 @@ Standard 2.1.
 In Unity's Package Manager, choose **Add package from git URL** and enter:
 
 ```
-https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks
+https://github.com/michael-tola-denis/Facepunch.Steamworks.Unity.git?path=/Packages/com.michaeltoladenis.facepunch-steamworks#v2.5.3
 ```
+
+Keep the `#v2.5.3` suffix. Without a tag, Unity follows `master`, so a later
+change to this repository can break your project the next time packages resolve.
+
+## Do not combine with other Facepunch.Steamworks copies
+
+Only one copy of Facepunch.Steamworks can be in a Unity project. Do **not** install
+this package alongside anything that already ships the assemblies, such as:
+
+- `com.community.netcode.transport.facepunch` (the Netcode for GameObjects Facepunch
+  transport bundles its own copy in `Runtime/Facepunch/`)
+- a `Facepunch.Steamworks.*.dll` under `Assets/Plugins`
+
+Two copies produce "Multiple precompiled assemblies with the same name" errors. If
+you use the NGO transport, rely on its bundled copy and skip this package.
 
 For a local checkout, add this to your project's `Packages/manifest.json`:
 
