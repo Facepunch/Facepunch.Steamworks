@@ -202,6 +202,13 @@ namespace Steamworks.Ugc
 			excludedTags.Add( tag );
 			return this;
 		}
+		
+		public QueryType WithDifferentApp( AppId consumerAppId, AppId creatorAppId )
+		{
+			consumerApp = consumerAppId;
+			creatorApp = creatorAppId;
+			return this;
+		}
 
 		void ApplyConstraints( UGCQueryHandle_t handle )
 		{
