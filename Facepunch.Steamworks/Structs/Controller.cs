@@ -48,6 +48,55 @@ namespace Steamworks
 		}
 
 
+		/// <summary>Rumble the body motors, 0-65535. Speeds persist until changed, so call StopVibration when done.</summary>
+		public void TriggerVibration( ushort leftSpeed, ushort rightSpeed )
+		{
+			SteamInput.Internal.TriggerVibration( Handle, leftSpeed, rightSpeed );
+		}
+
+		/// <summary>Rumble the body motors and the Xbox trigger motors, 0-65535. Trigger speeds are ignored on other controllers.</summary>
+		public void TriggerVibrationExtended( ushort leftSpeed, ushort rightSpeed, ushort leftTriggerSpeed, ushort rightTriggerSpeed )
+		{
+			SteamInput.Internal.TriggerVibrationExtended( Handle, leftSpeed, rightSpeed, leftTriggerSpeed, rightTriggerSpeed );
+		}
+
+		/// <summary>Stops every rumble motor, including the trigger motors.</summary>
+		public void StopVibration()
+		{
+			SteamInput.Internal.TriggerVibrationExtended( Handle, 0, 0, 0, 0 );
+		}
+
+		/// <summary>One-shot haptic tick on Steam Deck, Steam Controller and DualSense. Intensity 0-255, gain in dB. No-op on Xbox.</summary>
+		public void TriggerSimpleHapticEvent( ControllerHapticLocation location, byte intensity, sbyte gainDb, byte otherIntensity = 0, sbyte otherGainDb = 0 )
+		{
+			SteamInput.Internal.TriggerSimpleHapticEvent( Handle, location, intensity, (char)gainDb, otherIntensity, (char)otherGainDb );
+		}
+
+		/// <summary>Sets the light bar colour on PlayStation controllers and the LED on Steam Controller.</summary>
+		public void SetLEDColor( byte r, byte g, byte b )
+		{
+			SteamInput.Internal.SetLEDColor( Handle, r, g, b, (uint)SteamControllerLEDFlag.SetColor );
+		}
+
+		/// <summary>Hands the light bar / LED colour back to the user's own setting.</summary>
+		public void RestoreLEDColor()
+		{
+			SteamInput.Internal.SetLEDColor( Handle, 0, 0, 0, (uint)SteamControllerLEDFlag.RestoreUserDefault );
+		}
+
+		/// <summary>Accelerometer and gyro readings for this frame; all zero when the controller has no motion sensors.</summary>
+		public MotionState GetMotionData()
+		{
+			return SteamInput.Internal.GetMotionData( Handle );
+		}
+
+		/// <summary>Opens Steam's controller layout editor for this controller in the overlay. False when the overlay is unavailable.</summary>
+		public bool ShowBindingPanel()
+		{
+			return SteamInput.Internal.ShowBindingPanel( Handle );
+		}
+
+
 		public override string ToString() => $"{InputType}.{Handle.Value}";
 
 
@@ -69,7 +118,7 @@ namespace Steamworks
 	}
 
 	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
-	internal struct MotionState
+	public struct MotionState
 	{
 		public float RotQuatX; // rotQuatX float
 		public float RotQuatY; // rotQuatY float
