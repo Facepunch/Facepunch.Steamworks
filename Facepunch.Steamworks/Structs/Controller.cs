@@ -90,6 +90,12 @@ namespace Steamworks
 			return SteamInput.Internal.GetMotionData( Handle );
 		}
 
+		/// <summary>Opens Steam's controller layout editor for this controller in the overlay. False when the overlay is unavailable.</summary>
+		public bool ShowBindingPanel()
+		{
+			return SteamInput.Internal.ShowBindingPanel( Handle );
+		}
+
 
 		public override string ToString() => $"{InputType}.{Handle.Value}";
 
