@@ -162,6 +162,68 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Gets the total number of known app branches including the default "public" branch.
+		/// </summary>
+		/// <param name="availableCount">Returns the number of available beta branches.</param>
+		/// <param name="privateCount">Returns the number of private beta branches.</param>
+		/// <returns>The total number of beta branches.</returns>
+		public static int GetBetaCount( out int availableCount, out int privateCount )
+		{
+			availableCount = 0;
+			privateCount = 0;
+			return Internal.GetNumBetas( ref availableCount, ref privateCount );
+		}
+
+		/// <summary>
+		/// Gets detailed information about a specific beta branch by index.
+		/// </summary>
+		/// <param name="betaIndex">The index of the beta branch (0-based).</param>
+		/// <returns>Beta branch information, or null if the index is invalid.</returns>
+		public static BetaInformation? GetBetaInfo( int betaIndex )
+		{
+			uint flags = 0;
+			uint buildId = 0;
+			
+			if ( !Internal.GetBetaInfo( betaIndex, ref flags, ref buildId, out var name, out var description ) )
+				return null;
+
+			return new BetaInformation
+			{
+				Name = name,
+				Description = description,
+				BuildId = buildId,
+				Flags = (BetaBranchFlags)flags
+			};
+		}
+
+		/// <summary>
+		/// Gets information about all available beta branches.
+		/// </summary>
+		/// <returns>An enumerable of beta branch information.</returns>
+		public static IEnumerable<BetaInformation> GetBetaInformation()
+		{
+			int totalCount = GetBetaCount( out var availableCount, out var privateCount );
+			
+			for ( int i = 0; i < totalCount; i++ )
+			{
+				var betaInfo = GetBetaInfo( i );
+				if ( betaInfo.HasValue )
+					yield return betaInfo.Value;
+			}
+		}
+
+		/// <summary>
+		/// Selects the specified beta branch as active for this app. 
+		/// The game may need to restart so Steam can update to that branch.
+		/// </summary>
+		/// <param name="betaName">The name of the beta branch to activate. Use null or empty string to select the default "public" branch.</param>
+		/// <returns>True if the beta branch was successfully set as active.</returns>
+		public static bool SetActiveBeta( string betaName )
+		{
+			return Internal.SetActiveBeta( betaName ?? "" );
+		}
+
+		/// <summary>
 		/// Force verify game content on next launch.
 		/// <para>
 		/// If you detect the game is out-of-date (for example, by having the client detect a version mismatch with a server),
