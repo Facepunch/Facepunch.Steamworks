@@ -152,7 +152,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<Lobby?> CreateLobbyAsync( int maxMembers = 100 )
 		{
-			var lobby = await Internal.CreateLobby( LobbyType.Invisible, maxMembers );
+			var lobby = await Internal.CreateLobby( LobbyType.Private, maxMembers );
 			if ( !lobby.HasValue || lobby.Value.Result != Result.OK ) return null;
 
 			return new Lobby { Id = lobby.Value.SteamIDLobby };
