@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Facepunch.Steamworks</AssemblyName>
+        <TargetFramework>net6.0</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <RootNamespace>Steamworks</RootNamespace>
+
+        <RuntimeIdentifiers>win-x86;win-x64;linux-x86;linux-x64</RuntimeIdentifiers>
+
+        <!-- As far as I can tell, PLATFORM_WIN is not used -->
+        <DefineConstants Condition="'$(RuntimeIdentifier)' == 'win-x86'">$(DefineConstants);PLATFORM_WIN32</DefineConstants>
+        <DefineConstants Condition="'$(RuntimeIdentifier)' == 'win-x64'">$(DefineConstants);PLATFORM_WIN64</DefineConstants>
+        <DefineConstants Condition="'$(RuntimeIdentifier)' == 'linux-x86'">$(DefineConstants);PLATFORM_POSIX32</DefineConstants>
+        <DefineConstants Condition="'$(RuntimeIdentifier)' == 'linux-x64'">$(DefineConstants);PLATFORM_POSIX64</DefineConstants>
+        <DefineConstants Condition="'$(RuntimeIdentifier)' == 'osx-x64'">$(DefineConstants);PLATFORM_OSX64</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>Garry Newman</Authors>
+        <PackageId>Facepunch.Steamworks.multiplatform</PackageId>
+        <PackageDescription>Steamworks implementation with an emphasis on making things easy. Multiplatform (not for Unity)</PackageDescription>
+        <PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
+        <PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
+        <PackageTags>facepunch;steam;steamworks;valve;godot</PackageTags>
+        <LangVersion>10</LangVersion>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="Facepunch.Steamworks.jpg">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
+        </None>
+        <None Include="..\UnityPlugin\redistributable_bin\steam_api.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>content</PackagePath>
+        </None>
+        <None Include="..\UnityPlugin\redistributable_bin\win64\steam_api64.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>content</PackagePath>
+        </None>
+        <None Include="..\UnityPlugin\redistributable_bin\linux32\libsteam_api.so" Condition="'$(RuntimeIdentifier)' == 'linux-x86'">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>content</PackagePath>
+        </None>
+        <None Include="..\UnityPlugin\redistributable_bin\linux64\libsteam_api.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>content</PackagePath>
+        </None>
+        <None Include="..\UnityPlugin\redistributable_bin\osx\libsteam_api.dynlib" Condition="'$(RuntimeIdentifier)' == 'osx-x64'">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>content</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <Import Project="Facepunch.Steamworks.targets" />
+</Project>
