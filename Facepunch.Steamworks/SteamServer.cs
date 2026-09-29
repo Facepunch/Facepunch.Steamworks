@@ -115,6 +115,7 @@ namespace Steamworks
 			AddInterface<SteamApps>();
 
 			AddInterface<SteamNetworkingUtils>();
+			AddInterface<SteamNetworkingMessages>();
 			AddInterface<SteamNetworkingSockets>();
 
 			//
