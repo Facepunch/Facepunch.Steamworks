@@ -253,7 +253,7 @@ namespace Steamworks
 		{
 			try
 			{
-				OnMessage( msg->DataPtr, msg->DataSize, msg->RecvTime, msg->MessageNumber, msg->Channel );
+				OnMessage( msg->DataPtr, msg->DataSize, msg->MessageNumber, msg->RecvTime, msg->Channel );
 			}
 			finally
 			{
