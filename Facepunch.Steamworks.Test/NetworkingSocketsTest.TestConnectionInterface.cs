@@ -101,7 +101,7 @@ namespace Steamworks
 					for ( int i=0; i<20; i++ )
 					{
 						Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: BLAMMO {i}!" );
-						SendMessages( connections, connections.Length, $"BLAMMO {i}!", results: results );
+						SendMessages( connections, $"BLAMMO {i}!", results: results );
 						Assert.AreEqual( Result.OK, results[0] );
 					}
 
