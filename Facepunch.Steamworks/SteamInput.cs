@@ -83,6 +83,22 @@ namespace Steamworks
 			return num;
 		}
 
+		/// <summary>
+		/// Points Steam at an Input Action Manifest file on disk, for games that bundle their Steam Input configurations
+		/// with the game instead of the Steam Workshop. Steam remembers the path for the rest of the Steam session.
+		/// </summary>
+		/// <param name="absolutePath">Absolute path to the action manifest; its configurations resolve relative to it</param>
+		/// <returns>True if Steam accepted the path</returns>
+		public static bool SetInputActionManifestFilePath( string absolutePath )
+		{
+			// A new manifest assigns new handles, so anything looked up under the old one is stale
+			DigitalHandles.Clear();
+			AnalogHandles.Clear();
+			ActionSets.Clear();
+
+			return Internal.SetInputActionManifestFilePath( absolutePath );
+		}
+
 
         /// <summary>
         /// Return an absolute path to the PNG image glyph for the provided digital action name. The current
@@ -135,6 +151,7 @@ namespace Steamworks
 			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
 		}
 
+		// Zero handles aren't cached: Steam returns zero until it has loaded the manifest, and caching that would leave the action dead
 		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
 		internal static InputDigitalActionHandle_t GetDigitalActionHandle( string name )
 		{
@@ -142,7 +159,7 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetDigitalActionHandle( name );
-			DigitalHandles.Add( name, val );
+			if ( val.Value != 0 ) DigitalHandles.Add( name, val );
 			return val;
 		}
 
@@ -153,7 +170,7 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetAnalogActionHandle( name );
-			AnalogHandles.Add( name, val );
+			if ( val.Value != 0 ) AnalogHandles.Add( name, val );
 			return val;
 		}
 
@@ -164,7 +181,7 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetActionSetHandle( name );
-			ActionSets.Add( name, val );
+			if ( val.Value != 0 ) ActionSets.Add( name, val );
 			return val;
 		}
 	}
