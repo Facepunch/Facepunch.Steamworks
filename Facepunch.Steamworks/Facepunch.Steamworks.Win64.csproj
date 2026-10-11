@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win64</AssemblyName>
-		<TargetFrameworks>net46;netstandard2.1;net6.0</TargetFrameworks>
+		<TargetFrameworks>net462;netstandard2.1;net6.0</TargetFrameworks>
 		<DefineConstants>$(DefineConstants);PLATFORM_WIN64;PLATFORM_WIN;PLATFORM_64</DefineConstants>
 
 
@@ -42,12 +42,12 @@
 
 	<Import Project="Facepunch.Steamworks.targets" />
 
-  <Target Name="BuildUnityOutput" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net46'">
+  <Target Name="BuildUnityOutput" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net462'">
     <MSBuild Projects="$(MSBuildProjectDirectory)\Facepunch.Steamworks.Win32.csproj"
-             Properties="Configuration=$(Configuration);TargetFramework=net46"
+             Properties="Configuration=$(Configuration);TargetFramework=net462"
              Targets="Build" />
     <MSBuild Projects="$(MSBuildProjectDirectory)\Facepunch.Steamworks.Posix.csproj"
-             Properties="Configuration=$(Configuration);TargetFramework=net46"
+             Properties="Configuration=$(Configuration);TargetFramework=net462"
              Targets="Build" />
 
     <ItemGroup>
@@ -57,7 +57,7 @@
           DestinationFiles="@(UnityPluginFiles->'$(BaseOutputPath)$(Configuration)\Unity\%(RecursiveDir)%(Filename)%(Extension)')" />
 
     <ItemGroup>
-      <Net46Assemblies Include="$(BaseOutputPath)$(Configuration)\net46\Facepunch.Steamworks.*" />
+      <Net46Assemblies Include="$(BaseOutputPath)$(Configuration)\net462\Facepunch.Steamworks.*" />
     </ItemGroup>
     <Copy SourceFiles="@(Net46Assemblies)"
           DestinationFolder="$(BaseOutputPath)$(Configuration)\Unity\" />
