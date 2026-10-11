@@ -397,7 +397,7 @@ namespace Steamworks
 		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
-		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
+		public static unsafe bool BeginAuthSession( ReadOnlySpan<byte> data, SteamId steamid )
 		{
 			fixed ( byte* p = data )
 			{
@@ -449,11 +449,11 @@ namespace Steamworks
 		/// <summary>
 		/// We have received a server query on our game port. Pass it to Steam to handle.
 		/// </summary>
-		public static unsafe void HandleIncomingPacket( byte[] data, int size, uint address, ushort port )
+		public static unsafe void HandleIncomingPacket( ReadOnlySpan<byte> data, uint address, ushort port )
 		{
 			fixed ( byte* ptr = data )
 			{
-				HandleIncomingPacket( (IntPtr)ptr, size, address, port );
+				HandleIncomingPacket( (IntPtr)ptr, data.Length, address, port );
 			}
 		}
 		
