@@ -110,16 +110,7 @@ namespace Steamworks
         /// <returns></returns>
         public static string GetDigitalActionGlyph( Controller controller, string action )
         {
-            InputActionOrigin origin = InputActionOrigin.None;
-
-            Internal.GetDigitalActionOrigins(
-                controller.Handle,
-                Internal.GetCurrentActionSet(controller.Handle),
-                GetDigitalActionHandle(action),
-                ref origin
-            );
-
-            return Internal.GetGlyphForActionOrigin_Legacy(origin);
+            return Internal.GetGlyphForActionOrigin_Legacy( FirstDigitalOrigin( controller, action ) );
         }
 
 
@@ -130,11 +121,16 @@ namespace Steamworks
 		/// </summary>
 		public static string GetPngActionGlyph( Controller controller, string action, GlyphSize size )
 		{
-			InputActionOrigin origin = InputActionOrigin.None;
+			return Internal.GetGlyphPNGForActionOrigin( FirstDigitalOrigin( controller, action ), size, 0 );
+		}
 
-			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
-
-			return Internal.GetGlyphPNGForActionOrigin( origin, size, 0 );
+		/// <summary>
+		/// Return an absolute path to the PNG image glyph for the provided analog action name (a stick, pad or trigger).
+		/// The current action set in use for the controller will be used for the lookup.
+		/// </summary>
+		public static string GetPngAnalogActionGlyph( Controller controller, string action, GlyphSize size )
+		{
+			return Internal.GetGlyphPNGForActionOrigin( FirstAnalogOrigin( controller, action ), size, 0 );
 		}
 
 		/// <summary>
@@ -144,11 +140,24 @@ namespace Steamworks
 		/// </summary>
 		public static string GetSvgActionGlyph( Controller controller, string action )
 		{
-			InputActionOrigin origin = InputActionOrigin.None;
+			return Internal.GetGlyphSVGForActionOrigin( FirstDigitalOrigin( controller, action ), 0 );
+		}
 
-			Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref origin );
+		internal const int STEAM_INPUT_MAX_ORIGINS = 8;
 
-			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
+		// Steam writes every origin bound to the action, up to STEAM_INPUT_MAX_ORIGINS, so the buffer must hold them all even though only the first is used
+		static readonly InputActionOrigin[] originsArray = new InputActionOrigin[STEAM_INPUT_MAX_ORIGINS];
+
+		static InputActionOrigin FirstDigitalOrigin( Controller controller, string action )
+		{
+			int count = Internal.GetDigitalActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetDigitalActionHandle( action ), ref originsArray[0] );
+			return count > 0 ? originsArray[0] : InputActionOrigin.None;
+		}
+
+		static InputActionOrigin FirstAnalogOrigin( Controller controller, string action )
+		{
+			int count = Internal.GetAnalogActionOrigins( controller.Handle, Internal.GetCurrentActionSet( controller.Handle ), GetAnalogActionHandle( action ), ref originsArray[0] );
+			return count > 0 ? originsArray[0] : InputActionOrigin.None;
 		}
 
 		// Zero handles aren't cached: Steam returns zero until it has loaded the manifest, and caching that would leave the action dead
