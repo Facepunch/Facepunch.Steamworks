@@ -9,16 +9,16 @@ namespace Steamworks
 {
 	internal unsafe partial class ISteamRemotePlay : SteamInterface
 	{
-		public const string Version = "STEAMREMOTEPLAY_INTERFACE_VERSION002";
-		
+		public const string Version = "STEAMREMOTEPLAY_INTERFACE_VERSION004";
+
 		internal ISteamRemotePlay( bool IsGameServer )
 		{
 			SetupInterface( IsGameServer );
 		}
-		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v002", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamRemotePlay_v002();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v002();
+
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v004", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamRemotePlay_v004();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v004();
 		
 		
 		#region FunctionMeta
