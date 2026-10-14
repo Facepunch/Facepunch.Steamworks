@@ -70,7 +70,7 @@ namespace Steamworks
 		/// Fills the buffer with connected controllers and returns the count. Identical
 		/// results to <see cref="Controllers"/> but doesn't allocate, for per-frame polling.
 		/// </summary>
-		public static int GetControllers( Controller[] buffer )
+		public static int GetControllers( Span<Controller> buffer )
 		{
 			var num = Internal.GetConnectedControllers( queryArray );
 			if ( num > buffer.Length ) num = buffer.Length;

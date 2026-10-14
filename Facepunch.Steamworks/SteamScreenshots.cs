@@ -57,7 +57,7 @@ namespace Steamworks
 		/// Writes a screenshot to the user's screenshot library given the raw image data, which must be in RGB format.
 		/// The return value is a handle that is valid for the duration of the game process and can be used to apply tags.
 		/// </summary>
-		public unsafe static Screenshot? WriteScreenshot( byte[] data, int width, int height )
+		public unsafe static Screenshot? WriteScreenshot( ReadOnlySpan<byte> data, int width, int height )
 		{
 			fixed ( byte* ptr = data )
 			{
@@ -94,7 +94,7 @@ namespace Steamworks
 		/// <para>
 		/// Hooking is disabled by default, and only ever enabled if you do so with this function.
 		/// If the hooking is enabled, then the <see cref="OnScreenshotRequested"/> callback will be sent if the user presses the hotkey or 
-		/// when TriggerScreenshot is called, and then the game is expected to call <see cref="WriteScreenshot(byte[], int, int)"/> or <see cref="AddScreenshot(string, string, int, int)"/> in response.
+		/// when TriggerScreenshot is called, and then the game is expected to call <see cref="WriteScreenshot(ReadOnlySpan{Byte}, int, int)"/> or <see cref="AddScreenshot(string, string, int, int)"/> in response.
 		/// </para>
 		/// </summary>
 		public static bool Hooked

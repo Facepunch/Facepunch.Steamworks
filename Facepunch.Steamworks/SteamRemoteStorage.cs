@@ -30,7 +30,7 @@ namespace Steamworks
 		/// <param name="filename">The path of the file.</param>
 		/// <param name="data">The bytes of data.</param>
 		/// <returns>A boolean, detailing whether or not the operation was successful.</returns>
-		public unsafe static bool FileWrite( string filename, byte[] data )
+		public unsafe static bool FileWrite( string filename, ReadOnlySpan<byte> data )
 		{
 			fixed ( byte* ptr = data )
 			{

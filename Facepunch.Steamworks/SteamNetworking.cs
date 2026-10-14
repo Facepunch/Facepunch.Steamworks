@@ -114,9 +114,10 @@ namespace Steamworks
 		/// <summary>
 		/// Reads in a packet that has been sent from another user via <c>SendP2PPacket</c>.
 		/// </summary>
-		public unsafe static bool ReadP2PPacket( byte[] buffer, ref uint size, ref SteamId steamid, int channel = 0 )
+		public unsafe static bool ReadP2PPacket( Span<byte> buffer, ref uint size, ref SteamId steamid, int channel = 0 )
 		{
-			fixed (byte* p = buffer) {
+			fixed ( byte* p = buffer )
+			{
 				return Internal.ReadP2PPacket( (IntPtr)p, (uint)buffer.Length, ref size, ref steamid, channel );
 			}
 		}
@@ -134,14 +135,11 @@ namespace Steamworks
 		/// This is a session-less API which automatically establishes NAT-traversing or Steam relay server connections.
 		/// NOTE: The first packet send may be delayed as the NAT-traversal code runs.
 		/// </summary>
-		public static unsafe bool SendP2PPacket( SteamId steamid, byte[] data, int length = -1, int nChannel = 0, P2PSend sendType = P2PSend.Reliable )
+		public static unsafe bool SendP2PPacket( SteamId steamid, ReadOnlySpan<byte> data, int nChannel = 0, P2PSend sendType = P2PSend.Reliable )
 		{
-			if ( length <= 0 )
-				length = data.Length;
-
 			fixed ( byte* p = data )
 			{
-				return Internal.SendP2PPacket( steamid, (IntPtr)p, (uint)length, (P2PSend)sendType, nChannel );
+				return Internal.SendP2PPacket( steamid, (IntPtr)p, (uint)data.Length, (P2PSend)sendType, nChannel );
 			}
 		}
 

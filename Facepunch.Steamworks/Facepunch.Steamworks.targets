@@ -33,5 +33,9 @@
 		<Compile Remove="*AssemblyInfo.cs" />
 		<Folder Include="Generated\Interfaces\" />
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+		<PackageReference Include="System.Memory" Version="4.6.3" />
+	</ItemGroup>
   
 </Project>

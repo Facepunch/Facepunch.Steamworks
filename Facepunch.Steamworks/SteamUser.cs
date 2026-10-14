@@ -270,7 +270,7 @@ namespace Steamworks
 		/// <summary>
 		/// Lazy version
 		/// </summary>
-		public static unsafe int DecompressVoice( byte[] from, System.IO.Stream output )
+		public static unsafe int DecompressVoice( ReadOnlySpan<byte> from, System.IO.Stream output )
 		{
 			var to = Helpers.TakeBuffer( 1024 * 64 );
 
@@ -447,7 +447,7 @@ namespace Steamworks
 			}
 		}
 
-		public static unsafe BeginAuthResult BeginAuthSession( byte[] ticketData, SteamId steamid )
+		public static unsafe BeginAuthResult BeginAuthSession( ReadOnlySpan<byte> ticketData, SteamId steamid )
 		{
 			fixed ( byte* ptr = ticketData )
 			{

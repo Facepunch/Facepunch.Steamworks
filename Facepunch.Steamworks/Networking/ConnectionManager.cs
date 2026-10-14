@@ -1,5 +1,6 @@
 ﻿using Steamworks.Data;
 using System;
+using System.Buffers;
 
 namespace Steamworks
 {
@@ -155,21 +156,17 @@ namespace Steamworks
 		/// Sends a message to multiple connections.
 		/// </summary>
 		/// <param name="connections">The connections to send the message to.</param>
-		/// <param name="connectionCount">The number of connections to send the message to, to allow reusing the connections array.</param>
 		/// <param name="ptr">Pointer to the message data.</param>
 		/// <param name="size">Size of the message data.</param>
 		/// <param name="sendType">Flags to control delivery of the message.</param>
-		/// <param name="results">An optional array to hold the results of sending the messages for each connection.</param>
-		public unsafe void SendMessages( Connection[] connections, int connectionCount, IntPtr ptr, int size, SendType sendType = SendType.Reliable, Result[] results = null )
+		/// <param name="results">An optional span to hold the results of sending the messages for each connection.</param>
+		public unsafe void SendMessages( ReadOnlySpan<Connection> connections, IntPtr ptr, int size, SendType sendType = SendType.Reliable, Span<Result> results = default )
 		{
-			if ( connections == null )
-				throw new ArgumentNullException( nameof( connections ) );
-			if ( connectionCount < 0 || connectionCount > connections.Length )
-				throw new ArgumentException( "`connectionCount` must be between 0 and `connections.Length`", nameof( connectionCount ) );
-			if ( results != null && connectionCount > results.Length )
-				throw new ArgumentException( "`results` must have at least `connectionCount` entries", nameof( results ) );
+			var connectionCount = connections.Length;
+			if ( !results.IsEmpty && connectionCount > results.Length )
+				throw new ArgumentException( "`results` must have at least `connections.Length` entries", nameof( results ) );
 			if ( connectionCount > 1024 ) // restricting this because we stack allocate based on this value
-				throw new ArgumentOutOfRangeException( nameof( connectionCount ) );
+				throw new ArgumentOutOfRangeException( nameof( connections ) );
 			if ( ptr == IntPtr.Zero )
 				throw new ArgumentNullException( nameof( ptr ) );
 			if ( size == 0 )
@@ -186,7 +183,7 @@ namespace Steamworks
 			Buffer.MemoryCopy( (void*)ptr, (void*)copyPtr, size, size );
 
 			var messages = stackalloc NetMsg*[connectionCount];
-			var messageNumberOrResults = stackalloc long[results != null ? connectionCount : 0];
+			var messageNumberOrResults = stackalloc long[!results.IsEmpty ? connectionCount : 0];
 
 			for ( var i = 0; i < connectionCount; i++ )
 			{
@@ -200,7 +197,7 @@ namespace Steamworks
 
 			SteamNetworkingSockets.Internal.SendMessages( connectionCount, messages, messageNumberOrResults );
 
-			if (results == null)
+			if ( results.IsEmpty )
 				return;
 
 			for ( var i = 0; i < connectionCount; i++ )
@@ -217,36 +214,34 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
-		/// you're not creating a new one every frame (like using .ToArray())
+		/// Sends a message to multiple connections.
 		/// </summary>
-		public unsafe void SendMessages( Connection[] connections, int connectionCount, byte[] data, SendType sendType = SendType.Reliable, Result[] results = null )
+		/// <param name="connections">The connections to send the message to.</param>
+		/// <param name="data">The message payload.</param>
+		/// <param name="sendType">Flags to control delivery of the message.</param>
+		/// <param name="results">An optional span to hold the results of sending the messages for each connection.</param>
+		public unsafe void SendMessages( ReadOnlySpan<Connection> connections, ReadOnlySpan<byte> data, SendType sendType = SendType.Reliable, Span<Result> results = default )
 		{
 			fixed ( byte* ptr = data )
 			{
-				SendMessages( connections, connectionCount, (IntPtr)ptr, data.Length, sendType, results );
+				SendMessages( connections, (IntPtr)ptr, data.Length, sendType, results );
 			}
 		}
 
 		/// <summary>
-		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
-		/// you're not creating a new one every frame (like using .ToArray())
+		/// Sends a message to multiple connections.
 		/// </summary>
-		public unsafe void SendMessages( Connection[] connections, int connectionCount, byte[] data, int offset, int length, SendType sendType = SendType.Reliable, Result[] results = null )
+		/// <param name="connections">The connections to send the message to.</param>
+		/// <param name="str">The message data. It will be encoded as UTF-8 using a pooled temporary buffer.</param>
+		/// <param name="sendType">Flags to control delivery of the message.</param>
+		/// <param name="results">An optional span to hold the results of sending the messages for each connection.</param>
+		public void SendMessages( ReadOnlySpan<Connection> connections, string str, SendType sendType = SendType.Reliable, Span<Result> results = default )
 		{
-			fixed ( byte* ptr = data )
-			{
-				SendMessages( connections, connectionCount, (IntPtr)ptr + offset, length, sendType, results );
-			}
-		}
-
-		/// <summary>
-		/// This creates a ton of garbage - so don't do anything with this beyond testing!
-		/// </summary>
-		public void SendMessages( Connection[] connections, int connectionCount, string str, SendType sendType = SendType.Reliable, Result[] results = null )
-		{
-			var bytes = Utility.Utf8NoBom.GetBytes( str );
-			SendMessages( connections, connectionCount, bytes, sendType, results );
+			var byteCount = Utility.Utf8NoBom.GetByteCount( str );
+			var bytes = ArrayPool<byte>.Shared.Rent( byteCount );
+			Utility.Utf8NoBom.GetBytes( str, 0, str.Length, bytes, 0 );
+			SendMessages( connections, bytes.AsSpan( 0, byteCount ), sendType, results );
+			ArrayPool<byte>.Shared.Return( bytes );
 		}
 
 		internal unsafe void ReceiveMessage( ref NetMsg* msg )
