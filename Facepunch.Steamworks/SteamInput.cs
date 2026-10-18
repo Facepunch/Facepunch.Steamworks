@@ -14,6 +14,7 @@ namespace Steamworks
 		internal override bool InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamInput( server ) );
+			Internal.Init( false );
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
 			// ISteamInput requires an explicit Init before any other call - without it
