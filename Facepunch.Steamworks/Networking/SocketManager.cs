@@ -154,18 +154,15 @@ namespace Steamworks
 
 		internal unsafe void ReceiveMessage( IntPtr msgPtr )
 		{
-			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
-			try
-			{
-				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
-			}
-			finally
-			{
-				//
-				// Releases the message
-				//
-				NetMsg.InternalRelease( (NetMsg*) msgPtr );
-			}
+		    var msg = *(NetMsg*) msgPtr;
+		    try
+		    {
+		        OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
+		    }
+		    finally
+		    {
+		        NetMsg.InternalRelease( (NetMsg*) msgPtr );
+		    }
 		}
 
 		public virtual void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
