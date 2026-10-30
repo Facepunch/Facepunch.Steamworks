@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Facepunch.Steamworks.multiplatform</id>
+    <version>2.4.1-multiarch</version>
+    <authors>Garry Newman</authors>
+    <owners>Garry Newman</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Facepunch/Facepunch.Steamworks</projectUrl>
+    <icon>Facepunch.Steamworks.jpg</icon>
+    <description>Steamworks implementation with an emphasis on making things easy. Multiplatform (not for Unity)</description>
+    <tags>facepunch;steam;steamworks;valve;godot</tags>
+    <repository type="git" url="https://github.com/Facepunch/Facepunch.Steamworks.git" />
+    <dependencies>
+      <group targetFramework="net6.0" />
+    </dependencies>
+  </metadata>
+  <files>
+      <file src="Facepunch.Steamworks.jpg" />
+      <file src="bin\Release\net6.0\win-x86\Facepunch.Steamworks.dll" target="ref\net6.0\" />
+
+      <file src="bin\Release\net6.0\win-x86\Facepunch.Steamworks.dll" target="runtimes\win-x86\lib\net6.0\" />
+      <file src="bin\Release\net6.0\win-x86\steam_api.dll" target="runtimes\win-x86\native\" />
+
+      <file src="bin\Release\net6.0\win-x64\Facepunch.Steamworks.dll" target="runtimes\win-x64\lib\net6.0\" />
+      <file src="bin\Release\net6.0\win-x64\steam_api64.dll" target="runtimes\win-x64\native\" />
+
+      <file src="bin\Release\net6.0\linux-x86\Facepunch.Steamworks.dll" target="runtimes\linux-x86\lib\net6.0\" />
+      <file src="bin\Release\net6.0\linux-x86\libsteam_api.so" target="runtimes\linux-x86\native\" />
+
+      <file src="bin\Release\net6.0\linux-x64\Facepunch.Steamworks.dll" target="runtimes\linux-x64\lib\net6.0\" />
+      <file src="bin\Release\net6.0\linux-x64\libsteam_api.so" target="runtimes\linux-x64\native\" />
+  </files>
+</package>
