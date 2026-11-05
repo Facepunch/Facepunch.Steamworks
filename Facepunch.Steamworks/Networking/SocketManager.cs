@@ -157,7 +157,7 @@ namespace Steamworks
 			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
+				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.MessageNumber, msg.RecvTime, msg.Channel );
 			}
 			finally
 			{
