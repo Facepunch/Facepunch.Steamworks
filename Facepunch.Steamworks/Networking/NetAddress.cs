@@ -61,16 +61,21 @@ namespace Steamworks.Data
 		/// </summary>
 		public static NetAddress From( IPAddress address, ushort port )
 		{
-			var addr = address.GetAddressBytes();
+			var local = Cleared;
 
 			if ( address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork )
 			{
-				var local = Cleared;
 				InternalSetIPv4( ref local, Utility.IpToInt32( address ), port );
 				return local;
 			}
+			else if ( address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 )
+			{
+				var ipv6Bytes = address.GetAddressBytes();
+				InternalSetIPv6( ref local, ref ipv6Bytes[0], port );
+				return local;
+			}
 
-			throw new System.NotImplementedException( "Oops - no IPV6 support yet?" );
+			throw new System.NotImplementedException( $"Oops - no support for {address.AddressFamily} yet?" );
 		}
 
 		/// <summary>
