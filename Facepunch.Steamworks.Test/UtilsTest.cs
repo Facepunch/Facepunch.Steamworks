@@ -72,9 +72,9 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public void IsOverlayEnabled()
+		public void IsOverlayOpened()
 		{
-			var cnt = SteamUtils.IsOverlayEnabled;
+			var cnt = SteamUtils.IsOverlayOpened;
 			Console.WriteLine( $"{cnt}" );
 		}
 

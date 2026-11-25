@@ -23,6 +23,9 @@ namespace Steamworks
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_RestartAppIfNecessary", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
+
+			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_GetSteamInstallPath", CallingConvention = CallingConvention.Cdecl )]
+			public static extern IntPtr SteamAPI_GetSteamInstallPath();
 			
 		}
 		
@@ -48,6 +51,18 @@ namespace Steamworks
 		static internal bool RestartAppIfNecessary( uint unOwnAppID )
 		{
 			return Native.SteamAPI_RestartAppIfNecessary( unOwnAppID );
+		}
+
+		// Steam only implements it on Windows
+		static internal string GetSteamInstallPath()
+		{
+			var path = Native.SteamAPI_GetSteamInstallPath();
+			if ( path == IntPtr.Zero )
+			{
+				return null;
+			}
+
+			return Helpers.MemoryToString( path );
 		}
 		
 	}

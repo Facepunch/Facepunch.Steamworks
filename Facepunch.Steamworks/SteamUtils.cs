@@ -149,10 +149,27 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Returns true if the overlay is running and the user can access it. The overlay process could take a few seconds to
-		/// start and hook the game process, so this function will initially return false while the overlay is loading.
+		/// Steam's ISteamUtils::IsOverlayEnabled, which tells whether the overlay has opened, not whether the player turned it on.
+		/// Use <see cref="IsOverlayEnabledInSettings"/> for the player's setting.
 		/// </summary>
-		public static bool IsOverlayEnabled => Internal.IsOverlayEnabled();
+		public static bool IsOverlayOpened => Internal.IsOverlayEnabled();
+
+		[Obsolete( "Tells whether the overlay has opened, not the player's setting. Use IsOverlayEnabledInSettings, or IsOverlayOpened for the same value" )]
+		public static bool IsOverlayEnabled => IsOverlayOpened;
+
+		/// <summary>
+		/// Returns the player's "Enable the Steam Overlay while in-game" setting: false when it's off globally or for this game.
+		/// Reads Steam's localconfig.vdf, so returns null when that file can't be read. Steam can take a while to save a change to it.
+		/// </summary>
+		public static bool? IsOverlayEnabledInSettings()
+		{
+			if ( !SteamClient.IsValid )
+			{
+				return null;
+			}
+
+			return SteamLocalConfig.ReadOverlaySetting( SteamClient.SteamId.AccountId, SteamClient.AppId.Value );
+		}
 
 		/// <summary>
 		/// Normally this call is unneeded if your game has a constantly running frame loop that calls the 
