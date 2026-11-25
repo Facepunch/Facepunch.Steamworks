@@ -155,6 +155,20 @@ namespace Steamworks
 		public static bool IsOverlayEnabled => Internal.IsOverlayEnabled();
 
 		/// <summary>
+		/// Returns the player's "Enable the Steam Overlay while in-game" setting: false when it's off globally or for this game.
+		/// Reads Steam's localconfig.vdf, so returns null when that file can't be read. Steam can take a while to save a change to it.
+		/// </summary>
+		public static bool? IsOverlayEnabledInSettings()
+		{
+			if ( !SteamClient.IsValid )
+			{
+				return null;
+			}
+
+			return SteamLocalConfig.ReadOverlaySetting( SteamClient.SteamId.AccountId, SteamClient.AppId.Value );
+		}
+
+		/// <summary>
 		/// Normally this call is unneeded if your game has a constantly running frame loop that calls the 
 		/// D3D Present API, or OGL SwapBuffers API every frame.
 		///
