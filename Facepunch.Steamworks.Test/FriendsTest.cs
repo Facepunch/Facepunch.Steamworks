@@ -116,10 +116,10 @@ namespace Steamworks
 		[TestMethod]
 		public async Task OpenWebOverlay()
 		{
-			if ( SteamUtils.IsOverlayEnabled )
-				Console.WriteLine( "Overlay Is Enabled" );
+			if ( SteamUtils.IsOverlayOpened )
+				Console.WriteLine( "Overlay Is Opened" );
 			else
-				Console.WriteLine( "Overlay Is Not Enabled" );
+				Console.WriteLine( "Overlay Is Not Opened" );
 
 			SteamFriends.OpenWebOverlay( "https://www.google.com/" );
 
